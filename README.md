@@ -1,0 +1,4 @@
+Cockpit.Web
+===========
+
+Cockpit website
