@@ -1,8 +1,7 @@
-﻿define(["require", "exports", "less!Styles/Shell"], function(require, exports, style) {
-    style;
-
+﻿define(["require", "exports", "less!Styles/Shell"], function(require, exports) {
     var Shell = (function () {
         function Shell() {
+            this.Content = "Login";
         }
         return Shell;
     })();

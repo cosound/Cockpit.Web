@@ -17,6 +17,7 @@
     <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="App\Views\Login.html" />
     <Content Include="App\Views\Shell.html" />
     <Content Include="default.html" />
     <Content Include="Lib\bootstrap\css\bootstrap-theme.css" />
@@ -64,6 +65,7 @@
     <Content Include="Lib\require-css\README.md" />
     <Content Include="Lib\knockout-amd-helpers\README.md" />
     <Content Include="Lib\require-less\bower.json" />
+    <Content Include="App\Styles\Login.less" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -75,6 +77,8 @@
   <ItemGroup>
     <TypeScriptCompile Include="App\Application.ts" />
     <TypeScriptCompile Include="App\Main.ts" />
+    <TypeScriptCompile Include="App\Navigation.ts" />
+    <TypeScriptCompile Include="App\ViewModels\Login.ts" />
     <TypeScriptCompile Include="App\ViewModels\Shell.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\bootstrap.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\jquery.d.ts" />
