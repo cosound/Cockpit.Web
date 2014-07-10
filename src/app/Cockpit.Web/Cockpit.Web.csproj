@@ -18,9 +18,48 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="default.html" />
+    <Content Include="Lib\bootstrap\css\bootstrap-theme.css" />
+    <Content Include="Lib\bootstrap\css\bootstrap-theme.min.css" />
+    <Content Include="Lib\bootstrap\css\bootstrap.css" />
+    <Content Include="Lib\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Lib\bootstrap\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Lib\bootstrap\js\bootstrap.js" />
+    <Content Include="Lib\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Lib\jQuery\jquery.min.js" />
+    <Content Include="Lib\knockout-amd-helpers\knockout-amd-helpers.min.js" />
+    <Content Include="Lib\knockout\knockout.js" />
+    <Content Include="Lib\PortalClient\PortalClient.min.js" />
+    <Content Include="Lib\require-css\css-builder.js" />
+    <Content Include="Lib\require-css\css.js" />
+    <Content Include="Lib\require-css\css.min.js" />
+    <Content Include="Lib\require-css\normalize.js" />
+    <Content Include="Lib\require-less\less-builder.js" />
+    <Content Include="Lib\require-less\less.js" />
+    <Content Include="Lib\require-less\lessc.js" />
+    <Content Include="Lib\require-less\normalize.js" />
+    <Content Include="Lib\requirejs\r.js" />
+    <Content Include="Lib\requirejs\require.js" />
+    <Content Include="Lib\Routie\routie.min.js" />
+    <Content Include="Lib\text\text.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\Styles\Shell.less" />
+    <Content Include="Lib\text\LICENSE" />
+    <Content Include="Lib\text\package.json" />
+    <Content Include="Lib\text\README.md" />
+    <Content Include="Lib\require-less\LICENSE" />
+    <Content Include="Lib\require-less\README.md" />
+    <Content Include="Lib\require-less\package.json" />
+    <Content Include="Lib\bootstrap\css\bootstrap-theme.css.map" />
+    <Content Include="Lib\bootstrap\css\bootstrap.css.map" />
+    <Content Include="Lib\bootstrap\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Lib\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Lib\bootstrap\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Lib\require-css\bower.json" />
+    <Content Include="Lib\require-css\LICENSE" />
+    <Content Include="Lib\require-css\package.json" />
+    <Content Include="Lib\require-css\README.md" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -29,7 +68,18 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App\" />
+    <Folder Include="App\Views\" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="App\Main.ts" />
+    <TypeScriptCompile Include="App\ViewModels\Shell.ts" />
+    <TypeScriptCompile Include="TypeScriptDefinitions\bootstrap.d.ts" />
+    <TypeScriptCompile Include="TypeScriptDefinitions\jquery.d.ts" />
+    <TypeScriptCompile Include="TypeScriptDefinitions\knockout.amd.d.ts" />
+    <TypeScriptCompile Include="TypeScriptDefinitions\knockout.d.ts" />
+    <TypeScriptCompile Include="TypeScriptDefinitions\PortalClient.d.ts" />
+    <TypeScriptCompile Include="TypeScriptDefinitions\require.d.ts" />
+    <TypeScriptCompile Include="TypeScriptDefinitions\routie.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -60,9 +110,10 @@
   </ProjectExtensions>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptTarget>ES5</TypeScriptTarget>
-    <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
-    <TypeScriptSourceMap>true</TypeScriptSourceMap>
+    <TypeScriptRemoveComments>True</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>False</TypeScriptSourceMap>
     <TypeScriptModuleKind>AMD</TypeScriptModuleKind>
+    <TypeScriptNoImplicitAny>True</TypeScriptNoImplicitAny>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptTarget>ES5</TypeScriptTarget>

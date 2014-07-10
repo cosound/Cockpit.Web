@@ -1,0 +1,6 @@
+C:\Users\Jacob\Documents\Git\Cockpit.Web\src\app\Cockpit.Web\bin\Cockpit.Web.dll.config
+C:\Users\Jacob\Documents\Git\Cockpit.Web\src\app\Cockpit.Web\bin\Cockpit.Web.dll
+C:\Users\Jacob\Documents\Git\Cockpit.Web\src\app\Cockpit.Web\bin\Cockpit.Web.pdb
+C:\Users\Jacob\Documents\Git\Cockpit.Web\src\app\Cockpit.Web\obj\Debug\Cockpit.Web.dll
+C:\Users\Jacob\Documents\Git\Cockpit.Web\src\app\Cockpit.Web\obj\Debug\Cockpit.Web.pdb
+C:\Users\Jacob\Documents\Git\Cockpit.Web\src\app\Cockpit.Web\obj\Debug\Cockpit.Web.csprojResolveAssemblyReference.cache
