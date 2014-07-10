@@ -12,10 +12,16 @@ requirejs.config({
 	},
 	map: {
 		'*': {
-			'css':				'../Lib/require-css/css',
-			'less':				'../Lib/require-less/less'
+			'css':				'../Lib/require-css/css.min'
 		}
 	},
+	packages: [
+		{
+			name: 'less',
+			location: '../Lib/require-less',
+			main: 'less'
+		}
+	],
 	shim: {
 		bootstrap: {
 			deps: [
@@ -39,12 +45,12 @@ declare module "Portal" { }
 
 declare var CacheBuster: number;
 
-require(['ViewModels/Shell', 'knockout', 'bootstrap', 'knockout-amd-helpers', 'Portal'], (shell: any, knockout: any) =>
+require(['Application', 'knockout', 'bootstrap', 'knockout-amd-helpers', 'Portal'], (application: any, knockout: any) =>
 {
 	knockout.amdTemplateEngine.defaultPath = "Views";
 	knockout.amdTemplateEngine.defaultSuffix = ".html";
 	knockout.amdTemplateEngine.defaultRequireTextPluginName = "text";
 	knockout.bindingHandlers.module.baseDir = "ViewModels";
 
-	knockout.applyBindings(new shell());
+	knockout.applyBindings(new application());
 });

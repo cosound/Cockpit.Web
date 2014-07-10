@@ -10,10 +10,16 @@
     },
     map: {
         '*': {
-            'css': '../Lib/require-css/css',
-            'less': '../Lib/require-less/less'
+            'css': '../Lib/require-css/css.min'
         }
     },
+    packages: [
+        {
+            name: 'less',
+            location: '../Lib/require-less',
+            main: 'less'
+        }
+    ],
     shim: {
         bootstrap: {
             deps: [
@@ -33,11 +39,11 @@
     urlArgs: "bust=" + CacheBuster
 });
 
-require(['ViewModels/Shell', 'knockout', 'bootstrap', 'knockout-amd-helpers', 'Portal'], function (shell, knockout) {
+require(['Application', 'knockout', 'bootstrap', 'knockout-amd-helpers', 'Portal'], function (application, knockout) {
     knockout.amdTemplateEngine.defaultPath = "Views";
     knockout.amdTemplateEngine.defaultSuffix = ".html";
     knockout.amdTemplateEngine.defaultRequireTextPluginName = "text";
     knockout.bindingHandlers.module.baseDir = "ViewModels";
 
-    knockout.applyBindings(new shell());
+    knockout.applyBindings(new application());
 });

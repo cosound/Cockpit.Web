@@ -1,4 +1,6 @@
-﻿class Shell
+﻿import style = require("less!Styles/Shell"); style;
+
+class Shell
 {
 	
 }

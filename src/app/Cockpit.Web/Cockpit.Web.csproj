@@ -17,6 +17,7 @@
     <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="App\Views\Shell.html" />
     <Content Include="default.html" />
     <Content Include="Lib\bootstrap\css\bootstrap-theme.css" />
     <Content Include="Lib\bootstrap\css\bootstrap-theme.min.css" />
@@ -27,6 +28,7 @@
     <Content Include="Lib\bootstrap\js\bootstrap.min.js" />
     <Content Include="Lib\jQuery\jquery.min.js" />
     <Content Include="Lib\knockout-amd-helpers\knockout-amd-helpers.min.js" />
+    <Content Include="Lib\knockout-amd-helpers\LICENSE" />
     <Content Include="Lib\knockout\knockout.js" />
     <Content Include="Lib\PortalClient\PortalClient.min.js" />
     <Content Include="Lib\require-css\css-builder.js" />
@@ -60,6 +62,8 @@
     <Content Include="Lib\require-css\LICENSE" />
     <Content Include="Lib\require-css\package.json" />
     <Content Include="Lib\require-css\README.md" />
+    <Content Include="Lib\knockout-amd-helpers\README.md" />
+    <Content Include="Lib\require-less\bower.json" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -67,10 +71,9 @@
       <DependentUpon>web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="App\Views\" />
-  </ItemGroup>
-  <ItemGroup>
+    <TypeScriptCompile Include="App\Application.ts" />
     <TypeScriptCompile Include="App\Main.ts" />
     <TypeScriptCompile Include="App\ViewModels\Shell.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\bootstrap.d.ts" />

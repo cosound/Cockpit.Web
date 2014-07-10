@@ -9,8 +9,9 @@
 		</script>
 	</head>
 	<body>
-		<h1>Cockpit</h1>
-		<p>Welcome to Cockpit.</p>
-		<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.9/require.min.js" data-main="App/Main"></script>
+		<div data-bind="template: {name: 'Shell', data: Shell}">
+			Loading...
+		</div>
+		<script type="text/javascript" src="Lib/requirejs/require.js" data-main="App/Main"></script>
 	</body>
 </html>
