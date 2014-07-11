@@ -1,16 +1,17 @@
 ﻿requirejs.config({
     paths: {
-        'text': '../Lib/text/text',
-        'jquery': '../Lib/jQuery/jquery.min',
-        'routie': '../Lib/Routie/routie.min',
-        'knockout': '../Lib/knockout/knockout',
+        text: '../Lib/text/text',
+        jquery: '../Lib/jQuery/jquery.min',
+        routie: '../Lib/Routie/routie.min',
+        knockout: '../Lib/knockout/knockout',
         'knockout-amd-helpers': '../Lib/knockout-amd-helpers/knockout-amd-helpers.min',
-        'bootstrap': '../Lib/bootstrap/js/bootstrap.min',
-        'Portal': '../Lib/PortalClient/PortalClient.min'
+        bootstrap: '../Lib/bootstrap/js/bootstrap.min',
+        jsPlumb: '../Lib/jsPlumb/js/jquery.jsPlumb-1.6.2-min',
+        Portal: '../Lib/PortalClient/PortalClient.min'
     },
     map: {
         '*': {
-            'css': '../Lib/require-css/css.min'
+            css: '../Lib/require-css/css.min'
         }
     },
     packages: [
@@ -21,6 +22,9 @@
         }
     ],
     shim: {
+        routie: {
+            exports: 'routie'
+        },
         bootstrap: {
             deps: [
                 'jquery',
@@ -28,11 +32,14 @@
                 'css!../Lib/bootstrap/css/bootstrap-theme.min'
             ]
         },
+        jsPlumb: {
+            deps: [
+                'jquery',
+                'css!../Lib/jsPlumb/jsplumb'
+            ]
+        },
         Portal: {
             exports: 'CHAOS.Portal.Client'
-        },
-        routie: {
-            exports: 'routie'
         }
     },
     waitSeconds: 20,
