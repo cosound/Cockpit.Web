@@ -1,7 +1,7 @@
-﻿define(["require", "exports", "less!Styles/Shell"], function(require, exports) {
+﻿define(["require", "exports", "Navigation", "less!Styles/Shell"], function(require, exports, Navigation) {
     var Shell = (function () {
         function Shell() {
-            this.Content = "Login";
+            this.Page = Navigation.CurrentPage;
         }
         return Shell;
     })();

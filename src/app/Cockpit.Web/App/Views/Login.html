@@ -1,5 +1,11 @@
-﻿<form>
-	Email: <input type="email"/>
-	Password: <input type="password"/>
-	<button type="submit">Login</button>
+﻿<form role="form" data-bind="submit: Login">
+	<div class="form-group">
+		<label for="LoginEmail">Email address</label>
+		<input type="email" class="form-control" id="LoginEmail" placeholder="Enter email" data-bind="value: Email">
+	</div>
+	<div class="form-group">
+		<label for="LoginPassword">Password</label>
+		<input type="password" class="form-control" id="LoginPassword" placeholder="Password" data-bind="value: Password">
+	</div>
+	<button type="submit" class="btn btn-default">Login</button>
 </form>

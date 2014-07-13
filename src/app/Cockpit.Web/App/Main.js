@@ -6,7 +6,7 @@
         knockout: '../Lib/knockout/knockout',
         'knockout-amd-helpers': '../Lib/knockout-amd-helpers/knockout-amd-helpers.min',
         bootstrap: '../Lib/bootstrap/js/bootstrap.min',
-        jsPlumb: '../Lib/jsPlumb/js/jquery.jsPlumb-1.6.2-min',
+        jsPlumb: '../Lib/jsPlumb/js/dom.jsPlumb-1.6.2-min',
         Portal: '../Lib/PortalClient/PortalClient.min'
     },
     map: {
@@ -33,9 +33,10 @@
             ]
         },
         jsPlumb: {
+            exports: 'jsPlumb',
             deps: [
                 'jquery',
-                'css!../Lib/jsPlumb/jsplumb'
+                'css!../Lib/jsPlumb/css/jsplumb'
             ]
         },
         Portal: {

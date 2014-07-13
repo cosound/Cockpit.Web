@@ -17,6 +17,7 @@
     <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="App\Views\Experiments.html" />
     <Content Include="App\Views\Login.html" />
     <Content Include="App\Views\Shell.html" />
     <Content Include="default.html" />
@@ -50,6 +51,7 @@
     <Content Include="Lib\jsPlumb\img\swappedAnchors.jpg" />
     <Content Include="Lib\jsPlumb\img\triangle.png" />
     <Content Include="Lib\jsPlumb\img\triangle_90.png" />
+    <Content Include="Lib\jsPlumb\js\dom.jsPlumb-1.6.2-min.js" />
     <Content Include="Lib\jsPlumb\js\jquery.jsPlumb-1.6.2-min.js" />
     <Content Include="Lib\knockout-amd-helpers\knockout-amd-helpers.min.js" />
     <Content Include="Lib\knockout-amd-helpers\LICENSE" />
@@ -104,6 +106,7 @@
     <Content Include="Lib\jsPlumb\img\endpointTest1.xcf" />
     <Content Include="Lib\jsPlumb\img\favicon.xcf" />
     <Content Include="Lib\jsPlumb\img\littledot.xcf" />
+    <Content Include="App\Styles\Experiments.less" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -116,7 +119,9 @@
     <TypeScriptCompile Include="App\Application.ts" />
     <TypeScriptCompile Include="App\Main.ts" />
     <TypeScriptCompile Include="App\Navigation.ts" />
+    <TypeScriptCompile Include="App\ViewModels\Experiments.ts" />
     <TypeScriptCompile Include="App\ViewModels\Login.ts" />
+    <TypeScriptCompile Include="App\ViewModels\Page.ts" />
     <TypeScriptCompile Include="App\ViewModels\Shell.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\bootstrap.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\jquery.d.ts" />
