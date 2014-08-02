@@ -9,7 +9,7 @@ class Login
 
 	public Login():void
 	{
-		Navigation.Navigate("Experiments");
+		Navigation.Navigate("Search");
 	}
 }
 

@@ -19,6 +19,7 @@
   <ItemGroup>
     <Content Include="App\Views\Experiments.html" />
     <Content Include="App\Views\Login.html" />
+    <Content Include="App\Views\Search.html" />
     <Content Include="App\Views\Shell.html" />
     <Content Include="default.html" />
     <Content Include="Lib\bootstrap\css\bootstrap-theme.css" />
@@ -57,6 +58,8 @@
     <Content Include="Lib\knockout-amd-helpers\LICENSE" />
     <Content Include="Lib\knockout\knockout.js" />
     <Content Include="Lib\PortalClient\PortalClient.min.js" />
+    <Content Include="Lib\QUnit\qunit.css" />
+    <Content Include="Lib\QUnit\qunit.js" />
     <Content Include="Lib\require-css\css-builder.js" />
     <Content Include="Lib\require-css\css.js" />
     <Content Include="Lib\require-css\css.min.js" />
@@ -69,6 +72,7 @@
     <Content Include="Lib\requirejs\require.js" />
     <Content Include="Lib\Routie\routie.min.js" />
     <Content Include="Lib\text\text.js" />
+    <Content Include="Test.html" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -122,12 +126,16 @@
     <TypeScriptCompile Include="App\ViewModels\Experiments.ts" />
     <TypeScriptCompile Include="App\ViewModels\Login.ts" />
     <TypeScriptCompile Include="App\ViewModels\Page.ts" />
+    <TypeScriptCompile Include="App\ViewModels\Search.ts" />
     <TypeScriptCompile Include="App\ViewModels\Shell.ts" />
+    <TypeScriptCompile Include="Tests\Main.ts" />
+    <TypeScriptCompile Include="Tests\NavigationTest.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\bootstrap.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\jquery.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\knockout.amd.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\knockout.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\PortalClient.d.ts" />
+    <TypeScriptCompile Include="TypeScriptDefinitions\qunit.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\require.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\routie.d.ts" />
   </ItemGroup>

@@ -5,7 +5,7 @@
             this.Password = knockout.observable();
         }
         Login.prototype.Login = function () {
-            Navigation.Navigate("Experiments");
+            Navigation.Navigate("Search");
         };
         return Login;
     })();
