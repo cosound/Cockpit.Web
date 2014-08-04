@@ -1,4 +1,4 @@
-﻿import Navigation = require("Navigation");
+﻿/*import Navigation = require("Navigation");
 
 export function Run()
 {
@@ -6,5 +6,5 @@ export function Run()
 	{
 		ok(Navigation.CurrentPage);
 		ok(Navigator.CurrentPage() != null);
-	})
-}
+	});
+}*/

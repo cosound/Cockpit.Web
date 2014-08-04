@@ -1,4 +1,4 @@
-﻿/// <reference path="../TypeScriptDefinitions/require.d.ts" />
+﻿/*/// <reference path="../TypeScriptDefinitions/require.d.ts" />
 
 requirejs.config({
 	baseUrl: "../App",
@@ -57,4 +57,4 @@ require(['QUnit', 'Tests/NavigationTest'], (qUnit:QUnitStatic, navigationTest: a
 	
 	QUnit.load();
 	QUnit.start();
-});
+});*/

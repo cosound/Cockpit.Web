@@ -1,1 +1,19 @@
 ﻿<h2>Search</h2>
+<div>
+	<form class="form-inline" role="form" data-bind="submit: Search">
+		<div class="form-group">
+			<div class="input-group">
+				<input type="search" class="form-control" placeholder="Search query" data-bind="value: Query" />
+				<span class="input-group-btn">
+					<button class="btn btn-default" type="submit"><span class=" glyphicon glyphicon-search"></span></button>
+				</span>
+			</div>
+		</div>
+	</form>
+	<div data-bind="foreach:Results">
+		<div>
+			<input type="checkbox" data-bind="checked: Selected"/>
+			<span data-bind="text: Title"></span>
+		</div>
+	</div>
+</div>
