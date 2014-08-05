@@ -12,9 +12,17 @@ interface Route {
     toURL(params: any): string;
 }
 
-declare function routie(path: string): void;
-declare function routie(path: string, fn: Function): void;
-declare function routie(routes: { [key: string]: Function }): void;
+interface RouteStatic
+{
+	(path: string): void;
+	(path: string, fn: Function): void;
+	(routes: { [key: string]: Function }): void;
+}
+
+declare var routie:RouteStatic;
+
 
 declare module "routie"
-{ }
+{
+	export = routie;
+}

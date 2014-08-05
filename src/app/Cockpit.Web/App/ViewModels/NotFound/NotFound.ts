@@ -1,0 +1,6 @@
+﻿class NotFound
+{
+	
+}
+
+export = NotFound;

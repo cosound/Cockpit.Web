@@ -1,0 +1,6 @@
+﻿class Selections
+{
+	
+}
+
+export = Selections;

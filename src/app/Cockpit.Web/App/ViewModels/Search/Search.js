@@ -1,4 +1,4 @@
-﻿define(["require", "exports", "knockout", "ViewModels/SearchResult"], function(require, exports, knockout, SearchResult) {
+﻿define(["require", "exports", "knockout", "Navigation", "SelectionManager", "ViewModels/Search/SearchResult"], function(require, exports, knockout, Navigation, SelectionManager, SearchResult) {
     var Search = (function () {
         function Search() {
             this.Query = knockout.observable("");
@@ -20,7 +20,9 @@
                     selectedResults.push(result);
             }
 
-            sessionStorage.setItem("");
+            SelectionManager.SetNewSelectionResults(selectedResults);
+
+            Navigation.Navigate("Selections");
         };
         return Search;
     })();
