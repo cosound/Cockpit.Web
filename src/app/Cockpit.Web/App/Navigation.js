@@ -1,4 +1,6 @@
 ﻿define(["require", "exports", "knockout", "routie", "AuthenticationManager", "ViewModels/Page"], function(require, exports, knockout, Routie, AuthenticationManager, Page) {
+    var goToAfterAuthentication;
+
     exports.CurrentPage = knockout.observable();
 
     function Initialize() {
@@ -30,11 +32,25 @@
 
     function LoadPage(name, requiresAuthentication) {
         if (typeof requiresAuthentication === "undefined") { requiresAuthentication = true; }
-        if (requiresAuthentication && AuthenticationManager.IsAuthenticated())
-            exports.CurrentPage(new Page(name + "/" + name));
+        var page = new Page(name + "/" + name);
+
+        if (requiresAuthentication && !AuthenticationManager.IsAuthenticated()) {
+            goToAfterAuthentication = page;
+            page = new Page("Login/Login");
+        } else
+            goToAfterAuthentication = null;
+
+        exports.CurrentPage(page);
     }
 
     function IsAuthenticatedChanged(isAuthenticated) {
-        exports.Navigate(isAuthenticated ? "Search" : "");
+        if (isAuthenticated) {
+            if (goToAfterAuthentication) {
+                exports.CurrentPage(goToAfterAuthentication);
+                goToAfterAuthentication = null;
+            } else
+                exports.Navigate("Search");
+        } else
+            exports.Navigate("");
     }
 });
