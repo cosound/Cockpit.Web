@@ -127,7 +127,7 @@
     <TypeScriptCompile Include="App\Main.ts" />
     <TypeScriptCompile Include="App\Navigation.ts" />
     <TypeScriptCompile Include="App\SelectionManager.ts" />
-    <TypeScriptCompile Include="App\AuthorizationManager.ts" />
+    <TypeScriptCompile Include="App\AuthenticationManager.ts" />
     <TypeScriptCompile Include="App\ViewModels\Experiments\Experiments.ts" />
     <TypeScriptCompile Include="App\ViewModels\Login\Login.ts" />
     <TypeScriptCompile Include="App\ViewModels\NotFound\NotFound.ts" />

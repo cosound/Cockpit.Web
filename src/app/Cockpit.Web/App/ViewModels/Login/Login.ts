@@ -1,6 +1,6 @@
 ﻿/// <amd-dependency path="less!Styles/Login" />
 import knockout = require("knockout");
-import AuthorizationManager = require("AuthorizationManager");
+import AuthenticationManager = require("AuthenticationManager");
 
 class Login
 {
@@ -9,7 +9,7 @@ class Login
 
 	public Login():void
 	{
-		AuthorizationManager.Authenticate();
+		AuthenticationManager.Authenticate();
 	}
 }
 

@@ -1,10 +1,10 @@
-﻿define(["require", "exports", "knockout", "routie", "AuthorizationManager", "ViewModels/Page"], function(require, exports, knockout, Routie, AuthorizationManager, Page) {
+﻿define(["require", "exports", "knockout", "routie", "AuthenticationManager", "ViewModels/Page"], function(require, exports, knockout, Routie, AuthenticationManager, Page) {
     exports.CurrentPage = knockout.observable();
 
     function Initialize() {
         Routie({
             "": function () {
-                LoadPage("Login");
+                LoadPage("Login", false);
             },
             "Search": function () {
                 LoadPage("Search");
@@ -17,7 +17,7 @@
             }
         });
 
-        AuthorizationManager.IsAuthenticated.subscribe(function (newValue) {
+        AuthenticationManager.IsAuthenticated.subscribe(function (newValue) {
             return IsAuthenticatedChanged(newValue);
         });
     }
@@ -28,8 +28,10 @@
     }
     exports.Navigate = Navigate;
 
-    function LoadPage(name) {
-        exports.CurrentPage(new Page(name + "/" + name));
+    function LoadPage(name, requiresAuthentication) {
+        if (typeof requiresAuthentication === "undefined") { requiresAuthentication = true; }
+        if (requiresAuthentication && AuthenticationManager.IsAuthenticated())
+            exports.CurrentPage(new Page(name + "/" + name));
     }
 
     function IsAuthenticatedChanged(isAuthenticated) {
