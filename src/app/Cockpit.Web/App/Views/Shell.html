@@ -1,1 +1,6 @@
-﻿<div class="Content" data-bind="module: Page().Name"></div>
+﻿<div class="nav navbar" data-bind="visible: IsAuthenticated">
+	<h1>Cockpit</h1>
+	<a href="#Search">Search</a>
+	<a href="#Selections">Selections</a>
+</div>
+<div class="Content" data-bind="module: Page().Name"></div>
