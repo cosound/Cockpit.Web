@@ -3,12 +3,16 @@
         function Search() {
             this.Query = knockout.observable("");
             this.Results = knockout.observableArray();
+            this.SelectedSearchResult = knockout.observable();
         }
         Search.prototype.Search = function () {
+            var _this = this;
             this.Results.removeAll();
 
             for (var i = 0; i < 20; i++)
-                this.Results.push(new SearchResult(this.Query() + " Result " + i));
+                this.Results.push(new SearchResult(this.Query() + " Result " + i).SetSelector(function (s) {
+                    return _this.SelectSearchResult(s);
+                }));
         };
 
         Search.prototype.CreateSelection = function () {
@@ -23,6 +27,10 @@
             SelectionManager.SetNewSelectionResults(selectedResults);
 
             Navigation.Navigate("Selections");
+        };
+
+        Search.prototype.SelectSearchResult = function (searchResult) {
+            this.SelectedSearchResult(searchResult);
         };
         return Search;
     })();

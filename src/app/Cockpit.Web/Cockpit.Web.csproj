@@ -113,6 +113,7 @@
     <Content Include="Lib\jsPlumb\img\favicon.xcf" />
     <Content Include="Lib\jsPlumb\img\littledot.xcf" />
     <Content Include="App\Styles\Experiments.less" />
+    <Content Include="App\Styles\Default.less" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

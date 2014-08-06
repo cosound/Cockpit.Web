@@ -12,9 +12,12 @@
 	</form>
 	<button type="button" class="btn btn-default" data-bind="click: CreateSelection">Create Selection</button>
 	<div data-bind="foreach:Results">
-		<div>
-			<input type="checkbox" data-bind="checked: Selected"/>
+		<div data-bind="click: Select, css: { Selected: $parent.SelectedSearchResult() == $data }">
+			<input type="checkbox" data-bind="checked: Selected" />
 			<span data-bind="text: Title"></span>
 		</div>
+	</div>
+	<div data-bind="with: SelectedSearchResult">
+		<p data-bind="text: Title"></p>
 	</div>
 </div>
