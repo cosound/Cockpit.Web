@@ -1,9 +1,10 @@
-﻿define(["require", "exports", "knockout", "Navigation", "SelectionManager", "ViewModels/Search/SearchResult"], function(require, exports, knockout, Navigation, SelectionManager, SearchResult) {
+﻿define(["require", "exports", "knockout", "Navigation", "SelectionManager", "ViewModels/Search/SearchResult", "less!Styles/Search"], function(require, exports, knockout, Navigation, SelectionManager, SearchResult) {
     var Search = (function () {
         function Search() {
             this.Query = knockout.observable("");
             this.Results = knockout.observableArray();
-            this.SelectedSearchResult = knockout.observable();
+            this.SelectedSearchResulst = knockout.observableArray();
+            this.HighlightedSearchResult = knockout.observable();
         }
         Search.prototype.Search = function () {
             var _this = this;
@@ -11,7 +12,7 @@
 
             for (var i = 0; i < 20; i++)
                 this.Results.push(new SearchResult(this.Query() + " Result " + i).SetSelector(function (s) {
-                    return _this.SelectSearchResult(s);
+                    return _this.SearchResultSelected(s);
                 }));
         };
 
@@ -29,8 +30,8 @@
             Navigation.Navigate("Selections");
         };
 
-        Search.prototype.SelectSearchResult = function (searchResult) {
-            this.SelectedSearchResult(searchResult);
+        Search.prototype.SearchResultSelected = function (searchResult) {
+            this.HighlightedSearchResult(searchResult);
         };
         return Search;
     })();

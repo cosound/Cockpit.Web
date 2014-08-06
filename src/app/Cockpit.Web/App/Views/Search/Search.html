@@ -1,5 +1,5 @@
 ﻿<h2>Search</h2>
-<div>
+<div class="SearchPage">
 	<form class="form-inline" role="form" data-bind="submit: Search">
 		<div class="form-group">
 			<div class="input-group">
@@ -10,14 +10,17 @@
 			</div>
 		</div>
 	</form>
-	<button type="button" class="btn btn-default" data-bind="click: CreateSelection">Create Selection</button>
+	<div>
+		<button type="button" class="btn btn-default" data-bind="click: CreateSelection">Create Selection</button>
+	</div>
+	
 	<div data-bind="foreach:Results">
-		<div data-bind="click: Select, css: { Selected: $parent.SelectedSearchResult() == $data }">
+		<div class="SearchResult" data-bind="click: Select, css: { Selected: $parent.HighlightedSearchResult() == $data }">
 			<input type="checkbox" data-bind="checked: Selected" />
 			<span data-bind="text: Title"></span>
 		</div>
 	</div>
-	<div data-bind="with: SelectedSearchResult">
+	<div data-bind="with: HighlightedSearchResult">
 		<p data-bind="text: Title"></p>
 	</div>
 </div>
