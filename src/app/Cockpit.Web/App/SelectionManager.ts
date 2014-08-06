@@ -1,14 +1,10 @@
 ﻿import knockout = require("knockout");
 import SearchResult = require("ViewModels/Search/SearchResult");
+import Selection = require("ViewModels/Selections/Selection");
 
-var results:Array<SearchResult>;
+export var Selections: KnockoutObservableArray<Selection> = knockout.observableArray<Selection>();
 
 export function SetNewSelectionResults(results:Array<SearchResult>):void
 {
-	this.results = results;
-}
-
-export function GetNewSelectionResults():Array<SearchResult>
-{
-	return results;
+	Selections.unshift(new Selection(null, results));
 }

@@ -1,13 +1,8 @@
-﻿define(["require", "exports"], function(require, exports) {
-    var results;
+﻿define(["require", "exports", "knockout", "ViewModels/Selections/Selection"], function(require, exports, knockout, Selection) {
+    exports.Selections = knockout.observableArray();
 
     function SetNewSelectionResults(results) {
-        this.results = results;
+        exports.Selections.unshift(new Selection(null, results));
     }
     exports.SetNewSelectionResults = SetNewSelectionResults;
-
-    function GetNewSelectionResults() {
-        return results;
-    }
-    exports.GetNewSelectionResults = GetNewSelectionResults;
 });

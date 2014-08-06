@@ -133,6 +133,7 @@
     <TypeScriptCompile Include="App\ViewModels\Page.ts" />
     <TypeScriptCompile Include="App\ViewModels\Search\Search.ts" />
     <TypeScriptCompile Include="App\ViewModels\Search\SearchResult.ts" />
+    <TypeScriptCompile Include="App\ViewModels\Selections\Selection.ts" />
     <TypeScriptCompile Include="App\ViewModels\Selections\Selections.ts" />
     <TypeScriptCompile Include="App\ViewModels\Shell.ts" />
     <TypeScriptCompile Include="Tests\Main.ts" />

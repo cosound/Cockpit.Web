@@ -1,4 +1,7 @@
 ﻿<h2>Selections</h2>
-<div>
-
+<div data-bind="foreach:Selections">
+	<p>
+		<span data-bind="text: Name, visible: Name"></span>
+		<span data-bind="visible: !Name()">New Selection</span>
+	</p>
 </div>

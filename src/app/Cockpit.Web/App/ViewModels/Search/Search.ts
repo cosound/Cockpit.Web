@@ -29,7 +29,7 @@ class Search
 
 		SelectionManager.SetNewSelectionResults(selectedResults);
 
-		Navigation.Navigate("Selections")
+		Navigation.Navigate("Selections");
 	}
 }
 
