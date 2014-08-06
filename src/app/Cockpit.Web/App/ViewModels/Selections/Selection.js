@@ -8,6 +8,17 @@
             if (searchResults)
                 this.SearchResults.push.apply(this.SearchResults, searchResults);
         }
+        Selection.prototype.SetSelector = function (selector) {
+            this._selector = selector;
+            return this;
+        };
+
+        Selection.prototype.Select = function () {
+            if (this._selector)
+                this._selector(this);
+
+            return true;
+        };
         return Selection;
     })();
 

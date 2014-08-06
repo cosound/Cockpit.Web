@@ -115,6 +115,7 @@
     <Content Include="App\Styles\Experiments.less" />
     <Content Include="App\Styles\Default.less" />
     <Content Include="App\Styles\Search.less" />
+    <Content Include="App\Styles\Selections.less" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>

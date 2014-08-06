@@ -1,7 +1,15 @@
-﻿<h2>Selections</h2>
-<div data-bind="foreach:Selections">
-	<p>
-		<span data-bind="text: Name, visible: Name"></span>
-		<span data-bind="visible: !Name()">New Selection</span>
-	</p>
+﻿<div class="SelectionPage">
+	<h2>Selections</h2>
+	<div data-bind="foreach:Selections">
+		<p class="Selection" data-bind="click: Select, css: { Selected: $parent.HighlightedSelection() == $data }">
+			<span data-bind="text: Name, visible: Name"></span>
+			<span data-bind="visible: !Name()">New Selection</span>
+		</p>
+	</div>
+	<div data-bind="with: HighlightedSelection">
+		<p data-bind="text: Name"></p>
+		<div data-bind="foreach: SearchResults">
+			<p data-bind="text: Title"></p>
+		</div>
+	</div>
 </div>
