@@ -3,7 +3,7 @@
         function Search() {
             this.Query = knockout.observable("");
             this.Results = knockout.observableArray();
-            this.SelectedSearchResulst = knockout.observableArray();
+            this.SelectedSearchResults = knockout.observableArray();
             this.HighlightedSearchResult = knockout.observable();
         }
         Search.prototype.Search = function () {
@@ -32,6 +32,16 @@
 
         Search.prototype.SearchResultSelected = function (searchResult) {
             this.HighlightedSearchResult(searchResult);
+
+            var isInSelected = this.SelectedSearchResults.indexOf(searchResult) != -1;
+
+            if (searchResult.Selected()) {
+                if (!isInSelected)
+                    this.SelectedSearchResults.push(searchResult);
+            } else {
+                if (isInSelected)
+                    this.SelectedSearchResults.remove(searchResult);
+            }
         };
         return Search;
     })();

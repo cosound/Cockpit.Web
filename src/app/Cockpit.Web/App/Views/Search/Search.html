@@ -11,9 +11,9 @@
 		</div>
 	</form>
 	<div>
-		<button type="button" class="btn btn-default" data-bind="click: CreateSelection">Create Selection</button>
+		<span data-bind="text: SelectedSearchResults().length"></span> selected search results
+		<button type="button" class="btn btn-default" data-bind="click: CreateSelection, enable: SelectedSearchResults().length != 0">Create Selection</button>
 	</div>
-	
 	<div data-bind="foreach:Results">
 		<div class="SearchResult" data-bind="click: Select, css: { Selected: $parent.HighlightedSearchResult() == $data }">
 			<input type="checkbox" data-bind="checked: Selected" />
