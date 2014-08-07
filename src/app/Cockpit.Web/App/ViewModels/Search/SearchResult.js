@@ -1,9 +1,11 @@
 ﻿define(["require", "exports", "knockout"], function(require, exports, knockout) {
     var SearchResult = (function () {
-        function SearchResult(title) {
+        function SearchResult(title, date) {
             this.Title = knockout.observable("");
+            this.Date = knockout.observable();
             this.Selected = knockout.observable(false);
             this.Title(title);
+            this.Date(date.getDate() + " / " + (date.getMonth() + 1) + " - " + date.getFullYear());
         }
         SearchResult.prototype.SetSelector = function (selector) {
             this._selector = selector;

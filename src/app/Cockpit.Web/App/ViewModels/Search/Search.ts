@@ -16,8 +16,12 @@ class Search
 	{
 		this.Results.removeAll();
 
-		for (var i = 0; i < 20; i++)
-			this.Results.push(new SearchResult(this.Query() + " Result " + i).SetSelector(s => this.SearchResultSelected(s)));
+		for (var i = 0; i < 10; i++)
+		{
+			var result = new SearchResult(this.Query() + " Result " + i, new Date(Math.random() * 1000000000000));
+			this.ListenToResult(result);
+			this.Results.push(result);
+		}
 	}
 
 	public CreateSelection():void
@@ -36,10 +40,14 @@ class Search
 		Navigation.Navigate("Selections");
 	}
 
+	private ListenToResult(searchResult:SearchResult):void
+	{
+		searchResult.SetSelector(s => this.SearchResultHighlighted(s));
+		searchResult.Selected.subscribe(s => this.SearchResultSelected(searchResult));
+	}
+
 	private SearchResultSelected(searchResult:SearchResult):void
 	{
-		this.HighlightedSearchResult(searchResult);
-
 		var isInSelected = this.SelectedSearchResults.indexOf(searchResult) != -1;
 
 		if (searchResult.Selected())
@@ -49,6 +57,11 @@ class Search
 		{
 			if (isInSelected) this.SelectedSearchResults.remove(searchResult);
 		}
+	}
+
+	private SearchResultHighlighted(searchResult:SearchResult):void
+	{
+		this.HighlightedSearchResult(searchResult);
 	}
 }
 

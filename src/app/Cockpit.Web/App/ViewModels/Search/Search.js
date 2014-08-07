@@ -7,13 +7,13 @@
             this.HighlightedSearchResult = knockout.observable();
         }
         Search.prototype.Search = function () {
-            var _this = this;
             this.Results.removeAll();
 
-            for (var i = 0; i < 20; i++)
-                this.Results.push(new SearchResult(this.Query() + " Result " + i).SetSelector(function (s) {
-                    return _this.SearchResultSelected(s);
-                }));
+            for (var i = 0; i < 10; i++) {
+                var result = new SearchResult(this.Query() + " Result " + i, new Date(Math.random() * 1000000000000));
+                this.ListenToResult(result);
+                this.Results.push(result);
+            }
         };
 
         Search.prototype.CreateSelection = function () {
@@ -30,9 +30,17 @@
             Navigation.Navigate("Selections");
         };
 
-        Search.prototype.SearchResultSelected = function (searchResult) {
-            this.HighlightedSearchResult(searchResult);
+        Search.prototype.ListenToResult = function (searchResult) {
+            var _this = this;
+            searchResult.SetSelector(function (s) {
+                return _this.SearchResultHighlighted(s);
+            });
+            searchResult.Selected.subscribe(function (s) {
+                return _this.SearchResultSelected(searchResult);
+            });
+        };
 
+        Search.prototype.SearchResultSelected = function (searchResult) {
             var isInSelected = this.SelectedSearchResults.indexOf(searchResult) != -1;
 
             if (searchResult.Selected()) {
@@ -42,6 +50,10 @@
                 if (isInSelected)
                     this.SelectedSearchResults.remove(searchResult);
             }
+        };
+
+        Search.prototype.SearchResultHighlighted = function (searchResult) {
+            this.HighlightedSearchResult(searchResult);
         };
         return Search;
     })();
