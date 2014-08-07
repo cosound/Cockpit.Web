@@ -1,6 +1,12 @@
-﻿<div class="nav navbar" data-bind="visible: IsAuthenticated">
-	<h1>Cockpit</h1>
-	<a href="#Search">Search</a>
-	<a href="#Selections">Selections</a>
+﻿<div class="navbar navbar-default" role="navigation" data-bind="visible: IsAuthenticated">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#">Cockpit</a>
+		</div>
+		<ul class="nav navbar-nav navbar-left">
+			<li data-bind="css: { active: Page().Name() == 'Search/Search' }"><a href="#Search">Search</a></li>
+			<li data-bind="css: { active: Page().Name() == 'Selections/Selections' }"><a href="#Selections">Selections</a></li>
+		</ul>
+	</div>
 </div>
 <div class="Content" data-bind="module: Page().Name"></div>

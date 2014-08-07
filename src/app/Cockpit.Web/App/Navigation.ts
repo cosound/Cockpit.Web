@@ -3,7 +3,7 @@ import Routie = require("routie");
 import AuthenticationManager = require("AuthenticationManager");
 import Page = require("ViewModels/Page");
 
-var goToAfterAuthentication:Page;
+var goToAfterAuthentication: Page;
 
 export var CurrentPage: KnockoutObservable<Page> = knockout.observable<Page>();
 
