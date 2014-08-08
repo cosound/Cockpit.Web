@@ -8,6 +8,9 @@
             "": function () {
                 LoadPage("Login", false);
             },
+            "Projects": function () {
+                LoadPage("Projects");
+            },
             "Search": function () {
                 LoadPage("Search");
             },

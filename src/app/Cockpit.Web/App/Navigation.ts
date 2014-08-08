@@ -11,6 +11,7 @@ export function Initialize(): void
 {
 	Routie({
 		"": () => { LoadPage("Login", false); },
+		"Projects": () => { LoadPage("Projects"); },
 		"Search": () => { LoadPage("Search"); },
 		"Selections": () => { LoadPage("Selections"); },
 		"*": () => { LoadPage("NotFound"); }
