@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cockpit.Web", "src\app\Cockpit.Web\Cockpit.Web.csproj", "{54FA00A5-E357-4763-810B-2CFD8C2C9039}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cockpit.Experiments.Web", "src\app\Cockpit.Experiments.Web\Cockpit.Experiments.Web.csproj", "{E9B42D3E-C83F-4F5A-9D32-D88BF8CCFA65}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{54FA00A5-E357-4763-810B-2CFD8C2C9039}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54FA00A5-E357-4763-810B-2CFD8C2C9039}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54FA00A5-E357-4763-810B-2CFD8C2C9039}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9B42D3E-C83F-4F5A-9D32-D88BF8CCFA65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9B42D3E-C83F-4F5A-9D32-D88BF8CCFA65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9B42D3E-C83F-4F5A-9D32-D88BF8CCFA65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9B42D3E-C83F-4F5A-9D32-D88BF8CCFA65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
