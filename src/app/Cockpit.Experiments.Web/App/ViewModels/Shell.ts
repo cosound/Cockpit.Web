@@ -1,0 +1,6 @@
+﻿class Shell
+{
+	
+}
+
+export = Shell;

@@ -1,0 +1,6 @@
+﻿class Login
+{
+	
+}
+
+export = Login;

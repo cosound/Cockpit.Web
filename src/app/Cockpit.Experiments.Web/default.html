@@ -4,8 +4,14 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>Cockpit Experiments</title>
+		<script type="text/javascript">
+			var CacheBuster = 1;
+		</script>
 	</head>
 	<body>
-		<h1>Cockpit Experiments</h1>
+		<div data-bind="module: 'Shell'">
+			Loading...
+		</div>
+		<script type="text/javascript" src="Lib/requirejs/require.js" data-main="App/Main"></script>
 	</body>
 </html>
