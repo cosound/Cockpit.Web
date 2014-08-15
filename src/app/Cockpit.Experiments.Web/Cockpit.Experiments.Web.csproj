@@ -18,7 +18,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="App\Views\Login.html" />
+    <Content Include="App\Views\NotFound.html" />
     <Content Include="App\Views\Shell.html" />
+    <Content Include="App\Views\SlideShell.html" />
+    <Content Include="App\Views\Slides\Form.html" />
+    <Content Include="App\Views\Slides\Intro.html" />
     <Content Include="default.html" />
     <Content Include="Lib\bootstrap\css\bootstrap-theme.css" />
     <Content Include="Lib\bootstrap\css\bootstrap-theme.min.css" />
@@ -66,8 +70,16 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="App\Main.ts" />
+    <TypeScriptCompile Include="App\Models\ExperimentData.d.ts" />
+    <TypeScriptCompile Include="App\Navigation.ts" />
+    <TypeScriptCompile Include="App\ExperimentManager.ts" />
     <TypeScriptCompile Include="App\ViewModels\Login.ts" />
+    <TypeScriptCompile Include="App\ViewModels\NotFound.ts" />
+    <TypeScriptCompile Include="App\ViewModels\NavigationPage.ts" />
     <TypeScriptCompile Include="App\ViewModels\Shell.ts" />
+    <TypeScriptCompile Include="App\ViewModels\SlideShell.ts" />
+    <TypeScriptCompile Include="App\ViewModels\Slides\Form.ts" />
+    <TypeScriptCompile Include="App\ViewModels\Slides\Intro.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\bootstrap.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\jquery.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\knockout.amd.d.ts" />
@@ -76,6 +88,7 @@
     <TypeScriptCompile Include="TypeScriptDefinitions\require.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\routie.d.ts" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
