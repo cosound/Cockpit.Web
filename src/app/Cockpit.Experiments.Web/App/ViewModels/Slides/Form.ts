@@ -4,7 +4,7 @@ import Navigation = require("Navigation");
 
 class Intro
 {
-	public Text: KnockoutObservable<string> = knockout.observable<string>();
+	public Inputs: IInput[];
 
 	private _id: number;
 
@@ -12,13 +12,13 @@ class Intro
 	{
 		this._id = parseInt(id);
 
-		var slide = <ISlideIntro>ExperimentManager.Experiment().Slides[this._id];
-		this.Text(slide.Text);
+		var slide = <ISlideForm>ExperimentManager.Experiment().Slides[this._id];
+		this.Inputs = slide.Inputs;
 	}
 
 	public NextSlide()
 	{
-		Navigation.Navigate("Experiment/7/" + (this._id + 1));
+		
 	}
 }
 

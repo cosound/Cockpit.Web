@@ -15,7 +15,7 @@ interface ISlideIntro extends ISlide
 
 interface ISlideForm extends ISlide
 {
-	Inputs:IInput;
+	Inputs:IInput[];
 }
 
 interface IInput
