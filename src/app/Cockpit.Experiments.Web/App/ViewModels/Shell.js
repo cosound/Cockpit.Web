@@ -1,6 +1,9 @@
-﻿define(["require", "exports"], function(require, exports) {
+﻿define(["require", "exports", "Navigation"], function(require, exports, Navigation) {
     var Shell = (function () {
         function Shell() {
+            this.Page = Navigation.CurrentPage;
+
+            Navigation.Initialize();
         }
         return Shell;
     })();
