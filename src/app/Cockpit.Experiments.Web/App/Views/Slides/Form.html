@@ -9,5 +9,11 @@
 			<label><span data-bind="text: $data"></span><input type="radio" /></label>
 		</p>
 		<!-- /ko -->
+		<!-- ko if: Type == "AudioRating" -->
+		<div>
+			<p>Audio player here</p>
+			<input type="range" min="0" max="1" />
+		</div>
+		<!-- /ko -->
 	</div>
 </div>

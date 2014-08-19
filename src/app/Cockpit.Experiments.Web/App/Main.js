@@ -1,5 +1,4 @@
-﻿/// <reference path="../TypeScriptDefinitions/require.d.ts" />
-requirejs.config({
+﻿requirejs.config({
     paths: {
         text: '../Lib/text/text',
         jquery: '../Lib/jQuery/jquery.min',
