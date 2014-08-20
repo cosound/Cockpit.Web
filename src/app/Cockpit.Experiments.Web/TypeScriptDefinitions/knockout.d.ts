@@ -543,7 +543,9 @@ interface KnockoutStatic {
         readValue(element: HTMLElement): any;
 
         writeValue(element: HTMLElement, value: any): void;
-    };
+	};
+
+	components:KnockoutComponents;
 }
 
 interface KnockoutBindingProvider {
@@ -564,7 +566,7 @@ interface KnockoutComponents {
 }
 
 interface KnockoutComponentDefinition {
-	template: Node[];
+	template?: Node[];
 	createViewModel?(params: any, options: { element: Node; }): any;
 }
 

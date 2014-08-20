@@ -18,7 +18,7 @@ class SlideShell
 	{
 		var slide = ExperimentManager.Experiment().Slides[id];
 
-		this.Slide(new NavigationPage("Slides/" + slide.Type, id.toString()));
+		this.Slide(new NavigationPage("Slides-" + slide.Type, id.toString()));
 	}
 }
 

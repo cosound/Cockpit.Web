@@ -13,7 +13,7 @@
         SlideShell.prototype.LoadSlide = function (id) {
             var slide = ExperimentManager.Experiment().Slides[id];
 
-            this.Slide(new NavigationPage("Slides/" + slide.Type, id.toString()));
+            this.Slide(new NavigationPage("Slides-" + slide.Type, id.toString()));
         };
         return SlideShell;
     })();

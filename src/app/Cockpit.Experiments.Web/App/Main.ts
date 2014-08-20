@@ -6,9 +6,7 @@ requirejs.config({
 		jquery: '../Lib/jQuery/jquery.min',
 		routie: '../Lib/Routie/routie.min',
 		knockout: '../Lib/knockout/knockout',
-		'knockout-amd-helpers': '../Lib/knockout-amd-helpers/knockout-amd-helpers.min',
 		bootstrap: '../Lib/bootstrap/js/bootstrap.min',
-		jsPlumb: '../Lib/jsPlumb/js/dom.jsPlumb-1.6.2-min',
 		Portal: '../Lib/PortalClient/PortalClient.min',
 	},
 	map: {
@@ -40,12 +38,9 @@ declare module "ExperimentData" { }
 
 declare var CacheBuster: number;
 
-require(['knockout', 'bootstrap', 'knockout-amd-helpers', 'Portal'], (knockout: any) =>
+require(['NameConventionLoader', 'knockout', 'bootstrap', 'Portal'], (nameConventionLoader:any, knockout: any) =>
 {
-	knockout.amdTemplateEngine.defaultPath = "Views";
-	knockout.amdTemplateEngine.defaultSuffix = ".html";
-	knockout.amdTemplateEngine.defaultRequireTextPluginName = "text";
-	knockout.bindingHandlers.module.baseDir = "ViewModels";
+	knockout.components.loaders.push(new nameConventionLoader("Cockpit"));
 
 	knockout.applyBindings();
 });

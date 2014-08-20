@@ -32,7 +32,6 @@
     <Content Include="Lib\bootstrap\js\bootstrap.js" />
     <Content Include="Lib\bootstrap\js\bootstrap.min.js" />
     <Content Include="Lib\jQuery\jquery.min.js" />
-    <Content Include="Lib\knockout-amd-helpers\knockout-amd-helpers.min.js" />
     <Content Include="Lib\knockout\knockout.js" />
     <Content Include="Lib\PortalClient\PortalClient.min.js" />
     <Content Include="Lib\require-css\css-builder.js" />
@@ -51,8 +50,6 @@
     <Content Include="Lib\bootstrap\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Lib\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Lib\bootstrap\fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Lib\knockout-amd-helpers\LICENSE" />
-    <Content Include="Lib\knockout-amd-helpers\README.md" />
     <Content Include="Lib\text\LICENSE" />
     <Content Include="Lib\text\package.json" />
     <Content Include="Lib\text\README.md" />
@@ -71,6 +68,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="App\Main.ts" />
     <TypeScriptCompile Include="App\Models\ExperimentData.d.ts" />
+    <TypeScriptCompile Include="App\NameConventionLoader.ts" />
     <TypeScriptCompile Include="App\Navigation.ts" />
     <TypeScriptCompile Include="App\ExperimentManager.ts" />
     <TypeScriptCompile Include="App\ViewModels\Login.ts" />
@@ -82,7 +80,6 @@
     <TypeScriptCompile Include="App\ViewModels\Slides\Intro.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\bootstrap.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\jquery.d.ts" />
-    <TypeScriptCompile Include="TypeScriptDefinitions\knockout.amd.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\knockout.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\PortalClient.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\require.d.ts" />
