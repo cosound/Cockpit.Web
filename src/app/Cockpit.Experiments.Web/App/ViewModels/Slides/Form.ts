@@ -1,21 +1,38 @@
 ﻿import knockout = require("knockout");
 import ExperimentManager = require("ExperimentManager");
 import Navigation = require("Navigation");
+import Input = require("ViewModels/Slides/Input");
 
 class Intro
 {
-	public Inputs: IInput[];
+	public Inputs: Input[]  = [];
+
+	private CanGoToNextSlide:KnockoutObservable<boolean>;
 
 	constructor(data: any)
 	{
 		var slide = <ISlideForm>data.Slide;
 
-		this.Inputs = slide.Inputs;
+		this.CanGoToNextSlide = data.CanGoToNextSlide;
+
+		this.AddInputs(slide.Inputs);
 	}
 
-	public NextSlide()
+	private AddInputs(inputs:IInput[]):void
 	{
-		//data.CanGoToNextSlide(true);
+		inputs.forEach(v =>
+		{
+			var input = new Input(v);
+			this.Inputs.push(input);
+			
+			input.Value.subscribe(t =>
+			{
+				var noValue = false;
+				this.Inputs.forEach(i => noValue = noValue || i.Value() == null);
+
+				this.CanGoToNextSlide(!noValue);
+			});
+		});
 	}
 }
 

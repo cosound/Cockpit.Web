@@ -1,19 +1,13 @@
 ﻿<div data-bind="foreach: Inputs">
 	<div>
-		<!-- ko if: Type == "Text" -->
-		<label><span data-bind="text: Label"></span> <input type="text" /></label>
+		<!-- ko if: Configuration.Type == "Text" -->
+		<label><span data-bind="text: Configuration.Label"></span> <input type="text" data-bind="textInput: Value"/></label>
 		<!-- /ko -->
-		<!-- ko if: Type == "Radio" -->
-		<span data-bind="text: Label"></span>
-		<p data-bind="foreach: Options">
-			<label><span data-bind="text: $data"></span><input type="radio" /></label>
+		<!-- ko if: Configuration.Type == "Radio" -->
+		<span data-bind="text: Configuration.Label"></span>
+		<p data-bind="foreach: Configuration.Options">
+			<label><span data-bind="text: $data"></span><input type="radio" data-bind="checked: $parent.Value, value: $data, attr: {name: $parent.Label}" /></label>
 		</p>
-		<!-- /ko -->
-		<!-- ko if: Type == "AudioRating" -->
-		<div>
-			<p>Audio player here</p>
-			<input type="range" min="0" max="1" />
-		</div>
 		<!-- /ko -->
 	</div>
 </div>

@@ -21,6 +21,7 @@
     <Content Include="App\Views\NotFound.html" />
     <Content Include="App\Views\Shell.html" />
     <Content Include="App\Views\SlideShell.html" />
+    <Content Include="App\Views\Slides\AudioRating.html" />
     <Content Include="App\Views\Slides\Form.html" />
     <Content Include="App\Views\Slides\Intro.html" />
     <Content Include="App\Views\Slides\ThankYou.html" />
@@ -69,6 +70,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="App\Main.ts" />
     <TypeScriptCompile Include="App\Models\ExperimentData.d.ts" />
+    <TypeScriptCompile Include="App\ViewModels\Slides\Input.ts" />
     <TypeScriptCompile Include="App\NameConventionLoader.ts" />
     <TypeScriptCompile Include="App\Navigation.ts" />
     <TypeScriptCompile Include="App\ExperimentManager.ts" />
