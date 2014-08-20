@@ -20,6 +20,12 @@ interface ISlideForm extends ISlide
 	Inputs:IInput[];
 }
 
+interface ISlideAudioRating extends ISlide
+{
+	StreamUrl: string;
+	RatingLabel:string;
+}
+
 interface ISlideThankYou extends ISlide
 {
 	Text:string;

@@ -1,6 +1,4 @@
 ﻿import knockout = require("knockout");
-import ExperimentManager = require("ExperimentManager");
-import Navigation = require("Navigation");
 import Input = require("ViewModels/Slides/Input");
 
 class Intro

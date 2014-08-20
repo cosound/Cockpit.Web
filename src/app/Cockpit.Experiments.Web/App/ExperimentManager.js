@@ -40,6 +40,11 @@
                             ]
                         }
                     ]
+                },
+                {
+                    Type: "AudioRating",
+                    StreamUrl: "http://Cocking.dk/Mystream.mp4",
+                    RatingLabel: "Mood"
                 }
             ]
         };

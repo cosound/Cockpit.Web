@@ -1,4 +1,4 @@
 ﻿<div>
-	<p>Audio player here</p>
-	<input type="range" min="0" max="1" />
+	<p>Audio player for <span data-bind="value: StreamUrl"></span> here</p>
+	<label><span data-bind="text: RatingLabel"></span><input type="range" min="0" max="1" step="0.01" data-bind="value: Value" /></label>
 </div>
