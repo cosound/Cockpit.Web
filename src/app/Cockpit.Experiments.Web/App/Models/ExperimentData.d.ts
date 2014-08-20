@@ -2,6 +2,7 @@
 {
 	Name:string;
 	Slides: ISlide[];
+	CompletedSlide:ISlide;
 } 
 
 interface ISlide
@@ -17,6 +18,11 @@ interface ISlideIntro extends ISlide
 interface ISlideForm extends ISlide
 {
 	Inputs:IInput[];
+}
+
+interface ISlideThankYou extends ISlide
+{
+	Text:string;
 }
 
 interface IInput

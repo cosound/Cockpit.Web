@@ -11,7 +11,9 @@ class SlideShell
 
 	private _experimentLoadedSubscription: KnockoutSubscription;
 	private _slideIdSubscription: KnockoutSubscription;
-	private _slideId:KnockoutObservable<number>;
+
+	private _experiment:IExperiment;
+	private _slideId: KnockoutObservable<number>;
 
 	constructor(data:any)
 	{
@@ -33,20 +35,25 @@ class SlideShell
 	public GoToNextSlide():void
 	{
 		this.CanGoToNextSlide(false);
+
 		Navigation.Navigate("Experiment/7/" + (this._slideId() + 1));
 	}
 
 	private LoadExperiment():void
 	{
-		var experiement = ExperimentManager.Experiment();
-		this.Name(experiement.Name);
+		this._experiment = ExperimentManager.Experiment();
+		this.Name(this._experiment.Name);
 		this.LoadSlide(this._slideId());
 	}
 
 	private LoadSlide(id:number):void
 	{
-		var experiement = ExperimentManager.Experiment();
-		var slide = experiement.Slides[id];
+		var slide:ISlide;
+
+		if (id < this._experiment.Slides.length)
+			slide = this._experiment.Slides[id];
+		else
+			slide = this._experiment.CompletedSlide;
 
 		this.Slide(new NavigationPage("Slides-" + slide.Type, { Slide: slide, CanGoToNextSlide: this.CanGoToNextSlide}));
 	}

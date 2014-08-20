@@ -21,18 +21,23 @@
         }
         SlideShell.prototype.GoToNextSlide = function () {
             this.CanGoToNextSlide(false);
+
             Navigation.Navigate("Experiment/7/" + (this._slideId() + 1));
         };
 
         SlideShell.prototype.LoadExperiment = function () {
-            var experiement = ExperimentManager.Experiment();
-            this.Name(experiement.Name);
+            this._experiment = ExperimentManager.Experiment();
+            this.Name(this._experiment.Name);
             this.LoadSlide(this._slideId());
         };
 
         SlideShell.prototype.LoadSlide = function (id) {
-            var experiement = ExperimentManager.Experiment();
-            var slide = experiement.Slides[id];
+            var slide;
+
+            if (id < this._experiment.Slides.length)
+                slide = this._experiment.Slides[id];
+            else
+                slide = this._experiment.CompletedSlide;
 
             this.Slide(new NavigationPage("Slides-" + slide.Type, { Slide: slide, CanGoToNextSlide: this.CanGoToNextSlide }));
         };

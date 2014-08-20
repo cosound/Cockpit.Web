@@ -16,6 +16,10 @@ function GetData():any
 {
 	return {
 		Name: "My Experiment",
+		CompletedSlide: {
+			Type: "ThankYou",
+			Text: "We appreciate your time"
+		},
 		Slides: [
 			{
 				Type: "Intro",

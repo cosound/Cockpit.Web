@@ -15,6 +15,10 @@
     function GetData() {
         return {
             Name: "My Experiment",
+            CompletedSlide: {
+                Type: "ThankYou",
+                Text: "We appreciate your time"
+            },
             Slides: [
                 {
                     Type: "Intro",
