@@ -6,19 +6,16 @@ class Intro
 {
 	public Inputs: IInput[];
 
-	private _id: number;
-
-	constructor(id: string)
+	constructor(data: any)
 	{
-		this._id = parseInt(id);
+		var slide = <ISlideForm>data.Slide;
 
-		var slide = <ISlideForm>ExperimentManager.Experiment().Slides[this._id];
 		this.Inputs = slide.Inputs;
 	}
 
 	public NextSlide()
 	{
-		
+		//data.CanGoToNextSlide(true);
 	}
 }
 

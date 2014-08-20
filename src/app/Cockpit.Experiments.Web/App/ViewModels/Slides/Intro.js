@@ -1,15 +1,13 @@
-﻿define(["require", "exports", "knockout", "ExperimentManager", "Navigation"], function(require, exports, knockout, ExperimentManager, Navigation) {
+﻿define(["require", "exports", "knockout"], function(require, exports, knockout) {
     var Intro = (function () {
-        function Intro(id) {
+        function Intro(data) {
             this.Text = knockout.observable();
-            this._id = parseInt(id);
+            var slide = data.Slide;
 
-            var slide = ExperimentManager.Experiment().Slides[this._id];
             this.Text(slide.Text);
+
+            data.CanGoToNextSlide(true);
         }
-        Intro.prototype.NextSlide = function () {
-            Navigation.Navigate("Experiment/7/" + (this._id + 1));
-        };
         return Intro;
     })();
 

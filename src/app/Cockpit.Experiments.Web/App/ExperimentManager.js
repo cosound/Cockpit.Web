@@ -3,14 +3,18 @@
     exports.ExperimentLoaded = knockout.computed(function () {
         return exports.Experiment() != null;
     });
+    exports.ExperimentIsLoading = knockout.observable(false);
 
     function LoadExperiment(id) {
+        exports.ExperimentIsLoading(true);
         exports.Experiment(GetData());
+        exports.ExperimentIsLoading(false);
     }
     exports.LoadExperiment = LoadExperiment;
 
     function GetData() {
         return {
+            Name: "My Experiment",
             Slides: [
                 {
                     Type: "Intro",

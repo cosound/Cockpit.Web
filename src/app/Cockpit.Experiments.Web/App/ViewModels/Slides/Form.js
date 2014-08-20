@@ -1,9 +1,8 @@
-﻿define(["require", "exports", "ExperimentManager"], function(require, exports, ExperimentManager) {
+﻿define(["require", "exports"], function(require, exports) {
     var Intro = (function () {
-        function Intro(id) {
-            this._id = parseInt(id);
+        function Intro(data) {
+            var slide = data.Slide;
 
-            var slide = ExperimentManager.Experiment().Slides[this._id];
             this.Inputs = slide.Inputs;
         }
         Intro.prototype.NextSlide = function () {

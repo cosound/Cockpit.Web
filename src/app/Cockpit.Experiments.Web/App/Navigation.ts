@@ -9,8 +9,8 @@ export function Initialize(): void
 {
 	Routie({
 		"": () => { Navigate("Experiment/7"); },
-		"Experiment/:id": (id: string) => { LoadSlide(id, "0"); },
-		"Experiment/:id/:slideId": (id: string, slideId: string) => { LoadSlide(id, slideId); },
+		"Experiment/:id": (id: string) => { LoadSlide(id, 0); },
+		"Experiment/:id/:slideId": (id: string, slideId: string) => { LoadSlide(id, parseInt(slideId)); },
 		"*": () => { LoadPage("NotFound"); }
 	});
 }
@@ -20,17 +20,18 @@ export function Navigate(path: string): void
 	Routie(path);
 }
 
-function LoadPage(name: string, data?:string): void
+function LoadPage(name: string, data?:any): void
 {
 	CurrentPage(new NavigationPage(name, data));
 }
 
-function LoadSlide(id: string, slidId:string): void
+function LoadSlide(id: string, slideId:number): void
 {
-	ExperimentManager.LoadExperiment(id);
+	if(!ExperimentManager.ExperimentLoaded() && !ExperimentManager.ExperimentIsLoading())
+		ExperimentManager.LoadExperiment(id);
 
 	if (CurrentPage() == null || CurrentPage().Name() != "SlideShell")
-		CurrentPage(new NavigationPage("SlideShell", slidId));
+		CurrentPage(new NavigationPage("SlideShell", { SlideId: knockout.observable<number>(slideId) }));
 	else
-		CurrentPage().Data(slidId);
+		CurrentPage().Data().SlideId(slideId);
 }

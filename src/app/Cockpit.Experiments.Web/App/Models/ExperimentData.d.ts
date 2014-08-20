@@ -1,5 +1,6 @@
 ﻿interface IExperiment
 {
+	Name:string;
 	Slides: ISlide[];
 } 
 
