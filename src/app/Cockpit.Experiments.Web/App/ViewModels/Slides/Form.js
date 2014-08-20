@@ -7,6 +7,7 @@
             this.CanGoToNextSlide = data.CanGoToNextSlide;
 
             this.AddInputs(slide.Inputs);
+            this._UserInput = data.UserInput;
         }
         Intro.prototype.AddInputs = function (inputs) {
             var _this = this;
@@ -16,9 +17,14 @@
 
                 input.Value.subscribe(function (t) {
                     var noValue = false;
+                    var totalValue = new Array();
+
                     _this.Inputs.forEach(function (i) {
-                        return noValue = noValue || i.Value() == null;
+                        noValue = noValue || i.Value() == null;
+                        totalValue.push(i.Configuration.Type + "=" + i.Value());
                     });
+
+                    _this._UserInput(totalValue.join(", "));
 
                     _this.CanGoToNextSlide(!noValue);
                 });

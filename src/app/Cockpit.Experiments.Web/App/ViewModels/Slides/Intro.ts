@@ -11,6 +11,7 @@ class Intro
 		this.Text(slide.Text);
 
 		data.CanGoToNextSlide(true);
+		data.UserInput(true);
 	}
 }
 

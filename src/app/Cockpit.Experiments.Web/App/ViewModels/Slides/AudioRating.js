@@ -13,7 +13,8 @@
             this.RatingLabel(slide.RatingLabel);
 
             this._ValueSubscription = this.Value.subscribe(function (v) {
-                return _this._canGoToNextSlide(true);
+                data.UserInput(v);
+                _this._canGoToNextSlide(true);
             });
         }
         AudioRating.prototype.dispose = function () {

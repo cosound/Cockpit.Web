@@ -12,6 +12,11 @@ export function LoadExperiment(id: string): void
 	ExperimentIsLoading(false);
 }
 
+export function SaveSlideData(id:number, data:any)
+{
+	console.log("Saving data for slide " + id + ": " + data);
+}
+
 function GetData():any
 {
 	return {

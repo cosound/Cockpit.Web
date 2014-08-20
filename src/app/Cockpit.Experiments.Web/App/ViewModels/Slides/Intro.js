@@ -7,6 +7,7 @@
             this.Text(slide.Text);
 
             data.CanGoToNextSlide(true);
+            data.UserInput(true);
         }
         return Intro;
     })();

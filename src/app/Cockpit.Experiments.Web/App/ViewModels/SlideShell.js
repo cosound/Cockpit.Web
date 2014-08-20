@@ -22,6 +22,8 @@
         SlideShell.prototype.GoToNextSlide = function () {
             this.CanGoToNextSlide(false);
 
+            ExperimentManager.SaveSlideData(this._slideId(), this.Slide().Data().UserInput());
+
             Navigation.Navigate("Experiment/7/" + (this._slideId() + 1));
         };
 
@@ -39,7 +41,7 @@
             else
                 slide = this._experiment.CompletedSlide;
 
-            this.Slide(new NavigationPage("Slides-" + slide.Type, { Slide: slide, CanGoToNextSlide: this.CanGoToNextSlide }));
+            this.Slide(new NavigationPage("Slides-" + slide.Type, { Slide: slide, CanGoToNextSlide: this.CanGoToNextSlide, UserInput: knockout.observable(null) }));
         };
 
         SlideShell.prototype.CleanExperimentLoaded = function () {

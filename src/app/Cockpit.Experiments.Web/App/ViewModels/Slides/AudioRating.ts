@@ -19,7 +19,11 @@ class AudioRating
 		this.StreamUrl(slide.StreamUrl);
 		this.RatingLabel(slide.RatingLabel);
 
-		this._ValueSubscription = this.Value.subscribe(v => this._canGoToNextSlide(true));
+		this._ValueSubscription = this.Value.subscribe(v =>
+		{
+			data.UserInput(v);
+			this._canGoToNextSlide(true);
+		});
 	}
 
 	public dispose():void

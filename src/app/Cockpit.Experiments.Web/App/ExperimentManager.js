@@ -12,6 +12,11 @@
     }
     exports.LoadExperiment = LoadExperiment;
 
+    function SaveSlideData(id, data) {
+        console.log("Saving data for slide " + id + ": " + data);
+    }
+    exports.SaveSlideData = SaveSlideData;
+
     function GetData() {
         return {
             Name: "My Experiment",
