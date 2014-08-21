@@ -19,7 +19,7 @@
 
     function GetData() {
         return {
-            Name: "My Experiment",
+            Name: "Was the 80's the worst decade for music?",
             CompletedSlide: {
                 Type: "ThankYou",
                 Text: "We appreciate your time"
@@ -27,7 +27,7 @@
             Slides: [
                 {
                     Type: "Intro",
-                    Text: "Hey and welcome to my experiment"
+                    Text: "Hey and welcome to experiment about music."
                 },
                 {
                     Type: "Form",
@@ -37,11 +37,24 @@
                             Label: "Name"
                         },
                         {
+                            Type: "Text",
+                            Label: "Age"
+                        },
+                        {
                             Type: "Radio",
                             Label: "Gender",
                             Options: [
                                 "Male",
                                 "Female"
+                            ]
+                        },
+                        {
+                            Type: "Radio",
+                            Label: "Music Lover",
+                            Options: [
+                                "Yes",
+                                "A bit",
+                                "No"
                             ]
                         }
                     ]
