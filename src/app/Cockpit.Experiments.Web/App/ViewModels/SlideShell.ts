@@ -7,7 +7,10 @@ class SlideShell
 {
 	public Name: KnockoutObservable<string> = knockout.observable<string>();
 	public Slide: KnockoutObservable<NavigationPage> = knockout.observable<NavigationPage>();
-	public CanGoToNextSlide:KnockoutObservable<boolean> = knockout.observable<boolean>(false);
+	public CanGoToNextSlide: KnockoutObservable<boolean> = knockout.observable<boolean>(false);
+	public SlideNumber:KnockoutObservable<number> = knockout.observable<number>(0);
+	public NumberOfSlides: KnockoutObservable<number> = knockout.observable<number>(0);
+	public AreFooterControlsVisible: KnockoutObservable<boolean> = knockout.observable<boolean>(true);
 
 	private _experimentLoadedSubscription: KnockoutSubscription;
 	private _slideIdSubscription: KnockoutSubscription;
@@ -45,17 +48,23 @@ class SlideShell
 	{
 		this._experiment = ExperimentManager.Experiment();
 		this.Name(this._experiment.Name);
+		this.NumberOfSlides(this._experiment.Slides.length);
 		this.LoadSlide(this._slideId());
 	}
 
 	private LoadSlide(id:number):void
 	{
-		var slide:ISlide;
+		var slide: ISlide;
+
+		this.SlideNumber(id + 1);
 
 		if (id < this._experiment.Slides.length)
 			slide = this._experiment.Slides[id];
 		else
+		{
+			this.AreFooterControlsVisible(false);
 			slide = this._experiment.CompletedSlide;
+		}
 
 		this.Slide(new NavigationPage("Slides-" + slide.Type, { Slide: slide, CanGoToNextSlide: this.CanGoToNextSlide, UserInput: knockout.observable(null)}));
 	}
