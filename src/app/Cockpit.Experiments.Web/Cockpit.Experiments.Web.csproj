@@ -55,7 +55,7 @@
     <Content Include="Lib\text\LICENSE" />
     <Content Include="Lib\text\package.json" />
     <Content Include="Lib\text\README.md" />
-    <Content Include="App\Styles\Default.less" />
+    <Content Include="App\Styles\Default.css" />
     <Content Include="Lib\require-css\bower.json" />
     <Content Include="Lib\require-css\LICENSE" />
     <Content Include="Lib\require-css\package.json" />
@@ -90,7 +90,12 @@
     <TypeScriptCompile Include="TypeScriptDefinitions\require.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\routie.d.ts" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

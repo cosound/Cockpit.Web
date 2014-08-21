@@ -38,7 +38,7 @@ declare module "ExperimentData" { }
 
 declare var CacheBuster: number;
 
-require(['NameConventionLoader', 'knockout', 'bootstrap', 'Portal'], (nameConventionLoader:any, knockout: any) =>
+require(['NameConventionLoader', 'knockout', 'bootstrap', 'Portal', 'css!Styles/Default'], (nameConventionLoader:any, knockout: any) =>
 {
 	knockout.components.loaders.push(new nameConventionLoader("Cockpit"));
 

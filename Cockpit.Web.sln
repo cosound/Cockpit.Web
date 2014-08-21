@@ -1,11 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cockpit.Web", "src\app\Cockpit.Web\Cockpit.Web.csproj", "{54FA00A5-E357-4763-810B-2CFD8C2C9039}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cockpit.Experiments.Web", "src\app\Cockpit.Experiments.Web\Cockpit.Experiments.Web.csproj", "{E9B42D3E-C83F-4F5A-9D32-D88BF8CCFA65}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{7B05B1DE-699B-4350-828C-5E28ECD90ED9}"
+	ProjectSection(SolutionItems) = preProject
+		build\Build_Experiments.bat = build\Build_Experiments.bat
+		build\ExperimentsRConfiguration.js = build\ExperimentsRConfiguration.js
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
