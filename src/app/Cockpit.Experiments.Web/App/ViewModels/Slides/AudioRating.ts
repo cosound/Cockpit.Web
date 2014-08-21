@@ -2,24 +2,20 @@
 
 class AudioRating
 {
-	public StreamUrl:KnockoutObservable<string> = knockout.observable<string>();
-	public RatingLabel: KnockoutObservable<string> = knockout.observable<string>();
+	public Configuration: ISlideAudioRating;
 
 	public Value:KnockoutObservable<number> = knockout.observable(0.5);
 
 	private _canGoToNextSlide: KnockoutObservable<boolean>;
-	private _ValueSubscription:KnockoutSubscription;
+	private _valueSubscription:KnockoutSubscription;
 
 	constructor(data: any)
 	{
-		var slide = <ISlideAudioRating>data.Slide;
+		this.Configuration = <ISlideAudioRating>data.Slide;
 
 		this._canGoToNextSlide = data.CanGoToNextSlide;
 
-		this.StreamUrl(slide.StreamUrl);
-		this.RatingLabel(slide.RatingLabel);
-
-		this._ValueSubscription = this.Value.subscribe(v =>
+		this._valueSubscription = this.Value.subscribe(v =>
 		{
 			data.UserInput(v);
 			this._canGoToNextSlide(true);
@@ -28,8 +24,8 @@ class AudioRating
 
 	public dispose():void
 	{
-		this._ValueSubscription.dispose();
-		this._ValueSubscription = null;
+		this._valueSubscription.dispose();
+		this._valueSubscription = null;
 	}
 }
 

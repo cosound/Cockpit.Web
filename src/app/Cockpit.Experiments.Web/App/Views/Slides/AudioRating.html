@@ -1,4 +1,14 @@
-﻿<div>
-	<p>Audio player for <span data-bind="value: StreamUrl"></span> here</p>
-	<label><span data-bind="text: RatingLabel"></span><input type="range" min="0" max="1" step="0.01" data-bind="value: Value" /></label>
+﻿<div class="text-danger">
+	Audio player for <span data-bind="text: Configuration.StreamUrl"></span> here
 </div>
+<br/>
+<form class="form-horizontal" role="form">
+	<div class="form-group">
+		<label class="col-sm-2 control-label" data-bind="text: Configuration.RatingLabel"></label>
+		<div class="col-sm-1 text-right" data-bind="text: Configuration.RatingMinLabel"></div>
+		<div class="col-sm-5">
+			<input type="range" min="0" max="1" step="0.01" data-bind="value: Value" />
+		</div>
+		<div class="col-sm-1 text-left" data-bind="text: Configuration.RatingMaxLabel"></div>
+	</div>
+</form>

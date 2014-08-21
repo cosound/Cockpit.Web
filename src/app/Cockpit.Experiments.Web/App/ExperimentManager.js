@@ -61,8 +61,24 @@
                 },
                 {
                     Type: "AudioRating",
-                    StreamUrl: "http://Cocking.dk/Mystream.mp4",
-                    RatingLabel: "Mood"
+                    StreamUrl: "http://Cocpit.dk/Mystream1.mp4",
+                    RatingLabel: "Mood",
+                    RatingMinLabel: "Sad",
+                    RatingMaxLabel: "Happy"
+                },
+                {
+                    Type: "AudioRating",
+                    StreamUrl: "http://Cocpit.dk/Mystream2.mp4",
+                    RatingLabel: "Rythme",
+                    RatingMinLabel: "Slow",
+                    RatingMaxLabel: "Fast"
+                },
+                {
+                    Type: "AudioRating",
+                    StreamUrl: "http://Cocpit.dk/Mystream3.mp4",
+                    RatingLabel: "Colour",
+                    RatingMinLabel: "Blue",
+                    RatingMaxLabel: "Orange"
                 }
             ]
         };
