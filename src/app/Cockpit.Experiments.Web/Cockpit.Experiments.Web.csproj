@@ -70,6 +70,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="App\Main.ts" />
     <TypeScriptCompile Include="App\Models\ExperimentData.d.ts" />
+    <TypeScriptCompile Include="App\ViewModels\NameConventionLoader.ts" />
     <TypeScriptCompile Include="App\ViewModels\Slides\AudioRating.ts" />
     <TypeScriptCompile Include="App\ViewModels\Slides\Input.ts" />
     <TypeScriptCompile Include="App\NameConventionLoader.ts" />
