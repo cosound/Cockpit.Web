@@ -56,8 +56,6 @@
     <Content Include="Lib\jsPlumb\img\triangle_90.png" />
     <Content Include="Lib\jsPlumb\js\dom.jsPlumb-1.6.2-min.js" />
     <Content Include="Lib\jsPlumb\js\jquery.jsPlumb-1.6.2-min.js" />
-    <Content Include="Lib\knockout-amd-helpers\knockout-amd-helpers.min.js" />
-    <Content Include="Lib\knockout-amd-helpers\LICENSE" />
     <Content Include="Lib\knockout\knockout.js" />
     <Content Include="Lib\PortalClient\PortalClient.min.js" />
     <Content Include="Lib\QUnit\qunit.css" />
@@ -94,7 +92,6 @@
     <Content Include="Lib\require-css\LICENSE" />
     <Content Include="Lib\require-css\package.json" />
     <Content Include="Lib\require-css\README.md" />
-    <Content Include="Lib\knockout-amd-helpers\README.md" />
     <Content Include="Lib\require-less\bower.json" />
     <Content Include="App\Styles\Login.less" />
     <Content Include="Lib\jsPlumb\css\OpenSans-Bold.ttf" />
@@ -127,6 +124,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="App\Application.ts" />
     <TypeScriptCompile Include="App\Main.ts" />
+    <TypeScriptCompile Include="App\NameConventionLoader.ts" />
     <TypeScriptCompile Include="App\Navigation.ts" />
     <TypeScriptCompile Include="App\SelectionManager.ts" />
     <TypeScriptCompile Include="App\AuthenticationManager.ts" />
@@ -143,7 +141,6 @@
     <TypeScriptCompile Include="Tests\NavigationTest.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\bootstrap.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\jquery.d.ts" />
-    <TypeScriptCompile Include="TypeScriptDefinitions\knockout.amd.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\knockout.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\PortalClient.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\qunit.d.ts" />

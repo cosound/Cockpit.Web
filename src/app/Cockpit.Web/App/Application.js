@@ -1,8 +1,7 @@
-﻿define(["require", "exports", "ViewModels/Shell", "Navigation", "less!Styles/Default"], function(require, exports, Shell, Navigation) {
+﻿define(["require", "exports", "Navigation", "less!Styles/Default"], function(require, exports, Navigation) {
     var Application = (function () {
         function Application() {
             Navigation.Initialize();
-            this.Shell = new Shell();
         }
         return Application;
     })();
