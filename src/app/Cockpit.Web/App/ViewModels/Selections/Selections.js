@@ -1,4 +1,4 @@
-﻿define(["require", "exports", "knockout", "SelectionManager", "less!Styles/Selections"], function(require, exports, knockout, SelectionManager) {
+﻿define(["require", "exports", "knockout", "ViewModels/Selections/SelectionManager", "less!Styles/Selections"], function(require, exports, knockout, SelectionManager) {
     var Selections = (function () {
         function Selections() {
             var _this = this;

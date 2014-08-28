@@ -1,6 +1,9 @@
-﻿define(["require", "exports", "Navigation"], function(require, exports, Navigation) {
+﻿define(["require", "exports", "Navigation", "ViewModels/Experiments/ExperimentManager"], function(require, exports, Navigation, ExperimentManager) {
     var Experiments = (function () {
-        function Experiments() {
+        function Experiments(experimentId) {
+            this.Experiments = ExperimentManager.Experiments;
+
+            console.log("Load Experiment: " + experimentId);
         }
         Experiments.prototype.CreateExperiment = function () {
             Navigation.Navigate("CreateExperiment");

@@ -1,4 +1,6 @@
-﻿class CreateExperiment
+﻿import ExperimentManager = require("ViewModels/Experiments/ExperimentManager");
+
+class CreateExperiment
 {
 	
 }

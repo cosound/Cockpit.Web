@@ -10,11 +10,12 @@ export var CurrentPage: KnockoutObservable<Page> = knockout.observable<Page>();
 export function Initialize(): void
 {
 	Routie({
-		"": () => { LoadPage("Login", false); },
+		"": () => { LoadPage("Login", null, false); },
 		"Projects": () => { LoadPage("Projects"); },
 		"Search": () => { LoadPage("Search"); },
 		"Selections": () => { LoadPage("Selections"); },
 		"Experiments": () => { LoadPage("Experiments"); },
+		"Experiments/:experimentId": (experimentId:string) => { LoadPage("Experiments", experimentId); },
 		"CreateExperiment": () => { LoadPage("CreateExperiment"); },
 		"*": () => { LoadPage("NotFound"); }
 	});
@@ -27,9 +28,9 @@ export function Navigate(path: string): void
 	Routie(path);
 }
 
-function LoadPage(name: string, requiresAuthentication: boolean = true): void
+function LoadPage(name: string, parameters:any = null, requiresAuthentication: boolean = true): void
 {
-	var page = new Page(name + "/" + name);
+	var page = new Page(name + "/" + name, parameters);
 
 	if (requiresAuthentication && !AuthenticationManager.IsAuthenticated())
 	{

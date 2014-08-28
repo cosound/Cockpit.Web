@@ -1,7 +1,7 @@
 ﻿/// <amd-dependency path="less!Styles/Selections" />
 
 import knockout = require("knockout");
-import SelectionManager = require("SelectionManager");
+import SelectionManager = require("ViewModels/Selections/SelectionManager");
 import SearchResult = require("ViewModels/Search/SearchResult");
 import Selection = require("ViewModels/Selections/Selection");
 

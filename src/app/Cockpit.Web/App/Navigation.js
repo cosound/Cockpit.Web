@@ -6,7 +6,7 @@
     function Initialize() {
         Routie({
             "": function () {
-                LoadPage("Login", false);
+                LoadPage("Login", null, false);
             },
             "Projects": function () {
                 LoadPage("Projects");
@@ -19,6 +19,9 @@
             },
             "Experiments": function () {
                 LoadPage("Experiments");
+            },
+            "Experiments/:experimentId": function (experimentId) {
+                LoadPage("Experiments", experimentId);
             },
             "CreateExperiment": function () {
                 LoadPage("CreateExperiment");
@@ -39,9 +42,10 @@
     }
     exports.Navigate = Navigate;
 
-    function LoadPage(name, requiresAuthentication) {
+    function LoadPage(name, parameters, requiresAuthentication) {
+        if (typeof parameters === "undefined") { parameters = null; }
         if (typeof requiresAuthentication === "undefined") { requiresAuthentication = true; }
-        var page = new Page(name + "/" + name);
+        var page = new Page(name + "/" + name, parameters);
 
         if (requiresAuthentication && !AuthenticationManager.IsAuthenticated()) {
             goToAfterAuthentication = page;
