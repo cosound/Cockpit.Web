@@ -1,11 +1,13 @@
-﻿import Navigation = require("Navigation");
+﻿import knockout = require("knockout");
+import Navigation = require("Navigation");
 import Experiment = require("ViewModels/Experiments/Experiment");
 import ExperimentManager = require("ViewModels/Experiments/ExperimentManager");
 
 class Experiments
 {
 	public Experiments: KnockoutObservableArray<Experiment>;
-
+	public SelectedExperiment: KnockoutObservable<Experiment> = knockout.observable<Experiment>();
+	
 	private _experimentChangeSubscription:KnockoutSubscription;
 
 	constructor(experimentId:string)
@@ -13,7 +15,7 @@ class Experiments
 		this.Experiments = ExperimentManager.Experiments;
 
 		this.HookupExperiments();
-		this.Experiments().forEach(e => { if (e.Id() == experimentId) e.IsSelected(true); });
+		this.Experiments().forEach(e => { if (e.Id() == experimentId) this.SelectedExperiment(e); });
 		this._experimentChangeSubscription = this.Experiments.subscribe(e => this.ExperimentsChanged(e));
 	}
 
@@ -25,6 +27,7 @@ class Experiments
 	public dispose():void
 	{
 		this.Experiments().forEach(e => { e.SelectorCallback = null; });
+		this.SelectedExperiment(null);
 		this._experimentChangeSubscription.dispose();
 	}
 
@@ -40,12 +43,7 @@ class Experiments
 
 	private ExperimentSelected(experiment:Experiment):void
 	{
-		console.log("sdfsdfd");
-		this.Experiments().forEach(e =>
-		{
-			if (e != experiment && e.IsSelected())
-				e.IsSelected(false);
-		});
+		this.SelectedExperiment(experiment);
 	}
 }
 

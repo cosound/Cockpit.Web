@@ -5,11 +5,8 @@
             this.Name = knockout.observable();
             this.Participants = knockout.observableArray();
             this.Configuration = knockout.observable();
-            this.IsSelected = knockout.observable(false);
         }
         Experiment.prototype.Select = function () {
-            this.IsSelected(true);
-
             if (this.SelectorCallback != null)
                 this.SelectorCallback(this);
         };

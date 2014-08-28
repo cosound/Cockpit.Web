@@ -30,7 +30,7 @@ function FakeCreateExperiment(name: string, emails: string[], configuration: str
 		experiement.Id(Math.floor(Math.random() * 10000).toString());
 		experiement.Name(name);
 		experiement.Configuration(configuration);
-		experiement.Participants.push.call(experiement.Participants, participants);
+		experiement.Participants.push.apply(experiement.Participants, participants);
 
 		Experiments.push(experiement);
 

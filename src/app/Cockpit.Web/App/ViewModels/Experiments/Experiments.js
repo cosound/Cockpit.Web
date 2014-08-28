@@ -1,13 +1,14 @@
-﻿define(["require", "exports", "Navigation", "ViewModels/Experiments/ExperimentManager"], function(require, exports, Navigation, ExperimentManager) {
+﻿define(["require", "exports", "knockout", "Navigation", "ViewModels/Experiments/ExperimentManager"], function(require, exports, knockout, Navigation, ExperimentManager) {
     var Experiments = (function () {
         function Experiments(experimentId) {
             var _this = this;
+            this.SelectedExperiment = knockout.observable();
             this.Experiments = ExperimentManager.Experiments;
 
             this.HookupExperiments();
             this.Experiments().forEach(function (e) {
                 if (e.Id() == experimentId)
-                    e.IsSelected(true);
+                    _this.SelectedExperiment(e);
             });
             this._experimentChangeSubscription = this.Experiments.subscribe(function (e) {
                 return _this.ExperimentsChanged(e);
@@ -21,6 +22,7 @@
             this.Experiments().forEach(function (e) {
                 e.SelectorCallback = null;
             });
+            this.SelectedExperiment(null);
             this._experimentChangeSubscription.dispose();
         };
 
@@ -38,11 +40,7 @@
         };
 
         Experiments.prototype.ExperimentSelected = function (experiment) {
-            console.log("sdfsdfd");
-            this.Experiments().forEach(function (e) {
-                if (e != experiment && e.IsSelected())
-                    e.IsSelected(false);
-            });
+            this.SelectedExperiment(experiment);
         };
         return Experiments;
     })();
