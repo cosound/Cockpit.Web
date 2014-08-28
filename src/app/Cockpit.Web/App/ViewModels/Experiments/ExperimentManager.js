@@ -1,10 +1,20 @@
 ﻿define(["require", "exports", "knockout", "ViewModels/Experiments/Experiment", "ViewModels/Experiments/Participant"], function(require, exports, knockout, Experiment, Participant) {
     exports.Experiments = knockout.observableArray();
 
+    InitializeFakeExperiments();
+
     function CreateExperiment(name, emails, configuration, callback) {
         FakeCreateExperiment(name, emails, configuration, callback);
     }
     exports.CreateExperiment = CreateExperiment;
+
+    function InitializeFakeExperiments() {
+        FakeCreateExperiment("My Experiment", ["Peter@Test.com", "Jesper@test.com"], "<Configuration></Configuration>", null);
+        FakeCreateExperiment("My Other Experiment", ["Peter@Test.com", "Jesper@test.com"], "<Configuration></Configuration>", null);
+        FakeCreateExperiment("My Super Experiment", ["Peter@Test.com", "Jesper@test.com"], "<Configuration></Configuration>", null);
+        FakeCreateExperiment("My Fantastic Experiment 1", ["Peter@Test.com", "Jesper@test.com"], "<Configuration></Configuration>", null);
+        FakeCreateExperiment("My Meh Experiment", ["Peter@Test.com", "Jesper@test.com"], "<Configuration></Configuration>", null);
+    }
 
     function FakeCreateExperiment(name, emails, configuration, callback) {
         window.setTimeout(function () {
@@ -19,7 +29,9 @@
             experiement.Participants.push.call(experiement.Participants, participants);
 
             exports.Experiments.push(experiement);
-            callback(true, experiement);
+
+            if (callback != null)
+                callback(true, experiement);
         }, 100);
     }
 });

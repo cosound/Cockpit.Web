@@ -1,4 +1,7 @@
 ﻿<h2>Experiments</h2>
-<p>
+<div>
 	<button type="button" class="btn btn-primary" data-bind="click: CreateExperiment">Create</button>
-</p>
+</div>
+<ul class="nav nav-pills nav-stacked" data-bind="foreach: Experiments">
+	<li data-bind="css: {active: IsSelected}"><a href="#" data-bind="text: Name, click: Select"></a></li>
+</ul>

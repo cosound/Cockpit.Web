@@ -4,9 +4,20 @@ import Participant = require("ViewModels/Experiments/Participant");
 
 export var Experiments: KnockoutObservableArray<Experiment> = knockout.observableArray<Experiment>();
 
+InitializeFakeExperiments();
+
 export function CreateExperiment(name:string, emails:string[], configuration:string, callback:(success:boolean, experiment:Experiment) => void):void
 {
 	FakeCreateExperiment(name, emails, configuration, callback);
+}
+
+function InitializeFakeExperiments():void
+{
+	FakeCreateExperiment("My Experiment", ["Peter@Test.com", "Jesper@test.com"], "<Configuration></Configuration>", null);
+	FakeCreateExperiment("My Other Experiment", ["Peter@Test.com", "Jesper@test.com"], "<Configuration></Configuration>", null);
+	FakeCreateExperiment("My Super Experiment", ["Peter@Test.com", "Jesper@test.com"], "<Configuration></Configuration>", null);
+	FakeCreateExperiment("My Fantastic Experiment 1", ["Peter@Test.com", "Jesper@test.com"], "<Configuration></Configuration>", null);
+	FakeCreateExperiment("My Meh Experiment", ["Peter@Test.com", "Jesper@test.com"], "<Configuration></Configuration>", null);
 }
 
 function FakeCreateExperiment(name: string, emails: string[], configuration: string, callback: (success: boolean, experiment: Experiment) => void):void
@@ -22,6 +33,8 @@ function FakeCreateExperiment(name: string, emails: string[], configuration: str
 		experiement.Participants.push.call(experiement.Participants, participants);
 
 		Experiments.push(experiement);
-		callback(true, experiement);
+
+		if(callback != null)
+			callback(true, experiement);
 	}, 100);
 }
