@@ -124,13 +124,16 @@
   <ItemGroup />
   <ItemGroup>
     <TypeScriptCompile Include="App\Application.ts" />
+    <TypeScriptCompile Include="App\ViewModels\Experiments\ExperimentManager.ts" />
     <TypeScriptCompile Include="App\Main.ts" />
     <TypeScriptCompile Include="App\NameConventionLoader.ts" />
     <TypeScriptCompile Include="App\Navigation.ts" />
-    <TypeScriptCompile Include="App\SelectionManager.ts" />
+    <TypeScriptCompile Include="App\ViewModels\Selections\SelectionManager.ts" />
     <TypeScriptCompile Include="App\AuthenticationManager.ts" />
     <TypeScriptCompile Include="App\ViewModels\CreateExperiment\CreateExperiment.ts" />
+    <TypeScriptCompile Include="App\ViewModels\Experiments\Experiment.ts" />
     <TypeScriptCompile Include="App\ViewModels\Experiments\Experiments.ts" />
+    <TypeScriptCompile Include="App\ViewModels\Experiments\Participant.ts" />
     <TypeScriptCompile Include="App\ViewModels\Login\Login.ts" />
     <TypeScriptCompile Include="App\ViewModels\NotFound\NotFound.ts" />
     <TypeScriptCompile Include="App\ViewModels\Page.ts" />
