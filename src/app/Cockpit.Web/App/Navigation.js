@@ -17,6 +17,12 @@
             "Selections": function () {
                 LoadPage("Selections");
             },
+            "Experiments": function () {
+                LoadPage("Experiments");
+            },
+            "CreateExperiment": function () {
+                LoadPage("CreateExperiment");
+            },
             "*": function () {
                 LoadPage("NotFound");
             }

@@ -14,6 +14,8 @@ export function Initialize(): void
 		"Projects": () => { LoadPage("Projects"); },
 		"Search": () => { LoadPage("Search"); },
 		"Selections": () => { LoadPage("Selections"); },
+		"Experiments": () => { LoadPage("Experiments"); },
+		"CreateExperiment": () => { LoadPage("CreateExperiment"); },
 		"*": () => { LoadPage("NotFound"); }
 	});
 

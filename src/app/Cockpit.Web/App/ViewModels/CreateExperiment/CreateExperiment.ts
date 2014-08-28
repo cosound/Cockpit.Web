@@ -1,0 +1,6 @@
+﻿class CreateExperiment
+{
+	
+}
+
+export = CreateExperiment;

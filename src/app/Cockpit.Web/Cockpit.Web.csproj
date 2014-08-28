@@ -17,6 +17,7 @@
     <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="App\Views\CreateExperiment\CreateExperiment.html" />
     <Content Include="App\Views\Experiments\Experiments.html" />
     <Content Include="App\Views\Login\Login.html" />
     <Content Include="App\Views\NotFound\NotFound.html" />
@@ -128,6 +129,7 @@
     <TypeScriptCompile Include="App\Navigation.ts" />
     <TypeScriptCompile Include="App\SelectionManager.ts" />
     <TypeScriptCompile Include="App\AuthenticationManager.ts" />
+    <TypeScriptCompile Include="App\ViewModels\CreateExperiment\CreateExperiment.ts" />
     <TypeScriptCompile Include="App\ViewModels\Experiments\Experiments.ts" />
     <TypeScriptCompile Include="App\ViewModels\Login\Login.ts" />
     <TypeScriptCompile Include="App\ViewModels\NotFound\NotFound.ts" />
