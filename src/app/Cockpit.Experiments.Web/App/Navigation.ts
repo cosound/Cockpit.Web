@@ -8,9 +8,8 @@ export var CurrentPage: KnockoutObservable<NavigationPage> = knockout.observable
 export function Initialize(): void
 {
 	Routie({
-		"": () => { Navigate("Experiment/7"); },
-		"Experiment/:id": (id: string) => { LoadSlide(id, 0); },
-		"Experiment/:id/:slideId": (id: string, slideId: string) => { LoadSlide(id, parseInt(slideId)); },
+		"": () => { Navigate("Experiment/a12f"); },
+		"Experiment/:id": (id: string) => { LoadSlide(id); },
 		"*": () => { LoadPage("NotFound"); }
 	});
 }
@@ -25,13 +24,11 @@ function LoadPage(name: string, data?:any): void
 	CurrentPage(new NavigationPage(name, data));
 }
 
-function LoadSlide(id: string, slideId:number): void
+function LoadSlide(id: string): void
 {
 	if(!ExperimentManager.ExperimentLoaded() && !ExperimentManager.ExperimentIsLoading())
 		ExperimentManager.LoadExperiment(id);
 
 	if (CurrentPage() == null || CurrentPage().Name() != "SlideShell")
-		CurrentPage(new NavigationPage("SlideShell", { SlideId: knockout.observable<number>(slideId) }));
-	else
-		CurrentPage().Data().SlideId(slideId);
+		CurrentPage(new NavigationPage("SlideShell"));
 }

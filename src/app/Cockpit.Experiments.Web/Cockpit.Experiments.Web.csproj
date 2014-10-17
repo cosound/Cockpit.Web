@@ -68,6 +68,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="App\CockpitPortal.ts" />
+    <TypeScriptCompile Include="App\Configuration.ts" />
     <TypeScriptCompile Include="App\Main.ts" />
     <TypeScriptCompile Include="App\Models\ExperimentData.d.ts" />
     <TypeScriptCompile Include="App\ViewModels\NameConventionLoader.ts" />

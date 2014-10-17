@@ -1,6 +1,6 @@
-﻿define(["require", "exports", "knockout", "ExperimentManager", "ViewModels/NavigationPage", "Navigation"], function(require, exports, knockout, ExperimentManager, NavigationPage, Navigation) {
+﻿define(["require", "exports", "knockout", "ExperimentManager", "ViewModels/NavigationPage"], function(require, exports, knockout, ExperimentManager, NavigationPage) {
     var SlideShell = (function () {
-        function SlideShell(data) {
+        function SlideShell() {
             var _this = this;
             this.Name = knockout.observable();
             this.Slide = knockout.observable();
@@ -8,11 +8,6 @@
             this.SlideNumber = knockout.observable(0);
             this.NumberOfSlides = knockout.observable(0);
             this.AreFooterControlsVisible = knockout.observable(true);
-            this._slideId = data.SlideId;
-            this._slideIdSubscription = this._slideId.subscribe(function (id) {
-                return _this.LoadSlide(id);
-            });
-
             if (ExperimentManager.ExperimentLoaded())
                 this.LoadExperiment();
             else {
@@ -25,31 +20,32 @@
         SlideShell.prototype.GoToNextSlide = function () {
             this.CanGoToNextSlide(false);
 
-            ExperimentManager.SaveSlideData(this._slideId(), this.Slide().Data().UserInput());
+            ExperimentManager.SaveSlideData(this.SlideNumber(), this.Slide().Data().UserInput());
 
-            Navigation.Navigate("Experiment/7/" + (this._slideId() + 1));
+            this.SlideNumber(this.SlideNumber() + 1);
+
+            this.LoadSlide(this.SlideNumber());
         };
 
         SlideShell.prototype.LoadExperiment = function () {
             this._experiment = ExperimentManager.Experiment();
             this.Name(this._experiment.Name);
             this.NumberOfSlides(this._experiment.Slides.length);
-            this.LoadSlide(this._slideId());
+            this.LoadSlide(0);
         };
 
-        SlideShell.prototype.LoadSlide = function (id) {
+        SlideShell.prototype.LoadSlide = function (index) {
             var slide;
 
-            this.SlideNumber(id + 1);
+            this.SlideNumber(index + 1);
 
-            if (id < this._experiment.Slides.length)
-                slide = this._experiment.Slides[id];
+            if (index < this._experiment.Slides.length)
+                slide = this._experiment.Slides[index];
             else {
                 this.AreFooterControlsVisible(false);
-                slide = this._experiment.CompletedSlide;
             }
 
-            this.Slide(new NavigationPage("Slides-" + slide.Type, { Slide: slide, CanGoToNextSlide: this.CanGoToNextSlide, UserInput: knockout.observable(null) }));
+            this.Slide(new NavigationPage("Slides-" + slide, { Slide: slide, CanGoToNextSlide: this.CanGoToNextSlide, UserInput: knockout.observable(null) }));
         };
 
         SlideShell.prototype.CleanExperimentLoaded = function () {
@@ -60,9 +56,6 @@
         SlideShell.prototype.dispose = function () {
             if (this._experimentLoadedSubscription)
                 this.CleanExperimentLoaded();
-
-            this._slideIdSubscription.dispose();
-            this._slideIdSubscription = null;
         };
         return SlideShell;
     })();

@@ -4,13 +4,10 @@
     function Initialize() {
         Routie({
             "": function () {
-                exports.Navigate("Experiment/7");
+                exports.Navigate("Experiment/a12f");
             },
             "Experiment/:id": function (id) {
-                LoadSlide(id, 0);
-            },
-            "Experiment/:id/:slideId": function (id, slideId) {
-                LoadSlide(id, parseInt(slideId));
+                LoadSlide(id);
             },
             "*": function () {
                 LoadPage("NotFound");
@@ -28,14 +25,12 @@
         exports.CurrentPage(new NavigationPage(name, data));
     }
 
-    function LoadSlide(id, slideId) {
+    function LoadSlide(id) {
         if (!ExperimentManager.ExperimentLoaded() && !ExperimentManager.ExperimentIsLoading())
             ExperimentManager.LoadExperiment(id);
 
         if (exports.CurrentPage() == null || exports.CurrentPage().Name() != "SlideShell")
-            exports.CurrentPage(new NavigationPage("SlideShell", { SlideId: knockout.observable(slideId) }));
-        else
-            exports.CurrentPage().Data().SlideId(slideId);
+            exports.CurrentPage(new NavigationPage("SlideShell"));
     }
 });
 //# sourceMappingURL=Navigation.js.map

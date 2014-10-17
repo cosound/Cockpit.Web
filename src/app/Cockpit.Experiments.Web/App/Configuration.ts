@@ -1,0 +1,1 @@
+﻿export var PortalPath:string = "http://cockpit.api.cosound.dk";

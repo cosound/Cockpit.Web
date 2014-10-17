@@ -1,5 +1,6 @@
 ﻿import knockout = require("knockout");
 import ExperimentManager = require("ExperimentManager");
+import CockpitPortal = require("CockpitPortal");
 import NavigationPage = require("ViewModels/NavigationPage");
 import Navigation = require("Navigation");
 
@@ -13,16 +14,11 @@ class SlideShell
 	public AreFooterControlsVisible: KnockoutObservable<boolean> = knockout.observable<boolean>(true);
 
 	private _experimentLoadedSubscription: KnockoutSubscription;
-	private _slideIdSubscription: KnockoutSubscription;
 
-	private _experiment:IExperiment;
-	private _slideId: KnockoutObservable<number>;
+	private _experiment:CockpitPortal.IQuestionnaire;
 
-	constructor(data:any)
+	constructor()
 	{
-		this._slideId = data.SlideId;
-		this._slideIdSubscription = this._slideId.subscribe(id => this.LoadSlide(id));
-
 		if (ExperimentManager.ExperimentLoaded())
 			this.LoadExperiment();
 		else
@@ -39,9 +35,11 @@ class SlideShell
 	{
 		this.CanGoToNextSlide(false);
 
-		ExperimentManager.SaveSlideData(this._slideId(), this.Slide().Data().UserInput());
+		ExperimentManager.SaveSlideData(this.SlideNumber(), this.Slide().Data().UserInput());
 
-		Navigation.Navigate("Experiment/7/" + (this._slideId() + 1));
+		this.SlideNumber(this.SlideNumber() + 1);
+
+		this.LoadSlide(this.SlideNumber());
 	}
 
 	private LoadExperiment():void
@@ -49,24 +47,24 @@ class SlideShell
 		this._experiment = ExperimentManager.Experiment();
 		this.Name(this._experiment.Name);
 		this.NumberOfSlides(this._experiment.Slides.length);
-		this.LoadSlide(this._slideId());
+		this.LoadSlide(0);
 	}
 
-	private LoadSlide(id:number):void
+	private LoadSlide(index:number):void
 	{
-		var slide: ISlide;
+		var slide: CockpitPortal.ISlide;
 
-		this.SlideNumber(id + 1);
+		this.SlideNumber(index + 1);
 
-		if (id < this._experiment.Slides.length)
-			slide = this._experiment.Slides[id];
+		if (index < this._experiment.Slides.length)
+			slide = this._experiment.Slides[index];
 		else
 		{
 			this.AreFooterControlsVisible(false);
-			slide = this._experiment.CompletedSlide;
+			//slide = this._experiment.CompletedSlide;
 		}
 
-		this.Slide(new NavigationPage("Slides-" + slide.Type, { Slide: slide, CanGoToNextSlide: this.CanGoToNextSlide, UserInput: knockout.observable(null)}));
+		this.Slide(new NavigationPage("Slides-" + slide, { Slide: slide, CanGoToNextSlide: this.CanGoToNextSlide, UserInput: knockout.observable(null)}));
 	}
 
 	private CleanExperimentLoaded():void
@@ -79,9 +77,6 @@ class SlideShell
 	{
 		if (this._experimentLoadedSubscription)
 			this.CleanExperimentLoaded();
-
-		this._slideIdSubscription.dispose();
-		this._slideIdSubscription = null;
 	}
 }
 
