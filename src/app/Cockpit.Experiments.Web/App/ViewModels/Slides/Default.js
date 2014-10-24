@@ -13,13 +13,19 @@
         Default.prototype.AnswerChanged = function () {
             var allQuestionsAnswered = true;
 
+            var data = [];
+
             for (var i = 0; i < this.Questions.length; i++) {
-                if (this.Questions[i].UserInput() == null) {
+                var question = this.Questions[i];
+                var answer = question.UserInput();
+
+                if (answer == null)
                     allQuestionsAnswered = false;
-                    break;
-                }
+                else
+                    data.push(question.Data.Id + ": " + answer);
             }
 
+            this._slideData.UserInput = data.join(", ");
             this._slideData.CanGoToNextSlide(allQuestionsAnswered);
         };
         return Default;

@@ -6,7 +6,7 @@ class SlideData
 	public Name:string;
 	public CanGoToNextSlide:KnockoutObservable<boolean>;
 	public Data: CockpitPortal.ISlide;
-	public UserInput: any;
+	public UserInput: string;
 
 	constructor(name: string, canGoToNextSlide: KnockoutObservable<boolean> = null, data:CockpitPortal.ISlide = null)
 	{
