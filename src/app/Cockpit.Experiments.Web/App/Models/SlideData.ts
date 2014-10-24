@@ -1,13 +1,14 @@
-﻿import CockpitPortal = require("CockpitPortal");
+﻿import knockout = require("knockout");
+import CockpitPortal = require("CockpitPortal");
 
 class SlideData
 {
-	Name:string;
-	CanGoToNextSlide:()=>void;
-	Data: CockpitPortal.ISlide;
-	UserInput: any;
+	public Name:string;
+	public CanGoToNextSlide:KnockoutObservable<boolean>;
+	public Data: CockpitPortal.ISlide;
+	public UserInput: any;
 
-	constructor(name: string, canGoToNextSlide:()=>void = null, data:CockpitPortal.ISlide = null)
+	constructor(name: string, canGoToNextSlide: KnockoutObservable<boolean> = null, data:CockpitPortal.ISlide = null)
 	{
 		this.Name = name;
 		this.CanGoToNextSlide = canGoToNextSlide;

@@ -3,6 +3,7 @@
         function QuestionsBase(questionData) {
             this._slideData = questionData;
             this.Data = questionData.Data;
+            this.UserInput = this._slideData.UserInput;
 
             this.Initialize();
         }

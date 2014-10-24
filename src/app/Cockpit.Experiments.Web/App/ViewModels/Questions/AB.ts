@@ -8,7 +8,7 @@ class AB extends QuestionBase<QuestionModels.IABQuestion>
 	public Text: string;
 	public Url1: string;
 	public Url2: string;
-	public Answer: KnockoutObservable<string> = knockout.observable<string>();
+	public Answer: KnockoutObservable<string>;
 
 	public Initialize(): void
 	{
@@ -16,6 +16,8 @@ class AB extends QuestionBase<QuestionModels.IABQuestion>
 		this.Text = this.Data.Text;
 		this.Url1 = this.Data.Url1;
 		this.Url2 = this.Data.Url2;
+
+		this.Answer = this.UserInput;
 	}
 }
 

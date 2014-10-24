@@ -4,16 +4,17 @@
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "knockout", "ViewModels/Questions/QuestionBase"], function(require, exports, knockout, QuestionBase) {
+define(["require", "exports", "ViewModels/Questions/QuestionBase"], function(require, exports, QuestionBase) {
     var Boolean = (function (_super) {
         __extends(Boolean, _super);
         function Boolean() {
             _super.apply(this, arguments);
-            this.Answer = knockout.observable();
         }
         Boolean.prototype.Initialize = function () {
             this.Id = this.Data.Id;
             this.Text = this.Data.Value;
+
+            this.Answer = this.UserInput;
         };
         return Boolean;
     })(QuestionBase);

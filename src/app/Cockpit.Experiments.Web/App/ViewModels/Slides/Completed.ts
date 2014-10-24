@@ -4,7 +4,7 @@ class Completed
 {
 	constructor(slideData:SlideData)
 	{
-		console.log("Completed Slide");
+		
 	}
 }
 
