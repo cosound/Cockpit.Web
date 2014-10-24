@@ -37,16 +37,4 @@ export interface IQuestion
 	Fullname:string;
 }
 
-export interface IBooleanQuestion
-{
-	Value:string;
-}
-
-export interface IABQuestion
-{
-	Text: string;
-	Url1:string;
-	Url2:string;
-}
-
 Initialize();

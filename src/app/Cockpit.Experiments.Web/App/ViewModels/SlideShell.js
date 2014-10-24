@@ -1,13 +1,17 @@
-﻿define(["require", "exports", "knockout", "ExperimentManager", "ViewModels/NavigationPage"], function(require, exports, knockout, ExperimentManager, NavigationPage) {
+﻿define(["require", "exports", "knockout", "ExperimentManager", "Models/SlideData"], function(require, exports, knockout, ExperimentManager, SlideData) {
     var SlideShell = (function () {
         function SlideShell() {
             var _this = this;
             this.Name = knockout.observable();
-            this.Slide = knockout.observable();
-            this.CanGoToNextSlide = knockout.observable(false);
-            this.SlideNumber = knockout.observable(0);
+            this.SlideData = knockout.observable();
+            this.SlideIndex = knockout.observable(0);
             this.NumberOfSlides = knockout.observable(0);
+            this.CanGoToNextSlide = knockout.observable(false);
             this.AreFooterControlsVisible = knockout.observable(true);
+            this.SlideNumber = knockout.computed(function () {
+                return _this.SlideIndex() + 1;
+            });
+
             if (ExperimentManager.ExperimentLoaded())
                 this.LoadExperiment();
             else {
@@ -20,11 +24,9 @@
         SlideShell.prototype.GoToNextSlide = function () {
             this.CanGoToNextSlide(false);
 
-            ExperimentManager.SaveSlideData(this.SlideNumber(), this.Slide().Data().UserInput());
+            ExperimentManager.SaveSlideData(this.SlideIndex(), this.SlideData().UserInput);
 
-            this.SlideNumber(this.SlideNumber() + 1);
-
-            this.LoadSlide(this.SlideNumber());
+            this.LoadSlide(this.SlideIndex() + 1);
         };
 
         SlideShell.prototype.LoadExperiment = function () {
@@ -35,17 +37,14 @@
         };
 
         SlideShell.prototype.LoadSlide = function (index) {
-            var slide;
-
-            this.SlideNumber(index + 1);
+            this.SlideIndex(index);
 
             if (index < this._experiment.Slides.length)
-                slide = this._experiment.Slides[index];
+                this.SlideData(new SlideData("Slides/Default", this.CanGoToNextSlide, this._experiment.Slides[index]));
             else {
                 this.AreFooterControlsVisible(false);
+                this.SlideData(new SlideData("Slides/Completed"));
             }
-
-            this.Slide(new NavigationPage("Slides-" + slide, { Slide: slide, CanGoToNextSlide: this.CanGoToNextSlide, UserInput: knockout.observable(null) }));
         };
 
         SlideShell.prototype.CleanExperimentLoaded = function () {

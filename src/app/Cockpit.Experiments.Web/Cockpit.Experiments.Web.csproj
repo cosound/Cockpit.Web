@@ -19,12 +19,14 @@
   <ItemGroup>
     <Content Include="App\Views\Login.html" />
     <Content Include="App\Views\NotFound.html" />
+    <Content Include="App\Views\Questions\AB.html" />
+    <Content Include="App\Views\Questions\Boolean.html" />
     <Content Include="App\Views\Shell.html" />
+    <Content Include="App\Views\Slides\Completed.html" />
+    <Content Include="App\Views\Slides\Default.html" />
     <Content Include="App\Views\SlideShell.html" />
-    <Content Include="App\Views\Slides\AudioRating.html" />
-    <Content Include="App\Views\Slides\Form.html" />
-    <Content Include="App\Views\Slides\Intro.html" />
-    <Content Include="App\Views\Slides\ThankYou.html" />
+    <Content Include="App\Views\Questions\AudioRating.html" />
+    <Content Include="App\Views\Questions\Form.html" />
     <Content Include="default.html" />
     <Content Include="Lib\bootstrap\css\bootstrap-theme.css" />
     <Content Include="Lib\bootstrap\css\bootstrap-theme.min.css" />
@@ -71,10 +73,15 @@
     <TypeScriptCompile Include="App\CockpitPortal.ts" />
     <TypeScriptCompile Include="App\Configuration.ts" />
     <TypeScriptCompile Include="App\Main.ts" />
-    <TypeScriptCompile Include="App\Models\ExperimentData.d.ts" />
+    <TypeScriptCompile Include="App\Models\QuestionData.ts" />
+    <TypeScriptCompile Include="App\Models\Questions.ts" />
+    <TypeScriptCompile Include="App\Models\SlideData.ts" />
     <TypeScriptCompile Include="App\ViewModels\NameConventionLoader.ts" />
-    <TypeScriptCompile Include="App\ViewModels\Slides\AudioRating.ts" />
-    <TypeScriptCompile Include="App\ViewModels\Slides\Input.ts" />
+    <TypeScriptCompile Include="App\ViewModels\Questions\AB.ts" />
+    <TypeScriptCompile Include="App\ViewModels\Questions\Boolean.ts" />
+    <TypeScriptCompile Include="App\ViewModels\Questions\QuestionBase.ts" />
+    <TypeScriptCompile Include="App\ViewModels\Slides\Completed.ts" />
+    <TypeScriptCompile Include="App\ViewModels\Slides\Default.ts" />
     <TypeScriptCompile Include="App\NameConventionLoader.ts" />
     <TypeScriptCompile Include="App\Navigation.ts" />
     <TypeScriptCompile Include="App\ExperimentManager.ts" />
@@ -83,9 +90,6 @@
     <TypeScriptCompile Include="App\ViewModels\NavigationPage.ts" />
     <TypeScriptCompile Include="App\ViewModels\Shell.ts" />
     <TypeScriptCompile Include="App\ViewModels\SlideShell.ts" />
-    <TypeScriptCompile Include="App\ViewModels\Slides\Form.ts" />
-    <TypeScriptCompile Include="App\ViewModels\Slides\Intro.ts" />
-    <TypeScriptCompile Include="App\ViewModels\Slides\ThankYou.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\bootstrap.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\jquery.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\knockout.d.ts" />

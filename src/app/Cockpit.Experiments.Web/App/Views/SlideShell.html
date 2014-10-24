@@ -2,7 +2,9 @@
 	<div class="panel-heading">
 		<h1 data-bind="text: Name"></h1>
 	</div>
-	<div class="panel-body" data-bind="component: {name: Slide().Name, params: Slide().Data}"></div>
+	<!-- ko if: SlideData -->
+	<div class="panel-body" data-bind="component: {name: SlideData().Name, params: SlideData}"></div>
+	<!-- /ko -->
 	<div class="panel-footer text-right">
 		<span data-bind="visible: AreFooterControlsVisible">
 			Slide <span data-bind="text: SlideNumber"></span> of <span data-bind="text: NumberOfSlides"></span>

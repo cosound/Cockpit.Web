@@ -3,14 +3,18 @@ import ExperimentManager = require("ExperimentManager");
 import CockpitPortal = require("CockpitPortal");
 import NavigationPage = require("ViewModels/NavigationPage");
 import Navigation = require("Navigation");
+import SlideData = require("Models/SlideData");
 
 class SlideShell
 {
 	public Name: KnockoutObservable<string> = knockout.observable<string>();
-	public Slide: KnockoutObservable<NavigationPage> = knockout.observable<NavigationPage>();
-	public CanGoToNextSlide: KnockoutObservable<boolean> = knockout.observable<boolean>(false);
-	public SlideNumber:KnockoutObservable<number> = knockout.observable<number>(0);
+
+	public SlideData: KnockoutObservable<SlideData> = knockout.observable<SlideData>();
+
+	public SlideIndex:KnockoutObservable<number> = knockout.observable<number>(0);
+	public SlideNumber:KnockoutComputed<number>;
 	public NumberOfSlides: KnockoutObservable<number> = knockout.observable<number>(0);
+	public CanGoToNextSlide: KnockoutObservable<boolean> = knockout.observable<boolean>(false);
 	public AreFooterControlsVisible: KnockoutObservable<boolean> = knockout.observable<boolean>(true);
 
 	private _experimentLoadedSubscription: KnockoutSubscription;
@@ -19,6 +23,8 @@ class SlideShell
 
 	constructor()
 	{
+		this.SlideNumber = knockout.computed(() => this.SlideIndex() + 1);
+
 		if (ExperimentManager.ExperimentLoaded())
 			this.LoadExperiment();
 		else
@@ -35,11 +41,9 @@ class SlideShell
 	{
 		this.CanGoToNextSlide(false);
 
-		ExperimentManager.SaveSlideData(this.SlideNumber(), this.Slide().Data().UserInput());
+		ExperimentManager.SaveSlideData(this.SlideIndex(), this.SlideData().UserInput);
 
-		this.SlideNumber(this.SlideNumber() + 1);
-
-		this.LoadSlide(this.SlideNumber());
+		this.LoadSlide(this.SlideIndex() + 1);
 	}
 
 	private LoadExperiment():void
@@ -52,19 +56,15 @@ class SlideShell
 
 	private LoadSlide(index:number):void
 	{
-		var slide: CockpitPortal.ISlide;
-
-		this.SlideNumber(index + 1);
+		this.SlideIndex(index);
 
 		if (index < this._experiment.Slides.length)
-			slide = this._experiment.Slides[index];
+			this.SlideData(new SlideData("Slides/Default", this.CanGoToNextSlide, this._experiment.Slides[index]));
 		else
 		{
 			this.AreFooterControlsVisible(false);
-			//slide = this._experiment.CompletedSlide;
+			this.SlideData(new SlideData("Slides/Completed"));
 		}
-
-		this.Slide(new NavigationPage("Slides-" + slide, { Slide: slide, CanGoToNextSlide: this.CanGoToNextSlide, UserInput: knockout.observable(null)}));
 	}
 
 	private CleanExperimentLoaded():void
