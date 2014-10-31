@@ -1,19 +1,22 @@
 ﻿import knockout = require("knockout");
-import QuestionModels = require("Models/Questions");
 import QuestionBase = require("ViewModels/Questions/QuestionBase");
+import QuestionModel = require("Models/Question");
 
-class Boolean extends QuestionBase<QuestionModels.IBooleanQuestion>
+class Boolean extends QuestionBase
 {
 	public Id: string;
 	public Text: string;
-	public Answer: KnockoutObservable<string>;
+	public Answer: KnockoutObservable<string> = knockout.observable<string>(null);
 
-	public Initialize(): void
+	constructor(question:QuestionModel)
 	{
-		this.Id = this.Data.Id;
-		this.Text = this.Data.Value;
+		super(question);
 
-		this.Answer = this.UserInput;
+		this.Id = this.Data.Id;
+		this.Text = this.Data.Data["Text"];
+		this.AnswerType = "BooleanAnswer, 1.0";
+
+		this.Answer.subscribe(v => this.SetAnswer({ Value: v }));
 	}
 }
 

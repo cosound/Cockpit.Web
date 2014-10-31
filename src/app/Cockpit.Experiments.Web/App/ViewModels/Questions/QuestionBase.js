@@ -1,14 +1,10 @@
-﻿define(["require", "exports"], function(require, exports) {
+﻿define(["require", "exports", "Models/Answer"], function(require, exports, AnswerModel) {
     var QuestionsBase = (function () {
-        function QuestionsBase(questionData) {
-            this._slideData = questionData;
-            this.Data = questionData.Data;
-            this.UserInput = this._slideData.UserInput;
-
-            this.Initialize();
+        function QuestionsBase(question) {
+            this.Data = question;
         }
-        QuestionsBase.prototype.Initialize = function () {
-            throw new Error("Not implemented");
+        QuestionsBase.prototype.SetAnswer = function (data) {
+            this.Data.UserAnswer(new AnswerModel(this.AnswerType, data));
         };
         return QuestionsBase;
     })();

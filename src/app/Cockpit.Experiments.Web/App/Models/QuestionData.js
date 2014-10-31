@@ -2,7 +2,7 @@
     var QuestionData = (function () {
         function QuestionData(data, answerChangedCallback) {
             this.UserInput = knockout.observable();
-            this.Name = "Questions/" + data.Fullname.substr(0, data.Fullname.indexOf("Question"));
+            this.Name = "Questions/" + data.Type.substr(0, data.Type.indexOf("Question"));
             this.Data = data;
 
             this.UserInput.subscribe(function (v) {

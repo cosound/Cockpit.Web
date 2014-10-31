@@ -4,20 +4,24 @@
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "ViewModels/Questions/QuestionBase"], function(require, exports, QuestionBase) {
+define(["require", "exports", "knockout", "ViewModels/Questions/QuestionBase"], function(require, exports, knockout, QuestionBase) {
     var AB = (function (_super) {
         __extends(AB, _super);
-        function AB() {
-            _super.apply(this, arguments);
-        }
-        AB.prototype.Initialize = function () {
-            this.Id = this.Data.Id;
-            this.Text = this.Data.Text;
-            this.Url1 = this.Data.Url1;
-            this.Url2 = this.Data.Url2;
+        function AB(question) {
+            var _this = this;
+            _super.call(this, question);
+            this.Answer = knockout.observable(null);
 
-            this.Answer = this.UserInput;
-        };
+            this.Id = this.Data.Id;
+            this.Text = this.Data.Data["Text"];
+            this.Url1 = this.Data.Data["Url1"];
+            this.Url2 = this.Data.Data["Url2"];
+            this.AnswerType = "ABAnswer, 1.0";
+
+            this.Answer.subscribe(function (v) {
+                return _this.SetAnswer({ Value: v });
+            });
+        }
         return AB;
     })(QuestionBase);
 

@@ -1,25 +1,21 @@
 ﻿import knockout = require("knockout");
 import CockpitPortal = require("CockpitPortal");
-import QuestionData = require("Models/QuestionData");
+import QuestionModel = require("Models/Question");
+import AnswerModel = require("Models/Answer");
 
-class QuestionsBase<T extends CockpitPortal.IQuestion>
+class QuestionsBase
 {
-	private _slideData: QuestionData;
-	public Data: T;
-	public UserInput:KnockoutObservable<string>;
+	public Data: QuestionModel;
+	public AnswerType:string;
 
-	constructor(questionData: QuestionData)
+	constructor(question: QuestionModel)
 	{
-		this._slideData = questionData;
-		this.Data = <T>questionData.Data;
-		this.UserInput = this._slideData.UserInput;
-
-		this.Initialize();
+		this.Data = question;
 	}
 
-	public Initialize():void
+	public SetAnswer(data: { [key: string]: string }):void
 	{
-		throw new Error("Not implemented");
+		this.Data.UserAnswer(new AnswerModel(this.AnswerType, data));
 	}
 }
 

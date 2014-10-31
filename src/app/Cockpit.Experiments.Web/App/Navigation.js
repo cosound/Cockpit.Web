@@ -26,8 +26,8 @@
     }
 
     function LoadSlide(id) {
-        if (!ExperimentManager.ExperimentLoaded() && !ExperimentManager.ExperimentIsLoading())
-            ExperimentManager.LoadExperiment(id);
+        if (!ExperimentManager.IsReady())
+            ExperimentManager.SetId(id);
 
         if (exports.CurrentPage() == null || exports.CurrentPage().Name() != "SlideShell")
             exports.CurrentPage(new NavigationPage("SlideShell"));

@@ -1,32 +1,26 @@
-﻿define(["require", "exports", "Models/QuestionData"], function(require, exports, QuestionData) {
+﻿define(["require", "exports", "Models/Question", "ExperimentManager"], function(require, exports, QuestionModel, ExperimentManager) {
     var Default = (function () {
-        function Default(slideData) {
+        function Default(slide) {
             var _this = this;
             this.Questions = [];
-            this._slideData = slideData;
+            this._slide = slide;
 
-            for (var i = 0; i < slideData.Data.Questions.length; i++)
-                this.Questions.push(new QuestionData(slideData.Data.Questions[i], function () {
-                    return _this.AnswerChanged();
+            for (var i = 0; i < slide.Questions.length; i++)
+                this.Questions.push(new QuestionModel(slide.Questions[i], function (question) {
+                    return _this.AnswerChanged(question);
                 }));
         }
-        Default.prototype.AnswerChanged = function () {
+        Default.prototype.AnswerChanged = function (question) {
+            ExperimentManager.SaveQuestionAnswer(question.Id, question.UserAnswer());
+
             var allQuestionsAnswered = true;
 
-            var data = [];
-
             for (var i = 0; i < this.Questions.length; i++) {
-                var question = this.Questions[i];
-                var answer = question.UserInput();
-
-                if (answer == null)
+                if (this.Questions[i].UserAnswer() == null)
                     allQuestionsAnswered = false;
-                else
-                    data.push(question.Data.Id + ": " + answer);
             }
 
-            this._slideData.UserInput = data.join(", ");
-            this._slideData.CanGoToNextSlide(allQuestionsAnswered);
+            this._slide.CanGoToNextSlide(allQuestionsAnswered);
         };
         return Default;
     })();

@@ -1,31 +1,37 @@
 ﻿define(["require", "exports", "knockout", "CockpitPortal"], function(require, exports, knockout, CockpitPortal) {
-    exports.Experiment = knockout.observable();
-    exports.ExperimentLoaded = knockout.computed(function () {
-        return exports.Experiment() != null;
-    });
-    exports.ExperimentIsLoading = knockout.observable(false);
+    exports.IsReady = knockout.observable(false);
+    exports.NumberOfSlides = knockout.observable(0);
 
-    function LoadExperiment(id) {
-        exports.ExperimentIsLoading(true);
-        CockpitPortal.Questionnaire.Get(id).WithCallback(QuestionnaireGetCompleted, this);
+    var _id;
+
+    function SetId(id) {
+        _id = id;
+
+        exports.IsReady(true);
     }
-    exports.LoadExperiment = LoadExperiment;
+    exports.SetId = SetId;
 
-    function SaveSlideData(id, data) {
-        console.log("Saving data for slide " + id + ": " + data);
+    function LoadSlide(index, callback) {
+        CockpitPortal.Questionnaire.Get(_id, index).WithCallback(function (response) {
+            if (response.Error != null)
+                throw new Error("Failed to get slide: " + response.Error.Message);
+
+            if (response.Body.Count == 0)
+                throw new Error("No slide returned");
+
+            exports.NumberOfSlides(response.Body.TotalCount);
+
+            callback(response.Body.Results);
+        });
     }
-    exports.SaveSlideData = SaveSlideData;
+    exports.LoadSlide = LoadSlide;
 
-    function QuestionnaireGetCompleted(response) {
-        if (response.Error != null)
-            throw new Error("Failed to get questionnaire: " + response.Error.Message);
-
-        if (response.Body.Count == 0)
-            throw new Error("No questionnaire returned");
-
-        exports.Experiment(response.Body.Results[0]);
-
-        exports.ExperimentIsLoading(false);
+    function SaveQuestionAnswer(id, answer) {
+        CockpitPortal.Answer.Set(id, JSON.stringify(answer)).WithCallback(function (response) {
+            if (response.Error != null)
+                throw new Error("Failed to save answer: " + response.Error.Message);
+        });
     }
+    exports.SaveQuestionAnswer = SaveQuestionAnswer;
 });
 //# sourceMappingURL=ExperimentManager.js.map

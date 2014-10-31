@@ -2,7 +2,10 @@
 	<div class="panel-heading">
 		<h1 data-bind="text: Name"></h1>
 	</div>
-	<!-- ko if: SlideData -->
+	<!-- ko if: IsLoadingSlide -->
+	<div>Loading slide...</div>
+	<!-- /ko -->
+	<!-- ko ifnot: IsLoadingSlide -->
 	<div class="panel-body" data-bind="component: {name: SlideData().Name, params: SlideData}"></div>
 	<!-- /ko -->
 	<div class="panel-footer text-right">

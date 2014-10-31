@@ -10,31 +10,32 @@ function Initialize():void
 
 export class Questionnaire
 {
-	public static Get(id: string, serviceCaller: CHAOS.Portal.Client.IServiceCaller = null): CHAOS.Portal.Client.ICallState<IQuestionnaire>
+	public static Get(id: string, index:number, serviceCaller: CHAOS.Portal.Client.IServiceCaller = null): CHAOS.Portal.Client.ICallState<IQuestion>
 	{
 		if (serviceCaller == null)
 			serviceCaller = CHAOS.Portal.Client.ServiceCallerService.GetDefaultCaller();
 
-		return serviceCaller.CallService("Questionnaire/Get", CHAOS.Portal.Client.HttpMethod.Get, {id: id}, false);
+		return serviceCaller.CallService("Questionnaire/Get", CHAOS.Portal.Client.HttpMethod.Get, { id: id, index: index}, false);
 	}
 }
 
-export interface IQuestionnaire
+export class Answer
 {
-	Id: string;
-	Name: string;
-	Slides:ISlide[];
-}
+	public static Set(questionId: string, answer:string, serviceCaller: CHAOS.Portal.Client.IServiceCaller = null): CHAOS.Portal.Client.ICallState<any>
+	{
+		if (serviceCaller == null)
+			serviceCaller = CHAOS.Portal.Client.ServiceCallerService.GetDefaultCaller();
 
-export interface ISlide
-{
-	Questions:IQuestion[];
+		return serviceCaller.CallService("Answer/Set", CHAOS.Portal.Client.HttpMethod.Get, { questionId: questionId, answer: answer }, false);
+	}
 }
 
 export interface IQuestion
 {
 	Id:string;
-	Fullname:string;
+	Type: string;
+	UserAnswer: string;
+	Data:string[];
 }
 
 Initialize();

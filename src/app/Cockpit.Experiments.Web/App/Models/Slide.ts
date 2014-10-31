@@ -1,19 +1,18 @@
 ﻿import knockout = require("knockout");
 import CockpitPortal = require("CockpitPortal");
 
-class SlideData
+class Slide
 {
 	public Name:string;
 	public CanGoToNextSlide:KnockoutObservable<boolean>;
-	public Data: CockpitPortal.ISlide;
-	public UserInput: string;
+	public Questions:CockpitPortal.IQuestion[];
 
-	constructor(name: string, canGoToNextSlide: KnockoutObservable<boolean> = null, data:CockpitPortal.ISlide = null)
+	constructor(name: string, canGoToNextSlide: KnockoutObservable<boolean> = null, questions:CockpitPortal.IQuestion[] = null)
 	{
 		this.Name = name;
 		this.CanGoToNextSlide = canGoToNextSlide;
-		this.Data = data;
+		this.Questions = questions;
 	}
 }
 
-export = SlideData;
+export = Slide;

@@ -1,38 +1,33 @@
-﻿import SlideData = require("Models/SlideData");
-import QuestionData = require("Models/QuestionData");
+﻿import SlideModel = require("Models/Slide");
+import QuestionModel = require("Models/Question");
+import ExperimentManager = require("ExperimentManager");
 
 class Default
 {
-	private _slideData:SlideData;
-	public Questions: QuestionData[] = [];
+	private _slide: SlideModel;
+	public Questions: QuestionModel[] = [];
 
-	constructor(slideData: SlideData)
+	constructor(slide: SlideModel)
 	{
-		this._slideData = slideData;
+		this._slide = slide;
 
-		for (var i = 0; i < slideData.Data.Questions.length; i++)
-			this.Questions.push(new QuestionData(slideData.Data.Questions[i], () => this.AnswerChanged()));
+		for (var i = 0; i < slide.Questions.length; i++)
+			this.Questions.push(new QuestionModel(slide.Questions[i], question => this.AnswerChanged(question)));
 	}
 
-	private AnswerChanged():void
+	private AnswerChanged(question: QuestionModel):void
 	{
-		var allQuestionsAnswered = true;
+		ExperimentManager.SaveQuestionAnswer(question.Id, question.UserAnswer());
 
-		var data:string[] = [];
+		var allQuestionsAnswered = true;
 
 		for (var i = 0; i < this.Questions.length; i++)
 		{
-			var question = this.Questions[i];
-			var answer = question.UserInput();
-
-			if (answer == null)
+			if (this.Questions[i].UserAnswer() == null)
 				allQuestionsAnswered = false;
-			else
-				data.push(question.Data.Id + ": " + answer);
 		}
 
-		this._slideData.UserInput = data.join(", ");
-		this._slideData.CanGoToNextSlide(allQuestionsAnswered);
+		this._slide.CanGoToNextSlide(allQuestionsAnswered);
 	}
 }
 

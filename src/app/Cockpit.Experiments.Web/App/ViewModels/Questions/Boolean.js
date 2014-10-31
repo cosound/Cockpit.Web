@@ -4,18 +4,22 @@
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "ViewModels/Questions/QuestionBase"], function(require, exports, QuestionBase) {
+define(["require", "exports", "knockout", "ViewModels/Questions/QuestionBase"], function(require, exports, knockout, QuestionBase) {
     var Boolean = (function (_super) {
         __extends(Boolean, _super);
-        function Boolean() {
-            _super.apply(this, arguments);
-        }
-        Boolean.prototype.Initialize = function () {
-            this.Id = this.Data.Id;
-            this.Text = this.Data.Value;
+        function Boolean(question) {
+            var _this = this;
+            _super.call(this, question);
+            this.Answer = knockout.observable(null);
 
-            this.Answer = this.UserInput;
-        };
+            this.Id = this.Data.Id;
+            this.Text = this.Data.Data["Text"];
+            this.AnswerType = "BooleanAnswer, 1.0";
+
+            this.Answer.subscribe(function (v) {
+                return _this.SetAnswer({ Value: v });
+            });
+        }
         return Boolean;
     })(QuestionBase);
 

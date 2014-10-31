@@ -3,36 +3,39 @@ import ExperimentManager = require("ExperimentManager");
 import CockpitPortal = require("CockpitPortal");
 import NavigationPage = require("ViewModels/NavigationPage");
 import Navigation = require("Navigation");
-import SlideData = require("Models/SlideData");
+import SlideModel = require("Models/Slide");
 
 class SlideShell
 {
 	public Name: KnockoutObservable<string> = knockout.observable<string>();
 
-	public SlideData: KnockoutObservable<SlideData> = knockout.observable<SlideData>();
+	public SlideData: KnockoutObservable<SlideModel> = knockout.observable<SlideModel>();
 
 	public SlideIndex:KnockoutObservable<number> = knockout.observable<number>(0);
 	public SlideNumber:KnockoutComputed<number>;
-	public NumberOfSlides: KnockoutObservable<number> = knockout.observable<number>(0);
+	public NumberOfSlides: KnockoutObservable<number>;
 	public CanGoToNextSlide: KnockoutObservable<boolean> = knockout.observable<boolean>(false);
 	public AreFooterControlsVisible: KnockoutObservable<boolean> = knockout.observable<boolean>(true);
+	public IsLoadingSlide: KnockoutComputed<boolean>;
 
-	private _experimentLoadedSubscription: KnockoutSubscription;
-
-	private _experiment:CockpitPortal.IQuestionnaire;
+	private _experimentMangerIsReadySubscription: KnockoutSubscription;
 
 	constructor()
 	{
 		this.SlideNumber = knockout.computed(() => this.SlideIndex() + 1);
+		this.IsLoadingSlide = knockout.computed(() => this.SlideData() == null);
+		this.NumberOfSlides = ExperimentManager.NumberOfSlides;
 
-		if (ExperimentManager.ExperimentLoaded())
-			this.LoadExperiment();
+		this.Name("My Experiment");
+
+		if (ExperimentManager.IsReady())
+			this.LoadSlide(0);
 		else
 		{
-			this._experimentLoadedSubscription = ExperimentManager.ExperimentLoaded.subscribe(l =>
+			this._experimentMangerIsReadySubscription = ExperimentManager.IsReady.subscribe(l =>
 			{
 				this.CleanExperimentLoaded();
-				this.LoadExperiment();
+				this.LoadSlide(0);
 			});
 		}
 	}
@@ -41,41 +44,32 @@ class SlideShell
 	{
 		this.CanGoToNextSlide(false);
 
-		ExperimentManager.SaveSlideData(this.SlideIndex(), this.SlideData().UserInput);
-
 		this.LoadSlide(this.SlideIndex() + 1);
-	}
-
-	private LoadExperiment():void
-	{
-		this._experiment = ExperimentManager.Experiment();
-		this.Name(this._experiment.Name);
-		this.NumberOfSlides(this._experiment.Slides.length);
-		this.LoadSlide(0);
 	}
 
 	private LoadSlide(index:number):void
 	{
 		this.SlideIndex(index);
+		this.SlideData(null);
 
-		if (index < this._experiment.Slides.length)
-			this.SlideData(new SlideData("Slides/Default", this.CanGoToNextSlide, this._experiment.Slides[index]));
+		if (index < this.NumberOfSlides() || index == 0)
+			ExperimentManager.LoadSlide(this.SlideIndex(), questions => this.SlideData(new SlideModel("Slides/Default", this.CanGoToNextSlide, questions)));
 		else
 		{
 			this.AreFooterControlsVisible(false);
-			this.SlideData(new SlideData("Slides/Completed"));
+			this.SlideData(new SlideModel("Slides/Completed"));
 		}
 	}
 
 	private CleanExperimentLoaded():void
 	{
-		this._experimentLoadedSubscription.dispose();
-		this._experimentLoadedSubscription = null;
+		this._experimentMangerIsReadySubscription.dispose();
+		this._experimentMangerIsReadySubscription = null;
 	}
 
 	public dispose():void
 	{
-		if (this._experimentLoadedSubscription)
+		if (this._experimentMangerIsReadySubscription)
 			this.CleanExperimentLoaded();
 	}
 }

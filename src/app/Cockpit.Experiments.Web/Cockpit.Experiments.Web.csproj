@@ -73,9 +73,9 @@
     <TypeScriptCompile Include="App\CockpitPortal.ts" />
     <TypeScriptCompile Include="App\Configuration.ts" />
     <TypeScriptCompile Include="App\Main.ts" />
-    <TypeScriptCompile Include="App\Models\QuestionData.ts" />
-    <TypeScriptCompile Include="App\Models\Questions.ts" />
-    <TypeScriptCompile Include="App\Models\SlideData.ts" />
+    <TypeScriptCompile Include="App\Models\Answer.ts" />
+    <TypeScriptCompile Include="App\Models\Question.ts" />
+    <TypeScriptCompile Include="App\Models\Slide.ts" />
     <TypeScriptCompile Include="App\ViewModels\NameConventionLoader.ts" />
     <TypeScriptCompile Include="App\ViewModels\Questions\AB.ts" />
     <TypeScriptCompile Include="App\ViewModels\Questions\Boolean.ts" />
