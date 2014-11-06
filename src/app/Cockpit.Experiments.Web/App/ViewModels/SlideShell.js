@@ -27,6 +27,8 @@ define(["require", "exports", "knockout", "ExperimentManager", "Models/Slide"], 
         SlideShell.prototype.LoadSlide = function (index) {
             var _this = this;
             this.SlideIndex(index);
+            if (this.SlideData() != null)
+                this.SlideData().Complete();
             this.SlideData(null);
             if (index < this.NumberOfSlides() || index == 0)
                 ExperimentManager.LoadSlide(this.SlideIndex(), function (questions) { return _this.SlideData(new SlideModel("Slides/Default", _this.CanGoToNextSlide, questions)); });

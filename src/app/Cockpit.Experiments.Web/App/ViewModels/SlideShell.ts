@@ -50,6 +50,8 @@ class SlideShell
 	private LoadSlide(index:number):void
 	{
 		this.SlideIndex(index);
+
+		if (this.SlideData() != null) this.SlideData().Complete();
 		this.SlideData(null);
 
 		if (index < this.NumberOfSlides() || index == 0)

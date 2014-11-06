@@ -6,7 +6,12 @@ class End extends QuestionBase
 {
 	constructor(question: QuestionModel)
 	{
-		super(question);
+		super(question, false);
+	}
+
+	public SlideCompleted(): void
+	{
+		this.SetAnswer({ Value: new Date() });
 	}
 }
 

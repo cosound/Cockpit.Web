@@ -6,8 +6,11 @@ class Start extends QuestionBase
 {
 	constructor(question: QuestionModel)
 	{
-		super(question);
+		super(question, false);
+	}
 
+	public SlideLoaded(): void
+	{
 		this.SetAnswer({ Value: new Date() });
 	}
 }

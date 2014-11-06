@@ -7,6 +7,10 @@ define(["require", "exports"], function (require, exports) {
             this.CanGoToNextSlide = canGoToNextSlide;
             this.Questions = questions;
         }
+        Slide.prototype.Complete = function () {
+            if (this.SlideCompleted != null)
+                this.SlideCompleted();
+        };
         return Slide;
     })();
     return Slide;

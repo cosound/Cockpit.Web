@@ -8,8 +8,11 @@ define(["require", "exports", "ViewModels/Questions/QuestionBase"], function (re
     var End = (function (_super) {
         __extends(End, _super);
         function End(question) {
-            _super.call(this, question);
+            _super.call(this, question, false);
         }
+        End.prototype.SlideCompleted = function () {
+            this.SetAnswer({ Value: new Date() });
+        };
         return End;
     })(QuestionBase);
     return End;

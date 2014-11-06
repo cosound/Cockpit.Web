@@ -11,14 +11,12 @@ class Introduction extends QuestionBase
 
 	constructor(question: QuestionModel)
 	{
-		super(question);
+		super(question, false);
 
 		this.Id = this.Data.Id;
 		this.Header = this.Data.Data["labelHeader"];
 		this.Text = this.Data.Data["textContent"];
 		this.ImageUrl = this.Data.Data["imageObject"];
-
-		this.Data.HasInput = false;
 	}
 }
 

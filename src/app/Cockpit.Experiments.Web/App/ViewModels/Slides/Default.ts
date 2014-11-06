@@ -1,30 +1,60 @@
 ﻿import SlideModel = require("Models/Slide");
 import QuestionModel = require("Models/Question");
 import ExperimentManager = require("ExperimentManager");
+import CockpitPortal = require("CockpitPortal");
 
 class Default
 {
 	private _slide: SlideModel;
-	private _uiLessQuestions:any[] = [];
+	private _uiLessQuestions: IQuestionViewModel[] = [];
 	public Questions: QuestionModel[] = [];
 
 	constructor(slide: SlideModel)
 	{
 		this._slide = slide;
+		slide.SlideCompleted = () => this.SlideCompleted();
 
-		for (var i = 0; i < slide.Questions.length; i++)
+		this.InitializeQuestions(slide.Questions);
+	}
+
+	private InitializeQuestions(questions: CockpitPortal.IQuestion[]):void
+	{
+		var isFinished = false;
+		var numberToLoad = 0;
+
+		for (var i = 0; i < questions.length; i++)
 		{
-			var questionModel = new QuestionModel(slide.Questions[i], question => this.AnswerChanged(question));
+			var questionModel = new QuestionModel(questions[i], question => this.AnswerChanged(question));
 			this.Questions.push(questionModel);
 
 			if (!questionModel.HasUIElement)
 			{
-				require(["ViewModels/" + questionModel.Type], (vm:any) =>
+				numberToLoad++;
+				require(["ViewModels/" + questionModel.Type], (vm: any) =>
 				{
 					this._uiLessQuestions.push(new vm(questionModel));
+
+					if (isFinished && --numberToLoad == 0) this.SlideLoaded();
 				});
 			}
 		}
+
+		if (numberToLoad == 0)
+			this.SlideLoaded();
+		else
+			isFinished = true;
+	}
+
+	private SlideLoaded(): void
+	{
+		for (var i = 0; i < this._uiLessQuestions.length; i++)
+			this._uiLessQuestions[i].SlideLoaded();
+	}
+
+	private SlideCompleted():void
+	{
+		for (var i = 0; i < this._uiLessQuestions.length; i++)
+			this._uiLessQuestions[i].SlideCompleted();
 	}
 
 	private AnswerChanged(question: QuestionModel):void
@@ -35,7 +65,7 @@ class Default
 
 		for (var i = 0; i < this.Questions.length; i++)
 		{
-			if (this.Questions[i].HasInput && this.Questions[i].UserAnswer() == null)
+			if (this.Questions[i].RequiresInput && this.Questions[i].UserAnswer() == null)
 				allQuestionsAnswered = false;
 		}
 

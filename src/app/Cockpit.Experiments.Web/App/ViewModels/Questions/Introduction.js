@@ -8,12 +8,11 @@ define(["require", "exports", "ViewModels/Questions/QuestionBase"], function (re
     var Introduction = (function (_super) {
         __extends(Introduction, _super);
         function Introduction(question) {
-            _super.call(this, question);
+            _super.call(this, question, false);
             this.Id = this.Data.Id;
             this.Header = this.Data.Data["labelHeader"];
             this.Text = this.Data.Data["textContent"];
             this.ImageUrl = this.Data.Data["imageObject"];
-            this.Data.HasInput = false;
         }
         return Introduction;
     })(QuestionBase);
