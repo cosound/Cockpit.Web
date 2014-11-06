@@ -12,7 +12,7 @@
     exports.SetId = SetId;
 
     function LoadSlide(index, callback) {
-        CockpitPortal.Questionnaire.Get(_id, index).WithCallback(function (response) {
+        CockpitPortal.Question.Get(_id, index).WithCallback(function (response) {
             if (response.Error != null)
                 throw new Error("Failed to get slide: " + response.Error.Message);
 

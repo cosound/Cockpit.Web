@@ -17,7 +17,7 @@ export function SetId(id: string): void
 
 export function LoadSlide(index:number, callback:(questions:CockpitPortal.IQuestion[])=>void ):void
 {
-	CockpitPortal.Questionnaire.Get(_id, index).WithCallback(response =>
+	CockpitPortal.Question.Get(_id, index).WithCallback(response =>
 	{
 		if (response.Error != null)
 			throw new Error("Failed to get slide: " + response.Error.Message);

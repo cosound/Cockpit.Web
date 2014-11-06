@@ -8,14 +8,14 @@ function Initialize():void
 	Client = CHAOS.Portal.Client.Initialize(Configuration.PortalPath);
 }
 
-export class Questionnaire
+export class Question
 {
 	public static Get(id: string, index:number, serviceCaller: CHAOS.Portal.Client.IServiceCaller = null): CHAOS.Portal.Client.ICallState<IQuestion>
 	{
 		if (serviceCaller == null)
 			serviceCaller = CHAOS.Portal.Client.ServiceCallerService.GetDefaultCaller();
 
-		return serviceCaller.CallService("Questionnaire/Get", CHAOS.Portal.Client.HttpMethod.Get, { id: id, index: index}, false);
+		return serviceCaller.CallService("Question/Get", CHAOS.Portal.Client.HttpMethod.Get, { id: id, index: index}, false);
 	}
 }
 

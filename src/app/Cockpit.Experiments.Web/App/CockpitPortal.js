@@ -5,19 +5,19 @@
         exports.Client = CHAOS.Portal.Client.Initialize(Configuration.PortalPath);
     }
 
-    var Questionnaire = (function () {
-        function Questionnaire() {
+    var Question = (function () {
+        function Question() {
         }
-        Questionnaire.Get = function (id, index, serviceCaller) {
+        Question.Get = function (id, index, serviceCaller) {
             if (typeof serviceCaller === "undefined") { serviceCaller = null; }
             if (serviceCaller == null)
                 serviceCaller = CHAOS.Portal.Client.ServiceCallerService.GetDefaultCaller();
 
-            return serviceCaller.CallService("Questionnaire/Get", 0 /* Get */, { id: id, index: index }, false);
+            return serviceCaller.CallService("Question/Get", 0 /* Get */, { id: id, index: index }, false);
         };
-        return Questionnaire;
+        return Question;
     })();
-    exports.Questionnaire = Questionnaire;
+    exports.Question = Question;
 
     var Answer = (function () {
         function Answer() {
