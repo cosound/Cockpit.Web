@@ -1,4 +1,4 @@
-﻿define(["require", "exports"], function(require, exports) {
+define(["require", "exports"], function (require, exports) {
     var Answer = (function () {
         function Answer(type, data) {
             this.Type = type;
@@ -6,8 +6,6 @@
         }
         return Answer;
     })();
-
-    
     return Answer;
 });
 //# sourceMappingURL=Answer.js.map

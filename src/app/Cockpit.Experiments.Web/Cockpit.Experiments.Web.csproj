@@ -9,7 +9,7 @@
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
-    <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
+    <TypeScriptToolsVersion>1.1</TypeScriptToolsVersion>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -79,8 +79,10 @@
     <TypeScriptCompile Include="App\ViewModels\NameConventionLoader.ts" />
     <TypeScriptCompile Include="App\ViewModels\Questions\AB.ts" />
     <TypeScriptCompile Include="App\ViewModels\Questions\Boolean.ts" />
+    <TypeScriptCompile Include="App\ViewModels\Questions\End.ts" />
     <TypeScriptCompile Include="App\ViewModels\Questions\Introduction.ts" />
     <TypeScriptCompile Include="App\ViewModels\Questions\QuestionBase.ts" />
+    <TypeScriptCompile Include="App\ViewModels\Questions\Start.ts" />
     <TypeScriptCompile Include="App\ViewModels\Slides\Completed.ts" />
     <TypeScriptCompile Include="App\ViewModels\Slides\Default.ts" />
     <TypeScriptCompile Include="App\NameConventionLoader.ts" />

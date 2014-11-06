@@ -1,4 +1,4 @@
-﻿define(["require", "exports", "Models/Answer"], function(require, exports, AnswerModel) {
+define(["require", "exports", "Models/Answer"], function (require, exports, AnswerModel) {
     var QuestionsBase = (function () {
         function QuestionsBase(question) {
             this.Data = question;
@@ -8,8 +8,6 @@
         };
         return QuestionsBase;
     })();
-
-    
     return QuestionsBase;
 });
 //# sourceMappingURL=QuestionBase.js.map

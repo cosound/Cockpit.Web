@@ -17,6 +17,8 @@ class Introduction extends QuestionBase
 		this.Header = this.Data.Data["labelHeader"];
 		this.Text = this.Data.Data["textContent"];
 		this.ImageUrl = this.Data.Data["imageObject"];
+
+		this.Data.HasInput = false;
 	}
 }
 

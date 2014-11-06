@@ -1,29 +1,23 @@
-﻿var __extends = this.__extends || function (d, b) {
+var __extends = this.__extends || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "knockout", "ViewModels/Questions/QuestionBase"], function(require, exports, knockout, QuestionBase) {
+define(["require", "exports", "knockout", "ViewModels/Questions/QuestionBase"], function (require, exports, knockout, QuestionBase) {
     var Boolean = (function (_super) {
         __extends(Boolean, _super);
         function Boolean(question) {
             var _this = this;
             _super.call(this, question);
             this.Answer = knockout.observable(null);
-
             this.Id = this.Data.Id;
             this.Text = this.Data.Data["Text"];
             this.AnswerType = "BooleanAnswer, 1.0";
-
-            this.Answer.subscribe(function (v) {
-                return _this.SetAnswer({ Value: v });
-            });
+            this.Answer.subscribe(function (v) { return _this.SetAnswer({ Value: v }); });
         }
         return Boolean;
     })(QuestionBase);
-
-    
     return Boolean;
 });
 //# sourceMappingURL=Boolean.js.map

@@ -1,11 +1,11 @@
-﻿requirejs.config({
+requirejs.config({
     paths: {
         text: '../Lib/text/text',
         jquery: '../Lib/jQuery/jquery.min',
         routie: '../Lib/Routie/routie.min',
         knockout: '../Lib/knockout/knockout',
         bootstrap: '../Lib/bootstrap/js/bootstrap.min',
-        Portal: '../Lib/PortalClient/PortalClient.min'
+        Portal: '../Lib/PortalClient/PortalClient.min',
     },
     map: {
         '*': {
@@ -30,10 +30,8 @@
     waitSeconds: 20,
     urlArgs: "bust=" + CacheBuster
 });
-
 require(['NameConventionLoader', 'knockout', 'bootstrap', 'Portal', 'css!Styles/Default'], function (nameConventionLoader, knockout) {
     knockout.components.loaders.push(new nameConventionLoader("Cockpit"));
-
     knockout.applyBindings();
 });
 //# sourceMappingURL=Main.js.map

@@ -1,8 +1,8 @@
-﻿import SlideData = require("Models/SlideData");
+﻿import SlideModel = require("Models/Slide");
 
 class Completed
 {
-	constructor(slideData:SlideData)
+	constructor(slideData: SlideModel)
 	{
 		
 	}

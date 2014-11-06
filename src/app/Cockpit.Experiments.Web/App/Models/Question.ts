@@ -8,8 +8,9 @@ class Question
 	public Id: string;
 	public Type: string;
 	public HasUIElement: boolean;
-	public Data: {[key:string]:string} = {};
+	public Data: {[key:string]:any} = {};
 	public UserAnswer: KnockoutObservable<Answer> = knockout.observable<Answer>();
+	public HasInput:boolean = true;
 
 	constructor(question: CockpitPortal.IQuestion, answerChangedCallback: (question: Question)=>void)
 	{

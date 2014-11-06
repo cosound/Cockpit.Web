@@ -13,7 +13,7 @@ class QuestionsBase
 		this.Data = question;
 	}
 
-	public SetAnswer(data: { [key: string]: string }):void
+	public SetAnswer(data: { [key: string]: any }):void
 	{
 		this.Data.UserAnswer(new AnswerModel(this.AnswerType, data));
 	}

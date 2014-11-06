@@ -1,4 +1,4 @@
-﻿define(["require", "exports", "knockout"], function(require, exports, knockout) {
+define(["require", "exports", "knockout"], function (require, exports, knockout) {
     var NavigationPage = (function () {
         function NavigationPage(name, data) {
             this.Name = knockout.observable();
@@ -8,8 +8,6 @@
         }
         return NavigationPage;
     })();
-
-    
     return NavigationPage;
 });
 //# sourceMappingURL=NavigationPage.js.map
