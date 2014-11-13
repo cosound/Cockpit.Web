@@ -24,12 +24,14 @@
 
                 if (!questionModel.HasUIElement) {
                     numberToLoad++;
-                    require(["ViewModels/" + questionModel.Type], function (vm) {
-                        _this._uiLessQuestions.push(new vm(questionModel));
+                    (function (model) {
+                        require(["ViewModels/" + questionModel.Type], function (vm) {
+                            _this._uiLessQuestions.push(new vm(model));
 
-                        if (isFinished && --numberToLoad == 0)
-                            _this.SlideLoaded();
-                    });
+                            if (isFinished && --numberToLoad == 0)
+                                _this.SlideLoaded();
+                        });
+                    })(questionModel);
                 }
             }
 

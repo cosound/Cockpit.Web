@@ -35,7 +35,7 @@ export interface IQuestion
 	Id:string;
 	Type: string;
 	UserAnswer: string;
-	Data:string[];
+	Data:{[key:string]:any};
 }
 
 Initialize();

@@ -84,6 +84,7 @@
     <TypeScriptCompile Include="App\ViewModels\Questions\QuestionViewModel.d.ts" />
     <TypeScriptCompile Include="App\ViewModels\Questions\QuestionBase.ts" />
     <TypeScriptCompile Include="App\ViewModels\Questions\Start.ts" />
+    <TypeScriptCompile Include="App\ViewModels\Questions\Unsupported.ts" />
     <TypeScriptCompile Include="App\ViewModels\Slides\Completed.ts" />
     <TypeScriptCompile Include="App\ViewModels\Slides\Default.ts" />
     <TypeScriptCompile Include="App\NameConventionLoader.ts" />

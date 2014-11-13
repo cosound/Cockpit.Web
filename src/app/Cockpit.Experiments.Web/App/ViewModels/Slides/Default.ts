@@ -30,12 +30,14 @@ class Default
 			if (!questionModel.HasUIElement)
 			{
 				numberToLoad++;
-				require(["ViewModels/" + questionModel.Type], (vm: any) =>
-				{
-					this._uiLessQuestions.push(new vm(questionModel));
+				((model: QuestionModel) => {
+					require(["ViewModels/" + questionModel.Type], (vm: any) => {
+						this._uiLessQuestions.push(new vm(model));
 
-					if (isFinished && --numberToLoad == 0) this.SlideLoaded();
-				});
+						if (isFinished && --numberToLoad == 0) this.SlideLoaded();
+					});
+				})(questionModel);
+
 			}
 		}
 

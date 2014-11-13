@@ -4,22 +4,15 @@
             var _this = this;
             this.Data = {};
             this.UserAnswer = knockout.observable();
-            var questionMap = QuestionMap.Map[question.Type];
-
-            if (!questionMap)
-                throw new Error("Question map for " + question.Type + " not found");
+            var questionMap = QuestionMap.Get(question.Type);
 
             this.Id = question.Id;
             this.Type = questionMap.Type;
             this.HasUIElement = questionMap.HasUIElement;
+            this.APIType = question.Type;
 
-            if (question.Data) {
-                for (var i = 0; i < question.Data.length; i++) {
-                    var data = question.Data[i];
-                    var key = data.substring(1, data.indexOf(","));
-                    this.Data[key] = data.substring(key.length + 3, data.length - 1);
-                }
-            }
+            if (question.Data)
+                this.Data = question.Data;
 
             this.UserAnswer.subscribe(function () {
                 return answerChangedCallback(_this);

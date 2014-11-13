@@ -7,6 +7,7 @@ class Question
 {
 	public Id: string;
 	public Type: string;
+	public APIType:string;
 	public HasUIElement: boolean;
 	public Data: {[key:string]:any} = {};
 	public UserAnswer: KnockoutObservable<Answer> = knockout.observable<Answer>();
@@ -14,25 +15,17 @@ class Question
 
 	constructor(question: CockpitPortal.IQuestion, answerChangedCallback: (question: Question)=>void)
 	{
-		var questionMap = QuestionMap.Map[question.Type];
-
-		if (!questionMap) throw new Error("Question map for " + question.Type + " not found");
+		var questionMap = QuestionMap.Get(question.Type);
 
 		this.Id = question.Id;
 		this.Type = questionMap.Type;
 		this.HasUIElement = questionMap.HasUIElement;
+		this.APIType = question.Type;
 		
 		//this.UserAnswer(question.UserAnswer);
 
 		if (question.Data)
-		{
-			for (var i = 0; i < question.Data.length; i++)
-			{
-				var data = question.Data[i];
-				var key = data.substring(1, data.indexOf(","));
-				this.Data[key] = data.substring(key.length + 3, data.length - 1);
-			}
-		}
+			this.Data = question.Data;
 			
 		this.UserAnswer.subscribe(() => answerChangedCallback(this));
 	}
