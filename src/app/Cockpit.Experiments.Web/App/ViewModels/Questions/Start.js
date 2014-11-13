@@ -11,7 +11,8 @@ define(["require", "exports", "ViewModels/Questions/QuestionBase"], function (re
             _super.call(this, question, false);
         }
         Start.prototype.SlideLoaded = function () {
-            this.SetAnswer({ Value: new Date() });
+            if (!this.HasAnswer())
+                this.SetAnswer({ Value: new Date() });
         };
         return Start;
     })(QuestionBase);

@@ -1,11 +1,11 @@
 ﻿class Answer
 {
-	public Type: string;
+	public Id: string;
 	public Data: {[key:string]: string};
 
-	constructor(type: string, data: { [key: string]: string })
+	constructor(id:string, data: { [key: string]: string })
 	{
-		this.Type = type;
+		this.Id = id;
 		this.Data = data;
 	}
 }

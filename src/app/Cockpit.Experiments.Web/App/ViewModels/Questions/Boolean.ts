@@ -14,8 +14,8 @@ class Boolean extends QuestionBase
 
 		this.Id = this.Data.Id;
 		this.Text = this.Data.Data["Text"];
-		this.AnswerType = "BooleanAnswer, 1.0";
 
+		if (this.HasAnswer()) this.Answer(this.GetAsnwer()["Value"]);
 		this.Answer.subscribe(v => this.SetAnswer({ Value: v }));
 	}
 }

@@ -1,4 +1,4 @@
-﻿define(["require", "exports", "knockout", "QuestionMap"], function(require, exports, knockout, QuestionMap) {
+﻿define(["require", "exports", "knockout", "Models/Answer", "QuestionMap"], function(require, exports, knockout, Answer, QuestionMap) {
     var Question = (function () {
         function Question(question, answerChangedCallback) {
             var _this = this;
@@ -10,6 +10,9 @@
             this.Type = questionMap.Type;
             this.HasUIElement = questionMap.HasUIElement;
             this.APIType = question.Type;
+
+            if (question.UserAnswer)
+                this.UserAnswer(new Answer(question.Id, question.UserAnswer.Data));
 
             if (question.Data)
                 this.Data = question.Data;

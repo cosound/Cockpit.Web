@@ -37,7 +37,6 @@ class Default
 						if (isFinished && --numberToLoad == 0) this.SlideLoaded();
 					});
 				})(questionModel);
-
 			}
 		}
 

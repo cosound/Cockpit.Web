@@ -1,14 +1,11 @@
-﻿define(["require", "exports"], function(require, exports) {
+define(["require", "exports"], function (require, exports) {
     var _unsupported = "Unsupported";
     var _map;
-
     function Get(key) {
         var map = _map[key];
-
         return map != null ? map : _map[_unsupported];
     }
     exports.Get = Get;
-
     function Initialize() {
         _map = {
             "Monitor:Event:StartAtDateTime": new QuestionMap("Questions/Start", false),
@@ -17,20 +14,17 @@
             "BooleanQuestion, 1.0": new QuestionMap("Questions/Boolean"),
             "AbQuestion, 1.0": new QuestionMap("Questions/AB")
         };
-
         _map[_unsupported] = new QuestionMap("Questions/Unsupported", false);
     }
-
     var QuestionMap = (function () {
         function QuestionMap(type, hasUIElement) {
-            if (typeof hasUIElement === "undefined") { hasUIElement = true; }
+            if (hasUIElement === void 0) { hasUIElement = true; }
             this.Type = type;
             this.HasUIElement = hasUIElement;
         }
         return QuestionMap;
     })();
     exports.QuestionMap = QuestionMap;
-
     Initialize();
 });
 //# sourceMappingURL=QuestionMap.js.map

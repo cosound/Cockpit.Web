@@ -18,8 +18,8 @@ class AB extends QuestionBase
 		this.Text = this.Data.Data["Text"];
 		this.Url1 = this.Data.Data["Url1"];
 		this.Url2 = this.Data.Data["Url2"];
-		this.AnswerType = "ABAnswer, 1.0";
 
+		if (this.HasAnswer()) this.Answer(this.GetAsnwer()["Value"]);
 		this.Answer.subscribe(v => this.SetAnswer({ Value: v }));
 	}
 }

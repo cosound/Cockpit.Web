@@ -34,8 +34,14 @@ export interface IQuestion
 {
 	Id:string;
 	Type: string;
-	UserAnswer: string;
+	UserAnswer: IAnswer;
 	Data:{[key:string]:any};
+}
+
+export interface IAnswer
+{
+	Id: string;
+	Data: { [key: string]: any };
 }
 
 Initialize();

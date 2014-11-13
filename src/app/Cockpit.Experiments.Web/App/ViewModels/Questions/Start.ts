@@ -11,7 +11,8 @@ class Start extends QuestionBase
 
 	public SlideLoaded(): void
 	{
-		this.SetAnswer({ Value: new Date() });
+		if(!this.HasAnswer())
+			this.SetAnswer({ Value: new Date() });
 	}
 }
 

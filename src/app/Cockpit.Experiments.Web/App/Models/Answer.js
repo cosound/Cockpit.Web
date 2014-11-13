@@ -1,7 +1,7 @@
 define(["require", "exports"], function (require, exports) {
     var Answer = (function () {
-        function Answer(type, data) {
-            this.Type = type;
+        function Answer(id, data) {
+            this.Id = id;
             this.Data = data;
         }
         return Answer;

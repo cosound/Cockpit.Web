@@ -6,17 +6,24 @@ import AnswerModel = require("Models/Answer");
 class QuestionsBase implements IQuestionViewModel
 {
 	public Data: QuestionModel;
-	public AnswerType:string;
+	public HasAnswer:KnockoutComputed<boolean>;
 
 	constructor(question: QuestionModel, requiresInput:boolean = true)
 	{
 		this.Data = question;
 		this.Data.RequiresInput = requiresInput;
+		this.HasAnswer = knockout.computed(() => this.Data.UserAnswer() != null);
+	}
+
+	public GetAsnwer(): { [key: string]: string } 
+	{
+		return this.HasAnswer() ? this.Data.UserAnswer().Data : null;
 	}
 
 	public SetAnswer(data: { [key: string]: any }):void
 	{
-		this.Data.UserAnswer(new AnswerModel(this.AnswerType, data));
+		var id = this.Data.UserAnswer() == null ? null : this.Data.UserAnswer().Id;
+		this.Data.UserAnswer(new AnswerModel(id, data));
 	}
 
 	public SlideLoaded(): void

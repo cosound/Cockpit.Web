@@ -22,7 +22,8 @@ class Question
 		this.HasUIElement = questionMap.HasUIElement;
 		this.APIType = question.Type;
 		
-		//this.UserAnswer(question.UserAnswer);
+		if (question.UserAnswer)
+			this.UserAnswer(new Answer(question.Id, question.UserAnswer.Data));
 
 		if (question.Data)
 			this.Data = question.Data;
