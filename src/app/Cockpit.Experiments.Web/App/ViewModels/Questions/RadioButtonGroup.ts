@@ -2,12 +2,12 @@
 import QuestionBase = require("ViewModels/Questions/QuestionBase");
 import QuestionModel = require("Models/Question");
 
-class AB extends QuestionBase
+class RadioButtonGroup extends QuestionBase
 {
 	public Id: string;
-	public Text: string;
-	public Url1: string;
-	public Url2: string;
+	public Label: string;
+	public Url: string;
+	public Items: string[];
 	public Answer: KnockoutObservable<string> = knockout.observable<string>(null);
 
 	constructor(question: QuestionModel)
@@ -15,13 +15,13 @@ class AB extends QuestionBase
 		super(question);
 
 		this.Id = this.Model.Id;
-		this.Text = this.GetData("Text");
-		this.Url1 = this.GetData("Url1");
-		this.Url2 = this.GetData("Url2");
+		this.Label = this.GetData("Label");
+		this.Url = this.GetData("Url");
+		this.Items = this.GetData("Items");
 
 		if (this.HasAnswer()) this.Answer(this.GetAsnwer()["Value"]);
 		this.Answer.subscribe(v => this.SetAnswer({ Value: v }));
 	}
 }
 
-export = AB;
+export = RadioButtonGroup;

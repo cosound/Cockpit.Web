@@ -5,25 +5,30 @@ import AnswerModel = require("Models/Answer");
 
 class QuestionsBase implements IQuestionViewModel
 {
-	public Data: QuestionModel;
-	public HasAnswer:KnockoutComputed<boolean>;
+	protected Model: QuestionModel;
+	protected HasAnswer:KnockoutComputed<boolean>;
 
 	constructor(question: QuestionModel, requiresInput:boolean = true)
 	{
-		this.Data = question;
-		this.Data.RequiresInput = requiresInput;
-		this.HasAnswer = knockout.computed(() => this.Data.UserAnswer() != null);
+		this.Model = question;
+		this.Model.RequiresInput = requiresInput;
+		this.HasAnswer = knockout.computed(() => this.Model.UserAnswer() != null);
 	}
 
-	public GetAsnwer(): { [key: string]: string } 
+	protected GetData(key:string):any
 	{
-		return this.HasAnswer() ? this.Data.UserAnswer().Data : null;
+		return this.Model.Data[key];
 	}
 
-	public SetAnswer(data: { [key: string]: any }):void
+	protected GetAsnwer(): { [key: string]: any } 
 	{
-		var id = this.Data.UserAnswer() == null ? null : this.Data.UserAnswer().Id;
-		this.Data.UserAnswer(new AnswerModel(id, data));
+		return this.HasAnswer() ? this.Model.UserAnswer().Data : null;
+	}
+
+	protected SetAnswer(data: { [key: string]: any }):void
+	{
+		var id = this.Model.UserAnswer() == null ? null : this.Model.UserAnswer().Id;
+		this.Model.UserAnswer(new AnswerModel(id, data));
 	}
 
 	public SlideLoaded(): void

@@ -13,10 +13,10 @@ class Introduction extends QuestionBase
 	{
 		super(question, false);
 
-		this.Id = this.Data.Id;
-		this.Header = this.Data.Data["labelHeader"];
-		this.Text = this.Data.Data["textContent"];
-		this.ImageUrl = this.Data.Data["imageObject"];
+		this.Id = this.Model.Id;
+		this.Header = this.GetData("labelHeader");
+		this.Text = this.GetData("textContent");
+		this.ImageUrl = this.GetData("imageObject");
 	}
 }
 

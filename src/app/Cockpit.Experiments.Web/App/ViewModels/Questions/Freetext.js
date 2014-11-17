@@ -5,22 +5,21 @@ var __extends = this.__extends || function (d, b) {
     d.prototype = new __();
 };
 define(["require", "exports", "knockout", "ViewModels/Questions/QuestionBase"], function (require, exports, knockout, QuestionBase) {
-    var AB = (function (_super) {
-        __extends(AB, _super);
-        function AB(question) {
+    var Freetext = (function (_super) {
+        __extends(Freetext, _super);
+        function Freetext(question) {
             var _this = this;
             _super.call(this, question);
             this.Answer = knockout.observable(null);
             this.Id = this.Model.Id;
-            this.Text = this.GetData("Text");
-            this.Url1 = this.GetData("Url1");
-            this.Url2 = this.GetData("Url2");
+            this.Label = this.GetData("Value");
             if (this.HasAnswer())
                 this.Answer(this.GetAsnwer()["Value"]);
+            this.Answer.extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 500 } });
             this.Answer.subscribe(function (v) { return _this.SetAnswer({ Value: v }); });
         }
-        return AB;
+        return Freetext;
     })(QuestionBase);
-    return AB;
+    return Freetext;
 });
-//# sourceMappingURL=AB.js.map
+//# sourceMappingURL=Freetext.js.map

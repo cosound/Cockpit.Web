@@ -12,7 +12,9 @@ define(["require", "exports"], function (require, exports) {
             "Monitor:Event:EndAtDateTime": new QuestionMap("Questions/End", false),
             "introductions_r001": new QuestionMap("Questions/Introduction"),
             "BooleanQuestion, 1.0": new QuestionMap("Questions/Boolean"),
-            "AbQuestion, 1.0": new QuestionMap("Questions/AB")
+            "AbQuestion, 1.0": new QuestionMap("Questions/AB"),
+            "RadioButtonGroup": new QuestionMap("Questions/RadioButtonGroup"),
+            "Response:Freetext": new QuestionMap("Questions/Freetext"),
         };
         _map[_unsupported] = new QuestionMap("Questions/Unsupported", false);
     }

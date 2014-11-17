@@ -21,7 +21,9 @@
     <Content Include="App\Views\NotFound.html" />
     <Content Include="App\Views\Questions\AB.html" />
     <Content Include="App\Views\Questions\Boolean.html" />
+    <Content Include="App\Views\Questions\Freetext.html" />
     <Content Include="App\Views\Questions\Introduction.html" />
+    <Content Include="App\Views\Questions\RadioButtonGroup.html" />
     <Content Include="App\Views\Shell.html" />
     <Content Include="App\Views\Slides\Completed.html" />
     <Content Include="App\Views\Slides\Default.html" />
@@ -80,9 +82,11 @@
     <TypeScriptCompile Include="App\ViewModels\Questions\AB.ts" />
     <TypeScriptCompile Include="App\ViewModels\Questions\Boolean.ts" />
     <TypeScriptCompile Include="App\ViewModels\Questions\End.ts" />
+    <TypeScriptCompile Include="App\ViewModels\Questions\Freetext.ts" />
     <TypeScriptCompile Include="App\ViewModels\Questions\Introduction.ts" />
     <TypeScriptCompile Include="App\ViewModels\Questions\QuestionViewModel.d.ts" />
     <TypeScriptCompile Include="App\ViewModels\Questions\QuestionBase.ts" />
+    <TypeScriptCompile Include="App\ViewModels\Questions\RadioButtonGroup.ts" />
     <TypeScriptCompile Include="App\ViewModels\Questions\Start.ts" />
     <TypeScriptCompile Include="App\ViewModels\Questions\Unsupported.ts" />
     <TypeScriptCompile Include="App\ViewModels\Slides\Completed.ts" />

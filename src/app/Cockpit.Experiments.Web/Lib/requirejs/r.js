@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @license r.js 2.1.14 Copyright (c) 2010-2014, The Dojo Foundation All Rights Reserved.
  * Available via the MIT or new BSD license.
  * see: http://github.com/jrburke/requirejs for details
@@ -6617,18 +6617,18 @@ parseStatement: true, parseSourceElement: true */
             } else {
                 name = toString(property.key.value);
             }
-            kind = (property.kind === 'init') ? PropertyKind.Data : (property.kind === 'get') ? PropertyKind.Get : PropertyKind.Set;
+            kind = (property.kind === 'init') ? PropertyKind.Model : (property.kind === 'get') ? PropertyKind.Get : PropertyKind.Set;
 
             key = '$' + name;
             if (Object.prototype.hasOwnProperty.call(map, key)) {
-                if (map[key] === PropertyKind.Data) {
-                    if (strict && kind === PropertyKind.Data) {
+                if (map[key] === PropertyKind.Model) {
+                    if (strict && kind === PropertyKind.Model) {
                         throwErrorTolerant({}, Messages.StrictDuplicateProperty);
-                    } else if (kind !== PropertyKind.Data) {
+                    } else if (kind !== PropertyKind.Model) {
                         throwErrorTolerant({}, Messages.AccessorDataProperty);
                     }
                 } else {
-                    if (kind === PropertyKind.Data) {
+                    if (kind === PropertyKind.Model) {
                         throwErrorTolerant({}, Messages.AccessorDataProperty);
                     } else if (map[key] & kind) {
                         throwErrorTolerant({}, Messages.AccessorGetSet);
