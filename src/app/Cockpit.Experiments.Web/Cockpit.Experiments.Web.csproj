@@ -21,6 +21,7 @@
     <Content Include="App\Views\NotFound.html" />
     <Content Include="App\Views\Questions\AB.html" />
     <Content Include="App\Views\Questions\Boolean.html" />
+    <Content Include="App\Views\Questions\ContinousScale.html" />
     <Content Include="App\Views\Questions\Freetext.html" />
     <Content Include="App\Views\Questions\Introduction.html" />
     <Content Include="App\Views\Questions\RadioButtonGroup.html" />
@@ -81,6 +82,7 @@
     <TypeScriptCompile Include="App\ViewModels\NameConventionLoader.ts" />
     <TypeScriptCompile Include="App\ViewModels\Questions\AB.ts" />
     <TypeScriptCompile Include="App\ViewModels\Questions\Boolean.ts" />
+    <TypeScriptCompile Include="App\ViewModels\Questions\ContinousScale.ts" />
     <TypeScriptCompile Include="App\ViewModels\Questions\End.ts" />
     <TypeScriptCompile Include="App\ViewModels\Questions\Freetext.ts" />
     <TypeScriptCompile Include="App\ViewModels\Questions\Introduction.ts" />

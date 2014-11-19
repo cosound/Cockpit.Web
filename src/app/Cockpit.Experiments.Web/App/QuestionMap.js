@@ -15,6 +15,7 @@ define(["require", "exports"], function (require, exports) {
             "AbQuestion, 1.0": new QuestionMap("Questions/AB"),
             "RadioButtonGroup": new QuestionMap("Questions/RadioButtonGroup"),
             "Response:Freetext": new QuestionMap("Questions/Freetext"),
+            "ContinousScale": new QuestionMap("Questions/ContinousScale"),
         };
         _map[_unsupported] = new QuestionMap("Questions/Unsupported", false);
     }
