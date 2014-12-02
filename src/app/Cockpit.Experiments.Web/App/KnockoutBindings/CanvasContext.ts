@@ -1,5 +1,4 @@
 ﻿import knockout = require("knockout");
-import jquery = require("jquery");
 
 knockout.bindingHandlers["CanvasContext"] = {
 	init: (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) =>
