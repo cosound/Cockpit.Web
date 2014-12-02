@@ -1,11 +1,11 @@
 define(["require", "exports", "knockout"], function (require, exports, knockout) {
-    knockout.bindingHandlers["Size"] = {
+    knockout.bindingHandlers["Width"] = {
         init: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
             var value = valueAccessor();
-            value(element.getContext("2d"));
+            value(element.width);
         },
         update: function (element, valueAccessor, allBindingsAccessor, viewModel, bindingContext) {
         }
     };
 });
-//# sourceMappingURL=Size.js.map
+//# sourceMappingURL=Width.js.map

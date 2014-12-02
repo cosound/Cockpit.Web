@@ -4,67 +4,120 @@ import QuestionModel = require("Models/Question");
 
 class ContinousScale2D
 {
-	public Context: KnockoutObservable<CanvasRenderingContext2D> = knockout.observable<CanvasRenderingContext2D>();
+	private static BackgroundStrokeColor:string = "#eee";
+	private static BackgroundLineSpacing: number = 10;
+	private static BorderStrokeColor: string = "#000";
+	private static AxisStrokeColor: string = "#000";
+	private static PositionStrokeColor: string = "#000";
+	private static PositionFillColor: string = "#999";
 
-	private _contextSubscription: KnockoutSubscription;
-	private _context:CanvasRenderingContext2D;
+	public Context: KnockoutObservable<CanvasRenderingContext2D> = knockout.observable<CanvasRenderingContext2D>();
+	public Width: KnockoutObservable<number> = knockout.observable<number>();
+	public Height: KnockoutObservable<number> = knockout.observable<number>();
+
+	private _subscriptions: KnockoutSubscription[] = [];
 
 	constructor()
 	{
-		this._contextSubscription = this.Context.subscribe(v => this.ContextChanged(v));
-	}
-
-	public ContextChanged(context:CanvasRenderingContext2D)
-	{
-		this._context = context;
-		this.DrawGrid();
+		this._subscriptions.push(this.Context.subscribe(() => this.Update()));
+		this._subscriptions.push(this.Width.subscribe(() => this.Update()));
+		this._subscriptions.push(this.Height.subscribe(() => this.Update()));
 	}
 
 	public SetPosition(x:number, y:number):void
 	{
-		this._context.clearRect(0, 0, 300, 300);
+		var context = this.Context();
+
+		context.clearRect(0, 0, this.Width(), this.Height());
+		this.DrawBackground();
+
+		context.beginPath();
+
+		context.arc(x, y, 5, 0, Math.PI * 2, false);
+
+		context.closePath();
+
+		context.strokeStyle = ContinousScale2D.PositionStrokeColor;
+		context.stroke();
+		context.fillStyle = ContinousScale2D.PositionFillColor;
+		context.fill();
+	}
+
+	private Update():void
+	{
+		if (this.Context() == null || this.Width() == null || this.Height() == null) return;
+
+		this.DrawBackground();
+	}
+
+	private DrawBackground():void
+	{
 		this.DrawGrid();
-
-		this._context.beginPath();
-
-		this._context.arc(x, y, 5, 0, Math.PI * 2, false);
-
-		this._context.closePath();
-
-		this._context.strokeStyle = "#000";
-		this._context.stroke();
-		this._context.fillStyle = "#999";
-		this._context.fill();
+		this.DrawAxis();
+		this.DrawBorder();
 	}
 
 	private DrawGrid():void
 	{
-		for (var x = 0.5; x < 300; x += 10)
+		var context = this.Context();
+		var width = this.Width();
+		var height = this.Height();
+
+		context.beginPath();
+
+		for (var x = 0.5; x < width; x += ContinousScale2D.BackgroundLineSpacing)
 		{
-			this._context.moveTo(x, 0);
-			this._context.lineTo(x, 300);
+			context.moveTo(x, 0);
+			context.lineTo(x, height);
 		} 
 		
-		for (var y = 0.5; y < 300; y += 10)
+		for (var y = 0.5; y < height; y += ContinousScale2D.BackgroundLineSpacing)
 		{
-			this._context.moveTo(0, y);
-			this._context.lineTo(300, y);
+			context.moveTo(0, y);
+			context.lineTo(width, y);
 		}
 
-		this._context.strokeStyle = "#eee";
-		this._context.stroke();
+		context.strokeStyle = ContinousScale2D.BackgroundStrokeColor;
+		context.stroke();
 	}
 
-	private CleanContextSubscription():void
+	private DrawAxis():void
 	{
-		if (this._contextSubscription == null) return;
-		this._contextSubscription.dispose();
-		this._contextSubscription = null;
+		var context = this.Context();
+		var width = this.Width();
+		var height = this.Height();
+
+		context.beginPath();
+		context.moveTo(0, height / 2);
+		context.lineTo(width, height / 2);
+		context.moveTo(width / 2, 0);
+		context.lineTo(width / 2, height);
+
+		context.strokeStyle = ContinousScale2D.AxisStrokeColor;
+		context.stroke();
+	}
+
+	private DrawBorder(): void
+	{
+		var context = this.Context();
+		var width = this.Width();
+		var height = this.Height();
+
+		context.beginPath();
+		context.moveTo(0, 0);
+		context.lineTo(width, 0);
+		context.lineTo(width, height);
+		context.lineTo(0, height);
+		context.closePath();
+
+		context.strokeStyle = ContinousScale2D.BorderStrokeColor;
+		context.stroke();
 	}
 
 	public dispose():void
 	{
-		this.CleanContextSubscription();
+		for (var i = 0; i < this._subscriptions.length; i++)
+			this._subscriptions[i].dispose();
 	}
 }
 

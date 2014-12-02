@@ -3,44 +3,86 @@ define(["require", "exports", "knockout"], function (require, exports, knockout)
         function ContinousScale2D() {
             var _this = this;
             this.Context = knockout.observable();
-            this._contextSubscription = this.Context.subscribe(function (v) { return _this.ContextChanged(v); });
+            this.Width = knockout.observable();
+            this.Height = knockout.observable();
+            this._subscriptions = [];
+            this._subscriptions.push(this.Context.subscribe(function () { return _this.Update(); }));
+            this._subscriptions.push(this.Width.subscribe(function () { return _this.Update(); }));
+            this._subscriptions.push(this.Height.subscribe(function () { return _this.Update(); }));
         }
-        ContinousScale2D.prototype.ContextChanged = function (context) {
-            this._context = context;
-            this.DrawGrid();
-        };
         ContinousScale2D.prototype.SetPosition = function (x, y) {
-            this._context.clearRect(0, 0, 300, 300);
+            var context = this.Context();
+            context.clearRect(0, 0, this.Width(), this.Height());
+            this.DrawBackground();
+            context.beginPath();
+            context.arc(x, y, 5, 0, Math.PI * 2, false);
+            context.closePath();
+            context.strokeStyle = ContinousScale2D.PositionStrokeColor;
+            context.stroke();
+            context.fillStyle = ContinousScale2D.PositionFillColor;
+            context.fill();
+        };
+        ContinousScale2D.prototype.Update = function () {
+            if (this.Context() == null || this.Width() == null || this.Height() == null)
+                return;
+            this.DrawBackground();
+        };
+        ContinousScale2D.prototype.DrawBackground = function () {
             this.DrawGrid();
-            this._context.beginPath();
-            this._context.arc(x, y, 5, 0, Math.PI * 2, false);
-            this._context.closePath();
-            this._context.strokeStyle = "#000";
-            this._context.stroke();
-            this._context.fillStyle = "#999";
-            this._context.fill();
+            this.DrawAxis();
+            this.DrawBorder();
         };
         ContinousScale2D.prototype.DrawGrid = function () {
-            for (var x = 0.5; x < 300; x += 10) {
-                this._context.moveTo(x, 0);
-                this._context.lineTo(x, 300);
+            var context = this.Context();
+            var width = this.Width();
+            var height = this.Height();
+            context.beginPath();
+            for (var x = 0.5; x < width; x += ContinousScale2D.BackgroundLineSpacing) {
+                context.moveTo(x, 0);
+                context.lineTo(x, height);
             }
-            for (var y = 0.5; y < 300; y += 10) {
-                this._context.moveTo(0, y);
-                this._context.lineTo(300, y);
+            for (var y = 0.5; y < height; y += ContinousScale2D.BackgroundLineSpacing) {
+                context.moveTo(0, y);
+                context.lineTo(width, y);
             }
-            this._context.strokeStyle = "#eee";
-            this._context.stroke();
+            context.strokeStyle = ContinousScale2D.BackgroundStrokeColor;
+            context.stroke();
         };
-        ContinousScale2D.prototype.CleanContextSubscription = function () {
-            if (this._contextSubscription == null)
-                return;
-            this._contextSubscription.dispose();
-            this._contextSubscription = null;
+        ContinousScale2D.prototype.DrawAxis = function () {
+            var context = this.Context();
+            var width = this.Width();
+            var height = this.Height();
+            context.beginPath();
+            context.moveTo(0, height / 2);
+            context.lineTo(width, height / 2);
+            context.moveTo(width / 2, 0);
+            context.lineTo(width / 2, height);
+            context.strokeStyle = ContinousScale2D.AxisStrokeColor;
+            context.stroke();
+        };
+        ContinousScale2D.prototype.DrawBorder = function () {
+            var context = this.Context();
+            var width = this.Width();
+            var height = this.Height();
+            context.beginPath();
+            context.moveTo(0, 0);
+            context.lineTo(width, 0);
+            context.lineTo(width, height);
+            context.lineTo(0, height);
+            context.closePath();
+            context.strokeStyle = ContinousScale2D.BorderStrokeColor;
+            context.stroke();
         };
         ContinousScale2D.prototype.dispose = function () {
-            this.CleanContextSubscription();
+            for (var i = 0; i < this._subscriptions.length; i++)
+                this._subscriptions[i].dispose();
         };
+        ContinousScale2D.BackgroundStrokeColor = "#eee";
+        ContinousScale2D.BackgroundLineSpacing = 10;
+        ContinousScale2D.BorderStrokeColor = "#000";
+        ContinousScale2D.AxisStrokeColor = "#000";
+        ContinousScale2D.PositionStrokeColor = "#000";
+        ContinousScale2D.PositionFillColor = "#999";
         return ContinousScale2D;
     })();
     return ContinousScale2D;
