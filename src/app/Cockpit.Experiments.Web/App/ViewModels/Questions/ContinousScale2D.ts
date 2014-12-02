@@ -10,10 +10,17 @@ class ContinousScale2D
 	private static AxisStrokeColor: string = "#000";
 	private static PositionStrokeColor: string = "#000";
 	private static PositionFillColor: string = "#999";
+	private static LabelColor: string = "#000";
+	private static LabelMargin:number = 5;
 
 	public Context: KnockoutObservable<CanvasRenderingContext2D> = knockout.observable<CanvasRenderingContext2D>();
 	public Width: KnockoutObservable<number> = knockout.observable<number>();
 	public Height: KnockoutObservable<number> = knockout.observable<number>();
+
+	private XMinLabel:string = "Cheap";
+	private XMaxLabel: string = "Expensive";
+	private YMinLabel: string = "Cool";
+	private YMaxLabel: string = "Uncool";
 
 	private _subscriptions: KnockoutSubscription[] = [];
 
@@ -54,6 +61,7 @@ class ContinousScale2D
 	{
 		this.DrawGrid();
 		this.DrawAxis();
+		this.DrawLabels();
 		this.DrawBorder();
 	}
 
@@ -95,6 +103,25 @@ class ContinousScale2D
 
 		context.strokeStyle = ContinousScale2D.AxisStrokeColor;
 		context.stroke();
+	}
+
+	private DrawLabels(): void
+	{
+		var context = this.Context();
+		var width = this.Width();
+		var height = this.Height();
+
+		context.fillStyle = ContinousScale2D.LabelColor;
+		context.textAlign = "left";
+		context.textBaseline = "bottom";
+		context.fillText(this.XMinLabel, ContinousScale2D.LabelMargin, height / 2 - ContinousScale2D.LabelMargin);
+		context.textAlign = "right";
+		context.fillText(this.XMaxLabel, width - ContinousScale2D.LabelMargin, height / 2 - ContinousScale2D.LabelMargin);
+		context.textAlign = "left";
+		context.textBaseline = "top";
+		context.fillText(this.YMinLabel, width / 2 + ContinousScale2D.LabelMargin, ContinousScale2D.LabelMargin);
+		context.textBaseline = "bottom";
+		context.fillText(this.YMaxLabel, width / 2 + ContinousScale2D.LabelMargin, height - ContinousScale2D.LabelMargin);
 	}
 
 	private DrawBorder(): void

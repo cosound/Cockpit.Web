@@ -5,6 +5,10 @@ define(["require", "exports", "knockout"], function (require, exports, knockout)
             this.Context = knockout.observable();
             this.Width = knockout.observable();
             this.Height = knockout.observable();
+            this.XMinLabel = "Cheap";
+            this.XMaxLabel = "Expensive";
+            this.YMinLabel = "Cool";
+            this.YMaxLabel = "Uncool";
             this._subscriptions = [];
             this._subscriptions.push(this.Context.subscribe(function () { return _this.Update(); }));
             this._subscriptions.push(this.Width.subscribe(function () { return _this.Update(); }));
@@ -30,6 +34,7 @@ define(["require", "exports", "knockout"], function (require, exports, knockout)
         ContinousScale2D.prototype.DrawBackground = function () {
             this.DrawGrid();
             this.DrawAxis();
+            this.DrawLabels();
             this.DrawBorder();
         };
         ContinousScale2D.prototype.DrawGrid = function () {
@@ -60,6 +65,22 @@ define(["require", "exports", "knockout"], function (require, exports, knockout)
             context.strokeStyle = ContinousScale2D.AxisStrokeColor;
             context.stroke();
         };
+        ContinousScale2D.prototype.DrawLabels = function () {
+            var context = this.Context();
+            var width = this.Width();
+            var height = this.Height();
+            context.fillStyle = ContinousScale2D.LabelColor;
+            context.textAlign = "left";
+            context.textBaseline = "bottom";
+            context.fillText(this.XMinLabel, ContinousScale2D.LabelMargin, height / 2 - ContinousScale2D.LabelMargin);
+            context.textAlign = "right";
+            context.fillText(this.XMaxLabel, width - ContinousScale2D.LabelMargin, height / 2 - ContinousScale2D.LabelMargin);
+            context.textAlign = "left";
+            context.textBaseline = "top";
+            context.fillText(this.YMinLabel, width / 2 + ContinousScale2D.LabelMargin, ContinousScale2D.LabelMargin);
+            context.textBaseline = "bottom";
+            context.fillText(this.YMaxLabel, width / 2 + ContinousScale2D.LabelMargin, height - ContinousScale2D.LabelMargin);
+        };
         ContinousScale2D.prototype.DrawBorder = function () {
             var context = this.Context();
             var width = this.Width();
@@ -83,6 +104,8 @@ define(["require", "exports", "knockout"], function (require, exports, knockout)
         ContinousScale2D.AxisStrokeColor = "#000";
         ContinousScale2D.PositionStrokeColor = "#000";
         ContinousScale2D.PositionFillColor = "#999";
+        ContinousScale2D.LabelColor = "#000";
+        ContinousScale2D.LabelMargin = 5;
         return ContinousScale2D;
     })();
     return ContinousScale2D;
