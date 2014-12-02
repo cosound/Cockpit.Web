@@ -22,6 +22,7 @@
     <Content Include="App\Views\Questions\AB.html" />
     <Content Include="App\Views\Questions\Boolean.html" />
     <Content Include="App\Views\Questions\ContinousScale.html" />
+    <Content Include="App\Views\Questions\ContinousScale2D.html" />
     <Content Include="App\Views\Questions\Freetext.html" />
     <Content Include="App\Views\Questions\Introduction.html" />
     <Content Include="App\Views\Questions\RadioButtonGroup.html" />
@@ -74,6 +75,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="App\CockpitPortal.ts" />
     <TypeScriptCompile Include="App\Configuration.ts" />
+    <TypeScriptCompile Include="App\KnockoutBindings\CanvasContext.ts" />
     <TypeScriptCompile Include="App\Main.ts" />
     <TypeScriptCompile Include="App\Models\Answer.ts" />
     <TypeScriptCompile Include="App\Models\Question.ts" />
@@ -83,6 +85,7 @@
     <TypeScriptCompile Include="App\ViewModels\Questions\AB.ts" />
     <TypeScriptCompile Include="App\ViewModels\Questions\Boolean.ts" />
     <TypeScriptCompile Include="App\ViewModels\Questions\ContinousScale.ts" />
+    <TypeScriptCompile Include="App\ViewModels\Questions\ContinousScale2D.ts" />
     <TypeScriptCompile Include="App\ViewModels\Questions\End.ts" />
     <TypeScriptCompile Include="App\ViewModels\Questions\Freetext.ts" />
     <TypeScriptCompile Include="App\ViewModels\Questions\Introduction.ts" />
