@@ -1,7 +1,7 @@
 ﻿import knockout = require("knockout");
 import CockpitPortal = require("CockpitPortal");
 import Answer = require("Models/Answer");
-import QuestionMap = require("QuestionMap");
+import QuestionMap = require("Components/Questions/QuestionMap");
 
 class Question
 {

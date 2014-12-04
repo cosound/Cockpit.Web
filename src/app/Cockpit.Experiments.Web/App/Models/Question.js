@@ -1,4 +1,4 @@
-define(["require", "exports", "knockout", "Models/Answer", "QuestionMap"], function (require, exports, knockout, Answer, QuestionMap) {
+define(["require", "exports", "knockout", "Models/Answer", "Components/Questions/QuestionMap"], function (require, exports, knockout, Answer, QuestionMap) {
     var Question = (function () {
         function Question(question, answerChangedCallback) {
             var _this = this;

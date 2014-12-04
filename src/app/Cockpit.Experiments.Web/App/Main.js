@@ -30,7 +30,7 @@ requirejs.config({
     waitSeconds: 20,
     urlArgs: "bust=" + CacheBuster
 });
-require(['NameConventionLoader', 'knockout', 'bootstrap', 'Portal', 'css!Styles/Default', 'KnockoutBindings/KnockoutBindings'], function (nameConventionLoader, knockout) {
+require(['Components/NameConventionLoader', 'knockout', 'bootstrap', 'Portal', 'css!Styles/Default', 'KnockoutBindings/KnockoutBindings'], function (nameConventionLoader, knockout) {
     knockout.components.loaders.push(new nameConventionLoader("Cockpit"));
     knockout.applyBindings();
 });

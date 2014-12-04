@@ -1,6 +1,0 @@
-﻿class Login
-{
-	
-}
-
-export = Login;
