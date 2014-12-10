@@ -1,1 +1,1 @@
-﻿export var PortalPath:string = "http://cockpit.api.cosound.dk";
+﻿export var PortalPath: string = "https://dev-api.cosound.dk";

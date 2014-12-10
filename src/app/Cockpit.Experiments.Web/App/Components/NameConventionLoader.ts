@@ -17,14 +17,19 @@ class NameConventionLoader implements KnockoutComponentLoader
 		knockout.components.register(componentName, {});
 
 		var filePath = componentName.replace(this._prefix + "-", "").replace("-", "/");
-		filePath += (filePath.lastIndexOf("/") == -1 ? "/" + filePath : filePath.substring(filePath.lastIndexOf("/")));
-
-		filePath = "Components/" + filePath;
+		filePath = NameConventionLoader.GetFilePath(filePath);
 
 		callback({
 			viewModel: { require: filePath },
 			template: { require: "text!" + filePath + ".html" }
 		});
+	}
+
+	public static GetFilePath(name:string):string
+	{
+		var filePath = name + (name.lastIndexOf("/") == -1 ? "/" + name : name.substring(name.lastIndexOf("/")));
+
+		return "Components/" + filePath;
 	}
 }
 

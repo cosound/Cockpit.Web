@@ -48,6 +48,14 @@
     <Content Include="Lib\requirejs\require.js" />
     <Content Include="Lib\Routie\routie.min.js" />
     <Content Include="Lib\text\text.js" />
+    <Content Include="Tests\default.html" />
+    <Content Include="Tests\Lib\jasmine\boot.js" />
+    <Content Include="Tests\Lib\jasmine\console.js" />
+    <Content Include="Tests\Lib\jasmine\jasmine-html.js" />
+    <Content Include="Tests\Lib\jasmine\jasmine.css" />
+    <Content Include="Tests\Lib\jasmine\jasmine.js" />
+    <Content Include="Tests\Lib\jasmine\jasmine_favicon.png" />
+    <Content Include="Tests\Lib\Squire\Squire.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +113,8 @@
     <TypeScriptCompile Include="App\Managers\Navigation.ts" />
     <TypeScriptCompile Include="App\Managers\Experiment.ts" />
     <TypeScriptCompile Include="App\Managers\NavigationPage.ts" />
+    <TypeScriptCompile Include="Tests\App\Main.ts" />
+    <TypeScriptCompile Include="Tests\TypeScriptDefinitions\jasmine.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\bootstrap.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\jquery.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\knockout.d.ts" />

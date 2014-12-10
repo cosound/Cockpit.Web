@@ -2,6 +2,7 @@
 import QuestionModel = require("Models/Question");
 import ExperimentManager = require("Managers/Experiment");
 import CockpitPortal = require("CockpitPortal");
+import NameConventionLoader = require("Components/NameConventionLoader");
 
 class Default
 {
@@ -21,23 +22,23 @@ class Default
 	{
 		var isFinished = false;
 		var numberToLoad = 0;
+		var uiLessLoader = (model: QuestionModel) =>
+		{
+			numberToLoad++;
+			require([NameConventionLoader.GetFilePath(model.Type)], (vm: any) =>
+			{
+				this._uiLessQuestions.push(new vm(model));
+
+				if (isFinished && --numberToLoad == 0) this.SlideLoaded();
+			});
+		}
 
 		for (var i = 0; i < questions.length; i++)
 		{
 			var questionModel = new QuestionModel(questions[i], question => this.AnswerChanged(question));
 			this.Questions.push(questionModel);
 
-			if (!questionModel.HasUIElement)
-			{
-				numberToLoad++;
-				((model: QuestionModel) => {
-					require(["ViewModels/" + questionModel.Type], (vm: any) => {
-						this._uiLessQuestions.push(new vm(model));
-
-						if (isFinished && --numberToLoad == 0) this.SlideLoaded();
-					});
-				})(questionModel);
-			}
+			if (!questionModel.HasUIElement) uiLessLoader(questionModel);
 		}
 
 		if (numberToLoad == 0)

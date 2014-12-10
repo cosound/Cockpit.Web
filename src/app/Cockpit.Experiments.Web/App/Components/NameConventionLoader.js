@@ -8,12 +8,15 @@ define(["require", "exports", "knockout"], function (require, exports, knockout)
                 componentName = this._prefix + "-" + componentName;
             knockout.components.register(componentName, {});
             var filePath = componentName.replace(this._prefix + "-", "").replace("-", "/");
-            filePath += (filePath.lastIndexOf("/") == -1 ? "/" + filePath : filePath.substring(filePath.lastIndexOf("/")));
-            filePath = "Components/" + filePath;
+            filePath = NameConventionLoader.GetFilePath(filePath);
             callback({
                 viewModel: { require: filePath },
                 template: { require: "text!" + filePath + ".html" }
             });
+        };
+        NameConventionLoader.GetFilePath = function (name) {
+            var filePath = name + (name.lastIndexOf("/") == -1 ? "/" + name : name.substring(name.lastIndexOf("/")));
+            return "Components/" + filePath;
         };
         return NameConventionLoader;
     })();

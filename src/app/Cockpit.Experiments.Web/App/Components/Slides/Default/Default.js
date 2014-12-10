@@ -1,4 +1,4 @@
-define(["require", "exports", "Models/Question", "Managers/Experiment"], function (require, exports, QuestionModel, ExperimentManager) {
+define(["require", "exports", "Models/Question", "Managers/Experiment", "Components/NameConventionLoader"], function (require, exports, QuestionModel, ExperimentManager, NameConventionLoader) {
     var Default = (function () {
         function Default(slide) {
             var _this = this;
@@ -12,19 +12,19 @@ define(["require", "exports", "Models/Question", "Managers/Experiment"], functio
             var _this = this;
             var isFinished = false;
             var numberToLoad = 0;
+            var uiLessLoader = function (model) {
+                numberToLoad++;
+                require([NameConventionLoader.GetFilePath(model.Type)], function (vm) {
+                    _this._uiLessQuestions.push(new vm(model));
+                    if (isFinished && --numberToLoad == 0)
+                        _this.SlideLoaded();
+                });
+            };
             for (var i = 0; i < questions.length; i++) {
                 var questionModel = new QuestionModel(questions[i], function (question) { return _this.AnswerChanged(question); });
                 this.Questions.push(questionModel);
-                if (!questionModel.HasUIElement) {
-                    numberToLoad++;
-                    (function (model) {
-                        require(["ViewModels/" + questionModel.Type], function (vm) {
-                            _this._uiLessQuestions.push(new vm(model));
-                            if (isFinished && --numberToLoad == 0)
-                                _this.SlideLoaded();
-                        });
-                    })(questionModel);
-                }
+                if (!questionModel.HasUIElement)
+                    uiLessLoader(questionModel);
             }
             if (numberToLoad == 0)
                 this.SlideLoaded();

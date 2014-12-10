@@ -1,4 +1,5 @@
 ﻿requirejs.config({
+	baseUrl: "../App",
 	paths: {
 		text: '../Lib/text/text',
 		jquery: '../Lib/jQuery/jquery.min',
@@ -6,6 +7,7 @@
 		knockout: '../Lib/knockout/knockout',
 		bootstrap: '../Lib/bootstrap/js/bootstrap.min',
 		Portal: '../Lib/PortalClient/PortalClient.min',
+		Squire: '../Tests/Lib/Squire/Squire',
 	},
 	map: {
 		'*': {
@@ -18,27 +20,40 @@
 		},
 		bootstrap: {
 			deps: [
-				'jquery',
-				'css!../Lib/bootstrap/css/bootstrap.min',
-				'css!../Lib/bootstrap/css/bootstrap-theme.min'
+				'jquery'
 			]
 		},
 		Portal: {
 			exports: 'CHAOS.Portal.Client'
 		}
 	},
-	waitSeconds: 20,
-	urlArgs: "bust=" + CacheBuster
+	waitSeconds: 20
 });
 
 declare module "Portal" { }
 declare module "ExperimentData" { }
 
-declare var CacheBuster: number;
-
-require(['Components/NameConventionLoader', 'knockout', 'bootstrap', 'Portal', 'css!Styles/Default', 'KnockoutBindings/KnockoutBindings'], (nameConventionLoader:any, knockout: any) =>
+require(['Squire'], (Squire:any) =>
 {
-	knockout.components.loaders.push(new nameConventionLoader("Cockpit"));
+	var injector = new Squire();
+	injector.mock('knockout', {
+		observable: () =>
+		{
+			var value:any;
 
-	knockout.applyBindings();
+			return (val?:any) =>
+			{
+				if (val)
+					value = val;
+				else
+					return value;
+			}
+		}
+	})
+	.require(['Managers/NavigationPage'], (NavigationPage:any) =>
+	{
+		var navigationPage = new NavigationPage("TestName", 20);
+
+		console.log(navigationPage.Name());
+	});
 });
