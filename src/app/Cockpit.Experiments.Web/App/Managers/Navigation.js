@@ -3,7 +3,7 @@ define(["require", "exports", "knockout", "routie", "Managers/NavigationPage", "
     function Initialize() {
         Routie({
             "": function () {
-                Navigate("Experiment/a12f");
+                Navigate("Experiment/ea3976c7-2d4a-4ef0-84a1-1d9e66f4a0e7");
             },
             "Experiment/:id": function (id) {
                 LoadSlide(id);

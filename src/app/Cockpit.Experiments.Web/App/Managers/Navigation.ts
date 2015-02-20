@@ -8,7 +8,7 @@ export var CurrentPage: KnockoutObservable<NavigationPage> = knockout.observable
 export function Initialize(): void
 {
 	Routie({
-		"": () => { Navigate("Experiment/a12f"); },
+		"": () => { Navigate("Experiment/ea3976c7-2d4a-4ef0-84a1-1d9e66f4a0e7"); },
 		"Experiment/:id": (id: string) => { LoadSlide(id); },
 		"*": () => { LoadPage("NotFound"); }
 	});

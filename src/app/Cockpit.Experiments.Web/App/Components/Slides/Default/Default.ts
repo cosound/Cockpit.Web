@@ -51,6 +51,8 @@ class Default
 	{
 		for (var i = 0; i < this._uiLessQuestions.length; i++)
 			this._uiLessQuestions[i].SlideLoaded();
+
+		this.CheckIfAllQuestionsAreAnswered();
 	}
 
 	private SlideCompleted():void
@@ -63,6 +65,11 @@ class Default
 	{
 		ExperimentManager.SaveQuestionAnswer(question.Id, question.UserAnswer());
 
+		this.CheckIfAllQuestionsAreAnswered();
+	}
+
+	private CheckIfAllQuestionsAreAnswered():void
+	{
 		var allQuestionsAnswered = true;
 
 		for (var i = 0; i < this.Questions.length; i++)

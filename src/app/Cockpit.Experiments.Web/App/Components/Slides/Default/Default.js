@@ -34,6 +34,7 @@ define(["require", "exports", "Models/Question", "Managers/Experiment", "Compone
         Default.prototype.SlideLoaded = function () {
             for (var i = 0; i < this._uiLessQuestions.length; i++)
                 this._uiLessQuestions[i].SlideLoaded();
+            this.CheckIfAllQuestionsAreAnswered();
         };
         Default.prototype.SlideCompleted = function () {
             for (var i = 0; i < this._uiLessQuestions.length; i++)
@@ -41,6 +42,9 @@ define(["require", "exports", "Models/Question", "Managers/Experiment", "Compone
         };
         Default.prototype.AnswerChanged = function (question) {
             ExperimentManager.SaveQuestionAnswer(question.Id, question.UserAnswer());
+            this.CheckIfAllQuestionsAreAnswered();
+        };
+        Default.prototype.CheckIfAllQuestionsAreAnswered = function () {
             var allQuestionsAnswered = true;
             for (var i = 0; i < this.Questions.length; i++) {
                 if (this.Questions[i].RequiresInput && this.Questions[i].UserAnswer() == null)
