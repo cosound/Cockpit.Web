@@ -19,7 +19,7 @@ define(["require", "exports", "knockout", "CockpitPortal"], function (require, e
     }
     exports.LoadSlide = LoadSlide;
     function SaveQuestionAnswer(id, answer) {
-        CockpitPortal.Answer.Set(id, JSON.stringify(answer)).WithCallback(function (response) {
+        CockpitPortal.Answer.Set(id, answer).WithCallback(function (response) {
             if (response.Error != null)
                 throw new Error("Failed to save answer: " + response.Error.Message);
         });

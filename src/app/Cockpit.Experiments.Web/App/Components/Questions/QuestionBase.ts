@@ -1,7 +1,6 @@
 ﻿import knockout = require("knockout");
 import CockpitPortal = require("CockpitPortal");
 import QuestionModel = require("Models/Question");
-import AnswerModel = require("Models/Answer");
 
 class QuestionsBase implements IQuestionViewModel
 {
@@ -12,7 +11,7 @@ class QuestionsBase implements IQuestionViewModel
 	{
 		this.Model = question;
 		this.Model.RequiresInput = requiresInput;
-		this.HasAnswer = knockout.computed(() => this.Model.UserAnswer() != null);
+		this.HasAnswer = knockout.computed(() => this.Model.Answer() != null);
 	}
 
 	protected GetData(key:string):any
@@ -20,15 +19,14 @@ class QuestionsBase implements IQuestionViewModel
 		return this.Model.Data[key];
 	}
 
-	protected GetAsnwer(): { [key: string]: any } 
+	protected GetAsnwer(): any
 	{
-		return this.HasAnswer() ? this.Model.UserAnswer().Data : null;
+		return this.HasAnswer() ? this.Model.Answer() : null;
 	}
 
-	protected SetAnswer(data: { [key: string]: any }):void
+	protected SetAnswer(answer:any):void
 	{
-		var id = this.Model.UserAnswer() == null ? null : this.Model.UserAnswer().Id;
-		this.Model.UserAnswer(new AnswerModel(id, data));
+		this.Model.Answer(answer);
 	}
 
 	public SlideLoaded(): void

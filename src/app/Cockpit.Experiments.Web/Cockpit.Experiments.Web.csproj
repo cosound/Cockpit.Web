@@ -82,6 +82,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="App\CockpitPortal.ts" />
     <TypeScriptCompile Include="App\Components\NotFound\NotFound.ts" />
+    <TypeScriptCompile Include="App\Components\Questions\Monitor\Monitor.ts" />
     <TypeScriptCompile Include="App\Components\Shell\Shell.ts" />
     <TypeScriptCompile Include="App\Components\SlideShell\SlideShell.ts" />
     <TypeScriptCompile Include="App\Configuration.ts" />
@@ -91,7 +92,6 @@
     <TypeScriptCompile Include="App\KnockoutBindings\KnockoutBindings.ts" />
     <TypeScriptCompile Include="App\KnockoutBindings\Width.ts" />
     <TypeScriptCompile Include="App\Main.ts" />
-    <TypeScriptCompile Include="App\Models\Answer.ts" />
     <TypeScriptCompile Include="App\Models\Question.ts" />
     <TypeScriptCompile Include="App\Models\Slide.ts" />
     <TypeScriptCompile Include="App\Components\Questions\QuestionMap.ts" />
@@ -102,7 +102,7 @@
     <TypeScriptCompile Include="App\Components\Questions\End\End.ts" />
     <TypeScriptCompile Include="App\Components\Questions\Freetext\Freetext.ts" />
     <TypeScriptCompile Include="App\Components\Questions\Introduction\Introduction.ts" />
-    <TypeScriptCompile Include="App\Components\Questions\QuestionViewModel.d.ts" />
+    <TypeScriptCompile Include="App\Components\Questions\IQuestionViewModel.d.ts" />
     <TypeScriptCompile Include="App\Components\Questions\QuestionBase.ts" />
     <TypeScriptCompile Include="App\Components\Questions\RadioButtonGroup\RadioButtonGroup.ts" />
     <TypeScriptCompile Include="App\Components\Questions\Start\Start.ts" />
@@ -126,7 +126,6 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App\Components\Questions\Monitor\" />
     <Folder Include="Properties\" />
   </ItemGroup>
   <PropertyGroup>

@@ -1,7 +1,6 @@
 ﻿import knockout = require("knockout");
 import ExperimentData = require("ExperimentData");
 import CockpitPortal = require("CockpitPortal");
-import AnswerModel = require("Models/Answer");
 
 export var IsReady: KnockoutObservable<boolean> = knockout.observable<boolean>(false);
 export var NumberOfSlides:KnockoutObservable<number> = knockout.observable<number>(0);
@@ -31,9 +30,9 @@ export function LoadSlide(index:number, callback:(questions:CockpitPortal.IQuest
 	});
 }
 
-export function SaveQuestionAnswer(id: string, answer: AnswerModel)
+export function SaveQuestionAnswer(id: string, answer: any)
 {
-	CockpitPortal.Answer.Set(id, JSON.stringify(answer)).WithCallback(response =>
+	CockpitPortal.Answer.Set(id, answer).WithCallback(response =>
 	{
 		if (response.Error != null)
 			throw new Error("Failed to save answer: " + response.Error.Message);

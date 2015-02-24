@@ -21,12 +21,12 @@ export class Question
 
 export class Answer
 {
-	public static Set(questionId: string, answer:string, serviceCaller: CHAOS.Portal.Client.IServiceCaller = null): CHAOS.Portal.Client.ICallState<any>
+	public static Set(questionId: string, output:any, serviceCaller: CHAOS.Portal.Client.IServiceCaller = null): CHAOS.Portal.Client.ICallState<any>
 	{
 		if (serviceCaller == null)
 			serviceCaller = CHAOS.Portal.Client.ServiceCallerService.GetDefaultCaller();
 
-		return serviceCaller.CallService("Answer/Set", CHAOS.Portal.Client.HttpMethod.Get, { questionId: questionId, answer: answer }, false);
+		return serviceCaller.CallService("Answer/Set", CHAOS.Portal.Client.HttpMethod.Get, { questionId: questionId, output: JSON.stringify(output) }, false);
 	}
 }
 
@@ -34,14 +34,8 @@ export interface IQuestion
 {
 	Id:string;
 	Type: string;
-	UserAnswer: IAnswer;
+	Output: any;
 	Data:{[key:string]:any};
-}
-
-export interface IAnswer
-{
-	Id: string;
-	Data: { [key: string]: any };
 }
 
 Initialize();

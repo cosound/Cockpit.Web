@@ -18,11 +18,11 @@ define(["require", "exports", "Configuration"], function (require, exports, Conf
     var Answer = (function () {
         function Answer() {
         }
-        Answer.Set = function (questionId, answer, serviceCaller) {
+        Answer.Set = function (questionId, output, serviceCaller) {
             if (serviceCaller === void 0) { serviceCaller = null; }
             if (serviceCaller == null)
                 serviceCaller = CHAOS.Portal.Client.ServiceCallerService.GetDefaultCaller();
-            return serviceCaller.CallService("Answer/Set", 0 /* Get */, { questionId: questionId, answer: answer }, false);
+            return serviceCaller.CallService("Answer/Set", 0 /* Get */, { questionId: questionId, output: JSON.stringify(output) }, false);
         };
         return Answer;
     })();

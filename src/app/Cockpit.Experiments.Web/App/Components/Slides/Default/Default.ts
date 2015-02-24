@@ -63,7 +63,7 @@ class Default
 
 	private AnswerChanged(question: QuestionModel):void
 	{
-		ExperimentManager.SaveQuestionAnswer(question.Id, question.UserAnswer());
+		ExperimentManager.SaveQuestionAnswer(question.Id, question.Answer());
 
 		this.CheckIfAllQuestionsAreAnswered();
 	}
@@ -74,7 +74,7 @@ class Default
 
 		for (var i = 0; i < this.Questions.length; i++)
 		{
-			if (this.Questions[i].RequiresInput && this.Questions[i].UserAnswer() == null)
+			if (this.Questions[i].RequiresInput && this.Questions[i].Answer() == null)
 				allQuestionsAnswered = false;
 		}
 

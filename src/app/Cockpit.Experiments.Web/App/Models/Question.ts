@@ -1,6 +1,5 @@
 ﻿import knockout = require("knockout");
 import CockpitPortal = require("CockpitPortal");
-import Answer = require("Models/Answer");
 import QuestionMap = require("Components/Questions/QuestionMap");
 
 class Question
@@ -10,25 +9,24 @@ class Question
 	public APIType:string;
 	public HasUIElement: boolean;
 	public Data: {[key:string]:any} = {};
-	public UserAnswer: KnockoutObservable<Answer> = knockout.observable<Answer>();
+	public Answer: KnockoutObservable<any> = knockout.observable<any>();
 	public RequiresInput:boolean;
 
 	constructor(question: CockpitPortal.IQuestion, answerChangedCallback: (question: Question)=>void)
 	{
 		var questionMap = QuestionMap.Get(question.Type);
-
 		this.Id = question.Id;
 		this.Type = questionMap.Type;
 		this.HasUIElement = questionMap.HasUIElement;
 		this.APIType = question.Type;
-		
-		if (question.UserAnswer)
-			this.UserAnswer(new Answer(question.Id, question.UserAnswer.Data));
+
+		if (question.Output)
+			this.Answer(question.Output);
 
 		if (question.Data)
 			this.Data = question.Data;
-			
-		this.UserAnswer.subscribe(() => answerChangedCallback(this));
+
+		this.Answer.subscribe(() => answerChangedCallback(this));
 	}
 }
 

@@ -15,7 +15,7 @@ define(["require", "exports"], function (require, exports) {
             "BooleanQuestion, 1.0": new QuestionMap("Questions/Boolean"),
             "AbQuestion, 1.0": new QuestionMap("Questions/AB"),
             "RadioButtonGroup": new QuestionMap("Questions/RadioButtonGroup"),
-            "Response:Freetext": new QuestionMap("Questions/Freetext"),
+            "Freetext": new QuestionMap("Questions/Freetext"),
             "ContinousScale": new QuestionMap("Questions/ContinousScale"),
             "DropDown": new QuestionMap("Questions/ContinousScale2D"),
         };
