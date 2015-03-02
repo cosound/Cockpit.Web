@@ -50,7 +50,7 @@ declare module CHAOS.Portal.Client {
     interface IServiceCaller {
         CallService<T>(path: string, method?: HttpMethod, parameters?: {
             [index: string]: any;
-        }, requiresSession?: boolean): ICallState<T>;
+        }, requiresSession?: boolean, format?: string): ICallState<T>;
         GetServiceCallUri(path: string, parameters?: {
             [index: string]: any;
         }, requiresSession?: boolean, format?: string): string;
@@ -193,7 +193,7 @@ declare module CHAOS.Portal.Client {
         constructor(servicePath: string, clientGuid?: string);
         public CallService<T>(path: string, method?: HttpMethod, parameters?: {
             [index: string]: any;
-        }, requiresSession?: boolean): ICallState<T>;
+        }, requiresSession?: boolean, format?: string): ICallState<T>;
         public GetServiceCallUri(path: string, parameters?: {
             [index: string]: any;
         }, requiresSession?: boolean, format?: string): string;
@@ -219,7 +219,7 @@ declare module CHAOS.Portal.Client {
         static Update(guid: string, email: string, permissons?: number, serviceCaller?: IServiceCaller): ICallState<any>;
         static Delete(guid: string, serviceCaller?: IServiceCaller): ICallState<any>;
         static Get(guid?: string, groupGuid?: string, serviceCaller?: IServiceCaller): ICallState<any>;
-        static GetCurrent(serviceCaller?: IServiceCaller): ICallState<any>;
+        static GetCurrent(serviceCaller?: IServiceCaller): ICallState<IUserInfo>;
     }
     class Group {
         static Get(guid?: string, userGuid?: string, serviceCaller?: IServiceCaller): ICallState<any>;
@@ -244,6 +244,13 @@ declare module CHAOS.Portal.Client {
         static GetDefaultCaller(): IServiceCaller;
         static SetDefaultCaller(value: IServiceCaller): void;
     }
+    interface IUserInfo {
+        Guid: string;
+        Email: string;
+        SystemPermissions: number;
+        SessionDateCreated: number;
+        SessionDateModified: number;
+    }
 }
 declare module CHAOS.Portal.Client {
     class SecureCookieHelper {
@@ -259,8 +266,12 @@ declare module CHAOS.Portal.Client {
 declare module CHAOS.Portal.Client {
     class Wayf {
         static AuthenticationType(): string;
-        static LogIn(wayfServicePath: string, target: any, callback: (status: number) => void, callbackUrl?: string, serviceCaller?: IServiceCaller): void;
-        static LogOut(wayfServicePath: string, target: any, callback: (status: number) => void, callbackUrl?: string, serviceCaller?: IServiceCaller): void;
-        private static CallWayfService(wayfServicePath, wayfMethod, target, callback, callbackUrl?, serviceCaller?);
+        static LogIn(wayfServicePath: string, callbackUrl: string, serviceCaller?: IServiceCaller): WayfCallInfo;
+        static LogOut(wayfServicePath: string, callbackUrl: string, serviceCaller?: IServiceCaller): WayfCallInfo;
+        private static BuildWayfServicePath(wayfServicePath, wayfMethod, callbackUrl?, serviceCaller?);
+    }
+    interface WayfCallInfo {
+        Path: string;
+        Callback: (status: number) => void;
     }
 }

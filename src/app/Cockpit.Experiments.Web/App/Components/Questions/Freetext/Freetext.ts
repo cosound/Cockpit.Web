@@ -15,9 +15,9 @@ class Freetext extends QuestionBase
 		this.Id = this.Model.Id;
 		this.Label = this.GetData("Value");
 
-		if (this.HasAnswer()) this.Answer(this.GetAsnwer()["Value"]);
+		if (this.HasAnswer()) this.Answer(this.GetAsnwer()["Text"]);
 		this.Answer.extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 500 }});
-		this.Answer.subscribe(v => this.SetAnswer({ Value: v }));
+		this.Answer.subscribe(v => this.SetAnswer({ Text: v, Events: [] }));
 	}
 }
 

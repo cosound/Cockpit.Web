@@ -10,7 +10,7 @@ define(["require", "exports", "Configuration"], function (require, exports, Conf
             if (serviceCaller === void 0) { serviceCaller = null; }
             if (serviceCaller == null)
                 serviceCaller = CHAOS.Portal.Client.ServiceCallerService.GetDefaultCaller();
-            return serviceCaller.CallService("Question/Get", 0 /* Get */, { id: id, index: index }, false);
+            return serviceCaller.CallService("Question/Get", 0 /* Get */, { id: id, index: index }, false, "json3");
         };
         return Question;
     })();

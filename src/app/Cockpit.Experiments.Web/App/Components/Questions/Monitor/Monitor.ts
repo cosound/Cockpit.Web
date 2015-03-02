@@ -11,7 +11,12 @@ class Monitor extends QuestionBase
 
 	public SlideCompleted(): void
 	{
-		this.SetAnswer({ Value: new Date() });
+		this.SetAnswer({ Events: [this.CreateEvent(new Date(), "Slide Completed")], Contexts: [] });
+	}
+
+	private CreateEvent(dateTime:Date, type:string):{ DateTime:Date; Type:string; Id:string; Data:string; Method:string }
+	{
+		return { DateTime: dateTime, Type: type, Id: " ", Data: " ", Method: " " };
 	}
 }
 

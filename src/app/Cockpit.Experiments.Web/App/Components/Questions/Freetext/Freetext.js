@@ -14,9 +14,9 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], 
             this.Id = this.Model.Id;
             this.Label = this.GetData("Value");
             if (this.HasAnswer())
-                this.Answer(this.GetAsnwer()["Value"]);
+                this.Answer(this.GetAsnwer()["Text"]);
             this.Answer.extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 500 } });
-            this.Answer.subscribe(function (v) { return _this.SetAnswer({ Value: v }); });
+            this.Answer.subscribe(function (v) { return _this.SetAnswer({ Text: v, Events: [] }); });
         }
         return Freetext;
     })(QuestionBase);
