@@ -13,7 +13,7 @@ class Freetext extends QuestionBase
 		super(question);
 
 		this.Id = this.Model.Id;
-		this.Label = this.GetData("Value");
+		this.Label = this.GetInstrument("Label");
 
 		if (this.HasAnswer()) this.Answer(this.GetAsnwer()["Text"]);
 		this.Answer.extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 500 }});

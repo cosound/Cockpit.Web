@@ -14,9 +14,19 @@ class QuestionsBase implements IQuestionViewModel
 		this.HasAnswer = knockout.computed(() => this.Model.Answer() != null);
 	}
 
-	protected GetData(key:string):any
+	protected GetInstrument(key:string):any
 	{
-		return this.Model.Data[key];
+		return this.GetIntrumentObject()[key];
+	}
+
+	private GetIntrumentObject():{ [key:string]:any }
+	{
+		for (var i = 0; i < this.Model.Input.length; i++)
+		{
+			if (this.Model.Input[i].Instrument) return this.Model.Input[i].Instrument;
+		}
+
+		throw new Error("Intrument object not found in input");
 	}
 
 	protected GetAsnwer(): any

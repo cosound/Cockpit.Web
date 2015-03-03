@@ -24,7 +24,7 @@ export function LoadSlide(index:number, callback:(questions:CockpitPortal.IQuest
 		if (response.Body.Count == 0)
 			throw new Error("No slide returned");
 
-		NumberOfSlides(response.Body.TotalCount);
+		NumberOfSlides(response.Body.FoundCount);
 
 		callback(response.Body.Results);
 	});

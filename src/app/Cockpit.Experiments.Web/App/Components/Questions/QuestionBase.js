@@ -7,8 +7,15 @@ define(["require", "exports", "knockout"], function (require, exports, knockout)
             this.Model.RequiresInput = requiresInput;
             this.HasAnswer = knockout.computed(function () { return _this.Model.Answer() != null; });
         }
-        QuestionsBase.prototype.GetData = function (key) {
-            return this.Model.Data[key];
+        QuestionsBase.prototype.GetInstrument = function (key) {
+            return this.GetIntrumentObject()[key];
+        };
+        QuestionsBase.prototype.GetIntrumentObject = function () {
+            for (var i = 0; i < this.Model.Input.length; i++) {
+                if (this.Model.Input[i].Instrument)
+                    return this.Model.Input[i].Instrument;
+            }
+            throw new Error("Intrument object not found in input");
         };
         QuestionsBase.prototype.GetAsnwer = function () {
             return this.HasAnswer() ? this.Model.Answer() : null;

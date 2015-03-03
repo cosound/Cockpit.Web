@@ -2,8 +2,8 @@
 <p data-bind="text: Url"></p>
 <div data-bind="foreach: Items">
 	<label>
-		<input type="radio" data-bind="checked: $parent.Answer, attr: {name: $parent.Id}, value: $data" />
-		<span data-bind="text: $data"></span>
+		<input type="radio" data-bind="checked: $parent.Answer, attr: {name: $parent.Id}, value: Id" />
+		<span data-bind="text: Label"></span>
 	</label>
 	<br />
 </div>

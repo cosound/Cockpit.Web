@@ -10,9 +10,9 @@ define(["require", "exports", "Components/Questions/QuestionBase"], function (re
         function Introduction(question) {
             _super.call(this, question, false);
             this.Id = this.Model.Id;
-            this.Header = this.GetData("labelHeader");
-            this.Text = this.GetData("textContent");
-            this.ImageUrl = this.GetData("imageObject");
+            this.Header = this.GetInstrument("labelHeader");
+            this.Text = this.GetInstrument("textContent");
+            this.ImageUrl = this.GetInstrument("imageObject");
         }
         return Introduction;
     })(QuestionBase);

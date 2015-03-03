@@ -10,7 +10,7 @@ function Initialize():void
 
 export class Question
 {
-	public static Get(id: string, index:number, serviceCaller: CHAOS.Portal.Client.IServiceCaller = null): CHAOS.Portal.Client.ICallState<IQuestion>
+	public static Get(id: string, index: number, serviceCaller: CHAOS.Portal.Client.IServiceCaller = null): CHAOS.Portal.Client.ICallState<CockpitResults<IQuestion>>
 	{
 		if (serviceCaller == null)
 			serviceCaller = CHAOS.Portal.Client.ServiceCallerService.GetDefaultCaller();
@@ -21,7 +21,7 @@ export class Question
 
 export class Answer
 {
-	public static Set(questionId: string, output:any, serviceCaller: CHAOS.Portal.Client.IServiceCaller = null): CHAOS.Portal.Client.ICallState<any>
+	public static Set(questionId: string, output: any, serviceCaller: CHAOS.Portal.Client.IServiceCaller = null): CHAOS.Portal.Client.ICallState<CHAOS.Portal.Client.IPagedPortalResult<any>>
 	{
 		if (serviceCaller == null)
 			serviceCaller = CHAOS.Portal.Client.ServiceCallerService.GetDefaultCaller();
@@ -30,12 +30,20 @@ export class Answer
 	}
 }
 
+export interface CockpitResults<T>
+{
+	Count:number;
+	FoundCount:number;
+	StartIndex: number;
+	Results: T[];
+}
+
 export interface IQuestion
 {
 	Id:string;
 	Type: string;
+	Input:any[];
 	Output: any;
-	Data:{[key:string]:any};
 }
 
 Initialize();

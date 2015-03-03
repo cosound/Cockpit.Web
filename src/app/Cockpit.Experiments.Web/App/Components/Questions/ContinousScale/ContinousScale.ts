@@ -15,9 +15,9 @@ class ContinousScale extends QuestionBase
 		super(question);
 
 		this.Id = this.Model.Id;
-		this.Label = this.GetData("Label");
-		this.MinLabel = this.GetData("Items")[0];
-		this.MaxLabel = this.GetData("Items")[1];
+		this.Label = this.GetInstrument("Label");
+		this.MinLabel = this.GetInstrument("Items")[0];
+		this.MaxLabel = this.GetInstrument("Items")[1];
 
 		if (this.HasAnswer()) this.Answer(this.GetAsnwer()["Value"]);
 		this.Answer.subscribe(v => this.SetAnswer({ Value: v }));

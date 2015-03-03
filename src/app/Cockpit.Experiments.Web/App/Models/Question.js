@@ -2,7 +2,6 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionMap"], f
     var Question = (function () {
         function Question(question, answerChangedCallback) {
             var _this = this;
-            this.Data = {};
             this.Answer = knockout.observable();
             var questionMap = QuestionMap.Get(question.Type);
             this.Id = question.Id;
@@ -11,8 +10,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionMap"], f
             this.APIType = question.Type;
             if (question.Output)
                 this.Answer(question.Output);
-            if (question.Data)
-                this.Data = question.Data;
+            this.Input = question.Input;
             this.Answer.subscribe(function () { return answerChangedCallback(_this); });
         }
         return Question;

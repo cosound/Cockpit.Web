@@ -15,12 +15,13 @@ class RadioButtonGroup extends QuestionBase
 		super(question);
 
 		this.Id = this.Model.Id;
-		this.Label = this.GetData("Label");
-		this.Url = this.GetData("Url");
-		this.Items = this.GetData("Items");
+		this.Label = this.GetInstrument("HeaderLabel");
+		this.Url = this.GetInstrument("Stimulus");
+
+		this.Items = this.GetInstrument("Items").Item;
 
 		if (this.HasAnswer()) this.Answer(this.GetAsnwer()["Value"]);
-		this.Answer.subscribe(v => this.SetAnswer({ Value: v }));
+		this.Answer.subscribe(v => this.SetAnswer({ Id: v, Events: [] }));
 	}
 }
 

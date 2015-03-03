@@ -14,9 +14,9 @@ class Introduction extends QuestionBase
 		super(question, false);
 
 		this.Id = this.Model.Id;
-		this.Header = this.GetData("labelHeader");
-		this.Text = this.GetData("textContent");
-		this.ImageUrl = this.GetData("imageObject");
+		this.Header = this.GetInstrument("labelHeader");
+		this.Text = this.GetInstrument("textContent");
+		this.ImageUrl = this.GetInstrument("imageObject");
 	}
 }
 

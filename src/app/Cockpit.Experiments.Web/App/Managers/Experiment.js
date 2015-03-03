@@ -13,7 +13,7 @@ define(["require", "exports", "knockout", "CockpitPortal"], function (require, e
                 throw new Error("Failed to get slide: " + response.Error.Message);
             if (response.Body.Count == 0)
                 throw new Error("No slide returned");
-            exports.NumberOfSlides(response.Body.TotalCount);
+            exports.NumberOfSlides(response.Body.FoundCount);
             callback(response.Body.Results);
         });
     }

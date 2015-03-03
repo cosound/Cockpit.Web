@@ -12,9 +12,9 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], 
             _super.call(this, question);
             this.Answer = knockout.observable(null);
             this.Id = this.Model.Id;
-            this.Text = this.GetData("Text");
-            this.Url1 = this.GetData("Url1");
-            this.Url2 = this.GetData("Url2");
+            this.Text = this.GetInstrument("Text");
+            this.Url1 = this.GetInstrument("Url1");
+            this.Url2 = this.GetInstrument("Url2");
             if (this.HasAnswer())
                 this.Answer(this.GetAsnwer()["Value"]);
             this.Answer.subscribe(function (v) { return _this.SetAnswer({ Value: v }); });

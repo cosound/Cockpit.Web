@@ -8,7 +8,7 @@ class Question
 	public Type: string;
 	public APIType:string;
 	public HasUIElement: boolean;
-	public Data: {[key:string]:any} = {};
+	public Input: any[];
 	public Answer: KnockoutObservable<any> = knockout.observable<any>();
 	public RequiresInput:boolean;
 
@@ -23,8 +23,7 @@ class Question
 		if (question.Output)
 			this.Answer(question.Output);
 
-		if (question.Data)
-			this.Data = question.Data;
+		this.Input = question.Input;
 
 		this.Answer.subscribe(() => answerChangedCallback(this));
 	}
