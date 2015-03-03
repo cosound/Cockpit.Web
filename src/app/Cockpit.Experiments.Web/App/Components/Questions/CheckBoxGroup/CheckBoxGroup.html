@@ -1,0 +1,9 @@
+﻿<p data-bind="text: Label"></p>
+<p data-bind="text: Url"></p>
+<div data-bind="foreach: Items">
+	<label>
+		<input type="checkbox" data-bind="checked: $parent.Answer, value: Id" />
+		<span data-bind="text: Label"></span>
+	</label>
+	<br />
+</div>
