@@ -17,7 +17,7 @@ class Freetext extends QuestionBase
 
 		if (this.HasAnswer()) this.Answer(this.GetAsnwer()["Text"]);
 		this.Answer.extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 500 }});
-		this.Answer.subscribe(v => this.SetAnswer({ Text: v, Events: [] }));
+		this.Answer.subscribe(v => this.SetAnswer({ Text: v }));
 	}
 }
 

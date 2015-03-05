@@ -5,13 +5,23 @@ import QuestionModel = require("Models/Question");
 class QuestionsBase implements IQuestionViewModel
 {
 	protected Model: QuestionModel;
-	protected HasAnswer:KnockoutComputed<boolean>;
+	protected HasAnswer: KnockoutComputed<boolean>;
+	private _events: CockpitPortal.IQuestionEvent[];
 
 	constructor(question: QuestionModel, requiresInput:boolean = true)
 	{
 		this.Model = question;
 		this.Model.RequiresInput = requiresInput;
 		this.HasAnswer = knockout.computed(() => this.Model.Answer() != null);
+
+		if (this.HasAnswer())
+		{
+			var answer = this.Model.Answer();
+
+			this._events = answer.Events ? answer.Events : new Array<CockpitPortal.IQuestionEvent>();
+		} else {
+			this._events = new Array<CockpitPortal.IQuestionEvent>();
+		}
 	}
 
 	protected GetInstrument(key:string):any
@@ -34,9 +44,24 @@ class QuestionsBase implements IQuestionViewModel
 		return this.HasAnswer() ? this.Model.Answer() : null;
 	}
 
-	protected SetAnswer(answer:any):void
+	protected SetAnswer(answer: any):void
 	{
+		answer.Events = this._events;
+
 		this.Model.Answer(answer);
+	}
+
+	protected AddEvent(type:string)
+	{
+		var event = {
+			Id: " ",
+			Type: type,
+			Method: " ",
+			Data: " ",
+			DateTime: new Date()
+		};
+
+		this._events.push(event);
 	}
 
 	public SlideLoaded(): void

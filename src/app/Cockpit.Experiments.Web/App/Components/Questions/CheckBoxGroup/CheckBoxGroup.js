@@ -17,7 +17,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], 
             this.Items = this.GetInstrument("Items").Item;
             if (this.HasAnswer())
                 this.Answer.push.apply(this.Answer, this.GetAsnwer()["Selections"]);
-            this.Answer.subscribe(function (v) { return _this.SetAnswer({ Selections: _this.Answer(), Events: [] }); });
+            this.Answer.subscribe(function (v) { return _this.SetAnswer({ Selections: _this.Answer() }); });
         }
         return CheckBoxGroup;
     })(QuestionBase);

@@ -16,7 +16,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], 
             if (this.HasAnswer())
                 this.Answer(this.GetAsnwer()["Text"]);
             this.Answer.extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 500 } });
-            this.Answer.subscribe(function (v) { return _this.SetAnswer({ Text: v, Events: [] }); });
+            this.Answer.subscribe(function (v) { return _this.SetAnswer({ Text: v }); });
         }
         return Freetext;
     })(QuestionBase);

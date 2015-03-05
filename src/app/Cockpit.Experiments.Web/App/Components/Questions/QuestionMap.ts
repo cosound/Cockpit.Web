@@ -20,7 +20,7 @@ function Initialize()
 		"RadioButtonGroup": new QuestionMap("Questions/RadioButtonGroup"),
 		"CheckBoxGroup": new QuestionMap("Questions/CheckBoxGroup"),
 		"Freetext": new QuestionMap("Questions/Freetext"),
-		"ContinousScale": new QuestionMap("Questions/ContinousScale"),
+		"OneDScale": new QuestionMap("Questions/ContinousScale"),
 		"DropDown": new QuestionMap("Questions/ContinousScale2D"),
 	};
 

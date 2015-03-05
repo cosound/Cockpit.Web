@@ -10,11 +10,13 @@ define(["require", "exports", "Components/Questions/QuestionBase"], function (re
         function Monitor(question) {
             _super.call(this, question, false);
         }
-        Monitor.prototype.SlideCompleted = function () {
-            this.SetAnswer({ Events: [this.CreateEvent(new Date(), "Slide Completed")], Contexts: [] });
+        Monitor.prototype.SlideLoaded = function () {
+            this.AddEvent("Trial Start");
+            this.SetAnswer({ Contexts: [] });
         };
-        Monitor.prototype.CreateEvent = function (dateTime, type) {
-            return { DateTime: dateTime, Type: type, Id: " ", Data: " ", Method: " " };
+        Monitor.prototype.SlideCompleted = function () {
+            this.AddEvent("Trial End");
+            this.SetAnswer({ Contexts: [] });
         };
         return Monitor;
     })(QuestionBase);

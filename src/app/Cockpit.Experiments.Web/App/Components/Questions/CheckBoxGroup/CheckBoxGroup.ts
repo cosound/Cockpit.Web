@@ -21,7 +21,7 @@ class CheckBoxGroup extends QuestionBase
 		this.Items = this.GetInstrument("Items").Item;
 
 		if (this.HasAnswer()) this.Answer.push.apply(this.Answer, this.GetAsnwer()["Selections"]);
-		this.Answer.subscribe(v => this.SetAnswer({ Selections: this.Answer(), Events: [] }));
+		this.Answer.subscribe(v => this.SetAnswer({ Selections: this.Answer() }));
 	}
 }
 

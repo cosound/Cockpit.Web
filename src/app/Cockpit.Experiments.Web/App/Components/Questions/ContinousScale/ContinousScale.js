@@ -12,12 +12,12 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], 
             _super.call(this, question);
             this.Answer = knockout.observable(null);
             this.Id = this.Model.Id;
-            this.Label = this.GetInstrument("Label");
-            this.MinLabel = this.GetInstrument("Items")[0];
-            this.MaxLabel = this.GetInstrument("Items")[1];
+            this.Label = this.GetInstrument("HeaderLabel");
+            this.MinLabel = this.GetInstrument("X1AxisLabel");
+            this.MaxLabel = this.GetInstrument("Y1AxisLabel");
             if (this.HasAnswer())
-                this.Answer(this.GetAsnwer()["Value"]);
-            this.Answer.subscribe(function (v) { return _this.SetAnswer({ Value: v }); });
+                this.Answer(this.GetAsnwer().Position);
+            this.Answer.subscribe(function (v) { return _this.SetAnswer({ Position: v }); });
         }
         return ContinousScale;
     })(QuestionBase);

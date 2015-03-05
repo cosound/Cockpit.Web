@@ -9,14 +9,18 @@ class Monitor extends QuestionBase
 		super(question, false);
 	}
 
-	public SlideCompleted(): void
+	public SlideLoaded(): void
 	{
-		this.SetAnswer({ Events: [this.CreateEvent(new Date(), "Slide Completed")], Contexts: [] });
+		this.AddEvent("Trial Start");
+
+		this.SetAnswer({ Contexts: [] });
 	}
 
-	private CreateEvent(dateTime:Date, type:string):{ DateTime:Date; Type:string; Id:string; Data:string; Method:string }
+	public SlideCompleted(): void
 	{
-		return { DateTime: dateTime, Type: type, Id: " ", Data: " ", Method: " " };
+		this.AddEvent("Trial End");
+
+		this.SetAnswer({ Contexts: [] });
 	}
 }
 

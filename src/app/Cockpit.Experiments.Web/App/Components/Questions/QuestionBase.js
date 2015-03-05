@@ -6,6 +6,13 @@ define(["require", "exports", "knockout"], function (require, exports, knockout)
             this.Model = question;
             this.Model.RequiresInput = requiresInput;
             this.HasAnswer = knockout.computed(function () { return _this.Model.Answer() != null; });
+            if (this.HasAnswer()) {
+                var answer = this.Model.Answer();
+                this._events = answer.Events ? answer.Events : new Array();
+            }
+            else {
+                this._events = new Array();
+            }
         }
         QuestionsBase.prototype.GetInstrument = function (key) {
             return this.GetIntrumentObject()[key];
@@ -21,7 +28,18 @@ define(["require", "exports", "knockout"], function (require, exports, knockout)
             return this.HasAnswer() ? this.Model.Answer() : null;
         };
         QuestionsBase.prototype.SetAnswer = function (answer) {
+            answer.Events = this._events;
             this.Model.Answer(answer);
+        };
+        QuestionsBase.prototype.AddEvent = function (type) {
+            var event = {
+                Id: " ",
+                Type: type,
+                Method: " ",
+                Data: " ",
+                DateTime: new Date()
+            };
+            this._events.push(event);
         };
         QuestionsBase.prototype.SlideLoaded = function () {
         };

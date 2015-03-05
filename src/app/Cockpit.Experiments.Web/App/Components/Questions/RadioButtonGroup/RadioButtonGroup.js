@@ -17,7 +17,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], 
             this.Items = this.GetInstrument("Items").Item;
             if (this.HasAnswer())
                 this.Answer(this.GetAsnwer()["Id"]);
-            this.Answer.subscribe(function (v) { return _this.SetAnswer({ Id: v, Events: [] }); });
+            this.Answer.subscribe(function (v) { return _this.SetAnswer({ Id: v }); });
         }
         return RadioButtonGroup;
     })(QuestionBase);

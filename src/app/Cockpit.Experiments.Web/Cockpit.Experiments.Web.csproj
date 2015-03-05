@@ -18,6 +18,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="App\Components\NotFound\NotFound.html" />
+    <Content Include="App\Components\Questions\CheckBoxGroup\CheckBoxGroup.html" />
     <Content Include="App\Components\Shell\Shell.html" />
     <Content Include="App\Components\SlideShell\SlideShell.html" />
     <Content Include="App\Components\Questions\AB\AB.html" />
@@ -82,6 +83,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="App\CockpitPortal.ts" />
     <TypeScriptCompile Include="App\Components\NotFound\NotFound.ts" />
+    <TypeScriptCompile Include="App\Components\Questions\CheckBoxGroup\CheckBoxGroup.ts" />
     <TypeScriptCompile Include="App\Components\Questions\Monitor\Monitor.ts" />
     <TypeScriptCompile Include="App\Components\Shell\Shell.ts" />
     <TypeScriptCompile Include="App\Components\SlideShell\SlideShell.ts" />

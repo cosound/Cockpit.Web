@@ -15,12 +15,12 @@ class ContinousScale extends QuestionBase
 		super(question);
 
 		this.Id = this.Model.Id;
-		this.Label = this.GetInstrument("Label");
-		this.MinLabel = this.GetInstrument("Items")[0];
-		this.MaxLabel = this.GetInstrument("Items")[1];
+		this.Label = this.GetInstrument("HeaderLabel");
+		this.MinLabel = this.GetInstrument("X1AxisLabel");
+		this.MaxLabel = this.GetInstrument("Y1AxisLabel");
 
-		if (this.HasAnswer()) this.Answer(this.GetAsnwer()["Value"]);
-		this.Answer.subscribe(v => this.SetAnswer({ Value: v }));
+		if (this.HasAnswer()) this.Answer(this.GetAsnwer().Position);
+		this.Answer.subscribe(v => this.SetAnswer({ Position: v }));
 	}
 }
 

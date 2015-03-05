@@ -46,4 +46,13 @@ export interface IQuestion
 	Output: any;
 }
 
+export interface IQuestionEvent
+{
+	Id: string;
+	Type: string;
+	Method: string;
+	Data: string;
+	DateTime:Date;
+}
+
 Initialize();

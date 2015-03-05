@@ -21,7 +21,7 @@ class RadioButtonGroup extends QuestionBase
 		this.Items = this.GetInstrument("Items").Item;
 
 		if (this.HasAnswer()) this.Answer(this.GetAsnwer()["Id"]);
-		this.Answer.subscribe(v => this.SetAnswer({ Id: v, Events: [] }));
+		this.Answer.subscribe(v => this.SetAnswer({ Id: v }));
 	}
 }
 
