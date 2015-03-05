@@ -2,7 +2,7 @@
 import QuestionBase = require("Components/Questions/QuestionBase");
 import QuestionModel = require("Models/Question");
 
-class ContinousScale extends QuestionBase
+class OneDScale extends QuestionBase
 {
 	public Id: string;
 	public Label: string;
@@ -24,4 +24,4 @@ class ContinousScale extends QuestionBase
 	}
 }
 
-export = ContinousScale;
+export = OneDScale;

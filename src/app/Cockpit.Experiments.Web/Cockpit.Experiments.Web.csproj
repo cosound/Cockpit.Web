@@ -19,11 +19,12 @@
   <ItemGroup>
     <Content Include="App\Components\NotFound\NotFound.html" />
     <Content Include="App\Components\Questions\CheckBoxGroup\CheckBoxGroup.html" />
+    <Content Include="App\Components\Questions\TwoDScaleK\TwoDScaleK.html" />
     <Content Include="App\Components\Shell\Shell.html" />
     <Content Include="App\Components\SlideShell\SlideShell.html" />
     <Content Include="App\Components\Questions\AB\AB.html" />
     <Content Include="App\Components\Questions\Boolean\Boolean.html" />
-    <Content Include="App\Components\Questions\ContinousScale\ContinousScale.html" />
+    <Content Include="App\Components\Questions\OneDScale\OneDScale.html" />
     <Content Include="App\Components\Questions\ContinousScale2D\ContinousScale2D.html" />
     <Content Include="App\Components\Questions\Freetext\Freetext.html" />
     <Content Include="App\Components\Questions\Introduction\Introduction.html" />
@@ -85,6 +86,7 @@
     <TypeScriptCompile Include="App\Components\NotFound\NotFound.ts" />
     <TypeScriptCompile Include="App\Components\Questions\CheckBoxGroup\CheckBoxGroup.ts" />
     <TypeScriptCompile Include="App\Components\Questions\Monitor\Monitor.ts" />
+    <TypeScriptCompile Include="App\Components\Questions\TwoDScaleK\TwoDScaleK.ts" />
     <TypeScriptCompile Include="App\Components\Shell\Shell.ts" />
     <TypeScriptCompile Include="App\Components\SlideShell\SlideShell.ts" />
     <TypeScriptCompile Include="App\Configuration.ts" />
@@ -99,7 +101,7 @@
     <TypeScriptCompile Include="App\Components\Questions\QuestionMap.ts" />
     <TypeScriptCompile Include="App\Components\Questions\AB\AB.ts" />
     <TypeScriptCompile Include="App\Components\Questions\Boolean\Boolean.ts" />
-    <TypeScriptCompile Include="App\Components\Questions\ContinousScale\ContinousScale.ts" />
+    <TypeScriptCompile Include="App\Components\Questions\OneDScale\OneDScale.ts" />
     <TypeScriptCompile Include="App\Components\Questions\ContinousScale2D\ContinousScale2D.ts" />
     <TypeScriptCompile Include="App\Components\Questions\End\End.ts" />
     <TypeScriptCompile Include="App\Components\Questions\Freetext\Freetext.ts" />

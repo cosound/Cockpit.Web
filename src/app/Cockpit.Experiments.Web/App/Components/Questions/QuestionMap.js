@@ -17,8 +17,9 @@ define(["require", "exports"], function (require, exports) {
             "RadioButtonGroup": new QuestionMap("Questions/RadioButtonGroup"),
             "CheckBoxGroup": new QuestionMap("Questions/CheckBoxGroup"),
             "Freetext": new QuestionMap("Questions/Freetext"),
-            "OneDScale": new QuestionMap("Questions/ContinousScale"),
-            "DropDown": new QuestionMap("Questions/ContinousScale2D"),
+            "OneDScale": new QuestionMap("Questions/OneDScale"),
+            "TwoDScale": new QuestionMap("Questions/ContinousScale2D"),
+            "TwoDKScaleDD": new QuestionMap("Questions/TwoDScaleK"),
         };
         _map[_unsupported] = new QuestionMap("Questions/Unsupported", false);
     }
