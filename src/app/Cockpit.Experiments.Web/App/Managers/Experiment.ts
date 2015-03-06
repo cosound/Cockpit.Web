@@ -1,5 +1,4 @@
 ﻿import knockout = require("knockout");
-import ExperimentData = require("ExperimentData");
 import CockpitPortal = require("CockpitPortal");
 
 export var IsReady: KnockoutObservable<boolean> = knockout.observable<boolean>(false);

@@ -39,6 +39,8 @@
     <Content Include="Lib\bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Lib\bootstrap\js\bootstrap.js" />
     <Content Include="Lib\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Lib\Highcharts\highcharts-more.js" />
+    <Content Include="Lib\Highcharts\highcharts.js" />
     <Content Include="Lib\jQuery\jquery.min.js" />
     <Content Include="Lib\knockout\knockout.js" />
     <Content Include="Lib\PortalClient\PortalClient.min.js" />
@@ -90,6 +92,7 @@
     <TypeScriptCompile Include="App\Components\Shell\Shell.ts" />
     <TypeScriptCompile Include="App\Components\SlideShell\SlideShell.ts" />
     <TypeScriptCompile Include="App\Configuration.ts" />
+    <TypeScriptCompile Include="App\KnockoutBindings\Element.ts" />
     <TypeScriptCompile Include="App\KnockoutBindings\CanvasContext.ts" />
     <TypeScriptCompile Include="App\KnockoutBindings\ClickPosition.ts" />
     <TypeScriptCompile Include="App\KnockoutBindings\Height.ts" />
@@ -120,6 +123,7 @@
     <TypeScriptCompile Include="Tests\App\Main.ts" />
     <TypeScriptCompile Include="Tests\TypeScriptDefinitions\jasmine.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\bootstrap.d.ts" />
+    <TypeScriptCompile Include="TypeScriptDefinitions\highcharts.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\jquery.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\knockout.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\PortalClient.d.ts" />

@@ -6,6 +6,8 @@ requirejs.config({
         knockout: '../Lib/knockout/knockout',
         bootstrap: '../Lib/bootstrap/js/bootstrap.min',
         Portal: '../Lib/PortalClient/PortalClient.min',
+        Highcharts: '../Lib/Highcharts/highcharts',
+        HighchartsMore: '../Lib/Highcharts/highcharts-more',
     },
     map: {
         '*': {
@@ -22,6 +24,13 @@ requirejs.config({
                 'css!../Lib/bootstrap/css/bootstrap.min',
                 'css!../Lib/bootstrap/css/bootstrap-theme.min'
             ]
+        },
+        Highcharts: {
+            exports: "Highcharts",
+            deps: ["jquery"]
+        },
+        HighchartsMore: {
+            deps: ["jquery", "Highcharts"]
         },
         Portal: {
             exports: 'CHAOS.Portal.Client'
