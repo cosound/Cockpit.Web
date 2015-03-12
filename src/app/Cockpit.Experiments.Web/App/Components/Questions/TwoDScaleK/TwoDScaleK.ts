@@ -2,6 +2,7 @@
 import jquery = require("jquery");
 import Highcharts = require("Highcharts"); Highcharts;
 import HighchartsMore = require("HighchartsMore"); HighchartsMore;
+import HighChartsDraggablePoints = require("HighChartsDraggablePoints"); HighChartsDraggablePoints;
 import QuestionBase = require("Components/Questions/QuestionBase");
 import QuestionModel = require("Models/Question");
 
@@ -20,6 +21,8 @@ class TwoDScaleK extends QuestionBase
 
 	private InitializeChart():void
 	{
+		var items = this.GetInstrument("Items").Item.map(this.CreateGraphItem);
+
 		jquery(this.ChartElement()).highcharts({
 			chart: {
 				type: 'bubble'
@@ -37,8 +40,18 @@ class TwoDScaleK extends QuestionBase
 				min: -1,
 				max: 1
 			},
-			series: this.GetInstrument("Items").Item.forEach((v:any) => { return { name: v.List, data: [0, 0, 5] }; })
+			series: items 
 		});
+	}
+
+	private CreateGraphItem(item:any)
+	{
+		return {
+			name: item.List.Label,
+			draggableX: true,
+			draggableY: true,
+			data: [0, 0, 5]
+		};
 	}
 
 	public dispose():void

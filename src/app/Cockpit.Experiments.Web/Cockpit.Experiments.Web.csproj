@@ -39,6 +39,8 @@
     <Content Include="Lib\bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Lib\bootstrap\js\bootstrap.js" />
     <Content Include="Lib\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Lib\Highcharts\crossing-specific-value\crossing-specific-value.js" />
+    <Content Include="Lib\Highcharts\draggable-points\draggable-points.js" />
     <Content Include="Lib\Highcharts\highcharts-more.js" />
     <Content Include="Lib\Highcharts\highcharts.js" />
     <Content Include="Lib\jQuery\jquery.min.js" />
@@ -76,6 +78,12 @@
     <Content Include="Lib\require-css\LICENSE" />
     <Content Include="Lib\require-css\package.json" />
     <Content Include="Lib\require-css\README.md" />
+    <Content Include="Lib\Highcharts\crossing-specific-value\LICENSE" />
+    <Content Include="Lib\Highcharts\crossing-specific-value\manifest.json" />
+    <Content Include="Lib\Highcharts\crossing-specific-value\README.md" />
+    <Content Include="Lib\Highcharts\draggable-points\LICENSE" />
+    <Content Include="Lib\Highcharts\draggable-points\manifest.json" />
+    <Content Include="Lib\Highcharts\draggable-points\README.md" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -124,6 +132,7 @@
     <TypeScriptCompile Include="Tests\TypeScriptDefinitions\jasmine.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\bootstrap.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\highcharts.d.ts" />
+    <TypeScriptCompile Include="TypeScriptDefinitions\highchartsDraggable.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\jquery.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\knockout.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\PortalClient.d.ts" />

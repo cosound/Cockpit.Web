@@ -1,0 +1,26 @@
+{
+    "name": "Crossing-Specific-Values",
+    "version": "1.0.1",
+    "title": "Axis Crossing At Specific Value",
+    "demo": [
+        "http://jsfiddle.net/highcharts/jsCJF/"
+    ],
+    "author": {
+        "name": "Torstein Hønsi",
+        "url": "https://github.com/highslide-software"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/highslide-software/crossing-specific-value/blob/master/LICENSE"
+        }
+    ],
+    "description": "This feature lets you specify specific values where the axis should cross.",
+    "keywords": [
+     "crossing",
+     "axis"
+    ],
+    "dependencies": {
+        "Highcharts": ">=3.0.0"
+    }
+}

@@ -8,6 +8,8 @@ requirejs.config({
         Portal: '../Lib/PortalClient/PortalClient.min',
         Highcharts: '../Lib/Highcharts/highcharts',
         HighchartsMore: '../Lib/Highcharts/highcharts-more',
+        HighChartsDraggablePoints: '../Lib/Highcharts/draggable-points/draggable-points',
+        HighChartsCrossingSpecificValue: '../Lib/Highcharts/crossing-specific-value/crossing-specific-value',
     },
     map: {
         '*': {
@@ -31,6 +33,12 @@ requirejs.config({
         },
         HighchartsMore: {
             deps: ["jquery", "Highcharts"]
+        },
+        HighChartsDraggablePoints: {
+            deps: ["jquery", "Highcharts", "HighchartsMore"]
+        },
+        HighChartsCrossingSpecificValue: {
+            deps: ["jquery", "Highcharts", "HighchartsMore"]
         },
         Portal: {
             exports: 'CHAOS.Portal.Client'
