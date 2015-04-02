@@ -1,1 +1,16 @@
 ﻿<div data-bind="Element: ChartElement" style="width: 400px; height: 400px"></div>
+<div class="panel-group" role="tablist" aria-multiselectable="true" data-bind="attr: {id: Id}, foreach: Items">
+	<div class="panel panel-default">
+		<div class="panel-heading" role="tab" data-bind="attr: {id: 'h_' + Id}">
+			<h4 class="panel-title">
+				<a class="collapsed" data-toggle="collapse" aria-expanded="true" data-bind="text: Name, attr: {'data-parent': '#' + $parent.Id, 'href': '#' + Id, 'aria-controls': Id}">
+				</a>
+			</h4>
+		</div>
+		<div class="panel-collapse collapse" role="tabpanel" data-bind="attr: {id: Id, 'aria-labelledby': 'h_' + Id}">
+			<div class="panel-body" data-bind="text: Data">
+
+			</div>
+		</div>
+	</div>
+</div>

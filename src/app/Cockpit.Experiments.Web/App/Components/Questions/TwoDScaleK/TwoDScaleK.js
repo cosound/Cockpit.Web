@@ -11,13 +11,17 @@ define(["require", "exports", "knockout", "jquery", "Highcharts", "HighchartsMor
     var TwoDScaleK = (function (_super) {
         __extends(TwoDScaleK, _super);
         function TwoDScaleK(question) {
+            var _this = this;
             _super.call(this, question);
             this.ChartElement = knockout.observable();
+            this.Items = knockout.observableArray();
             this._subscriptions = [];
+            this.Id = this.Model.Id.replace(":", "_");
+            this.Items = knockout.observableArray(this.GetInstrument("Items").Item.map(function (i) { return _this.CreateItem(i); }));
             this._subscriptions.push(this.ChartElement.subscribe(this.InitializeChart, this));
         }
         TwoDScaleK.prototype.InitializeChart = function () {
-            var items = this.GetInstrument("Items").Item.map(this.CreateGraphItem);
+            var items = this.Items().map(function (i) { return i.GraphData; });
             jquery(this.ChartElement()).highcharts({
                 chart: {
                     type: 'bubble'
@@ -38,12 +42,21 @@ define(["require", "exports", "knockout", "jquery", "Highcharts", "HighchartsMor
                 series: items
             });
         };
-        TwoDScaleK.prototype.CreateGraphItem = function (item) {
+        TwoDScaleK.prototype.CreateItem = function (data) {
             return {
-                name: item.List.Label,
+                Id: this.Id + "_" + data.Id,
+                Name: data.List.Label,
+                Type: data.Stimulus.Type,
+                Data: data.Stimulus.URI,
+                GraphData: this.CreateGraphItem(data)
+            };
+        };
+        TwoDScaleK.prototype.CreateGraphItem = function (data) {
+            return {
+                name: data.List.Label,
                 draggableX: true,
                 draggableY: true,
-                data: [0, 0, 5]
+                data: [0, 0]
             };
         };
         TwoDScaleK.prototype.dispose = function () {

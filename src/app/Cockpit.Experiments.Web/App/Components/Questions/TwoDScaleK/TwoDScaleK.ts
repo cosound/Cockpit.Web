@@ -6,9 +6,13 @@ import HighChartsDraggablePoints = require("HighChartsDraggablePoints"); HighCha
 import QuestionBase = require("Components/Questions/QuestionBase");
 import QuestionModel = require("Models/Question");
 
+type Item = {Id:string; Name:string; Type:string; Data:string; GraphData:any};
+
 class TwoDScaleK extends QuestionBase
 {
+	public Id:string;
 	public ChartElement: KnockoutObservable<HTMLElement> = knockout.observable<HTMLElement>();
+	public Items: KnockoutObservableArray<Item> = knockout.observableArray<Item>();
 
 	private _subscriptions: KnockoutSubscription[] = [];
 
@@ -16,12 +20,15 @@ class TwoDScaleK extends QuestionBase
 	{
 		super(question);
 
+		this.Id = this.Model.Id.replace(":", "_");
+		this.Items = knockout.observableArray((<any[]>this.GetInstrument("Items").Item).map(i => this.CreateItem(i)));
+
 		this._subscriptions.push(this.ChartElement.subscribe(this.InitializeChart, this));
 	}
 
 	private InitializeChart():void
 	{
-		var items = this.GetInstrument("Items").Item.map(this.CreateGraphItem);
+		var items = this.Items().map(i => i.GraphData);
 
 		jquery(this.ChartElement()).highcharts({
 			chart: {
@@ -44,13 +51,24 @@ class TwoDScaleK extends QuestionBase
 		});
 	}
 
-	private CreateGraphItem(item:any)
+	private CreateItem(data:any):Item
 	{
 		return {
-			name: item.List.Label,
+			Id: this.Id + "_" + data.Id,
+			Name: data.List.Label,
+			Type: data.Stimulus.Type,
+			Data: data.Stimulus.URI,
+			GraphData: this.CreateGraphItem(data)
+		}
+	}
+
+	private CreateGraphItem(data:any)
+	{
+		return {
+			name: data.List.Label,
 			draggableX: true,
 			draggableY: true,
-			data: [0, 0, 5]
+			data: [0, 0]
 		};
 	}
 
