@@ -19,6 +19,7 @@
   <ItemGroup>
     <Content Include="App\Components\NotFound\NotFound.html" />
     <Content Include="App\Components\Questions\CheckBoxGroup\CheckBoxGroup.html" />
+    <Content Include="App\Components\Questions\TextBlock\TextBlock.html" />
     <Content Include="App\Components\Questions\TwoDScaleK\TwoDScaleK.html" />
     <Content Include="App\Components\Shell\Shell.html" />
     <Content Include="App\Components\SlideShell\SlideShell.html" />
@@ -126,6 +127,7 @@
     <TypeScriptCompile Include="App\Components\NotFound\NotFound.ts" />
     <TypeScriptCompile Include="App\Components\Questions\CheckBoxGroup\CheckBoxGroup.ts" />
     <TypeScriptCompile Include="App\Components\Questions\Monitor\Monitor.ts" />
+    <TypeScriptCompile Include="App\Components\Questions\TextBlock\TextBlock.ts" />
     <TypeScriptCompile Include="App\Components\Questions\TwoDScaleK\TwoDScaleK.ts" />
     <TypeScriptCompile Include="App\Components\Shell\Shell.ts" />
     <TypeScriptCompile Include="App\Components\SlideShell\SlideShell.ts" />
