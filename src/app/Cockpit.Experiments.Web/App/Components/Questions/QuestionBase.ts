@@ -54,10 +54,10 @@ class QuestionsBase implements IQuestionViewModel
 	protected AddEvent(type:string)
 	{
 		var event = {
-			Id: " ",
+			Id: "None",
 			Type: type,
-			Method: " ",
-			Data: " ",
+			Method: "None",
+			Data: "None",
 			DateTime: new Date()
 		};
 

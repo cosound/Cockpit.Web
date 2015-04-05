@@ -20,6 +20,7 @@ define(["require", "exports"], function (require, exports) {
             "OneDScale": new QuestionMap("Questions/OneDScale"),
             "TwoDScale": new QuestionMap("Questions/ContinousScale2D"),
             "TwoDKScaleDD": new QuestionMap("Questions/TwoDScaleK"),
+            "TextBlock": new QuestionMap("Questions/TextBlock"),
         };
         _map[_unsupported] = new QuestionMap("Questions/Unsupported", false);
     }

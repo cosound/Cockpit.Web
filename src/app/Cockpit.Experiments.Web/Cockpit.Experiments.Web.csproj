@@ -54,6 +54,33 @@
     <Content Include="Lib\requirejs\require.js" />
     <Content Include="Lib\Routie\routie.min.js" />
     <Content Include="Lib\text\text.js" />
+    <Content Include="Lib\video-js\font\vjs.svg" />
+    <Content Include="Lib\video-js\lang\ar.js" />
+    <Content Include="Lib\video-js\lang\bg.js" />
+    <Content Include="Lib\video-js\lang\ca.js" />
+    <Content Include="Lib\video-js\lang\cs.js" />
+    <Content Include="Lib\video-js\lang\de.js" />
+    <Content Include="Lib\video-js\lang\es.js" />
+    <Content Include="Lib\video-js\lang\fr.js" />
+    <Content Include="Lib\video-js\lang\hu.js" />
+    <Content Include="Lib\video-js\lang\it.js" />
+    <Content Include="Lib\video-js\lang\ja.js" />
+    <Content Include="Lib\video-js\lang\ko.js" />
+    <Content Include="Lib\video-js\lang\nl.js" />
+    <Content Include="Lib\video-js\lang\pt-BR.js" />
+    <Content Include="Lib\video-js\lang\ru.js" />
+    <Content Include="Lib\video-js\lang\tr.js" />
+    <Content Include="Lib\video-js\lang\uk.js" />
+    <Content Include="Lib\video-js\lang\vi.js" />
+    <Content Include="Lib\video-js\lang\zh-CN.js" />
+    <Content Include="Lib\video-js\lang\zh-TW.js" />
+    <Content Include="Lib\video-js\video-js.css" />
+    <Content Include="Lib\video-js\video-js.min.css" />
+    <Content Include="Lib\video-js\video-js.swf" />
+    <Content Include="Lib\video-js\video.dev.js" />
+    <Content Include="Lib\video-js\video.js" />
+    <Content Include="Lib\video-js\video.novtt.dev.js" />
+    <Content Include="Lib\video-js\video.novtt.js" />
     <Content Include="Tests\default.html" />
     <Content Include="Tests\Lib\jasmine\boot.js" />
     <Content Include="Tests\Lib\jasmine\console.js" />
@@ -84,6 +111,9 @@
     <Content Include="Lib\Highcharts\draggable-points\LICENSE" />
     <Content Include="Lib\Highcharts\draggable-points\manifest.json" />
     <Content Include="Lib\Highcharts\draggable-points\README.md" />
+    <Content Include="Lib\video-js\font\vjs.eot" />
+    <Content Include="Lib\video-js\font\vjs.ttf" />
+    <Content Include="Lib\video-js\font\vjs.woff" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -138,6 +168,7 @@
     <TypeScriptCompile Include="TypeScriptDefinitions\PortalClient.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\require.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\routie.d.ts" />
+    <TypeScriptCompile Include="TypeScriptDefinitions\videojs.d.ts" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

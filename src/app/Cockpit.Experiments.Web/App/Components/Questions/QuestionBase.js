@@ -33,10 +33,10 @@ define(["require", "exports", "knockout"], function (require, exports, knockout)
         };
         QuestionsBase.prototype.AddEvent = function (type) {
             var event = {
-                Id: " ",
+                Id: "None",
                 Type: type,
-                Method: " ",
-                Data: " ",
+                Method: "None",
+                Data: "None",
                 DateTime: new Date()
             };
             this._events.push(event);
