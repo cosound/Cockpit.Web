@@ -1,3 +1,7 @@
 ﻿body {
 	padding-top: 20px;
 }
+
+.AudioPlayer {
+	display: inline-block;
+}

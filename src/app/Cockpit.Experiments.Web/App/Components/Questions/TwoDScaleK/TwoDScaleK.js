@@ -4,7 +4,7 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "knockout", "jquery", "Highcharts", "HighchartsMore", "HighChartsDraggablePoints", "Components/Questions/QuestionBase"], function (require, exports, knockout, jquery, Highcharts, HighchartsMore, HighChartsDraggablePoints, QuestionBase) {
+define(["require", "exports", "knockout", "jquery", "Highcharts", "HighchartsMore", "HighChartsDraggablePoints", "Components/Questions/QuestionBase", "Components/Players/Audio/AudioInfo"], function (require, exports, knockout, jquery, Highcharts, HighchartsMore, HighChartsDraggablePoints, QuestionBase, AudioInfo) {
     Highcharts;
     HighchartsMore;
     HighChartsDraggablePoints;
@@ -16,7 +16,7 @@ define(["require", "exports", "knockout", "jquery", "Highcharts", "HighchartsMor
             this.ChartElement = knockout.observable();
             this.Items = knockout.observableArray();
             this._subscriptions = [];
-            this.Id = this.Model.Id.replace(":", "_");
+            this.Title = this.GetInstrument("HeaderLabel");
             this.Items = knockout.observableArray(this.GetInstrument("Items").Item.map(function (i) { return _this.CreateItem(i); }));
             this._subscriptions.push(this.ChartElement.subscribe(this.InitializeChart, this));
         }
@@ -27,7 +27,7 @@ define(["require", "exports", "knockout", "jquery", "Highcharts", "HighchartsMor
                     type: 'bubble'
                 },
                 title: {
-                    text: this.GetInstrument("HeaderLabel")
+                    text: null
                 },
                 xAxis: {
                     title: this.GetInstrument("X1AxisLabel"),
@@ -46,8 +46,7 @@ define(["require", "exports", "knockout", "jquery", "Highcharts", "HighchartsMor
             return {
                 Id: this.Id + "_" + data.Id,
                 Name: data.List.Label,
-                Type: data.Stimulus.Type,
-                Data: data.Stimulus.URI,
+                AudioInfo: new AudioInfo([{ Type: data.Stimulus.Type, Source: data.Stimulus.URI }]),
                 GraphData: this.CreateGraphItem(data)
             };
         };

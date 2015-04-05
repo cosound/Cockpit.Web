@@ -5,12 +5,13 @@ import HighchartsMore = require("HighchartsMore"); HighchartsMore;
 import HighChartsDraggablePoints = require("HighChartsDraggablePoints"); HighChartsDraggablePoints;
 import QuestionBase = require("Components/Questions/QuestionBase");
 import QuestionModel = require("Models/Question");
+import AudioInfo = require("Components/Players/Audio/AudioInfo");
 
-type Item = {Id:string; Name:string; Type:string; Data:string; GraphData:any};
+type Item = { Id: string; Name: string; AudioInfo: AudioInfo; GraphData:any;};
 
 class TwoDScaleK extends QuestionBase
 {
-	public Id:string;
+	public Title:string;
 	public ChartElement: KnockoutObservable<HTMLElement> = knockout.observable<HTMLElement>();
 	public Items: KnockoutObservableArray<Item> = knockout.observableArray<Item>();
 
@@ -20,7 +21,7 @@ class TwoDScaleK extends QuestionBase
 	{
 		super(question);
 
-		this.Id = this.Model.Id.replace(":", "_");
+		this.Title = this.GetInstrument("HeaderLabel");
 		this.Items = knockout.observableArray((<any[]>this.GetInstrument("Items").Item).map(i => this.CreateItem(i)));
 
 		this._subscriptions.push(this.ChartElement.subscribe(this.InitializeChart, this));
@@ -35,7 +36,7 @@ class TwoDScaleK extends QuestionBase
 				type: 'bubble'
 			},
 			title: {
-				text: this.GetInstrument("HeaderLabel")
+				text: null
 			},
 			xAxis: {
 				title: this.GetInstrument("X1AxisLabel"),
@@ -56,8 +57,7 @@ class TwoDScaleK extends QuestionBase
 		return {
 			Id: this.Id + "_" + data.Id,
 			Name: data.List.Label,
-			Type: data.Stimulus.Type,
-			Data: data.Stimulus.URI,
+			AudioInfo: new AudioInfo([{ Type: data.Stimulus.Type, Source: data.Stimulus.URI}]),
 			GraphData: this.CreateGraphItem(data)
 		}
 	}
