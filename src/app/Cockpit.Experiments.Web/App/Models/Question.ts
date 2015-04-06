@@ -25,6 +25,7 @@ class Question
 
 		this.Input = question.Input;
 
+		this.Answer.extend({ rateLimit: { timeout: 200, method: "notifyWhenChangesStop" } });
 		this.Answer.subscribe(() => answerChangedCallback(this));
 	}
 }

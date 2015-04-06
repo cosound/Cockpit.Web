@@ -8,13 +8,14 @@ import QuestionBase = require("Components/Questions/QuestionBase");
 import QuestionModel = require("Models/Question");
 import AudioInfo = require("Components/Players/Audio/AudioInfo");
 
-type Item = { Id: string; Name: string; AudioInfo: AudioInfo; GraphData:any;};
+type Item = { Id: string; Name: string; AudioInfo: AudioInfo; GraphData: HighchartsSeriesOptions;};
+type AnswerItem = { Id: string; Position:string;};
 
 class TwoDScaleK extends QuestionBase
 {
 	public Title:string;
 	public ChartElement: KnockoutObservable<HTMLElement> = knockout.observable<HTMLElement>();
-	public Items: KnockoutObservableArray<Item> = knockout.observableArray<Item>();
+	public Items: Item[];
 
 	private _subscriptions: KnockoutSubscription[] = [];
 	private _chart:HighchartsChartObject;
@@ -25,9 +26,22 @@ class TwoDScaleK extends QuestionBase
 		super(question);
 
 		this.Title = this.GetInstrument("HeaderLabel");
-		this.Items = knockout.observableArray((<any[]>this.GetInstrument("Items").Item).map(i => this.CreateItem(i)));
+		this.InitializeItems();
 
 		this._subscriptions.push(this.ChartElement.subscribe(this.InitializeChart, this));
+	}
+
+	private InitializeItems():void
+	{
+		var answers: {[key:string]:{x:number; y:number}} = {};
+
+		this.GetAsnwer().Scalings.forEach((scaling:AnswerItem) =>
+		{
+			var coordinates = scaling.Position.split(" ");
+			answers[scaling.Id] = { x: parseFloat(coordinates[0]), y: parseFloat(coordinates[1]) }
+		});
+
+		this.Items = (<any[]>this.GetInstrument("Items").Item).map(i => this.CreateItem(i, answers[i.Id]));
 	}
 
 	private InitializeChart():void
@@ -48,9 +62,9 @@ class TwoDScaleK extends QuestionBase
 				series: {
 					point: {
 						events: {
-							update: e =>
+							update: () =>
 							{
-								console.log(e)
+								this.UpdateAnswer();
 								return true;
 							}
 						}
@@ -58,19 +72,21 @@ class TwoDScaleK extends QuestionBase
 				}
 			},
 			xAxis: {
-				title: { text: this.GetInstrument("X1AxisLabel")},
+				title: { text: this.GetInstrument("X1AxisLabel") },
 				min: -1,
 				max: 1,
 				lineWidth: 1,
 				gridLineWidth: 1,
 				showEmpty: true,
 				tickInterval: 0.25,
-				plotLines: [{
-					value: 0,
-					width: 1,
-					color: 'black'
-				}],
-				labels: {enabled: false}
+				plotLines: [
+					{
+						value: 0,
+						width: 1,
+						color: 'black'
+					}
+				],
+				labels: { enabled: false }
 			},
 			yAxis: {
 				title: { text: this.GetInstrument("Y1AxisLabel") },
@@ -80,36 +96,52 @@ class TwoDScaleK extends QuestionBase
 				gridLineWidth: 1,
 				showEmpty: true,
 				tickInterval: 0.25,
-				plotLines: [{
-					value: 0,
-					width: 2,
-					color: 'black'
-				}],
+				plotLines: [
+					{
+						value: 0,
+						width: 2,
+						color: 'black'
+					}
+				],
 				labels: { enabled: false }
 			},
-			tooltip: false
+			tooltip: false,
+			series: this.Items.map(item => item.GraphData)
 		});
 		this._chart = jquery(this.ChartElement()).highcharts();
 	}
-
-	private CreateItem(data:any):Item
+	private UpdateAnswer(): void
 	{
-		var isAdded = false;
+		this.SetAnswer({
+			Scalings: this.Items.filter(i => i.GraphData != null).map(i => this.CreateAnswerItem(i))
+		});
+	}
+
+	private CreateAnswerItem(item: Item): AnswerItem
+	{
+		var point = item.GraphData.data[0];
+
+		return { Id: item.Id, Position: point.x.toString() + " " + point.y.toString() };
+	}
+
+	private CreateItem(data:any, answer:{x:number; y:number}):Item
+	{
 		var audioInfo = new AudioInfo([{ Type: data.Stimulus.Type, Source: data.Stimulus.URI }]);
+		
 		var item = {
 			Id: data.Id,
 			Name: data.List.Label,
 			AudioInfo: audioInfo,
-			GraphData: this.CreateGraphItem(data)
-		}
+			GraphData: answer ? this.CreateGraphItem(data, answer) : null
+		};
 
 		audioInfo.AddIsPlayingCallback(isPlaying =>
 		{
 			this.AddEvent(isPlaying ? "Start" : "Stop", data.Id);
 
-			if (isPlaying && !isAdded)
+			if (isPlaying && item.GraphData == null)
 			{
-				isAdded = true;
+				item.GraphData = this.CreateGraphItem(data, {x: 0, y: 0});
 
 				this._chart.addSeries(item.GraphData);
 			}
@@ -118,14 +150,14 @@ class TwoDScaleK extends QuestionBase
 		return item;
 	}
 
-	private CreateGraphItem(data:any):HighchartsSeriesOptions
+	private CreateGraphItem(data: any, answer: { x: number; y: number }):HighchartsSeriesOptions
 	{
 		return {
 			name: data.List.Label,
 			draggableX: true,
 			draggableY: true,
 			cursor: 'pointer',
-			data: [[0, 0]]
+			data: [answer]
 		};
 	}
 

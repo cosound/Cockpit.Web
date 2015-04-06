@@ -11,16 +11,24 @@ define(["require", "exports", "knockout", "jquery", "Highcharts", "HighchartsMor
     var TwoDScaleK = (function (_super) {
         __extends(TwoDScaleK, _super);
         function TwoDScaleK(question) {
-            var _this = this;
             _super.call(this, question);
             this.ChartElement = knockout.observable();
-            this.Items = knockout.observableArray();
             this._subscriptions = [];
             this.Title = this.GetInstrument("HeaderLabel");
-            this.Items = knockout.observableArray(this.GetInstrument("Items").Item.map(function (i) { return _this.CreateItem(i); }));
+            this.InitializeItems();
             this._subscriptions.push(this.ChartElement.subscribe(this.InitializeChart, this));
         }
+        TwoDScaleK.prototype.InitializeItems = function () {
+            var _this = this;
+            var answers = {};
+            this.GetAsnwer().Scalings.forEach(function (scaling) {
+                var coordinates = scaling.Position.split(" ");
+                answers[scaling.Id] = { x: parseFloat(coordinates[0]), y: parseFloat(coordinates[1]) };
+            });
+            this.Items = this.GetInstrument("Items").Item.map(function (i) { return _this.CreateItem(i, answers[i.Id]); });
+        };
         TwoDScaleK.prototype.InitializeChart = function () {
+            var _this = this;
             jquery(this.ChartElement()).highcharts({
                 chart: {
                     type: 'bubble',
@@ -37,8 +45,8 @@ define(["require", "exports", "knockout", "jquery", "Highcharts", "HighchartsMor
                     series: {
                         point: {
                             events: {
-                                update: function (e) {
-                                    console.log(e);
+                                update: function () {
+                                    _this.UpdateAnswer();
                                     return true;
                                 }
                             }
@@ -53,11 +61,13 @@ define(["require", "exports", "knockout", "jquery", "Highcharts", "HighchartsMor
                     gridLineWidth: 1,
                     showEmpty: true,
                     tickInterval: 0.25,
-                    plotLines: [{
-                        value: 0,
-                        width: 1,
-                        color: 'black'
-                    }],
+                    plotLines: [
+                        {
+                            value: 0,
+                            width: 1,
+                            color: 'black'
+                        }
+                    ],
                     labels: { enabled: false }
                 },
                 yAxis: {
@@ -68,43 +78,55 @@ define(["require", "exports", "knockout", "jquery", "Highcharts", "HighchartsMor
                     gridLineWidth: 1,
                     showEmpty: true,
                     tickInterval: 0.25,
-                    plotLines: [{
-                        value: 0,
-                        width: 2,
-                        color: 'black'
-                    }],
+                    plotLines: [
+                        {
+                            value: 0,
+                            width: 2,
+                            color: 'black'
+                        }
+                    ],
                     labels: { enabled: false }
                 },
-                tooltip: false
+                tooltip: false,
+                series: this.Items.map(function (item) { return item.GraphData; })
             });
             this._chart = jquery(this.ChartElement()).highcharts();
         };
-        TwoDScaleK.prototype.CreateItem = function (data) {
+        TwoDScaleK.prototype.UpdateAnswer = function () {
             var _this = this;
-            var isAdded = false;
+            this.SetAnswer({
+                Scalings: this.Items.filter(function (i) { return i.GraphData != null; }).map(function (i) { return _this.CreateAnswerItem(i); })
+            });
+        };
+        TwoDScaleK.prototype.CreateAnswerItem = function (item) {
+            var point = item.GraphData.data[0];
+            return { Id: item.Id, Position: point.x.toString() + " " + point.y.toString() };
+        };
+        TwoDScaleK.prototype.CreateItem = function (data, answer) {
+            var _this = this;
             var audioInfo = new AudioInfo([{ Type: data.Stimulus.Type, Source: data.Stimulus.URI }]);
             var item = {
                 Id: data.Id,
                 Name: data.List.Label,
                 AudioInfo: audioInfo,
-                GraphData: this.CreateGraphItem(data)
+                GraphData: answer ? this.CreateGraphItem(data, answer) : null
             };
             audioInfo.AddIsPlayingCallback(function (isPlaying) {
                 _this.AddEvent(isPlaying ? "Start" : "Stop", data.Id);
-                if (isPlaying && !isAdded) {
-                    isAdded = true;
+                if (isPlaying && item.GraphData == null) {
+                    item.GraphData = _this.CreateGraphItem(data, { x: 0, y: 0 });
                     _this._chart.addSeries(item.GraphData);
                 }
             });
             return item;
         };
-        TwoDScaleK.prototype.CreateGraphItem = function (data) {
+        TwoDScaleK.prototype.CreateGraphItem = function (data, answer) {
             return {
                 name: data.List.Label,
                 draggableX: true,
                 draggableY: true,
                 cursor: 'pointer',
-                data: [[0, 0]]
+                data: [answer]
             };
         };
         TwoDScaleK.prototype.dispose = function () {

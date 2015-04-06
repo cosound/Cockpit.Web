@@ -11,6 +11,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionMap"], f
             if (question.Output)
                 this.Answer(question.Output);
             this.Input = question.Input;
+            this.Answer.extend({ rateLimit: { timeout: 200, method: "notifyWhenChangesStop" } });
             this.Answer.subscribe(function () { return answerChangedCallback(_this); });
         }
         return Question;
