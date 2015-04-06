@@ -44,7 +44,7 @@ class SlideShell
 	{
 		this.CanGoToNextSlide(false);
 
-		this.LoadSlide(this.SlideIndex() + 15);
+		this.LoadSlide(this.SlideIndex() + 1);
 	}
 
 	private LoadSlide(index:number):void

@@ -22,7 +22,7 @@ define(["require", "exports", "knockout", "Managers/Experiment", "Models/Slide"]
         }
         SlideShell.prototype.GoToNextSlide = function () {
             this.CanGoToNextSlide(false);
-            this.LoadSlide(this.SlideIndex() + 15);
+            this.LoadSlide(this.SlideIndex() + 1);
         };
         SlideShell.prototype.LoadSlide = function (index) {
             var _this = this;

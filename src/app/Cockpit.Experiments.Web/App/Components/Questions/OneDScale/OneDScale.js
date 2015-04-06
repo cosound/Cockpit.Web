@@ -4,7 +4,7 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], function (require, exports, knockout, QuestionBase) {
+define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "Components/Players/Audio/AudioInfo"], function (require, exports, knockout, QuestionBase, AudioInfo) {
     var OneDScale = (function (_super) {
         __extends(OneDScale, _super);
         function OneDScale(question) {
@@ -15,6 +15,8 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], 
             this.Label = this.GetInstrument("HeaderLabel");
             this.MinLabel = this.GetInstrument("X1AxisLabel");
             this.MaxLabel = this.GetInstrument("Y1AxisLabel");
+            var stimulus = this.GetInstrument("Stimulus");
+            this.AudioInfo = new AudioInfo([{ Type: stimulus.Type, Source: stimulus.URI }]);
             if (this.HasAnswer())
                 this.Answer(this.GetAsnwer().Position);
             this.Answer.subscribe(function (v) { return _this.SetAnswer({ Position: v }); });
