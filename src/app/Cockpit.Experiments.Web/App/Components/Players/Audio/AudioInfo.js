@@ -11,4 +11,3 @@ define(["require", "exports", "knockout"], function (require, exports, knockout)
     })();
     return AudioInfo;
 });
-//# sourceMappingURL=AudioInfo.js.map

@@ -26,4 +26,3 @@ define(["require", "exports", "knockout", "CockpitPortal"], function (require, e
     }
     exports.SaveQuestionAnswer = SaveQuestionAnswer;
 });
-//# sourceMappingURL=Experiment.js.map

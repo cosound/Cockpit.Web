@@ -21,4 +21,3 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], 
     })(QuestionBase);
     return Boolean;
 });
-//# sourceMappingURL=Boolean.js.map

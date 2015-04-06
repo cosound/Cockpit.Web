@@ -18,4 +18,3 @@ define(["require", "exports", "Components/Questions/QuestionBase"], function (re
     })(QuestionBase);
     return Start;
 });
-//# sourceMappingURL=Start.js.map

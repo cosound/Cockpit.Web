@@ -110,4 +110,3 @@ define(["require", "exports", "knockout"], function (require, exports, knockout)
     })();
     return ContinousScale2D;
 });
-//# sourceMappingURL=ContinousScale2D.js.map

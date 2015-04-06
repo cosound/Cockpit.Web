@@ -51,4 +51,3 @@ require(['Components/NameConventionLoader', 'knockout', 'bootstrap', 'Portal', '
     knockout.components.loaders.push(new nameConventionLoader("Cockpit"));
     knockout.applyBindings();
 });
-//# sourceMappingURL=Main.js.map

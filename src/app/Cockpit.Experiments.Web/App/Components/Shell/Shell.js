@@ -8,4 +8,3 @@ define(["require", "exports", "Managers/Navigation"], function (require, exports
     })();
     return Shell;
 });
-//# sourceMappingURL=Shell.js.map

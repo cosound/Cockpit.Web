@@ -10,4 +10,3 @@ define(["require", "exports", "knockout"], function (require, exports, knockout)
     })();
     return NavigationPage;
 });
-//# sourceMappingURL=NavigationPage.js.map

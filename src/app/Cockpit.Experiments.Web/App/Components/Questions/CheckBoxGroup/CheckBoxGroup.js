@@ -23,4 +23,3 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], 
     })(QuestionBase);
     return CheckBoxGroup;
 });
-//# sourceMappingURL=CheckBoxGroup.js.map

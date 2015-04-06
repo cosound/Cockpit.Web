@@ -23,6 +23,7 @@ class OneDScale extends QuestionBase
 
 		var stimulus = this.GetInstrument("Stimulus");
 		this.AudioInfo = new AudioInfo([{ Type: stimulus.Type, Source: stimulus.URI }]);
+		this.AudioInfo.AddIsPlayingCallback(isPlaying => this.AddEvent(isPlaying ? "Start" : "Stop"));
 
 		if (this.HasAnswer()) this.Answer(this.GetAsnwer().Position);
 		this.Answer.subscribe(v => this.SetAnswer({ Position: v }));

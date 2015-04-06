@@ -22,4 +22,3 @@ define(["require", "exports", "knockout", "jquery"], function (require, exports,
     })();
     return Audio;
 });
-//# sourceMappingURL=Audio.js.map

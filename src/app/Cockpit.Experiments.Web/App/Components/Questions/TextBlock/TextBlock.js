@@ -8,11 +8,10 @@ define(["require", "exports", "Components/Questions/QuestionBase"], function (re
     var TextBlock = (function (_super) {
         __extends(TextBlock, _super);
         function TextBlock(question) {
-            _super.call(this, question);
+            _super.call(this, question, false);
             this.Text = this.GetInstrument("Text");
         }
         return TextBlock;
     })(QuestionBase);
     return TextBlock;
 });
-//# sourceMappingURL=TextBlock.js.map

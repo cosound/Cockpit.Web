@@ -50,4 +50,3 @@ define(["require", "exports", "knockout"], function (require, exports, knockout)
     })();
     return QuestionsBase;
 });
-//# sourceMappingURL=QuestionBase.js.map

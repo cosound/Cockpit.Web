@@ -22,4 +22,3 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], 
     })(QuestionBase);
     return Freetext;
 });
-//# sourceMappingURL=Freetext.js.map

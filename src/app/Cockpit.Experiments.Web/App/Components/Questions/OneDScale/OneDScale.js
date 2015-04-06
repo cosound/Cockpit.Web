@@ -17,6 +17,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             this.MaxLabel = this.GetInstrument("Y1AxisLabel");
             var stimulus = this.GetInstrument("Stimulus");
             this.AudioInfo = new AudioInfo([{ Type: stimulus.Type, Source: stimulus.URI }]);
+            this.AudioInfo.AddIsPlayingCallback(function (isPlaying) { return _this.AddEvent(isPlaying ? "Start" : "Stop"); });
             if (this.HasAnswer())
                 this.Answer(this.GetAsnwer().Position);
             this.Answer.subscribe(function (v) { return _this.SetAnswer({ Position: v }); });
@@ -25,4 +26,3 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
     })(QuestionBase);
     return OneDScale;
 });
-//# sourceMappingURL=OneDScale.js.map

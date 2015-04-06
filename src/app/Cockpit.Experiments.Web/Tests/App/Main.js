@@ -46,4 +46,3 @@ require(['Squire'], function (Squire) {
         console.log(navigationPage.Name());
     });
 });
-//# sourceMappingURL=Main.js.map

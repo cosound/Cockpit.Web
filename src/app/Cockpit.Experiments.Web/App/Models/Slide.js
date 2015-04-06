@@ -15,4 +15,3 @@ define(["require", "exports"], function (require, exports) {
     })();
     return Slide;
 });
-//# sourceMappingURL=Slide.js.map

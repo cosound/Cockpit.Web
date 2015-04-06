@@ -56,4 +56,3 @@ define(["require", "exports", "Models/Question", "Managers/Experiment", "Compone
     })();
     return Default;
 });
-//# sourceMappingURL=Default.js.map

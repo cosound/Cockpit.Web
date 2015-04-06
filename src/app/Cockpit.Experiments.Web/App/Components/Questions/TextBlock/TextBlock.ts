@@ -8,7 +8,7 @@ class TextBlock extends QuestionBase
 
 	constructor(question: QuestionModel)
 	{
-		super(question);
+		super(question, false);
 
 		this.Text = this.GetInstrument("Text");
 	}

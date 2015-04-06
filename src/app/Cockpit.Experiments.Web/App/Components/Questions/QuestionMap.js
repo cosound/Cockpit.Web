@@ -35,4 +35,3 @@ define(["require", "exports"], function (require, exports) {
     exports.QuestionMap = QuestionMap;
     Initialize();
 });
-//# sourceMappingURL=QuestionMap.js.map

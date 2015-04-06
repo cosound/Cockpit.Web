@@ -8,4 +8,3 @@ define(["require", "exports", "knockout"], function (require, exports, knockout)
         }
     };
 });
-//# sourceMappingURL=CanvasContext.js.map

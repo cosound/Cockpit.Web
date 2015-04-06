@@ -22,4 +22,3 @@ define(["require", "exports", "Components/Questions/QuestionBase"], function (re
     })(QuestionBase);
     return Monitor;
 });
-//# sourceMappingURL=Monitor.js.map

@@ -22,4 +22,3 @@ define(["require", "exports", "knockout"], function (require, exports, knockout)
     })();
     return NameConventionLoader;
 });
-//# sourceMappingURL=NameConventionLoader.js.map

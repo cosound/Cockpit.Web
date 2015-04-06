@@ -29,4 +29,3 @@ define(["require", "exports", "Configuration"], function (require, exports, Conf
     exports.Answer = Answer;
     Initialize();
 });
-//# sourceMappingURL=CockpitPortal.js.map

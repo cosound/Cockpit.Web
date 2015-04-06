@@ -9,4 +9,3 @@ define(["require", "exports", "knockout", "jquery"], function (require, exports,
         }
     };
 });
-//# sourceMappingURL=ClickPosition.js.map

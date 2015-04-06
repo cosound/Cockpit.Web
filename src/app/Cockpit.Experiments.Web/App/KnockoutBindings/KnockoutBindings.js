@@ -5,4 +5,3 @@ define(["require", "exports", "KnockoutBindings/CanvasContext", "KnockoutBinding
     Height;
     Width;
 });
-//# sourceMappingURL=KnockoutBindings.js.map

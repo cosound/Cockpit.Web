@@ -18,4 +18,3 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionMap"], f
     })();
     return Question;
 });
-//# sourceMappingURL=Question.js.map

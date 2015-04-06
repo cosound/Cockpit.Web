@@ -28,4 +28,3 @@ define(["require", "exports", "knockout", "routie", "Managers/NavigationPage", "
             exports.CurrentPage(new NavigationPage("SlideShell"));
     }
 });
-//# sourceMappingURL=Navigation.js.map

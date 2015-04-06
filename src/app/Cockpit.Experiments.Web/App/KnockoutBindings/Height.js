@@ -8,4 +8,3 @@ define(["require", "exports", "knockout"], function (require, exports, knockout)
         }
     };
 });
-//# sourceMappingURL=Height.js.map

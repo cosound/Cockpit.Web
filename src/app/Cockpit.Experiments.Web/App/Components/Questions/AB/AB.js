@@ -23,4 +23,3 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], 
     })(QuestionBase);
     return AB;
 });
-//# sourceMappingURL=AB.js.map

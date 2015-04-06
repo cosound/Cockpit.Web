@@ -138,4 +138,3 @@ define(["require", "exports", "knockout", "jquery", "Highcharts", "HighchartsMor
     })(QuestionBase);
     return TwoDScaleK;
 });
-//# sourceMappingURL=TwoDScaleK.js.map

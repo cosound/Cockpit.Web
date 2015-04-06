@@ -23,4 +23,3 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], 
     })(QuestionBase);
     return RadioButtonGroup;
 });
-//# sourceMappingURL=RadioButtonGroup.js.map

@@ -49,4 +49,3 @@ define(["require", "exports", "knockout", "Managers/Experiment", "Models/Slide"]
     })();
     return SlideShell;
 });
-//# sourceMappingURL=SlideShell.js.map
