@@ -31,9 +31,10 @@ define(["require", "exports", "knockout"], function (require, exports, knockout)
             answer.Events = this._events;
             this.Model.Answer(answer);
         };
-        QuestionsBase.prototype.AddEvent = function (type) {
+        QuestionsBase.prototype.AddEvent = function (type, id) {
+            if (id === void 0) { id = null; }
             var event = {
-                Id: "None",
+                Id: id === null ? "None" : id,
                 Type: type,
                 Method: "None",
                 Data: "None",

@@ -1,3 +1,3 @@
-﻿<audio class="AudioPlayer" controls preload="auto" data-bind="foreach: Sources">
+﻿<audio class="AudioPlayer" controls preload="auto" data-bind="Element: PlayerElement, foreach: Sources">
 	<source data-bind="attr: {type: Type, src: Source}" />
 </audio>

@@ -51,10 +51,10 @@ class QuestionsBase implements IQuestionViewModel
 		this.Model.Answer(answer);
 	}
 
-	protected AddEvent(type:string)
+	protected AddEvent(type:string, id:string = null)
 	{
 		var event = {
-			Id: "None",
+			Id: id === null ? "None" : id,
 			Type: type,
 			Method: "None",
 			Data: "None",

@@ -21,41 +21,90 @@ define(["require", "exports", "knockout", "jquery", "Highcharts", "HighchartsMor
             this._subscriptions.push(this.ChartElement.subscribe(this.InitializeChart, this));
         }
         TwoDScaleK.prototype.InitializeChart = function () {
-            var items = this.Items().map(function (i) { return i.GraphData; });
             jquery(this.ChartElement()).highcharts({
                 chart: {
-                    type: 'bubble'
+                    type: 'bubble',
+                    animation: false,
+                    showAxes: true,
                 },
                 title: {
                     text: null
                 },
+                credits: {
+                    enabled: false
+                },
+                plotOptions: {
+                    series: {
+                        point: {
+                            events: {
+                                update: function (e) {
+                                    console.log(e);
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                },
                 xAxis: {
-                    title: this.GetInstrument("X1AxisLabel"),
+                    title: { text: this.GetInstrument("X1AxisLabel") },
                     min: -1,
-                    max: 1
+                    max: 1,
+                    lineWidth: 1,
+                    gridLineWidth: 1,
+                    showEmpty: true,
+                    tickInterval: 0.25,
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: 'black'
+                    }],
+                    labels: { enabled: false }
                 },
                 yAxis: {
-                    title: this.GetInstrument("Y1AxisLabel"),
+                    title: { text: this.GetInstrument("Y1AxisLabel") },
                     min: -1,
-                    max: 1
+                    max: 1,
+                    lineWidth: 1,
+                    gridLineWidth: 1,
+                    showEmpty: true,
+                    tickInterval: 0.25,
+                    plotLines: [{
+                        value: 0,
+                        width: 2,
+                        color: 'black'
+                    }],
+                    labels: { enabled: false }
                 },
-                series: items
+                tooltip: false
             });
+            this._chart = jquery(this.ChartElement()).highcharts();
         };
         TwoDScaleK.prototype.CreateItem = function (data) {
-            return {
-                Id: this.Id + "_" + data.Id,
+            var _this = this;
+            var isAdded = false;
+            var audioInfo = new AudioInfo([{ Type: data.Stimulus.Type, Source: data.Stimulus.URI }]);
+            var item = {
+                Id: data.Id,
                 Name: data.List.Label,
-                AudioInfo: new AudioInfo([{ Type: data.Stimulus.Type, Source: data.Stimulus.URI }]),
+                AudioInfo: audioInfo,
                 GraphData: this.CreateGraphItem(data)
             };
+            audioInfo.AddIsPlayingCallback(function (isPlaying) {
+                _this.AddEvent(isPlaying ? "Start" : "Stop", data.Id);
+                if (isPlaying && !isAdded) {
+                    isAdded = true;
+                    _this._chart.addSeries(item.GraphData);
+                }
+            });
+            return item;
         };
         TwoDScaleK.prototype.CreateGraphItem = function (data) {
             return {
                 name: data.List.Label,
                 draggableX: true,
                 draggableY: true,
-                data: [0, 0]
+                cursor: 'pointer',
+                data: [[0, 0]]
             };
         };
         TwoDScaleK.prototype.dispose = function () {

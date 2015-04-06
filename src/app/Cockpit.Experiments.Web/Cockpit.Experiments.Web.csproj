@@ -18,6 +18,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="App\Components\NotFound\NotFound.html" />
+    <Content Include="App\Components\Players\Audio\Audio.html" />
     <Content Include="App\Components\Questions\CheckBoxGroup\CheckBoxGroup.html" />
     <Content Include="App\Components\Questions\TextBlock\TextBlock.html" />
     <Content Include="App\Components\Questions\TwoDScaleK\TwoDScaleK.html" />
@@ -125,6 +126,8 @@
   <ItemGroup>
     <TypeScriptCompile Include="App\CockpitPortal.ts" />
     <TypeScriptCompile Include="App\Components\NotFound\NotFound.ts" />
+    <TypeScriptCompile Include="App\Components\Players\Audio\Audio.ts" />
+    <TypeScriptCompile Include="App\Components\Players\Audio\AudioInfo.ts" />
     <TypeScriptCompile Include="App\Components\Questions\CheckBoxGroup\CheckBoxGroup.ts" />
     <TypeScriptCompile Include="App\Components\Questions\Monitor\Monitor.ts" />
     <TypeScriptCompile Include="App\Components\Questions\TextBlock\TextBlock.ts" />
@@ -164,6 +167,7 @@
     <TypeScriptCompile Include="Tests\TypeScriptDefinitions\jasmine.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\bootstrap.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\highcharts.d.ts" />
+    <TypeScriptCompile Include="TypeScriptDefinitions\HighChartsCrossingSpecificValue.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\highchartsDraggable.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\jquery.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\knockout.d.ts" />
