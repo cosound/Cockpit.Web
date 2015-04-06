@@ -31,6 +31,8 @@ class CheckBoxGroup extends QuestionBase
 		this.Items = (<any[]>this.GetInstrument("Items").Item).map(v => this.CreateCheckBoxInfo(v));	
 
 		if (this.HasAnswer()) this.Answer.push.apply(this.Answer, this.GetAsnwer()["Selections"]);
+		this.Answer.subscribe(v => this.SetAnswer({ Selections: this.Answer() }));
+
 	}
 
 	private CreateCheckBoxInfo(data:{Label:string; Id:string}):CheckBoxInfo

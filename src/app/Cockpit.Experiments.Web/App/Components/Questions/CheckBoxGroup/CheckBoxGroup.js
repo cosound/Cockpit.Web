@@ -20,6 +20,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], 
             this.Items = this.GetInstrument("Items").Item.map(function (v) { return _this.CreateCheckBoxInfo(v); });
             if (this.HasAnswer())
                 this.Answer.push.apply(this.Answer, this.GetAsnwer()["Selections"]);
+            this.Answer.subscribe(function (v) { return _this.SetAnswer({ Selections: _this.Answer() }); });
         }
         CheckBoxGroup.prototype.CreateCheckBoxInfo = function (data) {
             var _this = this;
