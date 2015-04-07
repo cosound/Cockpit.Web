@@ -41,9 +41,8 @@ define(["require", "exports", "Models/Question", "Managers/Experiment", "Compone
                 this._uiLessQuestions[i].SlideCompleted();
         };
         Default.prototype.AnswerChanged = function (question) {
-            if (!question.HasValidAnswer())
-                return;
-            ExperimentManager.SaveQuestionAnswer(question.Id, question.Answer());
+            if (question.HasValidAnswer())
+                ExperimentManager.SaveQuestionAnswer(question.Id, question.Answer());
             this.CheckIfAllQuestionsAreAnswered();
         };
         Default.prototype.CheckIfAllQuestionsAreAnswered = function () {

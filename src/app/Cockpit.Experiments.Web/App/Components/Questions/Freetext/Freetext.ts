@@ -16,8 +16,15 @@ class Freetext extends QuestionBase
 		this.Label = this.GetInstrument("Label");
 
 		if (this.HasAnswer()) this.Answer(this.GetAsnwer()["Text"]);
-		this.Answer.extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 500 }});
+		this.Answer.extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 200 }});
 		this.Answer.subscribe(v => this.SetAnswer({ Text: v }));
+	}
+
+	protected HasValidAnswer(answer: any): boolean
+	{
+		if (!answer.Text) return false;
+
+		return answer.Text != "";
 	}
 }
 

@@ -15,9 +15,14 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], 
             this.Label = this.GetInstrument("Label");
             if (this.HasAnswer())
                 this.Answer(this.GetAsnwer()["Text"]);
-            this.Answer.extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 500 } });
+            this.Answer.extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 200 } });
             this.Answer.subscribe(function (v) { return _this.SetAnswer({ Text: v }); });
         }
+        Freetext.prototype.HasValidAnswer = function (answer) {
+            if (!answer.Text)
+                return false;
+            return answer.Text != "";
+        };
         return Freetext;
     })(QuestionBase);
     return Freetext;
