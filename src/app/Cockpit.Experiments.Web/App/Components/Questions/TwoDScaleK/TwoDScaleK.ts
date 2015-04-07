@@ -110,6 +110,14 @@ class TwoDScaleK extends QuestionBase
 		});
 		this._chart = jquery(this.ChartElement()).highcharts();
 	}
+
+	protected HasValidAnswer(answer: any): boolean
+	{
+		if (!answer.Scalings) return false;
+
+		return answer.Scalings.length == this.Items.length;
+	}
+
 	private UpdateAnswer(): void
 	{
 		this.SetAnswer({

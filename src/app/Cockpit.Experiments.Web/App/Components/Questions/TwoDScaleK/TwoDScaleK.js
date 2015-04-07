@@ -92,6 +92,11 @@ define(["require", "exports", "knockout", "jquery", "Highcharts", "HighchartsMor
             });
             this._chart = jquery(this.ChartElement()).highcharts();
         };
+        TwoDScaleK.prototype.HasValidAnswer = function (answer) {
+            if (!answer.Scalings)
+                return false;
+            return answer.Scalings.length == this.Items.length;
+        };
         TwoDScaleK.prototype.UpdateAnswer = function () {
             var _this = this;
             this.SetAnswer({
