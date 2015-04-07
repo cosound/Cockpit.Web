@@ -3,6 +3,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionMap"], f
         function Question(question, answerChangedCallback) {
             var _this = this;
             this.Answer = knockout.observable();
+            this.HasValidAnswer = knockout.observable(false);
             var questionMap = QuestionMap.Get(question.Type);
             this.Id = question.Id;
             this.Type = questionMap.Type;

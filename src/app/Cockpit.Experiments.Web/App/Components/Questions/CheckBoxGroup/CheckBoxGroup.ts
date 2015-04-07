@@ -30,9 +30,22 @@ class CheckBoxGroup extends QuestionBase
 
 		this.Items = (<any[]>this.GetInstrument("Items").Item).map(v => this.CreateCheckBoxInfo(v));	
 
-		if (this.HasAnswer()) this.Answer.push.apply(this.Answer, this.GetAsnwer()["Selections"]);
+		if (this.HasAnswer())
+		{
+			if (this.GetAsnwer()["Selections"])
+				this.Answer.push.apply(this.Answer, this.GetAsnwer()["Selections"]);
+			else
+				this.SetAnswer({ Selections: [] });
+		}
+		
 		this.Answer.subscribe(v => this.SetAnswer({ Selections: this.Answer() }));
+	}
 
+	protected HasValidAnswer(answer: any): boolean
+	{
+		if (!answer.Selections) return false;
+
+		return answer.Selections.length >= this._minNoOfSelections;
 	}
 
 	private CreateCheckBoxInfo(data:{Label:string; Id:string}):CheckBoxInfo

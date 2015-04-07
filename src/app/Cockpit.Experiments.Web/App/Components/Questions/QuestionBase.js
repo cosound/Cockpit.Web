@@ -13,7 +13,21 @@ define(["require", "exports", "knockout"], function (require, exports, knockout)
             else {
                 this._events = new Array();
             }
+            setTimeout(function () { return _this.UpdateIsAnswerValid(); }, 0);
         }
+        QuestionsBase.prototype.UpdateIsAnswerValid = function (answer) {
+            answer = answer || this.GetAsnwer();
+            if (answer == null)
+                this.Model.HasValidAnswer(false);
+            else
+                this.Model.HasValidAnswer(this.HasValidAnswer(answer));
+        };
+        QuestionsBase.prototype.HasValidAnswer = function (answer) {
+            for (var key in answer)
+                if (key != "Events")
+                    return true;
+            return false;
+        };
         QuestionsBase.prototype.GetInstrument = function (key) {
             return this.GetIntrumentObject()[key];
         };
@@ -29,6 +43,7 @@ define(["require", "exports", "knockout"], function (require, exports, knockout)
         };
         QuestionsBase.prototype.SetAnswer = function (answer) {
             answer.Events = this._events;
+            this.UpdateIsAnswerValid(answer);
             this.Model.Answer(answer);
         };
         QuestionsBase.prototype.AddEvent = function (type, id) {

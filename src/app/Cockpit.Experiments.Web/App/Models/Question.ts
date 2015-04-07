@@ -10,6 +10,7 @@ class Question
 	public HasUIElement: boolean;
 	public Input: any[];
 	public Answer: KnockoutObservable<any> = knockout.observable<any>();
+	public HasValidAnswer: KnockoutObservable<boolean> = knockout.observable(false);
 	public RequiresInput:boolean;
 
 	constructor(question: CockpitPortal.IQuestion, answerChangedCallback: (question: Question)=>void)

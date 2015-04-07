@@ -41,13 +41,15 @@ define(["require", "exports", "Models/Question", "Managers/Experiment", "Compone
                 this._uiLessQuestions[i].SlideCompleted();
         };
         Default.prototype.AnswerChanged = function (question) {
+            if (!question.HasValidAnswer())
+                return;
             ExperimentManager.SaveQuestionAnswer(question.Id, question.Answer());
             this.CheckIfAllQuestionsAreAnswered();
         };
         Default.prototype.CheckIfAllQuestionsAreAnswered = function () {
             var allQuestionsAnswered = true;
             for (var i = 0; i < this.Questions.length; i++) {
-                if (this.Questions[i].RequiresInput && this.Questions[i].Answer() == null)
+                if (this.Questions[i].RequiresInput && !this.Questions[i].HasValidAnswer())
                     allQuestionsAnswered = false;
             }
             this._slide.CanGoToNextSlide(allQuestionsAnswered);

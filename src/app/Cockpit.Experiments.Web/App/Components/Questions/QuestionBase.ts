@@ -22,6 +22,26 @@ class QuestionsBase implements IQuestionViewModel
 		} else {
 			this._events = new Array<CockpitPortal.IQuestionEvent>();
 		}
+
+		setTimeout(() => this.UpdateIsAnswerValid(), 0); //Give decendent time to override HasValidAnswer 
+	}
+
+	protected UpdateIsAnswerValid(answer?:any):void
+	{
+		answer = answer || this.GetAsnwer();
+
+		if (answer == null)
+			this.Model.HasValidAnswer(false);
+		else
+			this.Model.HasValidAnswer(this.HasValidAnswer(answer));
+	}
+
+	protected HasValidAnswer(answer:any):boolean
+	{
+		for (var key in answer)
+			if (key != "Events") return true;
+
+		return false;
 	}
 
 	protected GetInstrument(key:string):any
@@ -48,6 +68,7 @@ class QuestionsBase implements IQuestionViewModel
 	{
 		answer.Events = this._events;
 
+		this.UpdateIsAnswerValid(answer);
 		this.Model.Answer(answer);
 	}
 
@@ -66,7 +87,7 @@ class QuestionsBase implements IQuestionViewModel
 
 	public SlideLoaded(): void
 	{
-
+		
 	}
 
 	public SlideCompleted():void

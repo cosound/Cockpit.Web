@@ -18,10 +18,19 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], 
             this._maxNoOfSelections = this.GetInstrument("MaxNoOfSelections");
             this.CanSelectMore = knockout.computed(function () { return _this.Answer().length < _this._maxNoOfSelections; });
             this.Items = this.GetInstrument("Items").Item.map(function (v) { return _this.CreateCheckBoxInfo(v); });
-            if (this.HasAnswer())
-                this.Answer.push.apply(this.Answer, this.GetAsnwer()["Selections"]);
+            if (this.HasAnswer()) {
+                if (this.GetAsnwer()["Selections"])
+                    this.Answer.push.apply(this.Answer, this.GetAsnwer()["Selections"]);
+                else
+                    this.SetAnswer({ Selections: [] });
+            }
             this.Answer.subscribe(function (v) { return _this.SetAnswer({ Selections: _this.Answer() }); });
         }
+        CheckBoxGroup.prototype.HasValidAnswer = function (answer) {
+            if (!answer.Selections)
+                return false;
+            return answer.Selections.length >= this._minNoOfSelections;
+        };
         CheckBoxGroup.prototype.CreateCheckBoxInfo = function (data) {
             var _this = this;
             var info = {
