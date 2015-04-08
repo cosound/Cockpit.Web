@@ -53,14 +53,14 @@ export class Selection
 		return ServiceCaller.CallService("Selection/Delete", CHAOS.Portal.Client.HttpMethod.Get, { id: id }, true);
 	}
 
-	public static AddItems(id: string, items:ISelectionItem[]): CHAOS.Portal.Client.ICallState<any>
+	public static AddItems(id: string, items:string[]): CHAOS.Portal.Client.ICallState<any>
 	{
-		return ServiceCaller.CallService("Selection/AddItems", CHAOS.Portal.Client.HttpMethod.Post, { id: id, items: JSON.stringify(items) }, true);
+		return ServiceCaller.CallService("Selection/AddItems", CHAOS.Portal.Client.HttpMethod.Post, { id: id, items: items }, true);
 	}
 
-	public static DeleteItems(id: string, items: ISelectionItem[]): CHAOS.Portal.Client.ICallState<any>
+	public static DeleteItems(id: string, items: string[]): CHAOS.Portal.Client.ICallState<any>
 	{
-		return ServiceCaller.CallService("Selection/DeleteItems", CHAOS.Portal.Client.HttpMethod.Post, { id: id, items: JSON.stringify(items) }, true);
+		return ServiceCaller.CallService("Selection/DeleteItems", CHAOS.Portal.Client.HttpMethod.Post, { id: id, items: items }, true);
 	}
 }
 

@@ -3,10 +3,11 @@ import Notification = require("Managers/Notification");
 import Portal = require("Managers/Portal");
 import Title = require("Managers/Title");
 import SelectionsManager = require("Managers/Selections");
+import Selection = require("Data/Selection");
 
 class Selections
 {
-	public Selections: KnockoutObservableArray<Portal.ISelection>;
+	public Selections: KnockoutObservableArray<Selection>;
 	public NewSelectionName:KnockoutObservable<string> = knockout.observable("");
 
 	constructor()

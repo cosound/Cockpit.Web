@@ -2,14 +2,15 @@
 import Authorization = require("Managers/Authorization");
 import Portal = require("Managers/Portal");
 import Notification = require("Managers/Notification");
+import Selection = require("Data/Selection");
 
-export var Selections: KnockoutObservableArray<Portal.ISelection> = knockout.observableArray<Portal.ISelection>();
+export var Selections: KnockoutObservableArray<Selection> = knockout.observableArray<Selection>();
 
 function Initialize():void
 {
 	Authorization.WhenAuthenticated(() =>
 	{
-		Portal.Selection.Get("c375e8d2-64a3-4bb9-9b96-6f8ba7862d81").WithCallback(response =>
+		Portal.Selection.Get("cdeaa42f-1d41-483c-b7d1-e2ed5e98d7f4").WithCallback(response =>
 		{
 			if (response.Error != null)
 			{
@@ -18,7 +19,7 @@ function Initialize():void
 			}
 
 			if (response.Body.Results.length > 0)
-				Selections.push.apply(Selections, response.Body.Results);
+				Selections.push.apply(Selections, response.Body.Results.map(s => new Selection(s, Delete)));
 		});
 	});
 }
@@ -33,30 +34,44 @@ export function Create(name:string, callback:(success:boolean)=>void):void
 			callback(false);
 		} else
 		{
-			Selections.push(response.Body.Results[0]);
+			Selections.push(new Selection(response.Body.Results[0], Delete));
 			callback(true);
 		}
 	});
 }
 
-export function AddToSelection(id: string, items: Portal.ISelectionItem[], callback: (success: boolean) => void):void
+export function AddToSelection(id: string, ids: string[], callback: (success: boolean) => void = null):void
 {
-	Portal.Selection.AddItems(id, items).WithCallback(response =>
+	Portal.Selection.AddItems(id, ids).WithCallback(response =>
 	{
 		if (response.Error != null)
 		{
 			Notification.NotifyError("Error adding items to selection: " + response.Error.Message);
-			callback(false);
+			if(callback != null) callback(false);
 		} else
 		{
-			Selections().some(s =>
+			Selections().some(selection =>
 			{
-				if (s.Id != id) return false;
-				s.Items.push.apply(s.Items, items);
+				if (selection.Id != id) return false;
+				selection.AddItemsById(ids);
 				return true;
 			});
-			callback(true);
+			if (callback != null) callback(true);
 		}
+	});
+}
+
+export function Delete(selection:Selection):void
+{
+	this.Selections.remove(selection);
+
+	Portal.Selection.Delete(selection.Id).WithCallback(response =>
+	{
+		if (response.Error == null) return;
+
+		Notification.NotifyError("Failed to delete selection: " + response.Error.Message);
+		this.Selections.push(selection);
+		return;
 	});
 }
 

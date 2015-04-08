@@ -41,10 +41,10 @@ define(["require", "exports", "knockout", "Portal", "Managers/Configuration"], f
             return exports.ServiceCaller.CallService("Selection/Delete", 0 /* Get */, { id: id }, true);
         };
         Selection.AddItems = function (id, items) {
-            return exports.ServiceCaller.CallService("Selection/AddItems", 1 /* Post */, { id: id, items: JSON.stringify(items) }, true);
+            return exports.ServiceCaller.CallService("Selection/AddItems", 1 /* Post */, { id: id, items: items }, true);
         };
         Selection.DeleteItems = function (id, items) {
-            return exports.ServiceCaller.CallService("Selection/DeleteItems", 1 /* Post */, { id: id, items: JSON.stringify(items) }, true);
+            return exports.ServiceCaller.CallService("Selection/DeleteItems", 1 /* Post */, { id: id, items: items }, true);
         };
         return Selection;
     })();
