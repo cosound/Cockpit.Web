@@ -1,0 +1,17 @@
+﻿<div class="container">
+	<!-- ko component: 'Shell/Notifications' --><!-- /ko -->
+	<!-- ko component: 'Shell/TopBar' --><!-- /ko -->
+	<div>
+		<!-- ko if: Page() -->
+		<!-- ko component: {name: 'Pages/' + Page().Name, params: Page().Data} --><!-- /ko -->
+		<!-- /ko -->
+		<!-- ko ifnot: Page -->
+		<!-- ko if: HasCheckedAuthorization -->
+		<p>Loading...</p>
+		<!-- /ko -->
+		<!-- ko ifnot: HasCheckedAuthorization -->
+		<p>Checking Authorization...</p>
+		<!-- /ko -->
+		<!-- /ko -->
+	</div>
+</div>

@@ -1,0 +1,13 @@
+﻿<nav class="navbar navbar-default" role="navigation">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<a class="navbar-brand" href="#">Cockpit</a>
+		</div>
+		<div class="collapse navbar-collapse" id="TopBar-collapse" data-bind="if: IsAuthorized">
+			<ul class="nav navbar-nav">
+				<li class="active" data-bind="css: {active: CurrentPageName() == 'Search'}"><a href="#Search">Search</a></li>
+				<li class="active" data-bind="css: {active: CurrentPageName() == 'Selections'}"><a href="#Selections">Selections</a></li>
+			</ul>
+		</div>
+	</div>
+</nav>

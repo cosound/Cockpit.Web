@@ -142,6 +142,7 @@
     <TypeScriptCompile Include="App\KnockoutBindings\KnockoutBindings.ts" />
     <TypeScriptCompile Include="App\KnockoutBindings\Width.ts" />
     <TypeScriptCompile Include="App\Main.ts" />
+    <TypeScriptCompile Include="App\Managers\Title.ts" />
     <TypeScriptCompile Include="App\Models\Question.ts" />
     <TypeScriptCompile Include="App\Models\Slide.ts" />
     <TypeScriptCompile Include="App\Components\Questions\QuestionMap.ts" />

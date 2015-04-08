@@ -1,53 +1,27 @@
-﻿requirejs.config({
+requirejs.config({
     paths: {
-        text: '../Lib/text/text',
-        jquery: '../Lib/jQuery/jquery.min',
-        routie: '../Lib/Routie/routie.min',
-        knockout: '../Lib/knockout/knockout',
-        bootstrap: '../Lib/bootstrap/js/bootstrap.min',
-        jsPlumb: '../Lib/jsPlumb/js/dom.jsPlumb-1.6.2-min',
-        Portal: '../Lib/PortalClient/PortalClient.min'
+        text: "../Lib/requirejs/text",
+        jquery: "../Lib/jquery/jquery.min",
+        routie: "../Lib/routie/routie.min",
+        knockout: "../Lib/knockout/knockout.min",
+        bootstrap: "../Lib/bootstrap/js/bootstrap.min",
+        Portal: "../Lib/Portal/PortalClient",
     },
-    map: {
-        '*': {
-            css: '../Lib/require-css/css.min'
-        }
-    },
-    packages: [
-        {
-            name: 'less',
-            location: '../Lib/require-less',
-            main: 'less'
-        }
-    ],
     shim: {
         routie: {
-            exports: 'routie'
+            exports: "routie"
         },
         bootstrap: {
-            deps: [
-                'jquery',
-                'css!../Lib/bootstrap/css/bootstrap.min',
-                'css!../Lib/bootstrap/css/bootstrap-theme.min'
-            ]
-        },
-        jsPlumb: {
-            exports: 'jsPlumb',
-            deps: [
-                'jquery',
-                'css!../Lib/jsPlumb/css/jsplumb'
-            ]
+            deps: ["jquery"]
         },
         Portal: {
-            exports: 'CHAOS.Portal.Client'
+            exports: "CHAOS.Portal.Client"
         }
     },
     waitSeconds: 20,
     urlArgs: "bust=" + CacheBuster
 });
-
-require(['Application', 'knockout', 'NameConventionLoader', 'bootstrap', 'Portal'], function (application, knockout, nameConventionLoader) {
+require(["NameConventionLoader", "knockout", "bootstrap", "Managers/Portal", "KnockoutBindings/Element", "KnockoutBindings/Tooltip"], function (nameConventionLoader, knockout) {
     knockout.components.loaders.push(new nameConventionLoader("Cockpit"));
-
-    knockout.applyBindings(new application());
+    knockout.applyBindings();
 });

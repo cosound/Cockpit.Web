@@ -1,6 +1,0 @@
-﻿class NotFound
-{
-	
-}
-
-export = NotFound;

@@ -16,11 +16,12 @@ class NameConventionLoader implements KnockoutComponentLoader
 
 		knockout.components.register(componentName, {});
 
-		var fileName = componentName.replace(this._prefix + "-", "").replace("-", "/");
+		var filePath = componentName.replace(this._prefix + "-", "").replace("-", "/");
+		filePath += (filePath.lastIndexOf("/") == -1 ? "/" + filePath : filePath.substring(filePath.lastIndexOf("/")));
 
 		callback({
-			viewModel: { require: "ViewModels/" + fileName },
-			template: { require: "text!Views/" + fileName + ".html" }
+			viewModel: { require: filePath },
+			template: { require: "text!" + filePath + ".html" }
 		});
 	}
 }

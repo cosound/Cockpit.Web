@@ -1,0 +1,20 @@
+﻿<h2>Login</h2>
+<form role="form" data-bind="submit: Login" class="col-xs-4">
+	<div class="form-group" data-bind="css: {'has-error': HasLoginFailed, 'has-feedback': HasLoginFailed}">
+		<label class="control-label" for="LoginEmail">Email address</label>
+		<input type="email" class="form-control" id="LoginEmail" placeholder="Enter email" data-bind="textInput: Email, enable: !IsAuthorizing()" />
+		<span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true" data-bind="visible: HasLoginFailed"></span>
+	</div>
+	<div class="form-group" data-bind="css: {'has-error': HasLoginFailed, 'has-feedback': HasLoginFailed}">
+		<label class="control-label" for="LoginPassword">Password</label>
+		<input type="password" class="form-control" id="LoginPassword" placeholder="Password" data-bind="textInput: Password, enable: !IsAuthorizing()" />
+		<span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true" data-bind="visible: HasLoginFailed"></span>
+	</div>
+	<div class="checkbox">
+		<label>
+			<input type="checkbox" data-bind="checked: RememberLogin" /> Remember me
+		</label>
+	</div>
+	<button type="submit" class="btn btn-default" data-bind="click: Login, enable: CanLogin">Login</button>
+	<span data-bind="visible: HasLoginFailed" class="text-danger">Email or password is incorrect</span>
+</form>

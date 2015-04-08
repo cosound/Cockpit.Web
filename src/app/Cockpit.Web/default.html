@@ -1,18 +1,20 @@
 ﻿<!DOCTYPE html>
 
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Cockpit</title>
+		<link rel="stylesheet" href="Lib/bootstrap/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="Lib/bootstrap/css/bootstrap-theme.min.css" />
+		<link rel="stylesheet" href="App/Styles/Main.css?bust=1" />
 		<script type="text/javascript">
 			var CacheBuster = 1;
 		</script>
 	</head>
 	<body>
-		<div class="Content container-fluid" data-bind="component: 'Shell'">
+		<div data-bind="component: 'Shell'">
 			Loading...
 		</div>
-		<script type="text/javascript" src="Lib/requirejs/require.js" data-main="App/Main"></script>
+		<script type="text/javascript" src="Lib/requirejs/require.min.js" data-main="App/Main"></script>
 	</body>
 </html>

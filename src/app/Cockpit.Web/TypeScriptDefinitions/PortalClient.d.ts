@@ -68,7 +68,7 @@ declare module CHAOS.Portal.Client {
         TransferProgressChanged(): IEvent<ITransferProgress>;
     }
     interface ICallHandler {
-        ProcessResponse<T>(response: IPortalResponse<T>, recall: () => void): boolean;
+        ProcessResponse<T>(response: IPortalResponse<T>, recaller: (resetSession: boolean) => void): boolean;
     }
     interface ISession {
         Guid: string;
@@ -173,6 +173,7 @@ declare module CHAOS.Portal.Client {
 }
 declare module CHAOS.Portal.Client {
     class PortalClient implements IPortalClient, IServiceCaller {
+        static GetSessionParameterName(): string;
         static GetClientVersion(): string;
         private static GetProtocolVersion();
         private _servicePath;
@@ -198,10 +199,13 @@ declare module CHAOS.Portal.Client {
         }, requiresSession?: boolean, format?: string): string;
         public SetCallHandler(handler: ICallHandler): void;
         private GetPathToExtension(path);
-        private AddSessionToParameters(parameters);
+        private AddSessionToParameters(parameters, path, method?);
         public UpdateSession(session: ISession): void;
         public SetSessionAuthenticated(type: string, userGuid?: string, sessionDateModified?: number): void;
     }
+}
+interface Window {
+    [index: string]: any;
 }
 declare module CHAOS.Portal.Client {
     class Session {
@@ -215,7 +219,7 @@ declare module CHAOS.Portal.Client {
         static Update(guid: string, email: string, permissons?: number, serviceCaller?: IServiceCaller): ICallState<any>;
         static Delete(guid: string, serviceCaller?: IServiceCaller): ICallState<any>;
         static Get(guid?: string, groupGuid?: string, serviceCaller?: IServiceCaller): ICallState<any>;
-        static GetCurrent(serviceCaller?: IServiceCaller): ICallState<any>;
+        static GetCurrent(serviceCaller?: IServiceCaller): ICallState<IUserInfo>;
     }
     class Group {
         static Get(guid?: string, userGuid?: string, serviceCaller?: IServiceCaller): ICallState<any>;
@@ -236,12 +240,21 @@ declare module CHAOS.Portal.Client {
     }
     function Initialize(servicePath: string, clientGUID?: string, autoCreateSession?: boolean): IPortalClient;
     class ServiceCallerService {
+        private static _defaultCaller;
         static GetDefaultCaller(): IServiceCaller;
         static SetDefaultCaller(value: IServiceCaller): void;
+    }
+    interface IUserInfo {
+        Guid: string;
+        Email: string;
+        SystemPermissions: number;
+        SessionDateCreated: number;
+        SessionDateModified: number;
     }
 }
 declare module CHAOS.Portal.Client {
     class SecureCookieHelper {
+        private static COOKIE_LIFE_TIME_DAYS;
         static DoesCookieExist(): boolean;
         static Login(callback?: (success: boolean) => void, serviceCaller?: IServiceCaller): void;
         static Create(serviceCaller?: IServiceCaller): void;
@@ -253,8 +266,8 @@ declare module CHAOS.Portal.Client {
 declare module CHAOS.Portal.Client {
     class Wayf {
         static AuthenticationType(): string;
-        static LogIn(wayfServicePath: string, target: any, callback: (success: boolean) => void, callbackUrl?: string, serviceCaller?: IServiceCaller): void;
-        static LogOut(wayfServicePath: string, target: any, callback: (success: boolean) => void, callbackUrl?: string, serviceCaller?: IServiceCaller): void;
+        static LogIn(wayfServicePath: string, target: any, callback: (status: number) => void, callbackUrl?: string, serviceCaller?: IServiceCaller): void;
+        static LogOut(wayfServicePath: string, target: any, callback: (status: number) => void, callbackUrl?: string, serviceCaller?: IServiceCaller): void;
         private static CallWayfService(wayfServicePath, wayfMethod, target, callback, callbackUrl?, serviceCaller?);
     }
 }

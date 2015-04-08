@@ -1,0 +1,8 @@
+﻿<!-- ko foreach: Notifications -->
+<div class="alert alert-dismissable" data-bind="css : {'alert-warning': Level == 'Warning', 'alert-danger': Level == 'Error'}">
+	<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+	<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true" data-bind="visible: Level == 'Error'"></span>
+	<span class="glyphicon glyphicon-warning-sign" aria-hidden="true" data-bind="visible: Level == 'Warning'"></span>
+	<span data-bind="text: Message"></span>
+</div>
+<!-- /ko -->
