@@ -18,9 +18,11 @@
 		<tbody data-bind="foreach: SearchResults">
 			<tr>
 				<td>
-					<input type="checkbox" data-bind="checked: IsSelected" />
+					<label>
+						<input type="checkbox" data-bind="checked: IsSelected, enable: CanSelectSearchHits" />
+						<span data-bind="text: Title"></span>
+					</label>
 				</td>
-				<td data-bind="text: Title"></td>
 			</tr>
 		</tbody>
 	</table>

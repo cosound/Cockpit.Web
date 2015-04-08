@@ -9,9 +9,7 @@ define(["require", "exports", "knockout"], function (require, exports, knockout)
         }
         Selection.prototype.AddItems = function (items) {
             var _this = this;
-            console.log(items[0].Id);
             items.forEach(function (i) { return _this.Items[i.Id] = true; });
-            console.log(this.Items);
         };
         Selection.prototype.AddItemsById = function (ids) {
             var _this = this;

@@ -13,13 +13,15 @@ class Search
 
 	public SelectedSelection: KnockoutObservable<Selection> = knockout.observable<Selection>(null);
 	public Selections: KnockoutObservableArray<Selection>;
-	public CanAddToSelection:KnockoutComputed<boolean>;
+	public CanAddToSelection: KnockoutComputed<boolean>;
+	public CanSelectSearchHits:KnockoutComputed<boolean>;
 
 	constructor(selectionId:string)
 	{
 		Title.ToDefault("Search");
 		this.Selections = Selections.Selections;
 		this.CanAddToSelection = knockout.computed(() => this.SelectedSelection() != null);
+		this.CanSelectSearchHits = this.CanAddToSelection;
 		this.SelectedSelection.subscribe(s => this.UpdateSelections(s));
 	}
 
@@ -45,7 +47,7 @@ class Search
 			}
 
 			if (response.Body.Results.length > 0)
-				this.SearchResults.push.apply(this.SearchResults, response.Body.Results.map(r => new SearchResult(r)));
+				this.SearchResults.push.apply(this.SearchResults, response.Body.Results.map(r => new SearchResult(r, this.CanSelectSearchHits)));
 
 			this.Query("");
 			this.UpdateSelections();

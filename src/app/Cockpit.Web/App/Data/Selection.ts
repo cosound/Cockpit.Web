@@ -20,11 +20,7 @@ class Selection
 
 	public AddItems(items:Portal.ISelectionItem[]):void
 	{
-		console.log(items[0].Id);
-
 		items.forEach(i => this.Items[i.Id] = true);
-
-		console.log(this.Items);
 	}
 
 	public AddItemsById(ids: string[]): void

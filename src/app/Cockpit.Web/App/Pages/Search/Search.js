@@ -8,6 +8,7 @@ define(["require", "exports", "knockout", "Managers/Notification", "Managers/Por
             Title.ToDefault("Search");
             this.Selections = Selections.Selections;
             this.CanAddToSelection = knockout.computed(function () { return _this.SelectedSelection() != null; });
+            this.CanSelectSearchHits = this.CanAddToSelection;
             this.SelectedSelection.subscribe(function (s) { return _this.UpdateSelections(s); });
         }
         Search.prototype.UpdateSelections = function (selection) {
@@ -25,7 +26,7 @@ define(["require", "exports", "knockout", "Managers/Notification", "Managers/Por
                     return;
                 }
                 if (response.Body.Results.length > 0)
-                    _this.SearchResults.push.apply(_this.SearchResults, response.Body.Results.map(function (r) { return new SearchResult(r); }));
+                    _this.SearchResults.push.apply(_this.SearchResults, response.Body.Results.map(function (r) { return new SearchResult(r, _this.CanSelectSearchHits); }));
                 _this.Query("");
                 _this.UpdateSelections();
             });
