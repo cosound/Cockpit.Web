@@ -6,13 +6,22 @@ class SearchResult
 	public Id: string;
 	public Title: string;
 	public IsSelected: KnockoutObservable<boolean> = knockout.observable(false);
-	public CanSelectSearchHits:KnockoutComputed<boolean>;
+	public SavedIsSelected:KnockoutObservable<boolean> = knockout.observable(false);
+	public CanToggleSelect: KnockoutComputed<boolean>;
+	public HasChanges:KnockoutComputed<boolean>;
 
-	constructor(data: Portal.ISearchResult, canSelectSearchHits:KnockoutComputed<boolean>)
+	constructor(data: Portal.ISearchResult, canToggleSelect:KnockoutComputed<boolean>)
 	{
 		this.Id = data.Id;
 		this.Title = data.Title;
-		this.CanSelectSearchHits = canSelectSearchHits;
+		this.CanToggleSelect = canToggleSelect;
+		this.HasChanges = knockout.computed(() => this.IsSelected() !== this.SavedIsSelected());
+	}
+
+	public SetSavedState(isSelected:boolean):void
+	{
+		this.IsSelected(isSelected);
+		this.SavedIsSelected(isSelected);
 	}
 }
 

@@ -61,16 +61,37 @@ export function AddToSelection(id: string, ids: string[], callback: (success: bo
 	});
 }
 
+export function RemoveFromSelection(id: string, ids: string[], callback: (success: boolean) => void = null): void
+{
+	Portal.Selection.DeleteItems(id, ids).WithCallback(response =>
+	{
+		if (response.Error != null)
+		{
+			Notification.NotifyError("Error deleting items to selection: " + response.Error.Message);
+			if (callback != null) callback(false);
+		} else
+		{
+			Selections().some(selection =>
+			{
+				if (selection.Id !== id) return false;
+				selection.RemoveItemsById(ids);
+				return true;
+			});
+			if (callback != null) callback(true);
+		}
+	});
+}
+
 export function Delete(selection:Selection):void
 {
-	this.Selections.remove(selection);
+	Selections.remove(selection);
 
 	Portal.Selection.Delete(selection.Id).WithCallback(response =>
 	{
 		if (response.Error == null) return;
 
 		Notification.NotifyError("Failed to delete selection: " + response.Error.Message);
-		this.Selections.push(selection);
+		Selections.push(selection);
 		return;
 	});
 }

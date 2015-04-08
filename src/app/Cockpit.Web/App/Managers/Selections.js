@@ -46,14 +46,34 @@ define(["require", "exports", "knockout", "Managers/Authorization", "Managers/Po
         });
     }
     exports.AddToSelection = AddToSelection;
+    function RemoveFromSelection(id, ids, callback) {
+        if (callback === void 0) { callback = null; }
+        Portal.Selection.DeleteItems(id, ids).WithCallback(function (response) {
+            if (response.Error != null) {
+                Notification.NotifyError("Error deleting items to selection: " + response.Error.Message);
+                if (callback != null)
+                    callback(false);
+            }
+            else {
+                exports.Selections().some(function (selection) {
+                    if (selection.Id !== id)
+                        return false;
+                    selection.RemoveItemsById(ids);
+                    return true;
+                });
+                if (callback != null)
+                    callback(true);
+            }
+        });
+    }
+    exports.RemoveFromSelection = RemoveFromSelection;
     function Delete(selection) {
-        var _this = this;
-        this.Selections.remove(selection);
+        exports.Selections.remove(selection);
         Portal.Selection.Delete(selection.Id).WithCallback(function (response) {
             if (response.Error == null)
                 return;
             Notification.NotifyError("Failed to delete selection: " + response.Error.Message);
-            _this.Selections.push(selection);
+            exports.Selections.push(selection);
             return;
         });
     }

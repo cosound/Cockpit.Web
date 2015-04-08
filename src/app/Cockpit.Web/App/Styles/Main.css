@@ -1,3 +1,7 @@
 ﻿body, html {
 	margin-top: 20px;
 }
+
+.inline-block {
+	display: inline-block !important;
+}

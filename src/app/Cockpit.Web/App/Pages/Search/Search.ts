@@ -13,54 +13,92 @@ class Search
 
 	public SelectedSelection: KnockoutObservable<Selection> = knockout.observable<Selection>(null);
 	public Selections: KnockoutObservableArray<Selection>;
-	public CanAddToSelection: KnockoutComputed<boolean>;
-	public CanSelectSearchHits:KnockoutComputed<boolean>;
+	public CanUpdateSelection: KnockoutComputed<boolean>;
+	public CanSelectSearchHits: KnockoutComputed<boolean>;
+	public CanLoadMore: KnockoutComputed<boolean>;
+	public TotalNumberOfResults:KnockoutObservable<number> = knockout.observable(0);
+
+	private _lastQuery:string;
+	private _pageIndex:KnockoutObservable < number > = knockout.observable(0);
+	private _pageSize:number = 10;
 
 	constructor(selectionId:string)
 	{
 		Title.ToDefault("Search");
 		this.Selections = Selections.Selections;
-		this.CanAddToSelection = knockout.computed(() => this.SelectedSelection() != null);
-		this.CanSelectSearchHits = this.CanAddToSelection;
+		this.CanUpdateSelection = knockout.computed(() => this.SelectedSelection() != null);
+		this.CanSelectSearchHits = this.CanUpdateSelection;
+		this.CanLoadMore = knockout.computed(() => this.TotalNumberOfResults() > (this._pageIndex() + 1) * this._pageSize);
+
 		this.SelectedSelection.subscribe(s => this.UpdateSelections(s));
 	}
 
-	private UpdateSelections(selection:Selection = null):void
+	private UpdateSelections(selection:Selection = null, searchResults:SearchResult[] = null):void
 	{
 		selection = selection || this.SelectedSelection();
+		searchResults = searchResults || this.SearchResults();
 
-		this.SearchResults().forEach(s => s.IsSelected(selection != null && selection.Items[s.Id] == true));
+		searchResults.forEach(s => s.SetSavedState(selection != null && selection.Items[s.Id]));
 	}
 
 	public Search():void
 	{
 		this.SearchResults.removeAll();
 
-		Portal.Search.Simple(this.Query(), 0, 10).WithCallback(response =>
+		this._lastQuery = this.Query();
+		this.TotalNumberOfResults(0);
+		this._pageIndex(0);
+
+		this.InnerSearch(this._lastQuery, this._pageIndex(), this._pageSize, (r, t) =>
 		{
 			this.SearchResults.removeAll();
+			this.SearchResults.push.apply(this.SearchResults, r);
+			this.TotalNumberOfResults(t);
+		});
+	}
 
+	public LoadMore(): void
+	{
+		this._pageIndex(this._pageIndex() + 1);
+		this.InnerSearch(this._lastQuery, this._pageIndex(), this._pageSize, r => this.SearchResults.push.apply(this.SearchResults, r));
+	}
+
+	private InnerSearch(query:string, index:number, size:number, callback:(results:SearchResult[], totalCount:number)=>void):void
+	{
+		Portal.Search.Simple(query, index, size).WithCallback(response =>
+		{
 			if (response.Error != null)
 			{
 				Notification.NotifyError("Failed to get search: " + response.Error.Message);
 				return;
 			}
 
-			if (response.Body.Results.length > 0)
-				this.SearchResults.push.apply(this.SearchResults, response.Body.Results.map(r => new SearchResult(r, this.CanSelectSearchHits)));
+			var results = response.Body.Results.map(r => new SearchResult(r, this.CanSelectSearchHits));
 
-			this.Query("");
-			this.UpdateSelections();
+			this.UpdateSelections(null, results);
+
+			callback(results, response.Body.TotalCount);
 		});
 	}
 
-	public AddToSelection():void
+	public UpdateSelection():void
 	{
-		if (!this.CanAddToSelection()) return;
+		if (!this.CanUpdateSelection()) return;
 
-		var results = this.SearchResults().filter(s => s.IsSelected());
+		var changedResults = this.SearchResults().filter(s => s.HasChanges());
+		var addResults = changedResults.filter(s => s.IsSelected());
+		var removeResults = changedResults.filter(s => !s.IsSelected());
 
-		Selections.AddToSelection(this.SelectedSelection().Id, results.map(s => s.Id));
+		if(addResults.length !== 0)
+			Selections.AddToSelection(this.SelectedSelection().Id, addResults.map(s => s.Id), success =>
+			{
+				if (success) this.UpdateSelections(null, addResults);
+			});
+		if (removeResults.length !== 0)
+			Selections.RemoveFromSelection(this.SelectedSelection().Id, removeResults.map(s => s.Id), success =>
+			{
+				if (success) this.UpdateSelections(null, removeResults);
+			});
 	}
 }
 

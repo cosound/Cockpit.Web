@@ -1,29 +1,32 @@
 ﻿<h2>Search</h2>
 <div class="panel panel-default">
 	<div class="panel-heading">
-		<form class="form-inline" data-bind="submit: Search">
+		<form class="form-inline inline-block" data-bind="submit: Search">
 			<div class="form-group">
 				<input type="text" class="form-control" id="Query" placeholder="Search" data-bind="value: Query">
 			</div>
 			<button type="submit" class="btn btn-default">Search</button>
 		</form>
-		<form class="form-inline" data-bind="submit: AddToSelection">
+		<form class="form-inline pull-right" data-bind="submit: UpdateSelection">
 			<div class="form-group">
-				<select data-bind="options: Selections, optionsText: 'Name', value: SelectedSelection, optionsCaption: 'Choose a selection'"></select>
+				<select class="form-control" data-bind="options: Selections, optionsText: 'Name', value: SelectedSelection, optionsCaption: 'Choose a selection'"></select>
 			</div>
-			<button type="submit" class="btn btn-default" data-bind="enable: CanAddToSelection">Add to selection</button>
+			<button type="submit" class="btn btn-default" data-bind="enable: CanUpdateSelection">Save selection</button>
 		</form>
 	</div>
-	<table class="table">
+	<table class="table table-striped">
 		<tbody data-bind="foreach: SearchResults">
-			<tr>
+			<tr data-bind="css: {success: HasChanges() && IsSelected(), danger: HasChanges() && !IsSelected()}">
 				<td>
 					<label>
-						<input type="checkbox" data-bind="checked: IsSelected, enable: CanSelectSearchHits" />
+						<input type="checkbox" data-bind="checked: IsSelected, enable: CanToggleSelect" />
 						<span data-bind="text: Title"></span>
 					</label>
 				</td>
 			</tr>
 		</tbody>
 	</table>
+	<div class="panel-footer">
+		<button class="btn btn-default" data-bind="click: LoadMore, enable: CanLoadMore">Load more search results</button>
+	</div>
 </div>
