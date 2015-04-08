@@ -14,6 +14,16 @@ define(["require", "exports", "knockout", "Managers/Notification", "Managers/Por
             this.CanSelectSearchHits = this.CanUpdateSelection;
             this.CanLoadMore = knockout.computed(function () { return _this.TotalNumberOfResults() > (_this._pageIndex() + 1) * _this._pageSize; });
             this.SelectedSelection.subscribe(function (s) { return _this.UpdateSelections(s); });
+            if (selectionId != null) {
+                Selections.WhenReady(function () {
+                    _this.Selections().some(function (s) {
+                        if (s.Id !== selectionId)
+                            return false;
+                        _this.SelectedSelection(s);
+                        return true;
+                    });
+                });
+            }
         }
         Search.prototype.UpdateSelections = function (selection, searchResults) {
             if (selection === void 0) { selection = null; }
@@ -38,6 +48,18 @@ define(["require", "exports", "knockout", "Managers/Notification", "Managers/Por
             var _this = this;
             this._pageIndex(this._pageIndex() + 1);
             this.InnerSearch(this._lastQuery, this._pageIndex(), this._pageSize, function (r) { return _this.SearchResults.push.apply(_this.SearchResults, r); });
+        };
+        Search.prototype.LoadAll = function () {
+            var _this = this;
+            this.SearchResults.removeAll();
+            this._pageIndex(Math.ceil(1000 / this._pageSize));
+            this.InnerSearch(this._lastQuery, 0, 1000, function (r) {
+                _this.SearchResults.removeAll();
+                _this.SearchResults.push.apply(_this.SearchResults, r);
+            });
+        };
+        Search.prototype.SelectAll = function () {
+            this.SearchResults().forEach(function (s) { return s.IsSelected(true); });
         };
         Search.prototype.InnerSearch = function (query, index, size, callback) {
             var _this = this;

@@ -31,6 +31,19 @@ class Search
 		this.CanLoadMore = knockout.computed(() => this.TotalNumberOfResults() > (this._pageIndex() + 1) * this._pageSize);
 
 		this.SelectedSelection.subscribe(s => this.UpdateSelections(s));
+
+		if (selectionId != null)
+		{
+			Selections.WhenReady(() =>
+			{
+				this.Selections().some(s =>
+				{
+					if (s.Id !== selectionId) return false;
+					this.SelectedSelection(s);
+					return true;
+				});
+			});
+		}
 	}
 
 	private UpdateSelections(selection:Selection = null, searchResults:SearchResult[] = null):void
@@ -61,6 +74,23 @@ class Search
 	{
 		this._pageIndex(this._pageIndex() + 1);
 		this.InnerSearch(this._lastQuery, this._pageIndex(), this._pageSize, r => this.SearchResults.push.apply(this.SearchResults, r));
+	}
+
+	public LoadAll():void
+	{
+		this.SearchResults.removeAll();
+		this._pageIndex(Math.ceil(1000 / this._pageSize));
+
+		this.InnerSearch(this._lastQuery, 0, 1000, r =>
+		{
+			this.SearchResults.removeAll();
+			this.SearchResults.push.apply(this.SearchResults, r);
+		});
+	}
+
+	public SelectAll():void
+	{
+		this.SearchResults().forEach(s => s.IsSelected(true));
 	}
 
 	private InnerSearch(query:string, index:number, size:number, callback:(results:SearchResult[], totalCount:number)=>void):void

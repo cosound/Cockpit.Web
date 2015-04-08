@@ -1,17 +1,30 @@
 define(["require", "exports", "knockout", "Managers/Authorization", "Managers/Portal", "Managers/Notification", "Data/Selection"], function (require, exports, knockout, Authorization, Portal, Notification, Selection) {
     exports.Selections = knockout.observableArray();
+    exports.IsReady = knockout.observable(false);
     function Initialize() {
         Authorization.WhenAuthenticated(function () {
-            Portal.Selection.Get("cdeaa42f-1d41-483c-b7d1-e2ed5e98d7f4").WithCallback(function (response) {
+            Portal.Selection.Get().WithCallback(function (response) {
                 if (response.Error != null) {
                     Notification.NotifyError("Failed to get selections: " + response.Error.Message);
                     return;
                 }
                 if (response.Body.Results.length > 0)
                     exports.Selections.push.apply(exports.Selections, response.Body.Results.map(function (s) { return new Selection(s, Delete); }));
+                exports.IsReady(true);
             });
         });
     }
+    function WhenReady(callback) {
+        if (exports.IsReady())
+            callback();
+        else {
+            var sub = exports.IsReady.subscribe(function () {
+                sub.dispose();
+                callback();
+            });
+        }
+    }
+    exports.WhenReady = WhenReady;
     function Create(name, callback) {
         Portal.Selection.Set({ Name: name, Items: [] }).WithCallback(function (response) {
             if (response.Error != null) {

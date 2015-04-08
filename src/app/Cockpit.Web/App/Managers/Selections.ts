@@ -5,12 +5,13 @@ import Notification = require("Managers/Notification");
 import Selection = require("Data/Selection");
 
 export var Selections: KnockoutObservableArray<Selection> = knockout.observableArray<Selection>();
+export var IsReady:KnockoutObservable<boolean> = knockout.observable(false);
 
 function Initialize():void
 {
 	Authorization.WhenAuthenticated(() =>
 	{
-		Portal.Selection.Get("cdeaa42f-1d41-483c-b7d1-e2ed5e98d7f4").WithCallback(response =>
+		Portal.Selection.Get().WithCallback(response =>
 		{
 			if (response.Error != null)
 			{
@@ -20,8 +21,24 @@ function Initialize():void
 
 			if (response.Body.Results.length > 0)
 				Selections.push.apply(Selections, response.Body.Results.map(s => new Selection(s, Delete)));
+
+			IsReady(true);
 		});
 	});
+}
+
+export function WhenReady(callback:() => void):void
+{
+	if (IsReady())
+		callback();
+	else
+	{
+		var sub = IsReady.subscribe(() =>
+		{
+			sub.dispose();
+			callback();
+		});
+	}
 }
 
 export function Create(name:string, callback:(success:boolean)=>void):void

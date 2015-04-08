@@ -27,6 +27,8 @@
 		</tbody>
 	</table>
 	<div class="panel-footer">
+		<button class="btn btn-default" data-bind="click: SelectAll, enable: CanSelectSearchHits">Select All</button>
 		<button class="btn btn-default" data-bind="click: LoadMore, enable: CanLoadMore">Load more search results</button>
+		<button class="btn btn-default" data-bind="click: LoadAll, enable: CanLoadMore">Load all results <span class="badge" data-bind="text: TotalNumberOfResults() - SearchResults().length"></span></button>
 	</div>
 </div>
