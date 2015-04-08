@@ -25,5 +25,23 @@ define(["require", "exports", "knockout", "Managers/Authorization", "Managers/Po
         });
     }
     exports.Create = Create;
+    function AddToSelection(id, items, callback) {
+        Portal.Selection.AddItems(id, items).WithCallback(function (response) {
+            if (response.Error != null) {
+                Notification.NotifyError("Error adding items to selection: " + response.Error.Message);
+                callback(false);
+            }
+            else {
+                exports.Selections().some(function (s) {
+                    if (s.Id != id)
+                        return false;
+                    s.Items.push.apply(s.Items, items);
+                    return true;
+                });
+                callback(true);
+            }
+        });
+    }
+    exports.AddToSelection = AddToSelection;
     Initialize();
 });

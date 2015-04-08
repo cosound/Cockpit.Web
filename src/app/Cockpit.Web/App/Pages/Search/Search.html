@@ -7,12 +7,18 @@
 			</div>
 			<button type="submit" class="btn btn-default">Search</button>
 		</form>
+		<form class="form-inline" data-bind="submit: AddToSelection">
+			<div class="form-group">
+				<select data-bind="options: Selections, optionsText: 'Name', value: SelectedSelection, optionsCaption: 'Choose a selection'"></select>
+			</div>
+			<button type="submit" class="btn btn-default" data-bind="enable: CanAddToSelection">Add to selection</button>
+		</form>
 	</div>
 	<table class="table">
 		<tbody data-bind="foreach: SearchResults">
 			<tr>
 				<td>
-					<input type="checkbox"/>
+					<input type="checkbox" data-bind="checked: IsSelected" />
 				</td>
 				<td data-bind="text: Title"></td>
 			</tr>

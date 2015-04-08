@@ -39,4 +39,25 @@ export function Create(name:string, callback:(success:boolean)=>void):void
 	});
 }
 
+export function AddToSelection(id: string, items: Portal.ISelectionItem[], callback: (success: boolean) => void):void
+{
+	Portal.Selection.AddItems(id, items).WithCallback(response =>
+	{
+		if (response.Error != null)
+		{
+			Notification.NotifyError("Error adding items to selection: " + response.Error.Message);
+			callback(false);
+		} else
+		{
+			Selections().some(s =>
+			{
+				if (s.Id != id) return false;
+				s.Items.push.apply(s.Items, items);
+				return true;
+			});
+			callback(true);
+		}
+	});
+}
+
 Initialize();
