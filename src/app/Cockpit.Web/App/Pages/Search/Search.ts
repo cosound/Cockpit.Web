@@ -26,12 +26,21 @@ class Search
 	{
 		this.SearchResults.removeAll();
 
-		for (var i = 0; i < 20; i++)
+		Portal.Search.Simple(this.Query(), 0, 10).WithCallback(response =>
 		{
-			this.SearchResults.push(this.CreateSearchResult({ Id: i.toString(), Title: this.Query() + " " + i }));
-		}
+			this.SearchResults.removeAll();
 
-		this.Query("");
+			if (response.Error != null)
+			{
+				Notification.NotifyError("Failed to get search: " + response.Error.Message);
+				return;
+			}
+
+			if (response.Body.Results.length > 0)
+				this.SearchResults.push.apply(this.SearchResults, response.Body.Results.map(r => this.CreateSearchResult(r)));
+
+			this.Query("");
+		});
 	}
 
 	private CreateSearchResult(data:Portal.ISearchResult):SearchResult

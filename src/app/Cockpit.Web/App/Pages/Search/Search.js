@@ -1,4 +1,4 @@
-define(["require", "exports", "knockout", "Managers/Title", "Managers/Selections"], function (require, exports, knockout, Title, Selections) {
+define(["require", "exports", "knockout", "Managers/Notification", "Managers/Portal", "Managers/Title", "Managers/Selections"], function (require, exports, knockout, Notification, Portal, Title, Selections) {
     var Search = (function () {
         function Search(selectionId) {
             var _this = this;
@@ -10,11 +10,18 @@ define(["require", "exports", "knockout", "Managers/Title", "Managers/Selections
             this.CanAddToSelection = knockout.computed(function () { return _this.SelectedSelection() != null; });
         }
         Search.prototype.Search = function () {
+            var _this = this;
             this.SearchResults.removeAll();
-            for (var i = 0; i < 20; i++) {
-                this.SearchResults.push(this.CreateSearchResult({ Id: i.toString(), Title: this.Query() + " " + i }));
-            }
-            this.Query("");
+            Portal.Search.Simple(this.Query(), 0, 10).WithCallback(function (response) {
+                _this.SearchResults.removeAll();
+                if (response.Error != null) {
+                    Notification.NotifyError("Failed to get search: " + response.Error.Message);
+                    return;
+                }
+                if (response.Body.Results.length > 0)
+                    _this.SearchResults.push.apply(_this.SearchResults, response.Body.Results.map(function (r) { return _this.CreateSearchResult(r); }));
+                _this.Query("");
+            });
         };
         Search.prototype.CreateSearchResult = function (data) {
             return {

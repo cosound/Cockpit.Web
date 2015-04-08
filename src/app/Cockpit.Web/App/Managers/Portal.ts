@@ -30,9 +30,9 @@ export function WhenSessionIsAcquired(callback:() => void):void
 
 export class Search
 {
-	public static Get(query: string, pageIndex:number, pageSize:number): CHAOS.Portal.Client.ICallState<ISearchResult>
+	public static Simple(query: string, pageIndex:number, pageSize:number): CHAOS.Portal.Client.ICallState<ISearchResult>
 	{
-		return ServiceCaller.CallService("Search/Get", CHAOS.Portal.Client.HttpMethod.Get, { q: query, pageIndex: pageIndex, pageSize: pageSize }, true);
+		return ServiceCaller.CallService("Search/Simple", CHAOS.Portal.Client.HttpMethod.Get, { q: query, pageIndex: pageIndex, pageSize: pageSize }, true);
 	}
 }
 
