@@ -70,6 +70,7 @@
     <TypeScriptCompile Include="App\Managers\Navigation.ts" />
     <TypeScriptCompile Include="App\Managers\Notification.ts" />
     <TypeScriptCompile Include="App\Managers\Portal.ts" />
+    <TypeScriptCompile Include="App\Managers\Selections.ts" />
     <TypeScriptCompile Include="App\Managers\Title.ts" />
     <TypeScriptCompile Include="App\NameConventionLoader.ts" />
     <TypeScriptCompile Include="App\Pages\Login\Login.ts" />
