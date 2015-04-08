@@ -9,6 +9,9 @@ define(["require", "exports", "knockout", "routie"], function (require, exports,
             "Search": function () {
                 LoadPage("Search");
             },
+            "Search/:selectionId": function (selectionId) {
+                LoadPage("Search", selectionId);
+            },
             "Selections": function () {
                 LoadPage("Selections");
             }

@@ -30,16 +30,56 @@ export function WhenSessionIsAcquired(callback:() => void):void
 
 export class Search
 {
-	public static Get(query: string, tag:string, facets:string, pageIndex:number, pageSize:number): CHAOS.Portal.Client.ICallState<ISearchResult>
+	public static Get(query: string, pageIndex:number, pageSize:number): CHAOS.Portal.Client.ICallState<ISearchResult>
 	{
-		return ServiceCaller.CallService("Search/Get", CHAOS.Portal.Client.HttpMethod.Get, { q: query, tag: tag, facets: facets, pageIndex: pageIndex, pageSize: pageSize }, true);
+		return ServiceCaller.CallService("Search/Get", CHAOS.Portal.Client.HttpMethod.Get, { q: query, pageIndex: pageIndex, pageSize: pageSize }, true);
+	}
+}
+
+export class Selection
+{
+	public static Get(id:string = null): CHAOS.Portal.Client.ICallState<ISelection>
+	{
+		return ServiceCaller.CallService("Selection/Get", CHAOS.Portal.Client.HttpMethod.Get, { id: id }, true);
+	}
+
+	public static Set(selection:ISelection): CHAOS.Portal.Client.ICallState<ISelection>
+	{
+		return ServiceCaller.CallService("Selection/Set", CHAOS.Portal.Client.HttpMethod.Post, { selection: JSON.stringify(selection) }, true);
+	}
+
+	public static Delete(id: string): CHAOS.Portal.Client.ICallState<any>
+	{
+		return ServiceCaller.CallService("Selection/Delete", CHAOS.Portal.Client.HttpMethod.Get, { id: id }, true);
+	}
+
+	public static AddItems(id: string, items:ISelectionItem[]): CHAOS.Portal.Client.ICallState<any>
+	{
+		return ServiceCaller.CallService("Selection/AddItems", CHAOS.Portal.Client.HttpMethod.Post, { id: id, items: JSON.stringify(items) }, true);
+	}
+
+	public static DeleteItems(id: string, items: ISelectionItem[]): CHAOS.Portal.Client.ICallState<any>
+	{
+		return ServiceCaller.CallService("Selection/DeleteItems", CHAOS.Portal.Client.HttpMethod.Post, { id: id, items: JSON.stringify(items) }, true);
 	}
 }
 
 export interface ISearchResult
 {
-	Identifier: string;
-	Fields: { [key: string]: string };
+	Id: string;
+	Title: string;
+}
+
+export interface ISelection
+{
+	Id?: string;
+	Name: string;
+	Items: ISelectionItem[];
+}
+
+export interface ISelectionItem
+{
+	Id: string;
 }
 
 Initialize();

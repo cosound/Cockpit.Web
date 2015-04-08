@@ -8,9 +8,10 @@ export function Initialize(): void
 	CurrentPage.extend({ rateLimit: 0 });
 
 	Routie({
-		""					: ()			=> { Navigate("Search"); },
-		"Search"			: ()			=> { LoadPage("Search"); },
-		"Selections"		: ()			=> { LoadPage("Selections"); }
+		""						: ()					=> { Navigate("Search"); },
+		"Search"				: ()					=> { LoadPage("Search"); },
+		"Search/:selectionId"	: (selectionId:string)	=> { LoadPage("Search", selectionId); },
+		"Selections"			: ()					=> { LoadPage("Selections"); }
 	});
 }
 
