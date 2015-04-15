@@ -64,7 +64,7 @@ define(["require", "exports", "knockout", "jquery", "Highcharts", "HighchartsMor
                     plotLines: [
                         {
                             value: 0,
-                            width: 1,
+                            width: 2,
                             color: 'black'
                         }
                     ],

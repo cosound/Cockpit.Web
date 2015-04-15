@@ -82,7 +82,7 @@ class TwoDScaleK extends QuestionBase
 				plotLines: [
 					{
 						value: 0,
-						width: 1,
+						width: 2,
 						color: 'black'
 					}
 				],
