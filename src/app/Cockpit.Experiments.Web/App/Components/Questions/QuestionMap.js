@@ -22,7 +22,7 @@ define(["require", "exports"], function (require, exports) {
             "TwoDKScaleDD": new QuestionMap("Questions/TwoDScaleK"),
             "TextBlock": new QuestionMap("Questions/TextBlock"),
             "LikertScale": new QuestionMap("Questions/LikertScale"),
-            "KAcPS": new QuestionMap("Questions/KAcPS"),
+            "Kac": new QuestionMap("Questions/KAcPS"),
         };
         _map[_unsupported] = new QuestionMap("Questions/Unsupported", false);
     }
