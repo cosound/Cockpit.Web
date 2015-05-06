@@ -1,9 +1,13 @@
-﻿<p data-bind="text: Label"></p>
-<p data-bind="text: Url"></p>
+﻿<div data-bind="if: HasMedia">
+	<div data-bind="component: {name: 'Players/Audio', params: AudioInfo}"></div>
+	<p data-bind="text: AudioLabel"></p>
+</div>
+
+<h3 data-bind="text: HeaderLabel"></h3>
 <div data-bind="foreach: Items">
 	<label>
-		<input type="checkbox" data-bind="checked: $parent.Answer, value: Id, enable: IsEnabled" />
+		<input type="checkbox" data-bind="checked: $parent.Answer, value: Id, enable: IsEnabled"/>
 		<span data-bind="text: Label"></span>
 	</label>
-	<br />
+	<br/>
 </div>

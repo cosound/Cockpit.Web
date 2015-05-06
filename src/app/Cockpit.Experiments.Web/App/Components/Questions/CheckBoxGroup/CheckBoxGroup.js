@@ -4,18 +4,24 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], function (require, exports, knockout, QuestionBase) {
+define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "Components/Players/Audio/AudioInfo"], function (require, exports, knockout, QuestionBase, AudioInfo) {
     var CheckBoxGroup = (function (_super) {
         __extends(CheckBoxGroup, _super);
         function CheckBoxGroup(question) {
             var _this = this;
             _super.call(this, question);
             this.Answer = knockout.observableArray();
+            this.HasMedia = false;
             this.Id = this.Model.Id;
-            this.Label = this.GetInstrument("HeaderLabel");
-            this.Url = this.GetInstrument("Stimulus");
+            this.HeaderLabel = this.GetInstrument("HeaderLabel");
             this._minNoOfSelections = this.GetInstrument("MinNoOfSelections");
             this._maxNoOfSelections = this.GetInstrument("MaxNoOfSelections");
+            var stimulus = this.GetInstrument("Stimulus");
+            if (stimulus != null) {
+                this.AudioLabel = stimulus.Label;
+                this.AudioInfo = new AudioInfo([{ Type: stimulus.Type, Source: stimulus.URI }]);
+                this.HasMedia = true;
+            }
             this.CanSelectMore = knockout.computed(function () { return _this.Answer().length < _this._maxNoOfSelections; });
             this.Items = this.GetInstrument("Items").Item.map(function (v) { return _this.CreateCheckBoxInfo(v); });
             if (this.HasAnswer()) {

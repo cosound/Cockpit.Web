@@ -1,30 +1,41 @@
 ﻿import knockout = require("knockout");
 import QuestionBase = require("Components/Questions/QuestionBase");
 import QuestionModel = require("Models/Question");
+import AudioInfo = require("Components/Players/Audio/AudioInfo");
 
 type CheckBoxInfo = { Id:string; Label: string; IsEnabled: KnockoutComputed<boolean>; };
 
 class CheckBoxGroup extends QuestionBase
 {
+	private _minNoOfSelections: number;
+	private _maxNoOfSelections: number;
+
 	public Id: string;
-	public Label: string;
-	public Url: string;
+	public HeaderLabel: string;
+	public AudioLabel: string;
+	public AudioInfo: AudioInfo;
 	public Items: CheckBoxInfo[];
 	public Answer: KnockoutObservableArray<string> = knockout.observableArray<string>();
-	public CanSelectMore:KnockoutComputed<boolean>;
-
-	private _minNoOfSelections:number;
-	private _maxNoOfSelections:number;
+	public CanSelectMore: KnockoutComputed<boolean>;
+	public HasMedia: boolean = false;
 
 	constructor(question: QuestionModel)
 	{
 		super(question);
 
 		this.Id = this.Model.Id;
-		this.Label = this.GetInstrument("HeaderLabel");
-		this.Url = this.GetInstrument("Stimulus");
+		this.HeaderLabel = this.GetInstrument("HeaderLabel");
 		this._minNoOfSelections = this.GetInstrument("MinNoOfSelections");
 		this._maxNoOfSelections = this.GetInstrument("MaxNoOfSelections");
+
+		var stimulus = this.GetInstrument("Stimulus");
+		if (stimulus != null)
+		{
+			this.AudioLabel = stimulus.Label;
+
+			this.AudioInfo = new AudioInfo([{ Type: stimulus.Type, Source: stimulus.URI }]);
+			this.HasMedia = true;
+		}
 
 		this.CanSelectMore = knockout.computed(() => this.Answer().length < this._maxNoOfSelections);
 

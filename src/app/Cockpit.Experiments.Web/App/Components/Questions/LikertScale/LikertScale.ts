@@ -7,8 +7,8 @@ type CheckBoxInfo = { Id: string; Label: string; IsEnabled: KnockoutComputed<boo
 
 class LikertScale extends QuestionBase
 {
-	public _minNoOfSelections: number;
-	public _maxNoOfSelections: number;
+	private _minNoOfSelections: number;
+	private _maxNoOfSelections: number;
 
 	public HeaderLabel: string;
 	public AudioLabel: string;
