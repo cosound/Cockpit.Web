@@ -24,6 +24,8 @@ function Initialize()
 		"TwoDScale": new QuestionMap("Questions/ContinousScale2D"),
 		"TwoDKScaleDD": new QuestionMap("Questions/TwoDScaleK"),
 		"TextBlock": new QuestionMap("Questions/TextBlock"),
+		"LikertScale": new QuestionMap("Questions/LikertScale"),
+		"KAcPS": new QuestionMap("Questions/KAcPS"),
 	};
 
 	_map[_unsupported] = new QuestionMap("Questions/Unsupported", false);

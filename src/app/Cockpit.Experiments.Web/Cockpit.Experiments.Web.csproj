@@ -20,6 +20,8 @@
     <Content Include="App\Components\NotFound\NotFound.html" />
     <Content Include="App\Components\Players\Audio\Audio.html" />
     <Content Include="App\Components\Questions\CheckBoxGroup\CheckBoxGroup.html" />
+    <Content Include="App\Components\Questions\KAcPS\KAcPS.html" />
+    <Content Include="App\Components\Questions\LikertScale\LikertScale.html" />
     <Content Include="App\Components\Questions\TextBlock\TextBlock.html" />
     <Content Include="App\Components\Questions\TwoDScaleK\TwoDScaleK.html" />
     <Content Include="App\Components\Shell\Shell.html" />
@@ -129,6 +131,8 @@
     <TypeScriptCompile Include="App\Components\Players\Audio\Audio.ts" />
     <TypeScriptCompile Include="App\Components\Players\Audio\AudioInfo.ts" />
     <TypeScriptCompile Include="App\Components\Questions\CheckBoxGroup\CheckBoxGroup.ts" />
+    <TypeScriptCompile Include="App\Components\Questions\KAcPS\KAcPS.ts" />
+    <TypeScriptCompile Include="App\Components\Questions\LikertScale\LikertScale.ts" />
     <TypeScriptCompile Include="App\Components\Questions\Monitor\Monitor.ts" />
     <TypeScriptCompile Include="App\Components\Questions\TextBlock\TextBlock.ts" />
     <TypeScriptCompile Include="App\Components\Questions\TwoDScaleK\TwoDScaleK.ts" />
