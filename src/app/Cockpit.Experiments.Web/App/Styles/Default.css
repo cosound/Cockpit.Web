@@ -5,3 +5,7 @@
 .AudioPlayer {
 	display: inline-block;
 }
+
+.SlideContainer hr:last-of-type {
+	display: none;
+}
