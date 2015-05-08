@@ -1,6 +1,6 @@
 ﻿<p data-bind="text: Label"></p>
 <div class="row">
-	<div class="col-xs-4">
+	<div class="col-xs-4" data-bind="if: HasMedia">
 		<div data-bind="component: {name: 'Players/Audio', params: AudioInfo}"></div>
 	</div>
 	<div class="col-xs-8 container-fluid">

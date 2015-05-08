@@ -9,7 +9,8 @@ class OneDScale extends QuestionBase
 	public Label: string;
 	public MinLabel: string;
 	public MaxLabel: string;
-	public AudioInfo:AudioInfo;
+	public AudioInfo: AudioInfo;
+	public HasMedia:boolean = false;
 	public Answer: KnockoutObservable<number> = knockout.observable<number>(null);
 
 	constructor(question: QuestionModel)
@@ -22,8 +23,13 @@ class OneDScale extends QuestionBase
 		this.MaxLabel = this.GetInstrument("Y1AxisLabel");
 
 		var stimulus = this.GetInstrument("Stimulus");
-		this.AudioInfo = new AudioInfo([{ Type: stimulus.Type, Source: stimulus.URI }]);
-		this.AudioInfo.AddIsPlayingCallback(isPlaying => this.AddEvent(isPlaying ? "Start" : "Stop"));
+
+		if (stimulus != null)
+		{
+			this.AudioInfo = AudioInfo.Create(stimulus);
+			this.AudioInfo.AddIsPlayingCallback(isPlaying => this.AddEvent(isPlaying ? "Start" : "Stop"));
+			this.HasMedia = true;
+		}
 
 		if (this.HasAnswer()) this.Answer(this.GetAsnwer().Position);
 		this.Answer.subscribe(v => this.SetAnswer({ Position: v }));

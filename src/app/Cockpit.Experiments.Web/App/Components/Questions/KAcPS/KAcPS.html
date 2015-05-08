@@ -1,6 +1,8 @@
 ﻿<h3 data-bind="text: HeaderLabel"></h3>
 <div data-bind="foreach: Items">
+	<!-- ko if: HasStimulus -->
 	<div data-bind="component: {name: 'Players/Audio', params: AudioInfo}"></div>
+	<!-- /ko -->
 	<label>
 		<input type="checkbox" data-bind="checked: $parent.Answer, value: Id, enable: IsEnabled"/>
 		<span data-bind="text: Label"></span>

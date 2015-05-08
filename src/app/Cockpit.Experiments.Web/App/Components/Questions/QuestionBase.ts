@@ -72,6 +72,17 @@ class QuestionsBase implements IQuestionViewModel
 		this.Model.Answer(answer);
 	}
 
+	protected GetArray<T>(data:T|T[]):T[]
+	{
+		if (data instanceof Array) return <T[]>(data);
+		return [<T>data];
+	}
+
+	protected GetItems<TInput, TOutput>(converter:(item:TInput)=>TOutput):TOutput[]
+	{
+		return this.GetArray<TInput>(this.GetInstrument("Items").Item).map(converter);
+	}
+
 	protected AddEvent(type:string, id:string = null)
 	{
 		var event = {

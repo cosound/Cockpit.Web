@@ -15,7 +15,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             this._minNoOfSelections = parseInt(this.GetInstrument("MinNoOfScalings"));
             this._maxNoOfSelections = parseInt(this.GetInstrument("MaxNoOfScalings"));
             this.CanSelectMore = knockout.computed(function () { return _this.Answer().length < _this._maxNoOfSelections; });
-            this.Items = this.GetInstrument("Items").Item.map(function (v) { return _this.CreateItemInfo(v); });
+            this.Items = this.GetItems(function (v) { return _this.CreateItemInfo(v); });
             if (this.HasAnswer()) {
                 if (this.GetAsnwer()["Selections"])
                     this.Answer.push.apply(this.Answer, this.GetAsnwer()["Selections"]);
@@ -36,8 +36,9 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             var info = {
                 Id: data.Id,
                 Label: data.ChoiceButton.Label,
-                AudioInfo: new AudioInfo([{ Type: data.Stimulus.Type, Source: data.Stimulus.URI }]),
-                IsEnabled: knockout.computed(function () { return _this.Answer.indexOf(data.Id) != -1 || _this.CanSelectMore(); })
+                AudioInfo: AudioInfo.Create(data.Stimulus),
+                IsEnabled: knockout.computed(function () { return _this.Answer.indexOf(data.Id) !== -1 || _this.CanSelectMore(); }),
+                HasStimulus: data.Stimulus !== null
             };
             return info;
         };

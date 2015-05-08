@@ -131,6 +131,7 @@
     <TypeScriptCompile Include="App\Components\Players\Audio\Audio.ts" />
     <TypeScriptCompile Include="App\Components\Players\Audio\AudioInfo.ts" />
     <TypeScriptCompile Include="App\Components\Questions\CheckBoxGroup\CheckBoxGroup.ts" />
+    <TypeScriptCompile Include="App\Models\CommonTypes.d.ts" />
     <TypeScriptCompile Include="App\Components\Questions\KAcPS\KAcPS.ts" />
     <TypeScriptCompile Include="App\Components\Questions\LikertScale\LikertScale.ts" />
     <TypeScriptCompile Include="App\Components\Questions\Monitor\Monitor.ts" />

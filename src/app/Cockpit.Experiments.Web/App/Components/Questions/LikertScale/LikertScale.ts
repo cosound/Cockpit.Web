@@ -4,6 +4,7 @@ import QuestionModel = require("Models/Question");
 import AudioInfo = require("Components/Players/Audio/AudioInfo");
 
 type CheckBoxInfo = { Id: string; Label: string; IsEnabled: KnockoutComputed<boolean>; };
+type Item = { Label:string; Id:string; Selected:string };
 
 class LikertScale extends QuestionBase
 {
@@ -32,13 +33,13 @@ class LikertScale extends QuestionBase
 		{
 			this.AudioLabel = stimulus.Label;
 
-			this.AudioInfo = new AudioInfo([{ Type: stimulus.Type, Source: stimulus.URI }]);
+			this.AudioInfo = AudioInfo.Create(stimulus);
 			this.HasMedia = true;
 		}
 
 		this.CanSelectMore = knockout.computed(() => this.Answer().length < this._maxNoOfSelections);
 
-		this.Items = (<any[]>this.GetInstrument("Items").Item).map(v => this.CreateCheckBoxInfo(v));
+		this.Items = this.GetItems<Item, CheckBoxInfo>(item => this.CreateCheckBoxInfo(item));
 
 		if (this.HasAnswer())
 		{
@@ -58,7 +59,7 @@ class LikertScale extends QuestionBase
 		return answer.Selections.length >= this._minNoOfSelections;
 	}
 
-	private CreateCheckBoxInfo(data: { Label: string; Id: string; Selected:string }): CheckBoxInfo
+	private CreateCheckBoxInfo(data: Item): CheckBoxInfo
 	{
 		if (data.Selected === "1")
 			this.Answer.push(data.Id);
@@ -66,7 +67,7 @@ class LikertScale extends QuestionBase
 		var info = {
 			Id: data.Id,
 			Label: data.Label,
-			IsEnabled: knockout.computed(() => this.Answer.indexOf(data.Id) != -1 || this.CanSelectMore())
+			IsEnabled: knockout.computed(() => this.Answer.indexOf(data.Id) !== -1 || this.CanSelectMore())
 		};
 
 		return info;

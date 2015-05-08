@@ -18,11 +18,11 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             var stimulus = this.GetInstrument("Stimulus");
             if (stimulus != null) {
                 this.AudioLabel = stimulus.Label;
-                this.AudioInfo = new AudioInfo([{ Type: stimulus.Type, Source: stimulus.URI }]);
+                this.AudioInfo = AudioInfo.Create(stimulus);
                 this.HasMedia = true;
             }
             this.CanSelectMore = knockout.computed(function () { return _this.Answer().length < _this._maxNoOfSelections; });
-            this.Items = this.GetInstrument("Items").Item.map(function (v) { return _this.CreateCheckBoxInfo(v); });
+            this.Items = this.GetItems(function (item) { return _this.CreateCheckBoxInfo(item); });
             if (this.HasAnswer()) {
                 if (this.GetAsnwer()["Selections"])
                     this.Answer.push.apply(this.Answer, this.GetAsnwer()["Selections"]);
@@ -43,7 +43,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             var info = {
                 Id: data.Id,
                 Label: data.Label,
-                IsEnabled: knockout.computed(function () { return _this.Answer.indexOf(data.Id) != -1 || _this.CanSelectMore(); })
+                IsEnabled: knockout.computed(function () { return _this.Answer.indexOf(data.Id) !== -1 || _this.CanSelectMore(); })
             };
             return info;
         };

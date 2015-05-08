@@ -16,6 +16,12 @@ class AudioInfo
 	{
 		this.IsPlaying.subscribe(v => callback(v));
 	}
+
+	public static Create(stimulus:Stimulus):AudioInfo
+	{
+		if (stimulus === null) return null;
+		return new AudioInfo([{ Type: stimulus.Type, Source: stimulus.URI }]);
+	}
 }
 
 export = AudioInfo;

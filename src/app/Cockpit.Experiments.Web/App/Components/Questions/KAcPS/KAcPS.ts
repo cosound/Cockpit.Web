@@ -3,7 +3,8 @@ import QuestionBase = require("Components/Questions/QuestionBase");
 import QuestionModel = require("Models/Question");
 import AudioInfo = require("Components/Players/Audio/AudioInfo");
 
-type ItemInfo = { Id: string; Label: string; AudioInfo: AudioInfo; IsEnabled: KnockoutComputed<boolean>; };
+type ItemInfo = { Id: string; Label: string; AudioInfo: AudioInfo; IsEnabled: KnockoutComputed<boolean>; HasStimulus: boolean; };
+type Item = { Id:string; ChoiceButton:{ Label:string; Selected:string }; Stimulus:Stimulus };
 
 class KacPS extends QuestionBase
 {
@@ -26,7 +27,7 @@ class KacPS extends QuestionBase
 
 		this.CanSelectMore = knockout.computed(() => this.Answer().length < this._maxNoOfSelections);
 
-		this.Items = (<any[]>this.GetInstrument("Items").Item).map(v => this.CreateItemInfo(v));
+		this.Items = this.GetItems<Item, ItemInfo>(v => this.CreateItemInfo(v));
 
 		if (this.HasAnswer())
 		{
@@ -46,7 +47,7 @@ class KacPS extends QuestionBase
 		return answer.Selections.length >= this._minNoOfSelections;
 	}
 
-	private CreateItemInfo(data: { Id: string; ChoiceButton: { Label: string; Selected: string }; Stimulus: {Type:string; URI:string; Label:string} }): ItemInfo
+	private CreateItemInfo(data: Item): ItemInfo
 	{
 		if (data.ChoiceButton.Selected === "1")
 			this.Answer.push(data.Id);
@@ -54,8 +55,9 @@ class KacPS extends QuestionBase
 		var info = {
 			Id: data.Id,
 			Label: data.ChoiceButton.Label,
-			AudioInfo: new AudioInfo([{ Type: data.Stimulus.Type, Source: data.Stimulus.URI }]),
-			IsEnabled: knockout.computed(() => this.Answer.indexOf(data.Id) != -1 || this.CanSelectMore())
+			AudioInfo: AudioInfo.Create(data.Stimulus),
+			IsEnabled: knockout.computed(() => this.Answer.indexOf(data.Id) !== -1 || this.CanSelectMore()),
+			HasStimulus: data.Stimulus !== null
 		};
 
 		return info;

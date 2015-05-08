@@ -46,6 +46,14 @@ define(["require", "exports", "knockout"], function (require, exports, knockout)
             this.UpdateIsAnswerValid(answer);
             this.Model.Answer(answer);
         };
+        QuestionsBase.prototype.GetArray = function (data) {
+            if (data instanceof Array)
+                return (data);
+            return [data];
+        };
+        QuestionsBase.prototype.GetItems = function (converter) {
+            return this.GetArray(this.GetInstrument("Items").Item).map(converter);
+        };
         QuestionsBase.prototype.AddEvent = function (type, id) {
             if (id === void 0) { id = null; }
             var event = {
