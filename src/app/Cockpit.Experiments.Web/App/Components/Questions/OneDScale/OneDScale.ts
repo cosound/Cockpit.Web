@@ -10,6 +10,7 @@ class OneDScale extends QuestionBase
 	public MinLabel: string;
 	public MaxLabel: string;
 	public AudioInfo: AudioInfo;
+	public AudioLabel: string;
 	public HasMedia:boolean = false;
 	public Answer: KnockoutObservable<number> = knockout.observable<number>(null);
 
@@ -26,6 +27,7 @@ class OneDScale extends QuestionBase
 
 		if (stimulus != null)
 		{
+			this.AudioLabel = stimulus.Label;
 			this.AudioInfo = AudioInfo.Create(stimulus);
 			this.AudioInfo.AddIsPlayingCallback(isPlaying => this.AddEvent(isPlaying ? "Start" : "Stop"));
 			this.HasMedia = true;

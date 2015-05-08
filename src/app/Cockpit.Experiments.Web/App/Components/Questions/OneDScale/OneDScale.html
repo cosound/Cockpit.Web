@@ -2,6 +2,7 @@
 <div class="row">
 	<div class="col-xs-4" data-bind="if: HasMedia">
 		<div data-bind="component: {name: 'Players/Audio', params: AudioInfo}"></div>
+		<p data-bind="text: AudioLabel"></p>
 	</div>
 	<div class="col-xs-8 container-fluid">
 		<div class="col-xs-2 clearfix">

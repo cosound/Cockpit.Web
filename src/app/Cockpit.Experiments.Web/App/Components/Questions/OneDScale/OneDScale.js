@@ -18,6 +18,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             this.MaxLabel = this.GetInstrument("Y1AxisLabel");
             var stimulus = this.GetInstrument("Stimulus");
             if (stimulus != null) {
+                this.AudioLabel = stimulus.Label;
                 this.AudioInfo = AudioInfo.Create(stimulus);
                 this.AudioInfo.AddIsPlayingCallback(function (isPlaying) { return _this.AddEvent(isPlaying ? "Start" : "Stop"); });
                 this.HasMedia = true;
