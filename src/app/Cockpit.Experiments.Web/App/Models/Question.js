@@ -1,6 +1,6 @@
 define(["require", "exports", "knockout", "Components/Questions/QuestionMap"], function (require, exports, knockout, QuestionMap) {
     var Question = (function () {
-        function Question(question, answerChangedCallback) {
+        function Question(question, answerChangedCallback, questionLoadedCallback) {
             var _this = this;
             this.Answer = knockout.observable();
             this.HasValidAnswer = knockout.observable(false);
@@ -9,12 +9,19 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionMap"], f
             this.Type = questionMap.Type;
             this.HasUIElement = questionMap.HasUIElement;
             this.APIType = question.Type;
+            this._loadedCallback = questionLoadedCallback;
             if (question.Output)
                 this.Answer(question.Output);
             this.Input = question.Input;
             this.Answer.extend({ rateLimit: { timeout: 200, method: "notifyWhenChangesStop" } });
             this.Answer.subscribe(function () { return answerChangedCallback(_this); });
         }
+        Question.prototype.Loaded = function () {
+            if (this._loadedCallback === null)
+                return;
+            this._loadedCallback();
+            this._loadedCallback = null;
+        };
         return Question;
     })();
     return Question;

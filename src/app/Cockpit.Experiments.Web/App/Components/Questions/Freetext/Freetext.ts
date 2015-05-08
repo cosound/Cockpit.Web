@@ -5,7 +5,7 @@ import QuestionModel = require("Models/Question");
 class Freetext extends QuestionBase
 {
 	public Id: string;
-	public Label: string;
+	public Label: string = "";
 	public Answer: KnockoutObservable<string> = knockout.observable<string>(null);
 
 	constructor(question: QuestionModel)
@@ -13,7 +13,9 @@ class Freetext extends QuestionBase
 		super(question);
 
 		this.Id = this.Model.Id;
-		this.Label = this.GetInstrument("Label");
+
+		if(this.HasInstrument())
+			this.Label = this.GetInstrument("Label");
 
 		if (this.HasAnswer()) this.Answer(this.GetAsnwer()["Text"]);
 		this.Answer.extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 200 }});
@@ -23,8 +25,8 @@ class Freetext extends QuestionBase
 	protected HasValidAnswer(answer: any): boolean
 	{
 		if (!answer.Text) return false;
-
-		return answer.Text != "";
+		
+		return answer.Text !== "";
 	}
 }
 

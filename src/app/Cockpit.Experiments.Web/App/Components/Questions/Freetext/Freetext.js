@@ -10,9 +10,11 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], 
         function Freetext(question) {
             var _this = this;
             _super.call(this, question);
+            this.Label = "";
             this.Answer = knockout.observable(null);
             this.Id = this.Model.Id;
-            this.Label = this.GetInstrument("Label");
+            if (this.HasInstrument())
+                this.Label = this.GetInstrument("Label");
             if (this.HasAnswer())
                 this.Answer(this.GetAsnwer()["Text"]);
             this.Answer.extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 200 } });
@@ -21,7 +23,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], 
         Freetext.prototype.HasValidAnswer = function (answer) {
             if (!answer.Text)
                 return false;
-            return answer.Text != "";
+            return answer.Text !== "";
         };
         return Freetext;
     })(QuestionBase);

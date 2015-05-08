@@ -20,31 +20,21 @@ class Default
 
 	private InitializeQuestions(questions: CockpitPortal.IQuestion[]):void
 	{
-		var isFinished = false;
-		var numberToLoad = 0;
-		var uiLessLoader = (model: QuestionModel) =>
-		{
-			numberToLoad++;
-			require([NameConventionLoader.GetFilePath(model.Type)], (vm: any) =>
-			{
-				this._uiLessQuestions.push(new vm(model));
-
-				if (isFinished && --numberToLoad == 0) this.SlideLoaded();
-			});
-		}
+		var numberToLoad = questions.length;
+		var loaded = () => { if (--numberToLoad === 0) this.SlideLoaded(); }
 
 		for (var i = 0; i < questions.length; i++)
 		{
-			var questionModel = new QuestionModel(questions[i], question => this.AnswerChanged(question));
+			var questionModel = new QuestionModel(questions[i], question => this.AnswerChanged(question), loaded);
+			questionModel.HasValidAnswer.subscribe(() => this.CheckIfAllQuestionsAreAnswered());
 			this.Questions.push(questionModel);
 
-			if (!questionModel.HasUIElement) uiLessLoader(questionModel);
+			if (!questionModel.HasUIElement)
+				require([NameConventionLoader.GetFilePath(questionModel.Type)],(vm: any) => this._uiLessQuestions.push(new vm(questionModel)));
 		}
 
-		if (numberToLoad == 0)
+		if (questions.length === 0)
 			this.SlideLoaded();
-		else
-			isFinished = true;
 	}
 
 	private SlideLoaded(): void

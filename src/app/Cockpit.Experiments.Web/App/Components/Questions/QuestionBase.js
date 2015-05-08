@@ -13,7 +13,10 @@ define(["require", "exports", "knockout"], function (require, exports, knockout)
             else {
                 this._events = new Array();
             }
-            setTimeout(function () { return _this.UpdateIsAnswerValid(); }, 0);
+            setTimeout(function () {
+                _this.UpdateIsAnswerValid();
+                _this.Model.Loaded();
+            }, 0);
         }
         QuestionsBase.prototype.UpdateIsAnswerValid = function (answer) {
             answer = answer || this.GetAsnwer();
@@ -37,6 +40,13 @@ define(["require", "exports", "knockout"], function (require, exports, knockout)
                     return this.Model.Input[i].Instrument;
             }
             throw new Error("Intrument object not found in input");
+        };
+        QuestionsBase.prototype.HasInstrument = function () {
+            for (var i = 0; i < this.Model.Input.length; i++) {
+                if (this.Model.Input[i].Instrument)
+                    return true;
+            }
+            return false;
         };
         QuestionsBase.prototype.GetAsnwer = function () {
             return this.HasAnswer() ? this.Model.Answer() : null;

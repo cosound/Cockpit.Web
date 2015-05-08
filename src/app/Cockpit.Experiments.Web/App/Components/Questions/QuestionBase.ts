@@ -23,7 +23,11 @@ class QuestionsBase implements IQuestionViewModel
 			this._events = new Array<CockpitPortal.IQuestionEvent>();
 		}
 
-		setTimeout(() => this.UpdateIsAnswerValid(), 0); //Give decendent time to override HasValidAnswer 
+		setTimeout(() =>
+		{
+			this.UpdateIsAnswerValid();
+			this.Model.Loaded();
+		}, 0); //Give decendent time to override HasValidAnswer 
 	}
 
 	protected UpdateIsAnswerValid(answer?:any):void
@@ -57,6 +61,15 @@ class QuestionsBase implements IQuestionViewModel
 		}
 
 		throw new Error("Intrument object not found in input");
+	}
+
+	protected HasInstrument():boolean
+	{
+		for (var i = 0; i < this.Model.Input.length; i++)
+		{
+			if (this.Model.Input[i].Instrument) return true;
+		}
+		return false;
 	}
 
 	protected GetAsnwer(): any

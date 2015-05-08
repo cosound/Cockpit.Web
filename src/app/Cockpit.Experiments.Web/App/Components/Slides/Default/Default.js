@@ -10,26 +10,20 @@ define(["require", "exports", "Models/Question", "Managers/Experiment", "Compone
         }
         Default.prototype.InitializeQuestions = function (questions) {
             var _this = this;
-            var isFinished = false;
-            var numberToLoad = 0;
-            var uiLessLoader = function (model) {
-                numberToLoad++;
-                require([NameConventionLoader.GetFilePath(model.Type)], function (vm) {
-                    _this._uiLessQuestions.push(new vm(model));
-                    if (isFinished && --numberToLoad == 0)
-                        _this.SlideLoaded();
-                });
+            var numberToLoad = questions.length;
+            var loaded = function () {
+                if (--numberToLoad === 0)
+                    _this.SlideLoaded();
             };
             for (var i = 0; i < questions.length; i++) {
-                var questionModel = new QuestionModel(questions[i], function (question) { return _this.AnswerChanged(question); });
+                var questionModel = new QuestionModel(questions[i], function (question) { return _this.AnswerChanged(question); }, loaded);
+                questionModel.HasValidAnswer.subscribe(function () { return _this.CheckIfAllQuestionsAreAnswered(); });
                 this.Questions.push(questionModel);
                 if (!questionModel.HasUIElement)
-                    uiLessLoader(questionModel);
+                    require([NameConventionLoader.GetFilePath(questionModel.Type)], function (vm) { return _this._uiLessQuestions.push(new vm(questionModel)); });
             }
-            if (numberToLoad == 0)
+            if (questions.length === 0)
                 this.SlideLoaded();
-            else
-                isFinished = true;
         };
         Default.prototype.SlideLoaded = function () {
             for (var i = 0; i < this._uiLessQuestions.length; i++)

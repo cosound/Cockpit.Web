@@ -11,15 +11,18 @@ class Question
 	public Input: any[];
 	public Answer: KnockoutObservable<any> = knockout.observable<any>();
 	public HasValidAnswer: KnockoutObservable<boolean> = knockout.observable(false);
-	public RequiresInput:boolean;
+	public RequiresInput: boolean;
 
-	constructor(question: CockpitPortal.IQuestion, answerChangedCallback: (question: Question)=>void)
+	private _loadedCallback:()=>void;
+
+	constructor(question: CockpitPortal.IQuestion, answerChangedCallback: (question: Question)=>void, questionLoadedCallback:()=>void)
 	{
 		var questionMap = QuestionMap.Get(question.Type);
 		this.Id = question.Id;
 		this.Type = questionMap.Type;
 		this.HasUIElement = questionMap.HasUIElement;
 		this.APIType = question.Type;
+		this._loadedCallback = questionLoadedCallback;
 
 		if (question.Output)
 			this.Answer(question.Output);
@@ -28,6 +31,13 @@ class Question
 
 		this.Answer.extend({ rateLimit: { timeout: 200, method: "notifyWhenChangesStop" } });
 		this.Answer.subscribe(() => answerChangedCallback(this));
+	}
+
+	public Loaded():void
+	{
+		if (this._loadedCallback === null) return;
+		this._loadedCallback();
+		this._loadedCallback = null;
 	}
 }
 
