@@ -39,10 +39,12 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
         };
         CheckBoxGroup.prototype.CreateCheckBoxInfo = function (data) {
             var _this = this;
+            if (data.Selected === "1")
+                this.Answer.push(data.Id);
             var info = {
                 Id: data.Id,
                 Label: data.Label,
-                IsEnabled: knockout.computed(function () { return _this.Answer.indexOf(data.Id) != -1 || _this.CanSelectMore(); })
+                IsEnabled: knockout.computed(function () { return _this.Answer.indexOf(data.Id) !== -1 || _this.CanSelectMore(); })
             };
             return info;
         };

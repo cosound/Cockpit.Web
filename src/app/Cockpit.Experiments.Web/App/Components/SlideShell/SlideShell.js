@@ -10,7 +10,6 @@ define(["require", "exports", "knockout", "Managers/Experiment", "Models/Slide"]
             this.SlideNumber = knockout.computed(function () { return _this.SlideIndex() + 1; });
             this.IsLoadingSlide = knockout.computed(function () { return _this.SlideData() == null; });
             this.NumberOfSlides = ExperimentManager.NumberOfSlides;
-            this.CanGoToNextSlide.subscribe(function (v) { return console.log(v); });
             this.Name("My Experiment");
             if (ExperimentManager.IsReady())
                 this.LoadSlide(0);

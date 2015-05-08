@@ -3,7 +3,8 @@ import QuestionBase = require("Components/Questions/QuestionBase");
 import QuestionModel = require("Models/Question");
 import AudioInfo = require("Components/Players/Audio/AudioInfo");
 
-type CheckBoxInfo = { Id:string; Label: string; IsEnabled: KnockoutComputed<boolean>; };
+type CheckBoxInfo = { Id: string; Label: string; IsEnabled: KnockoutComputed<boolean>; };
+type Item = { Label: string; Id: string; Selected: string };
 
 class CheckBoxGroup extends QuestionBase
 {
@@ -59,12 +60,15 @@ class CheckBoxGroup extends QuestionBase
 		return answer.Selections.length >= this._minNoOfSelections;
 	}
 
-	private CreateCheckBoxInfo(data:{Label:string; Id:string}):CheckBoxInfo
+	private CreateCheckBoxInfo(data: Item):CheckBoxInfo
 	{
+		if (data.Selected === "1")
+			this.Answer.push(data.Id);
+
 		var info = {
 			Id: data.Id,
 			Label: data.Label,
-			IsEnabled: knockout.computed(() => this.Answer.indexOf(data.Id) != -1 || this.CanSelectMore())
+			IsEnabled: knockout.computed(() => this.Answer.indexOf(data.Id) !== -1 || this.CanSelectMore())
 		};
 
 		return info;

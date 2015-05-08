@@ -26,8 +26,6 @@ class SlideShell
 		this.IsLoadingSlide = knockout.computed(() => this.SlideData() == null);
 		this.NumberOfSlides = ExperimentManager.NumberOfSlides;
 
-		this.CanGoToNextSlide.subscribe(v => console.log(v))
-
 		this.Name("My Experiment");
 
 		if (ExperimentManager.IsReady())
