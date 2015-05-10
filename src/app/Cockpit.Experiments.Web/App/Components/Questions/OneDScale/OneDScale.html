@@ -9,7 +9,7 @@
 			<span data-bind="text: MinLabel" class="pull-right"></span>
 		</div>
 		<div class="col-xs-8">
-			<input type="range" min="0" max="1" data-bind="value: Answer" class="form-control col-xs-5" step="0.01" />
+			<input type="range" min="0" max="1" data-bind="value: Answer, css: {NoValue: IsValueNotSet}" class="form-control col-xs-5" step="0.01" />
 		</div>
 		<div class="col-xs-2">
 			<span data-bind="text: MaxLabel"></span>

@@ -13,6 +13,7 @@ class OneDScale extends QuestionBase
 	public AudioLabel: string;
 	public HasMedia:boolean = false;
 	public Answer: KnockoutObservable<number> = knockout.observable<number>(null);
+	public IsValueNotSet:KnockoutComputed<boolean>;
 
 	constructor(question: QuestionModel)
 	{
@@ -22,6 +23,7 @@ class OneDScale extends QuestionBase
 		this.Label = this.GetInstrument("HeaderLabel");
 		this.MinLabel = this.GetInstrument("X1AxisLabel");
 		this.MaxLabel = this.GetInstrument("Y1AxisLabel");
+		this.IsValueNotSet = knockout.computed(() => !(this.HasAnswer() && this.HasValidAnswer(this.Answer())));
 
 		var stimulus = this.GetInstrument("Stimulus");
 

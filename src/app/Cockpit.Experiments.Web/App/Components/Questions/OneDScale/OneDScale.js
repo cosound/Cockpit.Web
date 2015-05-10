@@ -16,6 +16,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             this.Label = this.GetInstrument("HeaderLabel");
             this.MinLabel = this.GetInstrument("X1AxisLabel");
             this.MaxLabel = this.GetInstrument("Y1AxisLabel");
+            this.IsValueNotSet = knockout.computed(function () { return !(_this.HasAnswer() && _this.HasValidAnswer(_this.Answer())); });
             var stimulus = this.GetInstrument("Stimulus");
             if (stimulus != null) {
                 this.AudioLabel = stimulus.Label;

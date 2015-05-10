@@ -9,3 +9,79 @@
 .SlideContainer hr:last-of-type {
 	display: none;
 }
+
+
+/*** OneDScale ***/
+
+input[type="range"] {
+  -webkit-appearance: none;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  width: 100%;
+  height: 20px;
+  margin: 0;
+  border: none;
+  padding: 1px 2px;
+  border-radius: 14px;
+  background: #F0F0F0;
+  box-shadow: inset 0 1px 0 0 #0d0e0f, inset 0 -1px 0 0 #3a3d42;
+  -webkit-box-shadow: inset 0 1px 0 0 #0d0e0f, inset 0 -1px 0 0 #3a3d42;
+  outline: none; /* no focus outline */
+}
+
+input[type="range"]::-moz-range-track {
+  border: inherit;
+  background: transparent;
+}
+
+input[type="range"]::-ms-track {
+  border: inherit;
+  color: transparent; /* don't draw vertical reference line */
+  background: transparent;
+}
+
+input[type="range"]::-ms-fill-lower,
+input[type="range"]::-ms-fill-upper {
+  background: transparent;
+}
+
+input[type="range"]::-ms-tooltip {
+  display: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 18px;
+  border: none;
+  border-radius: 12px;
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #CCCCCC), color-stop(100%, #AAAAAA )); /* android <= 2.2 */
+  background-image: -webkit-linear-gradient(top , #CCCCCC 0, #AAAAAA  100%); /* older mobile safari and android > 2.2 */;
+  background-image: linear-gradient(to bottom, #CCCCCC 0, #AAAAAA  100%); /* W3C */
+}
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 18px;
+  border: none;
+  border-radius: 12px;
+  background-image: linear-gradient(to bottom, #CCCCCC 0, #AAAAAA  100%); /* W3C */
+}
+
+input[type="range"]::-ms-thumb {
+  width: 20px;
+  height: 18px;
+  border-radius: 12px;
+  border: 0;
+  background-image: linear-gradient(to bottom, #CCCCCC 0, #AAAAAA  100%); /* W3C */
+}
+
+input[type="range"].NoValue::-webkit-slider-thumb {
+	visibility: hidden;
+}
+
+input[type="range"].NoValue::-moz-range-thumb{
+	visibility: hidden;
+}
+
+input[type="range"].NoValue::-ms-thumb {
+	visibility: hidden;
+}
