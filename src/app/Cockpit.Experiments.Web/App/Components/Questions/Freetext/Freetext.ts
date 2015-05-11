@@ -19,7 +19,11 @@ class Freetext extends QuestionBase
 
 		if (this.HasAnswer()) this.Answer(this.GetAsnwer()["Text"]);
 		this.Answer.extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 200 }});
-		this.Answer.subscribe(v => this.SetAnswer({ Text: v }));
+		this.Answer.subscribe(v =>
+		{
+			this.AddEvent("Change", "/Instrument", "Keyboard", v);
+			this.SetAnswer({ Text: v });
+		});
 	}
 
 	protected HasValidAnswer(answer: any): boolean

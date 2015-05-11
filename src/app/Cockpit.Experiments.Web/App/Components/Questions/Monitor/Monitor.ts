@@ -11,16 +11,16 @@ class Monitor extends QuestionBase
 
 	public SlideLoaded(): void
 	{
-		this.AddEvent("Trial Start");
+		this.AddEvent("Start", "/", "Monitor");
 
-		this.SetAnswer({ Contexts: [] });
+		this.SetAnswer({ Context: { Type: "UserAgent", Data: navigator.userAgent} });
 	}
 
 	public SlideCompleted(): void
 	{
-		this.AddEvent("Trial End");
+		this.AddEvent("Stop", "/", "Monitor");
 
-		this.SetAnswer({ Contexts: [] });
+		this.SetAnswer({ Context: { Type: "UserAgent", Data: navigator.userAgent } });
 	}
 }
 

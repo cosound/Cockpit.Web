@@ -3,7 +3,7 @@ import QuestionBase = require("Components/Questions/QuestionBase");
 import QuestionModel = require("Models/Question");
 import AudioInfo = require("Components/Players/Audio/AudioInfo");
 
-type CheckBoxInfo = { Id: string; Label: string; IsEnabled: KnockoutComputed<boolean>; };
+type ItemInfo = { Id: string; Label: string; IsEnabled: KnockoutComputed<boolean>; };
 type Item = { Label: string; Id: string; Selected: string };
 
 class CheckBoxGroup extends QuestionBase
@@ -15,7 +15,7 @@ class CheckBoxGroup extends QuestionBase
 	public HeaderLabel: string;
 	public AudioLabel: string;
 	public AudioInfo: AudioInfo;
-	public Items: CheckBoxInfo[];
+	public Items: ItemInfo[];
 	public Answer: KnockoutObservableArray<string> = knockout.observableArray<string>();
 	public CanSelectMore: KnockoutComputed<boolean>;
 	public HasMedia: boolean = false;
@@ -35,12 +35,13 @@ class CheckBoxGroup extends QuestionBase
 			this.AudioLabel = stimulus.Label;
 
 			this.AudioInfo = new AudioInfo([{ Type: stimulus.Type, Source: stimulus.URI }]);
+			this.TrackAudioInfo("/Instrument/Stimulus", this.AudioInfo);
 			this.HasMedia = true;
 		}
 
 		this.CanSelectMore = knockout.computed(() => this.Answer().length < this._maxNoOfSelections);
 
-		this.Items = (<any[]>this.GetInstrument("Items").Item).map(v => this.CreateCheckBoxInfo(v));	
+		this.Items = this.GetItems<Item, ItemInfo>(v => this.CreateItemInfo(v));
 
 		if (this.HasAnswer())
 		{
@@ -50,7 +51,11 @@ class CheckBoxGroup extends QuestionBase
 				this.SetAnswer({ Selections: [] });
 		}
 		
-		this.Answer.subscribe(v => this.SetAnswer({ Selections: this.Answer() }));
+		this.Answer.subscribe(v =>
+		{
+			this.AddEvent("Change", "/Instrument", "Mouse/Left/Down", v.join(","));
+			this.SetAnswer({ Selections: v });
+		});
 	}
 
 	protected HasValidAnswer(answer: any): boolean
@@ -60,7 +65,7 @@ class CheckBoxGroup extends QuestionBase
 		return answer.Selections.length >= this._minNoOfSelections;
 	}
 
-	private CreateCheckBoxInfo(data: Item):CheckBoxInfo
+	private CreateItemInfo(data: Item):ItemInfo
 	{
 		if (data.Selected === "1")
 			this.Answer.push(data.Id);

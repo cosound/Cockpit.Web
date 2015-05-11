@@ -20,24 +20,28 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             if (stimulus != null) {
                 this.AudioLabel = stimulus.Label;
                 this.AudioInfo = new AudioInfo([{ Type: stimulus.Type, Source: stimulus.URI }]);
+                this.TrackAudioInfo("/Instrument/Stimulus", this.AudioInfo);
                 this.HasMedia = true;
             }
             this.CanSelectMore = knockout.computed(function () { return _this.Answer().length < _this._maxNoOfSelections; });
-            this.Items = this.GetInstrument("Items").Item.map(function (v) { return _this.CreateCheckBoxInfo(v); });
+            this.Items = this.GetItems(function (v) { return _this.CreateItemInfo(v); });
             if (this.HasAnswer()) {
                 if (this.GetAsnwer()["Selections"])
                     this.Answer.push.apply(this.Answer, this.GetAsnwer()["Selections"]);
                 else
                     this.SetAnswer({ Selections: [] });
             }
-            this.Answer.subscribe(function (v) { return _this.SetAnswer({ Selections: _this.Answer() }); });
+            this.Answer.subscribe(function (v) {
+                _this.AddEvent("Change", "/Instrument", "Mouse/Left/Down", v.join(","));
+                _this.SetAnswer({ Selections: v });
+            });
         }
         CheckBoxGroup.prototype.HasValidAnswer = function (answer) {
             if (!answer.Selections)
                 return false;
             return answer.Selections.length >= this._minNoOfSelections;
         };
-        CheckBoxGroup.prototype.CreateCheckBoxInfo = function (data) {
+        CheckBoxGroup.prototype.CreateItemInfo = function (data) {
             var _this = this;
             if (data.Selected === "1")
                 this.Answer.push(data.Id);

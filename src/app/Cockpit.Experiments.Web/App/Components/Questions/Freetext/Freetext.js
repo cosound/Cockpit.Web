@@ -18,7 +18,10 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], 
             if (this.HasAnswer())
                 this.Answer(this.GetAsnwer()["Text"]);
             this.Answer.extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 200 } });
-            this.Answer.subscribe(function (v) { return _this.SetAnswer({ Text: v }); });
+            this.Answer.subscribe(function (v) {
+                _this.AddEvent("Change", "/Instrument", "Keyboard", v);
+                _this.SetAnswer({ Text: v });
+            });
         }
         Freetext.prototype.HasValidAnswer = function (answer) {
             if (!answer.Text)

@@ -28,20 +28,22 @@ class OneDScale extends QuestionBase
 		this.X2Ticks = this.GetInstrument("X2AxisTicks").X2AxisTick;
 		this.IsValueNotSet = knockout.computed(() => !(this.HasAnswer() && this.HasValidAnswer(this.Answer())));
 
-		console.log(this.X2Ticks)
-
 		var stimulus = this.GetInstrument("Stimulus");
 
 		if (stimulus != null)
 		{
 			this.AudioLabel = stimulus.Label;
 			this.AudioInfo = AudioInfo.Create(stimulus);
-			this.AudioInfo.AddIsPlayingCallback(isPlaying => this.AddEvent(isPlaying ? "Start" : "Stop"));
+			this.TrackAudioInfo("/Instrument/Stimulus", this.AudioInfo);
 			this.HasMedia = true;
 		}
 
 		if (this.HasAnswer()) this.Answer(this.GetAsnwer().Position);
-		this.Answer.subscribe(v => this.SetAnswer({ Position: v }));
+		this.Answer.subscribe(v =>
+		{
+			this.AddEvent("Change", "/Instrument", "Mouse/Left/Down", v.toString());
+			this.SetAnswer({ Position: v });
+		});
 	}
 }
 

@@ -29,13 +29,18 @@ class RadioButtonGroup extends QuestionBase
 			this.AudioLabel = stimulus.Label;
 
 			this.AudioInfo = new AudioInfo([{ Type: stimulus.Type, Source: stimulus.URI }]);
+			this.TrackAudioInfo("/Instrument/Stimulus", this.AudioInfo);
 			this.HasMedia = true;
 		}
 
 		this.Items = this.GetInstrument("Items").Item;
 
 		if (this.HasAnswer()) this.Answer(this.GetAsnwer()["Id"]);
-		this.Answer.subscribe(v => this.SetAnswer({ Id: v }));
+		this.Answer.subscribe(v =>
+		{
+			this.AddEvent("Change", "/Instrument", "Mouse/Left/Down", v);
+			this.SetAnswer({ Id: v });
+		});
 	}
 
 	protected HasValidAnswer(answer: any): boolean

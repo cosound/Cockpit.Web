@@ -1,6 +1,7 @@
 ﻿import knockout = require("knockout");
 import CockpitPortal = require("CockpitPortal");
 import QuestionModel = require("Models/Question");
+import AudioInfo = require("Components/Players/Audio/AudioInfo");
 
 class QuestionsBase implements IQuestionViewModel
 {
@@ -96,17 +97,22 @@ class QuestionsBase implements IQuestionViewModel
 		return this.GetArray<TInput>(this.GetInstrument("Items").Item).map(converter);
 	}
 
-	protected AddEvent(type:string, id:string = null)
+	protected AddEvent(type:string, id:string = null, method:string = "None", data:string = "None")
 	{
 		var event = {
 			Id: id === null ? "None" : id,
 			Type: type,
-			Method: "None",
-			Data: "None",
+			Method: method,
+			Data: data,
 			DateTime: new Date()
 		};
 
 		this._events.push(event);
+	}
+
+	protected TrackAudioInfo(id:string, audioInfo:AudioInfo):void
+	{
+		audioInfo.AddIsPlayingCallback(isPlaying => this.AddEvent(isPlaying ? "Start" : "Stop", id, "AudioDevice"));
 	}
 
 	public SlideLoaded(): void

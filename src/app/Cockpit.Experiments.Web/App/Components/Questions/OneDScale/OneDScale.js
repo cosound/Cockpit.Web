@@ -17,17 +17,19 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             this.X1Ticks = this.GetInstrument("X1AxisTicks").X1AxisTick;
             this.X2Ticks = this.GetInstrument("X2AxisTicks").X2AxisTick;
             this.IsValueNotSet = knockout.computed(function () { return !(_this.HasAnswer() && _this.HasValidAnswer(_this.Answer())); });
-            console.log(this.X2Ticks);
             var stimulus = this.GetInstrument("Stimulus");
             if (stimulus != null) {
                 this.AudioLabel = stimulus.Label;
                 this.AudioInfo = AudioInfo.Create(stimulus);
-                this.AudioInfo.AddIsPlayingCallback(function (isPlaying) { return _this.AddEvent(isPlaying ? "Start" : "Stop"); });
+                this.TrackAudioInfo("/Instrument/Stimulus", this.AudioInfo);
                 this.HasMedia = true;
             }
             if (this.HasAnswer())
                 this.Answer(this.GetAsnwer().Position);
-            this.Answer.subscribe(function (v) { return _this.SetAnswer({ Position: v }); });
+            this.Answer.subscribe(function (v) {
+                _this.AddEvent("Change", "/Instrument", "Mouse/Left/Down", v.toString());
+                _this.SetAnswer({ Position: v });
+            });
         }
         return OneDScale;
     })(QuestionBase);

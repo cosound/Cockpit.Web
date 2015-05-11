@@ -37,7 +37,11 @@ class KacPS extends QuestionBase
 				this.SetAnswer({ Selections: [] });
 		}
 
-		this.Answer.subscribe(v => this.SetAnswer({ Selections: this.Answer() }));
+		this.Answer.subscribe(v =>
+		{
+			this.AddEvent("Change", "/Instrument", "Mouse/Left/Down", v.join(","));
+			this.SetAnswer({ Selections: v });
+		});
 	}
 
 	protected HasValidAnswer(answer: any): boolean
@@ -52,10 +56,15 @@ class KacPS extends QuestionBase
 		if (data.ChoiceButton.Selected === "1")
 			this.Answer.push(data.Id);
 
+		var audioInfo = AudioInfo.Create(data.Stimulus);
+
+		if(audioInfo !== null)
+			this.TrackAudioInfo(`/Instrument/Items/Item(Id=${data.Id})/Stimulus`, audioInfo);
+
 		var info = {
 			Id: data.Id,
 			Label: data.ChoiceButton.Label,
-			AudioInfo: AudioInfo.Create(data.Stimulus),
+			AudioInfo: audioInfo,
 			IsEnabled: knockout.computed(() => this.Answer.indexOf(data.Id) !== -1 || this.CanSelectMore()),
 			HasStimulus: data.Stimulus !== null
 		};

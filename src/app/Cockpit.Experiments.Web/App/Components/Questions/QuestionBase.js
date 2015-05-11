@@ -64,16 +64,22 @@ define(["require", "exports", "knockout"], function (require, exports, knockout)
         QuestionsBase.prototype.GetItems = function (converter) {
             return this.GetArray(this.GetInstrument("Items").Item).map(converter);
         };
-        QuestionsBase.prototype.AddEvent = function (type, id) {
+        QuestionsBase.prototype.AddEvent = function (type, id, method, data) {
             if (id === void 0) { id = null; }
+            if (method === void 0) { method = "None"; }
+            if (data === void 0) { data = "None"; }
             var event = {
                 Id: id === null ? "None" : id,
                 Type: type,
-                Method: "None",
-                Data: "None",
+                Method: method,
+                Data: data,
                 DateTime: new Date()
             };
             this._events.push(event);
+        };
+        QuestionsBase.prototype.TrackAudioInfo = function (id, audioInfo) {
+            var _this = this;
+            audioInfo.AddIsPlayingCallback(function (isPlaying) { return _this.AddEvent(isPlaying ? "Start" : "Stop", id, "AudioDevice"); });
         };
         QuestionsBase.prototype.SlideLoaded = function () {
         };

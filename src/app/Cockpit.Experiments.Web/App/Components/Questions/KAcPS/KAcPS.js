@@ -22,7 +22,10 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
                 else
                     this.SetAnswer({ Selections: [] });
             }
-            this.Answer.subscribe(function (v) { return _this.SetAnswer({ Selections: _this.Answer() }); });
+            this.Answer.subscribe(function (v) {
+                _this.AddEvent("Change", "/Instrument", "Mouse/Left/Down", v.join(","));
+                _this.SetAnswer({ Selections: v });
+            });
         }
         KacPS.prototype.HasValidAnswer = function (answer) {
             if (!answer.Selections)
@@ -33,10 +36,13 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             var _this = this;
             if (data.ChoiceButton.Selected === "1")
                 this.Answer.push(data.Id);
+            var audioInfo = AudioInfo.Create(data.Stimulus);
+            if (audioInfo !== null)
+                this.TrackAudioInfo("/Instrument/Items/Item(Id=" + data.Id + ")/Stimulus", audioInfo);
             var info = {
                 Id: data.Id,
                 Label: data.ChoiceButton.Label,
-                AudioInfo: AudioInfo.Create(data.Stimulus),
+                AudioInfo: audioInfo,
                 IsEnabled: knockout.computed(function () { return _this.Answer.indexOf(data.Id) !== -1 || _this.CanSelectMore(); }),
                 HasStimulus: data.Stimulus !== null
             };

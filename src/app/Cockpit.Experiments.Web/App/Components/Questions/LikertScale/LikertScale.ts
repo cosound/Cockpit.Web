@@ -34,6 +34,7 @@ class LikertScale extends QuestionBase
 			this.AudioLabel = stimulus.Label;
 
 			this.AudioInfo = AudioInfo.Create(stimulus);
+			this.TrackAudioInfo("/Instrument/Stimulus", this.AudioInfo);
 			this.HasMedia = true;
 		}
 
@@ -49,7 +50,11 @@ class LikertScale extends QuestionBase
 				this.SetAnswer({ Selections: [] });
 		}
 
-		this.Answer.subscribe(v => this.SetAnswer({ Selections: this.Answer() }));
+		this.Answer.subscribe(v =>
+		{
+			this.AddEvent("Change", "/Instrument", "Mouse/Left/Down", v.join(","));
+			this.SetAnswer({ Selections: v })
+		});
 	}
 
 	protected HasValidAnswer(answer: any): boolean

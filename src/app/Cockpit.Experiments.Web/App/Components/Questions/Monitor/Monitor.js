@@ -11,12 +11,12 @@ define(["require", "exports", "Components/Questions/QuestionBase"], function (re
             _super.call(this, question, false);
         }
         Monitor.prototype.SlideLoaded = function () {
-            this.AddEvent("Trial Start");
-            this.SetAnswer({ Contexts: [] });
+            this.AddEvent("Start", "/", "Monitor");
+            this.SetAnswer({ Context: { Type: "UserAgent", Data: navigator.userAgent } });
         };
         Monitor.prototype.SlideCompleted = function () {
-            this.AddEvent("Trial End");
-            this.SetAnswer({ Contexts: [] });
+            this.AddEvent("Stop", "/", "Monitor");
+            this.SetAnswer({ Context: { Type: "UserAgent", Data: navigator.userAgent } });
         };
         return Monitor;
     })(QuestionBase);

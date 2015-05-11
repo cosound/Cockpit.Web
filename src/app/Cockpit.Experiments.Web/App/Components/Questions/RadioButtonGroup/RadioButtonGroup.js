@@ -18,12 +18,16 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             if (stimulus != null) {
                 this.AudioLabel = stimulus.Label;
                 this.AudioInfo = new AudioInfo([{ Type: stimulus.Type, Source: stimulus.URI }]);
+                this.TrackAudioInfo("/Instrument/Stimulus", this.AudioInfo);
                 this.HasMedia = true;
             }
             this.Items = this.GetInstrument("Items").Item;
             if (this.HasAnswer())
                 this.Answer(this.GetAsnwer()["Id"]);
-            this.Answer.subscribe(function (v) { return _this.SetAnswer({ Id: v }); });
+            this.Answer.subscribe(function (v) {
+                _this.AddEvent("Change", "/Instrument", "Mouse/Left/Down", v);
+                _this.SetAnswer({ Id: v });
+            });
         }
         RadioButtonGroup.prototype.HasValidAnswer = function (answer) {
             return answer.Id != undefined && answer.Id != null;

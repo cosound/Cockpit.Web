@@ -19,6 +19,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             if (stimulus != null) {
                 this.AudioLabel = stimulus.Label;
                 this.AudioInfo = AudioInfo.Create(stimulus);
+                this.TrackAudioInfo("/Instrument/Stimulus", this.AudioInfo);
                 this.HasMedia = true;
             }
             this.CanSelectMore = knockout.computed(function () { return _this.Answer().length < _this._maxNoOfSelections; });
@@ -29,7 +30,10 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
                 else
                     this.SetAnswer({ Selections: [] });
             }
-            this.Answer.subscribe(function (v) { return _this.SetAnswer({ Selections: _this.Answer() }); });
+            this.Answer.subscribe(function (v) {
+                _this.AddEvent("Change", "/Instrument", "Mouse/Left/Down", v.join(","));
+                _this.SetAnswer({ Selections: v });
+            });
         }
         LikertScale.prototype.HasValidAnswer = function (answer) {
             if (!answer.Selections)
