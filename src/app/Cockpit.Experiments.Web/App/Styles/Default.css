@@ -6,10 +6,21 @@
 	display: inline-block;
 }
 
+.AudioBlock {
+	width: 500px;
+}
+
+.AudioBlock div {
+	display: inline-block;
+}
+
 .SlideContainer hr:last-of-type {
 	display: none;
 }
 
+.QuestionHeader {
+	text-align: center;
+}
 
 /*** OneDScale ***/
 
@@ -84,4 +95,24 @@ input[type="range"].NoValue::-moz-range-thumb{
 
 input[type="range"].NoValue::-ms-thumb {
 	visibility: hidden;
+}
+
+/*** KAcPS ***/
+
+.KAcPS .Item {
+	position: relative;
+	height: 80px;
+}
+
+.KAcPS .Item > div > button {
+	margin: 0 auto;
+	display: block;
+}
+
+
+.KAcPS .Item label {
+	position: absolute;
+	width: 90%;
+	bottom: 0;
+	text-align: center;
 }

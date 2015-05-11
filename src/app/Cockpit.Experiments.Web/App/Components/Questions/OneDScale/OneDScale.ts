@@ -3,11 +3,14 @@ import QuestionBase = require("Components/Questions/QuestionBase");
 import QuestionModel = require("Models/Question");
 import AudioInfo = require("Components/Players/Audio/AudioInfo");
 
+type Ticks = {Label:string; Position:string;}
+
 class OneDScale extends QuestionBase
 {
 	public Id: string;
-	public Label: string;
-	public MinLabel: string;
+	public HeaderLabel: string;
+	public X1Ticks: Ticks[];
+	public X2Ticks: Ticks[];
 	public MaxLabel: string;
 	public AudioInfo: AudioInfo;
 	public AudioLabel: string;
@@ -20,10 +23,12 @@ class OneDScale extends QuestionBase
 		super(question);
 
 		this.Id = this.Model.Id;
-		this.Label = this.GetInstrument("HeaderLabel");
-		this.MinLabel = this.GetInstrument("X1AxisLabel");
-		this.MaxLabel = this.GetInstrument("Y1AxisLabel");
+		this.HeaderLabel = this.GetInstrument("HeaderLabel");
+		this.X1Ticks = this.GetInstrument("X1AxisTicks").X1AxisTick;
+		this.X2Ticks = this.GetInstrument("X2AxisTicks").X2AxisTick;
 		this.IsValueNotSet = knockout.computed(() => !(this.HasAnswer() && this.HasValidAnswer(this.Answer())));
+
+		console.log(this.X2Ticks)
 
 		var stimulus = this.GetInstrument("Stimulus");
 

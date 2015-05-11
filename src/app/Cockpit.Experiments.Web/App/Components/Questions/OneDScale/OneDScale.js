@@ -13,10 +13,11 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             this.HasMedia = false;
             this.Answer = knockout.observable(null);
             this.Id = this.Model.Id;
-            this.Label = this.GetInstrument("HeaderLabel");
-            this.MinLabel = this.GetInstrument("X1AxisLabel");
-            this.MaxLabel = this.GetInstrument("Y1AxisLabel");
+            this.HeaderLabel = this.GetInstrument("HeaderLabel");
+            this.X1Ticks = this.GetInstrument("X1AxisTicks").X1AxisTick;
+            this.X2Ticks = this.GetInstrument("X2AxisTicks").X2AxisTick;
             this.IsValueNotSet = knockout.computed(function () { return !(_this.HasAnswer() && _this.HasValidAnswer(_this.Answer())); });
+            console.log(this.X2Ticks);
             var stimulus = this.GetInstrument("Stimulus");
             if (stimulus != null) {
                 this.AudioLabel = stimulus.Label;
