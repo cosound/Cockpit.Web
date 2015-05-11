@@ -13,7 +13,6 @@ class Audio
 	private _info: AudioInfo;
 	private static _activePlayer:Audio = null;
 
-
 	constructor(info:AudioInfo)
 	{
 		this._info = info;
@@ -34,6 +33,7 @@ class Audio
 		{
 			Audio._activePlayer = null;
 			this.PlayerElement().pause();
+			this.PlayerElement().currentTime = 0;
 		}
 		else
 		{
