@@ -16,7 +16,9 @@ class OneDScale extends QuestionBase
 	public AudioLabel: string;
 	public HasMedia:boolean = false;
 	public Answer: KnockoutObservable<number> = knockout.observable<number>(null);
-	public IsValueNotSet:KnockoutComputed<boolean>;
+	public IsValueNotSet: KnockoutComputed<boolean>;
+	public HasX1Ticks:boolean;
+	public HasX2Ticks:boolean;
 
 	constructor(question: QuestionModel)
 	{
@@ -24,8 +26,10 @@ class OneDScale extends QuestionBase
 
 		this.Id = this.Model.Id;
 		this.HeaderLabel = this.GetInstrument("HeaderLabel");
-		this.X1Ticks = this.GetInstrument("X1AxisTicks").X1AxisTick;
-		this.X2Ticks = this.GetInstrument("X2AxisTicks").X2AxisTick;
+		this.X1Ticks = this.GetInstrument("X1AxisTicks") ? this.GetInstrument("X1AxisTicks").X1AxisTick : null;
+		this.X2Ticks = this.GetInstrument("X2AxisTicks") ? this.GetInstrument("X2AxisTicks").X2AxisTick : null;
+		this.HasX1Ticks = this.X1Ticks != null;
+		this.HasX2Ticks = this.X2Ticks != null;
 		this.IsValueNotSet = knockout.computed(() => !(this.HasAnswer() && this.HasValidAnswer(this.Answer())));
 
 		var stimulus = this.GetInstrument("Stimulus");

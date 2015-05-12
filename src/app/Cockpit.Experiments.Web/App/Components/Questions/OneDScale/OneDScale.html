@@ -5,14 +5,14 @@
 		<p data-bind="text: AudioLabel"></p>
 	</div>
 	<div class="col-xs-8">
-		<div class="container-fluid">
+		<div class="container-fluid" data-bind="if: HasX2Ticks">
 			<div class="col-xs-6 text-left" data-bind="text: X2Ticks[0].Label"></div>
 			<div class="col-xs-6 text-right" data-bind="text: X2Ticks[1].Label"></div>
 		</div>
 		<div class="container-fluid">
 			<input type="range" min="0" max="1" data-bind="value: Answer, css: {NoValue: IsValueNotSet}" class="form-control col-xs-5" step="0.01" />
 		</div>
-		<div class="container-fluid">
+		<div class="container-fluid" data-bind="if: HasX1Ticks">
 			<div class="col-xs-6 text-left" data-bind="text: X1Ticks[0].Label"></div>
 			<div class="col-xs-6 text-right" data-bind="text: X1Ticks[1].Label"></div>
 		</div>
