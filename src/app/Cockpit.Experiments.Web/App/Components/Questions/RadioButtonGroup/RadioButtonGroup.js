@@ -17,11 +17,11 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             var stimulus = this.GetInstrument("Stimulus");
             if (stimulus != null) {
                 this.AudioLabel = stimulus.Label;
-                this.AudioInfo = new AudioInfo([{ Type: stimulus.Type, Source: stimulus.URI }]);
+                this.AudioInfo = AudioInfo.Create(stimulus);
                 this.TrackAudioInfo("/Instrument/Stimulus", this.AudioInfo);
                 this.HasMedia = true;
             }
-            this.Items = this.GetInstrument("Items").Item;
+            this.Items = this.GetItems(function (item) { return _this.ItemInfo(item); });
             if (this.HasAnswer())
                 this.Answer(this.GetAsnwer()["Id"]);
             this.Answer.subscribe(function (v) {
@@ -32,7 +32,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
         RadioButtonGroup.prototype.HasValidAnswer = function (answer) {
             return answer.Id != undefined && answer.Id != null;
         };
-        RadioButtonGroup.prototype.CreateRadioButtonInfo = function (data) {
+        RadioButtonGroup.prototype.ItemInfo = function (data) {
             if (data.Selected === "1")
                 this.Answer(data.Id);
             var info = {

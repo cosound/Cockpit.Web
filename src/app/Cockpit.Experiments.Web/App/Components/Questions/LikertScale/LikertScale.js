@@ -10,11 +10,10 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
         function LikertScale(question) {
             var _this = this;
             _super.call(this, question);
-            this.Answer = knockout.observableArray();
+            this.Answer = knockout.observable(null);
             this.HasMedia = false;
+            this.Id = this.Model.Id;
             this.HeaderLabel = this.GetInstrument("HeaderLabel");
-            this._minNoOfSelections = parseInt(this.GetInstrument("MinNoOfScalings"));
-            this._maxNoOfSelections = parseInt(this.GetInstrument("MaxNoOfScalings"));
             var stimulus = this.GetInstrument("Stimulus");
             if (stimulus != null) {
                 this.AudioLabel = stimulus.Label;
@@ -22,32 +21,23 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
                 this.TrackAudioInfo("/Instrument/Stimulus", this.AudioInfo);
                 this.HasMedia = true;
             }
-            this.CanSelectMore = knockout.computed(function () { return _this.Answer().length < _this._maxNoOfSelections; });
-            this.Items = this.GetItems(function (item) { return _this.CreateCheckBoxInfo(item); });
-            if (this.HasAnswer()) {
-                if (this.GetAsnwer()["Selections"])
-                    this.Answer.push.apply(this.Answer, this.GetAsnwer()["Selections"]);
-                else
-                    this.SetAnswer({ Selections: [] });
-            }
+            this.Items = this.GetItems(function (item) { return _this.ItemInfo(item); });
+            if (this.HasAnswer())
+                this.Answer(this.GetAsnwer()["Id"]);
             this.Answer.subscribe(function (v) {
-                _this.AddEvent("Change", "/Instrument", "Mouse/Left/Down", v.join(","));
-                _this.SetAnswer({ Selections: v });
+                _this.AddEvent("Change", "/Instrument", "Mouse/Left/Down", v);
+                _this.SetAnswer({ Id: v });
             });
         }
         LikertScale.prototype.HasValidAnswer = function (answer) {
-            if (!answer.Selections)
-                return false;
-            return answer.Selections.length >= this._minNoOfSelections;
+            return answer.Id != undefined && answer.Id != null;
         };
-        LikertScale.prototype.CreateCheckBoxInfo = function (data) {
-            var _this = this;
+        LikertScale.prototype.ItemInfo = function (data) {
             if (data.Selected === "1")
-                this.Answer.push(data.Id);
+                this.Answer(data.Id);
             var info = {
                 Id: data.Id,
-                Label: data.Label,
-                IsEnabled: knockout.computed(function () { return _this.Answer.indexOf(data.Id) !== -1 || _this.CanSelectMore(); })
+                Label: data.Label
             };
             return info;
         };

@@ -3,7 +3,7 @@ import QuestionBase = require("Components/Questions/QuestionBase");
 import QuestionModel = require("Models/Question");
 import AudioInfo = require("Components/Players/Audio/AudioInfo");
 
-type RadioButtonInfo = { Id: string; Label: string; };
+type ItemInfo = { Id: string; Label: string; };
 type Item = { Label: string; Id: string; Selected: string };
 
 class RadioButtonGroup extends QuestionBase
@@ -12,7 +12,7 @@ class RadioButtonGroup extends QuestionBase
 	public HeaderLabel: string;
 	public AudioLabel: string;
 	public AudioInfo: AudioInfo;
-	public Items: RadioButtonInfo[];
+	public Items: ItemInfo[];
 	public Answer: KnockoutObservable<string> = knockout.observable<string>(null);
 	public HasMedia: boolean = false;
 
@@ -28,12 +28,12 @@ class RadioButtonGroup extends QuestionBase
 		{
 			this.AudioLabel = stimulus.Label;
 
-			this.AudioInfo = new AudioInfo([{ Type: stimulus.Type, Source: stimulus.URI }]);
+			this.AudioInfo = AudioInfo.Create(stimulus);
 			this.TrackAudioInfo("/Instrument/Stimulus", this.AudioInfo);
 			this.HasMedia = true;
 		}
 
-		this.Items = this.GetInstrument("Items").Item;
+		this.Items = this.GetItems<Item, ItemInfo>(item => this.ItemInfo(item));
 
 		if (this.HasAnswer()) this.Answer(this.GetAsnwer()["Id"]);
 		this.Answer.subscribe(v =>
@@ -48,7 +48,7 @@ class RadioButtonGroup extends QuestionBase
 		return answer.Id != undefined && answer.Id != null;
 	}
 
-	private CreateRadioButtonInfo(data: Item): RadioButtonInfo
+	private ItemInfo(data: Item): ItemInfo
 	{
 		if (data.Selected === "1")
 			this.Answer(data.Id);

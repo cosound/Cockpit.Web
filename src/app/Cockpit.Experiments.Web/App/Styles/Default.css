@@ -14,7 +14,7 @@
 	display: inline-block;
 }
 
-.SlideContainer hr:last-of-type {
+.SlideContainer > hr:last-of-type {
 	display: none;
 }
 
@@ -119,4 +119,16 @@ input[type="range"].NoValue::-ms-thumb {
 	width: 90%;
 	bottom: 0;
 	text-align: center;
+}
+
+/*** LikertScale ***/
+
+.LikertScale .Scale {
+	margin: 0 auto;
+	display: table;
+	min-width: 50%;
+}
+
+.LikertScale .Scale label{
+	display: table-cell;
 }
