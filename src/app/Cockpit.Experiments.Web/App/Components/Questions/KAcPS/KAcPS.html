@@ -8,7 +8,7 @@
 			<div data-bind="component: {name: 'Players/Audio', params: AudioInfo}"></div>
 			<!-- /ko -->
 			<label class="btn btn-default">
-				<input type="checkbox" data-bind="checked: $parent.Answer, value: Id, enable: IsEnabled" />
+				<input type="radio" data-bind="checked: $parent.Answer, attr: {name: $parent.Id}, value: Id" />
 				<span data-bind="text: Label"></span>
 			</label>
 		</div>

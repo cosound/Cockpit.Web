@@ -10,32 +10,23 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
         function KacPS(question) {
             var _this = this;
             _super.call(this, question);
-            this.Answer = knockout.observableArray();
+            this.Answer = knockout.observable(null);
+            this.Id = this.Model.Id;
             this.HeaderLabel = this.GetInstrument("HeaderLabel");
-            this._minNoOfSelections = parseInt(this.GetInstrument("MinNoOfScalings"));
-            this._maxNoOfSelections = parseInt(this.GetInstrument("MaxNoOfScalings"));
-            this.CanSelectMore = knockout.computed(function () { return _this.Answer().length < _this._maxNoOfSelections; });
             this.Items = this.GetItems(function (v) { return _this.CreateItemInfo(v); });
-            if (this.HasAnswer()) {
-                if (this.GetAsnwer()["Selections"])
-                    this.Answer.push.apply(this.Answer, this.GetAsnwer()["Selections"]);
-                else
-                    this.SetAnswer({ Selections: [] });
-            }
+            if (this.HasAnswer())
+                this.Answer(this.GetAsnwer()["Id"]);
             this.Answer.subscribe(function (v) {
-                _this.AddEvent("Change", "/Instrument", "Mouse/Left/Down", v.join(","));
-                _this.SetAnswer({ Selections: v });
+                _this.AddEvent("Change", "/Instrument", "Mouse/Left/Down", v);
+                _this.SetAnswer({ Id: v });
             });
         }
         KacPS.prototype.HasValidAnswer = function (answer) {
-            if (!answer.Selections)
-                return false;
-            return answer.Selections.length >= this._minNoOfSelections;
+            return answer.Id != undefined && answer.Id != null;
         };
         KacPS.prototype.CreateItemInfo = function (data) {
-            var _this = this;
             if (data.ChoiceButton.Selected === "1")
-                this.Answer.push(data.Id);
+                this.Answer(data.Id);
             var audioInfo = AudioInfo.Create(data.Stimulus);
             if (audioInfo !== null)
                 this.TrackAudioInfo("/Instrument/Items/Item(Id=" + data.Id + ")/Stimulus", audioInfo);
@@ -43,7 +34,6 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
                 Id: data.Id,
                 Label: data.ChoiceButton.Label,
                 AudioInfo: audioInfo,
-                IsEnabled: knockout.computed(function () { return _this.Answer.indexOf(data.Id) !== -1 || _this.CanSelectMore(); }),
                 HasStimulus: data.Stimulus !== null
             };
             return info;
