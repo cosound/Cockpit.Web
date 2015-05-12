@@ -1,6 +1,6 @@
-﻿<div class="container">
+﻿<div class="container-fluid">
 	<div class="row">
-		<div class="center-block AudioBlock" data-bind="if: HasMedia">
+		<div class="AudioBlock" data-bind="if: HasMedia">
 			<div data-bind="component: {name: 'Players/Audio', params: AudioInfo}"></div>
 			<span data-bind="text: AudioLabel"></span>
 		</div>
@@ -10,7 +10,7 @@
 	</div>
 	<div class="row container" data-bind="foreach: Items">
 		<label class="col-xs-3">
-			<input type="checkbox" data-bind="checked: $parent.Answer, value: Id, enable: IsEnabled"/>
+			<input type="checkbox" data-bind="checked: $parent.Answer, value: Id, enable: IsEnabled" />
 			<span data-bind="text: Label"></span>
 		</label>
 	</div>
