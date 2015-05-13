@@ -5,11 +5,13 @@
 	<div class="row Scale" data-bind="foreach: Items">
 		<div class="Item">
 			<!-- ko if: HasStimulus -->
-			<div data-bind="component: {name: 'Players/Audio', params: AudioInfo}"></div>
+			<div class="Stimulus" data-bind="component: {name: 'Players/Audio', params: AudioInfo}"></div>
+			<!-- /ko -->
+			<!-- ko if: !$parent.HasNoStimulus && !HasStimulus -->
+			<div class="Filler"><button class="btn btn-default"><span class="glyphicon glyphicon-play" aria-hidden="true"></span></button></div>
 			<!-- /ko -->
 			<input type="radio" data-bind="checked: $parent.Answer, attr: {id: UniqueId, name: $parent.Id}, value: Id, enable: $parent.CanAnswer" />
 			<label class="btn btn-default" data-bind="attr: {for: UniqueId}, css: {active: IsSelected, disabled: !$parent.CanAnswer()}">
-				<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
 				<span data-bind="text: Label"></span>
 			</label>
 		</div>

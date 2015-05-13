@@ -14,6 +14,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             this.Id = this.Model.Id;
             this.HeaderLabel = this.GetInstrument("HeaderLabel");
             this.Items = this.GetItems(function (v) { return _this.CreateItemInfo(v); });
+            this.HasNoStimulus = this.Items.every(function (i) { return !i.HasStimulus; });
             this.CanAnswer = this.GetObservableWhenAllAudioHavePlayed(this.Items.map(function (i) { return i.AudioInfo; }));
             if (this.HasAnswer())
                 this.Answer(this.GetAsnwer()["Id"]);

@@ -138,6 +138,16 @@ input[type="range"].NoValue::-ms-thumb {
 .KAcPS .Scale .Item > label {
 	margin-top: 10px;
 	min-width: 75px;
+	vertical-align: bottom;
+}
+
+.KAcPS .Scale .Item > .Filler {
+	visibility: hidden;
+}
+
+.KAcPS .Scale .Item > .Stimulus~label {
+	
+	margin-top: 10px;
 }
 
 .KAcPS .Scale input[type="radio"]+label .glyphicon  {
