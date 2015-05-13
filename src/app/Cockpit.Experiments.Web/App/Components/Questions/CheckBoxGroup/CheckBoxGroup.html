@@ -9,7 +9,7 @@
 		<h3 data-bind="text: HeaderLabel" class="QuestionHeader"></h3>
 	</div>
 	<div class="row container" data-bind="foreach: Items">
-		<label class="col-xs-3">
+		<label class="col-xs-3" data-bind="css: {disabled: !$parent.CanAnswer()}">
 			<input type="checkbox" data-bind="checked: $parent.Answer, value: Id, enable: IsEnabled" />
 			<span data-bind="text: Label"></span>
 		</label>

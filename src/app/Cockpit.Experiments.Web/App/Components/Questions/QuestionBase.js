@@ -1,4 +1,4 @@
-define(["require", "exports", "knockout"], function (require, exports, knockout) {
+define(["require", "exports", "knockout", "Components/Players/Audio/AudioInfo"], function (require, exports, knockout, AudioInfo) {
     var QuestionsBase = (function () {
         function QuestionsBase(question, requiresInput) {
             var _this = this;
@@ -80,6 +80,24 @@ define(["require", "exports", "knockout"], function (require, exports, knockout)
         QuestionsBase.prototype.TrackAudioInfo = function (id, audioInfo) {
             var _this = this;
             audioInfo.AddIsPlayingCallback(function (isPlaying) { return _this.AddEvent(isPlaying ? "Start" : "Stop", id, "AudioDevice"); });
+        };
+        QuestionsBase.prototype.GetObservableWhenAllAudioHavePlayed = function (audio) {
+            if (audio instanceof AudioInfo)
+                audio = [audio];
+            var allHavePlayed = knockout.observable(false);
+            var numberOfPlays = 0;
+            audio.forEach(function (a) {
+                if (a === null)
+                    numberOfPlays++;
+                else {
+                    a.AddIsPlayingCallback(function () {
+                        if (++numberOfPlays === audio.length)
+                            allHavePlayed(true);
+                    }, true);
+                }
+            });
+            allHavePlayed(numberOfPlays === audio.length);
+            return allHavePlayed;
         };
         QuestionsBase.prototype.SlideLoaded = function () {
         };

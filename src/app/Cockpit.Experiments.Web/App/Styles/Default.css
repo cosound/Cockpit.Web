@@ -26,6 +26,16 @@ label {
 	font-weight: normal !important;
 }
 
+label.disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+label.btn.disabled {
+	pointer-events: all;
+	background-position: 0 !important;
+}
+
 /*** OneDScale ***/
 
 input[type="range"] {

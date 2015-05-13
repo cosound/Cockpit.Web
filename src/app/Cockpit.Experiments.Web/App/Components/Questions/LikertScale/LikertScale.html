@@ -10,10 +10,10 @@
 			<p data-bind="text: AudioLabel"></p>
 		</div>
 		<div class="col-xs-10 Scale" data-bind="foreach: Items">
-			<label class="text-center">
+			<label class="text-center" data-bind="css: {disabled: !$parent.CanAnswer()}">
 				<span class="Line"></span>
-				<input type="radio" data-bind="checked: $parent.Answer, attr: {name: $parent.Id}, value: Id"/>
-				<br/>
+				<input type="radio" data-bind="checked: $parent.Answer, attr: {name: $parent.Id}, value: Id, enable: $parent.CanAnswer" />
+				<br />
 				<span data-bind="text: Label"></span>
 			</label>
 		</div>

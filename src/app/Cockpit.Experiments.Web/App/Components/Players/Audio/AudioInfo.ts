@@ -12,9 +12,13 @@ class AudioInfo
 		this.Sources = sources;
 	}
 
-	public AddIsPlayingCallback(callback: (isPlaying: boolean) => void)
+	public AddIsPlayingCallback(callback: (isPlaying: boolean) => void, onlyCallOnce:boolean = false)
 	{
-		this.IsPlaying.subscribe(v => callback(v));
+		var sub = this.IsPlaying.subscribe(v =>
+		{
+			if (onlyCallOnce) sub.dispose();
+			callback(v);
+		});
 	}
 
 	public static Create(stimulus:Stimulus):AudioInfo

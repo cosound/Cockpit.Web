@@ -13,6 +13,7 @@ class KacPS extends QuestionBase
 	public AudioLabel: string;
 	public Items: ItemInfo[];
 	public Answer: KnockoutObservable<string> = knockout.observable<string>(null);
+	public CanAnswer: KnockoutObservable<boolean>;
 
 	constructor(question: QuestionModel)
 	{
@@ -22,6 +23,8 @@ class KacPS extends QuestionBase
 		this.HeaderLabel = this.GetInstrument("HeaderLabel");
 
 		this.Items = this.GetItems<Item, ItemInfo>(v => this.CreateItemInfo(v));
+
+		this.CanAnswer = this.GetObservableWhenAllAudioHavePlayed(this.Items.map(i => i.AudioInfo));
 
 		if (this.HasAnswer()) this.Answer(this.GetAsnwer()["Id"]);
 		this.Answer.subscribe(v =>

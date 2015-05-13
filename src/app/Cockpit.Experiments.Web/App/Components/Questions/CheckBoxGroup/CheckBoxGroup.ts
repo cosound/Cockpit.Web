@@ -19,6 +19,7 @@ class CheckBoxGroup extends QuestionBase
 	public Answer: KnockoutObservableArray<string> = knockout.observableArray<string>();
 	public CanSelectMore: KnockoutComputed<boolean>;
 	public HasMedia: boolean = false;
+	public CanAnswer: KnockoutObservable<boolean>;
 
 	constructor(question: QuestionModel)
 	{
@@ -38,6 +39,8 @@ class CheckBoxGroup extends QuestionBase
 			this.TrackAudioInfo("/Instrument/Stimulus", this.AudioInfo);
 			this.HasMedia = true;
 		}
+
+		this.CanAnswer = this.GetObservableWhenAllAudioHavePlayed(this.AudioInfo);
 
 		this.CanSelectMore = knockout.computed(() => this.Answer().length < this._maxNoOfSelections);
 
@@ -73,7 +76,7 @@ class CheckBoxGroup extends QuestionBase
 		var info = {
 			Id: data.Id,
 			Label: data.Label,
-			IsEnabled: knockout.computed(() => this.Answer.indexOf(data.Id) !== -1 || this.CanSelectMore())
+			IsEnabled: knockout.computed(() => this.CanAnswer() && (this.Answer.indexOf(data.Id) !== -1 || this.CanSelectMore()))
 		};
 
 		return info;

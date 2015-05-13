@@ -15,6 +15,7 @@ class LikertScale extends QuestionBase
 	public Items: ItemInfo[];
 	public Answer: KnockoutObservable<string> = knockout.observable<string>(null);
 	public HasMedia: boolean = false;
+	public CanAnswer:KnockoutObservable<boolean>;
 
 	constructor(question: QuestionModel)
 	{
@@ -32,6 +33,8 @@ class LikertScale extends QuestionBase
 			this.TrackAudioInfo("/Instrument/Stimulus", this.AudioInfo);
 			this.HasMedia = true;
 		}
+
+		this.CanAnswer = this.GetObservableWhenAllAudioHavePlayed(this.AudioInfo);
 
 		this.Items = this.GetItems<Item, ItemInfo>(item => this.ItemInfo(item));
 

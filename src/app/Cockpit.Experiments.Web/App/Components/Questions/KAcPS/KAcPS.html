@@ -7,8 +7,8 @@
 			<!-- ko if: HasStimulus -->
 			<div data-bind="component: {name: 'Players/Audio', params: AudioInfo}"></div>
 			<!-- /ko -->
-			<input type="radio" data-bind="checked: $parent.Answer, attr: {id: UniqueId, name: $parent.Id}, value: Id" />
-			<label class="btn btn-default" data-bind="attr: {for: UniqueId}, css: {active: IsSelected}">
+			<input type="radio" data-bind="checked: $parent.Answer, attr: {id: UniqueId, name: $parent.Id}, value: Id, enable: $parent.CanAnswer" />
+			<label class="btn btn-default" data-bind="attr: {for: UniqueId}, css: {active: IsSelected, disabled: !$parent.CanAnswer()}">
 				<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
 				<span data-bind="text: Label"></span>
 			</label>

@@ -18,7 +18,8 @@ class OneDScale extends QuestionBase
 	public Answer: KnockoutObservable<number> = knockout.observable<number>(null);
 	public IsValueNotSet: KnockoutComputed<boolean>;
 	public HasX1Ticks:boolean;
-	public HasX2Ticks:boolean;
+	public HasX2Ticks: boolean;
+	public CanAnswer: KnockoutObservable<boolean>;
 
 	constructor(question: QuestionModel)
 	{
@@ -41,6 +42,8 @@ class OneDScale extends QuestionBase
 			this.TrackAudioInfo("/Instrument/Stimulus", this.AudioInfo);
 			this.HasMedia = true;
 		}
+
+		this.CanAnswer = this.GetObservableWhenAllAudioHavePlayed(this.AudioInfo);
 
 		if (this.HasAnswer()) this.Answer(this.GetAsnwer().Position);
 		this.Answer.subscribe(v =>

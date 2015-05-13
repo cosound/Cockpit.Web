@@ -23,6 +23,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
                 this.TrackAudioInfo("/Instrument/Stimulus", this.AudioInfo);
                 this.HasMedia = true;
             }
+            this.CanAnswer = this.GetObservableWhenAllAudioHavePlayed(this.AudioInfo);
             this.CanSelectMore = knockout.computed(function () { return _this.Answer().length < _this._maxNoOfSelections; });
             this.Items = this.GetItems(function (v) { return _this.CreateItemInfo(v); });
             if (this.HasAnswer()) {
@@ -48,7 +49,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             var info = {
                 Id: data.Id,
                 Label: data.Label,
-                IsEnabled: knockout.computed(function () { return _this.Answer.indexOf(data.Id) !== -1 || _this.CanSelectMore(); })
+                IsEnabled: knockout.computed(function () { return _this.CanAnswer() && (_this.Answer.indexOf(data.Id) !== -1 || _this.CanSelectMore()); })
             };
             return info;
         };
