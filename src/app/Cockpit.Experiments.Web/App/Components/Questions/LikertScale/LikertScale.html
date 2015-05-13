@@ -11,7 +11,9 @@
 		</div>
 		<div class="col-xs-10 Scale" data-bind="foreach: Items">
 			<label class="text-center">
-				<input type="radio" data-bind="checked: $parent.Answer, attr: {name: $parent.Id}, value: Id" /><br />
+				<span class="Line"></span>
+				<input type="radio" data-bind="checked: $parent.Answer, attr: {name: $parent.Id}, value: Id"/>
+				<br/>
 				<span data-bind="text: Label"></span>
 			</label>
 		</div>

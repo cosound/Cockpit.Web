@@ -146,6 +146,29 @@ input[type="range"].NoValue::-ms-thumb {
 	min-width: 50%;
 }
 
-.LikertScale .Scale label{
+.LikertScale .Scale > label {
+	position: relative;
 	display: table-cell;
+}
+
+.LikertScale .Scale .Line {
+	position: absolute;
+	top: 10px;
+	left: 0;
+	height: 1px;
+	width: 100%;
+	border-top: 1px solid grey;
+}
+
+.LikertScale .Scale label:first-child .Line {
+	left: 50%;
+	width: 50%;
+}
+
+.LikertScale .Scale label:last-child .Line {
+	width: 50%;
+}
+
+.LikertScale .Scale > label > input {
+	position: relative;
 }
