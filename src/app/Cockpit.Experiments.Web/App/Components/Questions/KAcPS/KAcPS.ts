@@ -3,7 +3,7 @@ import QuestionBase = require("Components/Questions/QuestionBase");
 import QuestionModel = require("Models/Question");
 import AudioInfo = require("Components/Players/Audio/AudioInfo");
 
-type ItemInfo = { Id: string; Label: string; AudioInfo: AudioInfo; HasStimulus: boolean; };
+type ItemInfo = { Id: string; UniqueId: string; Label: string; AudioInfo: AudioInfo; HasStimulus: boolean; IsSelected:KnockoutComputed<boolean>; };
 type Item = { Id:string; ChoiceButton:{ Label:string; Selected:string }; Stimulus:Stimulus };
 
 class KacPS extends QuestionBase
@@ -48,8 +48,10 @@ class KacPS extends QuestionBase
 
 		var info = {
 			Id: data.Id,
+			UniqueId: this.Id + "_" + data.Id,
 			Label: data.ChoiceButton.Label,
 			AudioInfo: audioInfo,
+			IsSelected: knockout.computed(() => this.Answer() === data.Id ),
 			HasStimulus: data.Stimulus !== null
 		};
 

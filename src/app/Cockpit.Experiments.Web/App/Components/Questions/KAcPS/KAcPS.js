@@ -25,6 +25,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             return answer.Id != undefined && answer.Id != null;
         };
         KacPS.prototype.CreateItemInfo = function (data) {
+            var _this = this;
             if (data.ChoiceButton.Selected === "1")
                 this.Answer(data.Id);
             var audioInfo = AudioInfo.Create(data.Stimulus);
@@ -32,8 +33,10 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
                 this.TrackAudioInfo("/Instrument/Items/Item(Id=" + data.Id + ")/Stimulus", audioInfo);
             var info = {
                 Id: data.Id,
+                UniqueId: this.Id + "_" + data.Id,
                 Label: data.ChoiceButton.Label,
                 AudioInfo: audioInfo,
+                IsSelected: knockout.computed(function () { return _this.Answer() === data.Id; }),
                 HasStimulus: data.Stimulus !== null
             };
             return info;

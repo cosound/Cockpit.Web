@@ -103,22 +103,39 @@ input[type="range"].NoValue::-ms-thumb {
 
 /*** KAcPS ***/
 
-.KAcPS .Item {
-	position: relative;
-	height: 80px;
-}
-
-.KAcPS .Item > div > button {
+.KAcPS .Scale {
 	margin: 0 auto;
-	display: block;
+	display: table;
+	min-width: 50%;
 }
 
-
-.KAcPS .Item label {
-	position: absolute;
-	width: 90%;
-	bottom: 0;
+.KAcPS .Scale .Item {
+	display: table-cell;
+	height: 50px;
+	padding: 5px;
 	text-align: center;
+}
+
+.KAcPS .Scale .Item > div > button {
+	display: block;
+	margin: 0 auto;
+}
+
+.KAcPS .Scale input[type="radio"]  {
+	display: none;
+}
+
+.KAcPS .Scale .Item > label {
+	margin-top: 10px;
+	min-width: 75px;
+}
+
+.KAcPS .Scale input[type="radio"]+label .glyphicon  {
+	display: none;
+}
+
+.KAcPS .Scale input[type="radio"]:checked+label .glyphicon  {
+	display: inline;
 }
 
 /*** LikertScale ***/

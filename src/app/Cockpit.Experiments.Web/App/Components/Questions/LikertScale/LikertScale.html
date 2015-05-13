@@ -9,7 +9,7 @@
 			<div data-bind="component: {name: 'Players/Audio', params: AudioInfo}"></div>
 			<p data-bind="text: AudioLabel"></p>
 		</div>
-		<div class="col-xs-10 row Scale" data-bind="foreach: Items">
+		<div class="col-xs-10 Scale" data-bind="foreach: Items">
 			<label class="text-center">
 				<input type="radio" data-bind="checked: $parent.Answer, attr: {name: $parent.Id}, value: Id" /><br />
 				<span data-bind="text: Label"></span>
