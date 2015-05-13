@@ -12,7 +12,7 @@ class OneDScale extends QuestionBase
 	public X1Ticks: Ticks[];
 	public X2Ticks: Ticks[];
 	public MaxLabel: string;
-	public AudioInfo: AudioInfo;
+	public AudioInfo: AudioInfo = null;
 	public AudioLabel: string;
 	public HasMedia:boolean = false;
 	public Answer: KnockoutObservable<number> = knockout.observable<number>(null);

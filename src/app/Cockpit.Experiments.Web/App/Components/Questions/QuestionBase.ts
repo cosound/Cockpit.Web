@@ -117,6 +117,8 @@ class QuestionsBase implements IQuestionViewModel
 
 	protected GetObservableWhenAllAudioHavePlayed(audio:AudioInfo|AudioInfo[]):KnockoutObservable<boolean>
 	{
+		if (audio == null) return knockout.observable(true);
+
 		if (audio instanceof AudioInfo)
 			audio = [<AudioInfo>audio];
 

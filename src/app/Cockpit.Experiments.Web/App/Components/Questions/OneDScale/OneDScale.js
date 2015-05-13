@@ -10,6 +10,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
         function OneDScale(question) {
             var _this = this;
             _super.call(this, question);
+            this.AudioInfo = null;
             this.HasMedia = false;
             this.Answer = knockout.observable(null);
             this.Id = this.Model.Id;

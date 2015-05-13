@@ -10,6 +10,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
         function RadioButtonGroup(question) {
             var _this = this;
             _super.call(this, question);
+            this.AudioInfo = null;
             this.Answer = knockout.observable(null);
             this.HasMedia = false;
             this.Id = this.Model.Id;

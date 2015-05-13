@@ -11,7 +11,7 @@ class LikertScale extends QuestionBase
 	public Id: string;
 	public HeaderLabel: string;
 	public AudioLabel: string;
-	public AudioInfo: AudioInfo;
+	public AudioInfo: AudioInfo = null;
 	public Items: ItemInfo[];
 	public Answer: KnockoutObservable<string> = knockout.observable<string>(null);
 	public HasMedia: boolean = false;

@@ -14,7 +14,7 @@ class CheckBoxGroup extends QuestionBase
 	public Id: string;
 	public HeaderLabel: string;
 	public AudioLabel: string;
-	public AudioInfo: AudioInfo;
+	public AudioInfo: AudioInfo = null;
 	public Items: ItemInfo[];
 	public Answer: KnockoutObservableArray<string> = knockout.observableArray<string>();
 	public CanSelectMore: KnockoutComputed<boolean>;

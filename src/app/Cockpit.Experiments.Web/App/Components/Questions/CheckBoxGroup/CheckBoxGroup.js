@@ -10,6 +10,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
         function CheckBoxGroup(question) {
             var _this = this;
             _super.call(this, question);
+            this.AudioInfo = null;
             this.Answer = knockout.observableArray();
             this.HasMedia = false;
             this.Id = this.Model.Id;
