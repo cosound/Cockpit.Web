@@ -12,7 +12,7 @@ define(["require", "exports", "Components/Questions/QuestionBase"], function (re
         }
         Monitor.prototype.SlideLoaded = function () {
             this.AddEvent("Start", "/", "Monitor");
-            this.SetAnswer({ Context: { Type: "UserAgent", Data: navigator.userAgent } });
+            this.SetAnswer({ Context: { Type: "UserAgent", Data: navigator.userAgent }, TimeZone: { Offset: new Date().getTimezoneOffset() } });
         };
         Monitor.prototype.SlideCompleted = function () {
             this.AddEvent("Stop", "/", "Monitor");

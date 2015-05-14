@@ -13,7 +13,7 @@ class Monitor extends QuestionBase
 	{
 		this.AddEvent("Start", "/", "Monitor");
 
-		this.SetAnswer({ Context: { Type: "UserAgent", Data: navigator.userAgent} });
+		this.SetAnswer({ Context: { Type: "UserAgent", Data: navigator.userAgent}, TimeZone: { Offset: new Date().getTimezoneOffset()} });
 	}
 
 	public SlideCompleted(): void
