@@ -3,7 +3,7 @@ import QuestionBase = require("Components/Questions/QuestionBase");
 import QuestionModel = require("Models/Question");
 import AudioInfo = require("Components/Players/Audio/AudioInfo");
 
-type ItemInfo = { Id: string; UniqueId: string; Label: string; AudioInfo: AudioInfo; HasStimulus: boolean; IsSelected:KnockoutComputed<boolean>; };
+type ItemInfo = { Id: string; UniqueId: string; Label: string; AudioInfo: AudioInfo; HasStimulus: boolean; IsSelected: KnockoutComputed<boolean>; ButtonElement:KnockoutObservable<HTMLElement> };
 type Item = { Id:string; ChoiceButton:{ Label:string; Selected:string }; Stimulus:Stimulus };
 
 class KacPS extends QuestionBase
@@ -14,7 +14,8 @@ class KacPS extends QuestionBase
 	public Items: ItemInfo[];
 	public Answer: KnockoutObservable<string> = knockout.observable<string>(null);
 	public CanAnswer: KnockoutObservable<boolean>;
-	public HasNoStimulus:boolean;
+	public HasNoStimulus: boolean;
+	public MaxButtonWidth:KnockoutComputed<number>;
 
 	constructor(question: QuestionModel)
 	{
@@ -24,6 +25,8 @@ class KacPS extends QuestionBase
 		this.HeaderLabel = this.GetInstrument("HeaderLabel");
 
 		this.Items = this.GetItems<Item, ItemInfo>(v => this.CreateItemInfo(v));
+
+		this.MaxButtonWidth = knockout.computed(() => this.Items.map(i => i.ButtonElement() == null ? null : i.ButtonElement().offsetWidth).reduce((p, c) => p == null || c == null ? null : Math.max(p, c), 0));
 
 		this.HasNoStimulus = this.Items.every(i => !i.HasStimulus);
 
@@ -58,7 +61,8 @@ class KacPS extends QuestionBase
 			Label: data.ChoiceButton.Label,
 			AudioInfo: audioInfo,
 			IsSelected: knockout.computed(() => this.Answer() === data.Id ),
-			HasStimulus: data.Stimulus !== null
+			HasStimulus: data.Stimulus !== null,
+			ButtonElement: knockout.observable(null)
 		};
 
 		return info;
