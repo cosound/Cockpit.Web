@@ -27,6 +27,10 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
                 this.TrackAudioInfo("/Instrument/Stimulus", this.AudioInfo);
                 this.HasMedia = true;
             }
+            if (this.X1Ticks != null)
+                this.X1Ticks = this.X1Ticks.sort(function (a, b) { return parseInt(a.Position) - parseInt(b.Position); });
+            if (this.X2Ticks != null)
+                this.X2Ticks = this.X2Ticks.sort(function (a, b) { return parseInt(a.Position) - parseInt(b.Position); });
             this.CanAnswer = this.GetObservableWhenAllAudioHavePlayed(this.AudioInfo);
             if (this.HasAnswer())
                 this.Answer(this.GetAsnwer().Position);

@@ -43,6 +43,9 @@ class OneDScale extends QuestionBase
 			this.HasMedia = true;
 		}
 
+		if (this.X1Ticks != null) this.X1Ticks = this.X1Ticks.sort((a, b) => parseInt(a.Position) - parseInt(b.Position));
+		if (this.X2Ticks != null) this.X2Ticks = this.X2Ticks.sort((a, b) => parseInt(a.Position) - parseInt(b.Position));
+
 		this.CanAnswer = this.GetObservableWhenAllAudioHavePlayed(this.AudioInfo);
 
 		if (this.HasAnswer()) this.Answer(this.GetAsnwer().Position);
