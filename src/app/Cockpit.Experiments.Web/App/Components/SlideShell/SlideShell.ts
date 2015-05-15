@@ -1,13 +1,13 @@
 ﻿import knockout = require("knockout");
+import Configuration = require("Configuration");
 import ExperimentManager = require("Managers/Experiment");
-import CockpitPortal = require("CockpitPortal");
-import NavigationPage = require("Managers/NavigationPage");
-import Navigation = require("Managers/Navigation");
 import SlideModel = require("Models/Slide");
 
 class SlideShell
 {
-	public Name: KnockoutObservable<string> = knockout.observable<string>();
+	public Title: KnockoutObservable<string> = knockout.observable<string>();
+	public SlideName: KnockoutObservable<string> = knockout.observable<string>();
+	public HasTitle: KnockoutComputed<boolean>;
 
 	public SlideData: KnockoutObservable<SlideModel> = knockout.observable<SlideModel>();
 
@@ -26,7 +26,9 @@ class SlideShell
 		this.IsLoadingSlide = knockout.computed(() => this.SlideData() == null);
 		this.NumberOfSlides = ExperimentManager.NumberOfSlides;
 
-		this.Name("My Experiment");
+		this.Title(Configuration.ExperimentTitle);
+		this.SlideName(Configuration.SlideName);
+		this.HasTitle = knockout.computed(() => this.Title() !== "");
 
 		if (ExperimentManager.IsReady())
 			this.LoadSlide(0);

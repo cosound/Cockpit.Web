@@ -27,8 +27,8 @@ class OneDScale extends QuestionBase
 
 		this.Id = this.Model.Id;
 		this.HeaderLabel = this.GetInstrument("HeaderLabel");
-		this.X1Ticks = this.GetInstrument("X1AxisTicks") ? this.GetInstrument("X1AxisTicks").X1AxisTick : null;
-		this.X2Ticks = this.GetInstrument("X2AxisTicks") ? this.GetInstrument("X2AxisTicks").X2AxisTick : null;
+		this.X1Ticks = this.GetInstrument("X1AxisTicks") ? this.GetArray(this.GetInstrument("X1AxisTicks").X1AxisTick) : null;
+		this.X2Ticks = this.GetInstrument("X2AxisTicks") ? this.GetArray(this.GetInstrument("X2AxisTicks").X2AxisTick) : null;
 		this.HasX1Ticks = this.X1Ticks != null;
 		this.HasX2Ticks = this.X2Ticks != null;
 		this.IsValueNotSet = knockout.computed(() => !(this.HasAnswer() && this.HasValidAnswer(this.Answer())));
@@ -43,8 +43,8 @@ class OneDScale extends QuestionBase
 			this.HasMedia = true;
 		}
 
-		if (this.X1Ticks != null) this.X1Ticks = this.X1Ticks.sort((a, b) => parseInt(a.Position) - parseInt(b.Position));
-		if (this.X2Ticks != null) this.X2Ticks = this.X2Ticks.sort((a, b) => parseInt(a.Position) - parseInt(b.Position));
+		if (this.HasX1Ticks) this.X1Ticks = this.X1Ticks.sort((a, b) => parseInt(a.Position) - parseInt(b.Position));
+		if (this.HasX2Ticks) this.X2Ticks = this.X2Ticks.sort((a, b) => parseInt(a.Position) - parseInt(b.Position));
 
 		this.CanAnswer = this.GetObservableWhenAllAudioHavePlayed(this.AudioInfo);
 

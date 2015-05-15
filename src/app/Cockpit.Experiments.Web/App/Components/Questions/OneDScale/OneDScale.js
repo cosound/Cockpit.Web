@@ -15,8 +15,8 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             this.Answer = knockout.observable(null);
             this.Id = this.Model.Id;
             this.HeaderLabel = this.GetInstrument("HeaderLabel");
-            this.X1Ticks = this.GetInstrument("X1AxisTicks") ? this.GetInstrument("X1AxisTicks").X1AxisTick : null;
-            this.X2Ticks = this.GetInstrument("X2AxisTicks") ? this.GetInstrument("X2AxisTicks").X2AxisTick : null;
+            this.X1Ticks = this.GetInstrument("X1AxisTicks") ? this.GetArray(this.GetInstrument("X1AxisTicks").X1AxisTick) : null;
+            this.X2Ticks = this.GetInstrument("X2AxisTicks") ? this.GetArray(this.GetInstrument("X2AxisTicks").X2AxisTick) : null;
             this.HasX1Ticks = this.X1Ticks != null;
             this.HasX2Ticks = this.X2Ticks != null;
             this.IsValueNotSet = knockout.computed(function () { return !(_this.HasAnswer() && _this.HasValidAnswer(_this.Answer())); });
@@ -27,9 +27,9 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
                 this.TrackAudioInfo("/Instrument/Stimulus", this.AudioInfo);
                 this.HasMedia = true;
             }
-            if (this.X1Ticks != null)
+            if (this.HasX1Ticks)
                 this.X1Ticks = this.X1Ticks.sort(function (a, b) { return parseInt(a.Position) - parseInt(b.Position); });
-            if (this.X2Ticks != null)
+            if (this.HasX2Ticks)
                 this.X2Ticks = this.X2Ticks.sort(function (a, b) { return parseInt(a.Position) - parseInt(b.Position); });
             this.CanAnswer = this.GetObservableWhenAllAudioHavePlayed(this.AudioInfo);
             if (this.HasAnswer())

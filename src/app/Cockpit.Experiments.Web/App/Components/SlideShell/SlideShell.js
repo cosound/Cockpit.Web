@@ -1,8 +1,9 @@
-define(["require", "exports", "knockout", "Managers/Experiment", "Models/Slide"], function (require, exports, knockout, ExperimentManager, SlideModel) {
+define(["require", "exports", "knockout", "Configuration", "Managers/Experiment", "Models/Slide"], function (require, exports, knockout, Configuration, ExperimentManager, SlideModel) {
     var SlideShell = (function () {
         function SlideShell() {
             var _this = this;
-            this.Name = knockout.observable();
+            this.Title = knockout.observable();
+            this.SlideName = knockout.observable();
             this.SlideData = knockout.observable();
             this.SlideIndex = knockout.observable(0);
             this.CanGoToNextSlide = knockout.observable(false);
@@ -10,7 +11,9 @@ define(["require", "exports", "knockout", "Managers/Experiment", "Models/Slide"]
             this.SlideNumber = knockout.computed(function () { return _this.SlideIndex() + 1; });
             this.IsLoadingSlide = knockout.computed(function () { return _this.SlideData() == null; });
             this.NumberOfSlides = ExperimentManager.NumberOfSlides;
-            this.Name("My Experiment");
+            this.Title(Configuration.ExperimentTitle);
+            this.SlideName(Configuration.SlideName);
+            this.HasTitle = knockout.computed(function () { return _this.Title() !== ""; });
             if (ExperimentManager.IsReady())
                 this.LoadSlide(0);
             else {

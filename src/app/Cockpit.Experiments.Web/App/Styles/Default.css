@@ -36,6 +36,10 @@ label.btn.disabled {
 	background-position: 0 !important;
 }
 
+.SlideName {
+	text-transform: capitalize;
+}
+
 /*** OneDScale ***/
 
 input[type="range"] {

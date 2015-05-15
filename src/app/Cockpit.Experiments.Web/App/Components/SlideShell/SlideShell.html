@@ -1,6 +1,6 @@
 ﻿<div class="panel panel-default">
-	<div class="panel-heading">
-		<h1 data-bind="text: Name"></h1>
+	<div class="panel-heading" data-bind="visible: HasTitle">
+		<h1 data-bind="text: Title"></h1>
 	</div>
 	<!-- ko if: IsLoadingSlide -->
 	<div>Loading slide...</div>
@@ -10,8 +10,8 @@
 	<!-- /ko -->
 	<div class="panel-footer text-right">
 		<span data-bind="visible: AreFooterControlsVisible">
-			Slide <span data-bind="text: SlideNumber"></span> of <span data-bind="text: NumberOfSlides"></span>
+			<span class="SlideName" data-bind="text: SlideName"></span> <span data-bind="text: SlideNumber"></span> of <span data-bind="text: NumberOfSlides"></span>
 		</span>
-		<button type="button" data-bind="enable: CanGoToNextSlide, click: GoToNextSlide, visible: AreFooterControlsVisible" class="btn btn-primary">Next Slide</button>
+		<button type="button" data-bind="enable: CanGoToNextSlide, click: GoToNextSlide, visible: AreFooterControlsVisible" class="btn btn-primary">Next <span data-bind="text: SlideName"></span></button>
 	</div>
 </div>
