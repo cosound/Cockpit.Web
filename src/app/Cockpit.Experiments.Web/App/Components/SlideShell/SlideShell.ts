@@ -46,7 +46,12 @@ class SlideShell
 	{
 		this.CanGoToNextSlide(false);
 
-		this.LoadSlide(this.SlideIndex() + 1);
+		var slideIndex = this.SlideIndex();
+
+		this.LoadSlide(slideIndex + 1);
+
+		if (Configuration.CloseSlides)
+			ExperimentManager.CloseSlide(slideIndex);
 	}
 
 	private LoadSlide(index:number):void

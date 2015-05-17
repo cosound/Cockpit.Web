@@ -29,11 +29,20 @@ export function LoadSlide(index:number, callback:(questions:CockpitPortal.IQuest
 	});
 }
 
-export function SaveQuestionAnswer(id: string, answer: any)
+export function SaveQuestionAnswer(id: string, answer: any): void
 {
 	CockpitPortal.Answer.Set(id, answer).WithCallback(response =>
 	{
 		if (response.Error != null)
 			throw new Error("Failed to save answer: " + response.Error.Message);
+	});
+}
+
+export function CloseSlide(index:number):void
+{
+	CockpitPortal.Slide.Close(_id, index).WithCallback(response =>
+	{
+		if (response.Error != null)
+			throw new Error("Failed to close slide: " + response.Error.Message);
 	});
 }

@@ -25,4 +25,11 @@ define(["require", "exports", "knockout", "CockpitPortal"], function (require, e
         });
     }
     exports.SaveQuestionAnswer = SaveQuestionAnswer;
+    function CloseSlide(index) {
+        CockpitPortal.Slide.Close(_id, index).WithCallback(function (response) {
+            if (response.Error != null)
+                throw new Error("Failed to close slide: " + response.Error.Message);
+        });
+    }
+    exports.CloseSlide = CloseSlide;
 });

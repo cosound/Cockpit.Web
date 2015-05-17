@@ -25,7 +25,10 @@ define(["require", "exports", "knockout", "Configuration", "Managers/Experiment"
         }
         SlideShell.prototype.GoToNextSlide = function () {
             this.CanGoToNextSlide(false);
-            this.LoadSlide(this.SlideIndex() + 1);
+            var slideIndex = this.SlideIndex();
+            this.LoadSlide(slideIndex + 1);
+            if (Configuration.CloseSlides)
+                ExperimentManager.CloseSlide(slideIndex);
         };
         SlideShell.prototype.LoadSlide = function (index) {
             var _this = this;
