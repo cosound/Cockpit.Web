@@ -14,14 +14,14 @@ define(["require", "exports", "knockout", "Configuration", "Managers/Experiment"
             this.Title(Configuration.ExperimentTitle);
             this.SlideName(Configuration.SlideName);
             this.HasTitle = knockout.computed(function () { return _this.Title() !== ""; });
+            this._experimentMangerIsReadySubscription = ExperimentManager.IsReady.subscribe(function (r) {
+                if (!r)
+                    return;
+                _this.CleanExperimentLoaded();
+                _this.LoadSlide(0);
+            });
             if (ExperimentManager.IsReady())
                 this.LoadSlide(0);
-            else {
-                this._experimentMangerIsReadySubscription = ExperimentManager.IsReady.subscribe(function (l) {
-                    _this.CleanExperimentLoaded();
-                    _this.LoadSlide(0);
-                });
-            }
         }
         SlideShell.prototype.GoToNextSlide = function () {
             this.CanGoToNextSlide(false);
@@ -33,11 +33,16 @@ define(["require", "exports", "knockout", "Configuration", "Managers/Experiment"
         SlideShell.prototype.LoadSlide = function (index) {
             var _this = this;
             this.SlideIndex(index);
-            if (this.SlideData() != null)
-                this.SlideData().Complete();
+            if (this.SlideData() != null) {
+                var oldSlide = this.SlideData();
+                this.SlideData().Complete(function () {
+                    if (Configuration.CloseSlides && oldSlide.Index != null)
+                        setTimeout(function () { return ExperimentManager.CloseSlide(oldSlide.Index); }, 500);
+                });
+            }
             this.SlideData(null);
-            if (index < this.NumberOfSlides() || index == 0)
-                ExperimentManager.LoadSlide(this.SlideIndex(), function (questions) { return _this.SlideData(new SlideModel("Slides/Default", _this.CanGoToNextSlide, questions)); });
+            if (index < this.NumberOfSlides() || index === 0)
+                ExperimentManager.LoadSlide(this.SlideIndex(), function (questions) { return _this.SlideData(new SlideModel("Slides/Default", index, _this.CanGoToNextSlide, questions)); });
             else {
                 this.AreFooterControlsVisible(false);
                 this.SlideData(new SlideModel("Slides/Completed"));

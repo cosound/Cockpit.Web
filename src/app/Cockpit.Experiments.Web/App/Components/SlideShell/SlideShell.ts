@@ -30,16 +30,15 @@ class SlideShell
 		this.SlideName(Configuration.SlideName);
 		this.HasTitle = knockout.computed(() => this.Title() !== "");
 
-		if (ExperimentManager.IsReady())
-			this.LoadSlide(0);
-		else
+		this._experimentMangerIsReadySubscription = ExperimentManager.IsReady.subscribe(r =>
 		{
-			this._experimentMangerIsReadySubscription = ExperimentManager.IsReady.subscribe(l =>
-			{
-				this.CleanExperimentLoaded();
-				this.LoadSlide(0);
-			});
-		}
+			if (!r) return;
+
+			this.CleanExperimentLoaded();
+			this.LoadSlide(0);
+		});
+
+		if (ExperimentManager.IsReady()) this.LoadSlide(0);
 	}
 
 	public GoToNextSlide():void
@@ -58,11 +57,19 @@ class SlideShell
 	{
 		this.SlideIndex(index);
 
-		if (this.SlideData() != null) this.SlideData().Complete();
+		if (this.SlideData() != null)
+		{
+			var oldSlide = this.SlideData();
+			this.SlideData().Complete(() =>
+			{
+				if (Configuration.CloseSlides && oldSlide.Index != null)
+					setTimeout(() => ExperimentManager.CloseSlide(oldSlide.Index), 500); //TODO: Remove delay when callback waits for answer/set
+			});
+		}
 		this.SlideData(null);
 
-		if (index < this.NumberOfSlides() || index == 0)
-			ExperimentManager.LoadSlide(this.SlideIndex(), questions => this.SlideData(new SlideModel("Slides/Default", this.CanGoToNextSlide, questions)));
+		if (index < this.NumberOfSlides() || index === 0)
+			ExperimentManager.LoadSlide(this.SlideIndex(), questions => this.SlideData(new SlideModel("Slides/Default", index, this.CanGoToNextSlide, questions)));
 		else
 		{
 			this.AreFooterControlsVisible(false);

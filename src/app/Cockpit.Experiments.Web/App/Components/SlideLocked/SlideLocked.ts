@@ -1,0 +1,6 @@
+﻿class SlideLocked
+{
+
+}
+
+export = SlideLocked; 

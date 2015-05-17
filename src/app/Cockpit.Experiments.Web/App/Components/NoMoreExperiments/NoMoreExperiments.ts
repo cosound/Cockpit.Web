@@ -1,0 +1,6 @@
+﻿class NoMoreExperiments
+{
+
+}
+
+export = NoMoreExperiments; 

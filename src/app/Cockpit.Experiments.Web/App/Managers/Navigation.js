@@ -1,4 +1,4 @@
-define(["require", "exports", "knockout", "routie", "Managers/NavigationPage", "Managers/Experiment"], function (require, exports, knockout, Routie, NavigationPage, ExperimentManager) {
+define(["require", "exports", "knockout", "routie", "Managers/NavigationPage", "Managers/Experiment", "CockpitPortal"], function (require, exports, knockout, Routie, NavigationPage, ExperimentManager, CockpitPortal) {
     exports.CurrentPage = knockout.observable();
     function Initialize() {
         Routie({
@@ -7,6 +7,15 @@ define(["require", "exports", "knockout", "routie", "Managers/NavigationPage", "
             },
             "Experiment/:id": function (id) {
                 LoadSlide(id);
+            },
+            "ExperimentList/:id": function (id) {
+                LoadExperimentFromList(id);
+            },
+            "NoMoreExperiments": function () {
+                LoadPage("NoMoreExperiments");
+            },
+            "SlideLocked": function () {
+                LoadPage("SlideLocked");
             },
             "*": function () {
                 LoadPage("NotFound");
@@ -22,9 +31,20 @@ define(["require", "exports", "knockout", "routie", "Managers/NavigationPage", "
         exports.CurrentPage(new NavigationPage(name, data));
     }
     function LoadSlide(id) {
-        if (!ExperimentManager.IsReady())
-            ExperimentManager.SetId(id);
-        if (exports.CurrentPage() == null || exports.CurrentPage().Name() != "SlideShell")
+        ExperimentManager.SetId(id);
+        if (exports.CurrentPage() == null || exports.CurrentPage().Name() !== "SlideShell")
             exports.CurrentPage(new NavigationPage("SlideShell"));
+    }
+    function LoadExperimentFromList(id) {
+        CockpitPortal.Experiment.Next(id).WithCallback(function (response) {
+            if (response.Error != null) {
+                Navigate("NoMoreExperiments");
+                return;
+            }
+            if (response.Body.Results.length === 0)
+                Navigate("NoMoreExperiments");
+            else
+                Navigate("Experiment/" + response.Body.Results[0].Id);
+        });
     }
 });
