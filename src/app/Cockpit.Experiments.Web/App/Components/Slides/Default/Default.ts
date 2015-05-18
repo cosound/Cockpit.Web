@@ -13,7 +13,7 @@ class Default
 	constructor(slide: SlideModel)
 	{
 		this._slide = slide;
-		slide.SlideCompleted = () => this.SlideCompleted();
+		slide.SlideCompleted = callback => this.SlideCompleted(callback);
 
 		this.InitializeQuestions(slide.Questions);
 	}
@@ -45,10 +45,17 @@ class Default
 		this.CheckIfAllQuestionsAreAnswered();
 	}
 
-	private SlideCompleted():void
+	private SlideCompleted(completed: () => void):void
 	{
+		var calls = this._uiLessQuestions.length;
+
 		for (var i = 0; i < this._uiLessQuestions.length; i++)
-			this._uiLessQuestions[i].SlideCompleted();
+		{
+			this._uiLessQuestions[i].SlideCompleted(() =>
+			{
+				if (--calls === 0) completed();
+			});
+		}
 	}
 
 	private AnswerChanged(question: QuestionModel):void

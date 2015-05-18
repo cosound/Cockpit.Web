@@ -1,5 +1,5 @@
 ﻿interface IQuestionViewModel
 {
 	SlideLoaded(): void;
-	SlideCompleted():void;
+	SlideCompleted(callback:()=>void):void;
 }

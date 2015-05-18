@@ -14,9 +14,10 @@ define(["require", "exports", "Components/Questions/QuestionBase"], function (re
             this.AddEvent("Start", "/", "Monitor");
             this.SetAnswer({ Context: { Type: "UserAgent", Data: navigator.userAgent }, TimeZone: { Offset: new Date().getTimezoneOffset() } });
         };
-        Monitor.prototype.SlideCompleted = function () {
+        Monitor.prototype.SlideCompleted = function (callback) {
             this.AddEvent("Stop", "/", "Monitor");
             this.SetAnswer({ Context: { Type: "UserAgent", Data: navigator.userAgent } });
+            callback();
         };
         return Monitor;
     })(QuestionBase);

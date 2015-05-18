@@ -17,6 +17,7 @@
     <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="App\Components\NoMoreExperiments\NoMoreExperiments.html" />
     <Content Include="App\Components\NotFound\NotFound.html" />
     <Content Include="App\Components\Players\Audio\Audio.html" />
     <Content Include="App\Components\Questions\CheckBoxGroup\CheckBoxGroup.html" />
@@ -127,6 +128,7 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="App\CockpitPortal.ts" />
+    <TypeScriptCompile Include="App\Components\NoMoreExperiments\NoMoreExperiments.ts" />
     <TypeScriptCompile Include="App\Components\NotFound\NotFound.ts" />
     <TypeScriptCompile Include="App\Components\Players\Audio\Audio.ts" />
     <TypeScriptCompile Include="App\Components\Players\Audio\AudioInfo.ts" />
@@ -205,7 +207,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>57131</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:57131/</IISUrl>
+          <IISUrl>http://localhost:57132/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

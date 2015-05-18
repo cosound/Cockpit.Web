@@ -8,6 +8,28 @@ function Initialize():void
 	Client = CHAOS.Portal.Client.Initialize(Configuration.PortalPath);
 }
 
+export class Experiment
+{
+	public static Next(listId: string, serviceCaller: CHAOS.Portal.Client.IServiceCaller = null): CHAOS.Portal.Client.ICallState<CockpitResults<IExperimentClaim>>
+	{
+		if (serviceCaller == null)
+			serviceCaller = CHAOS.Portal.Client.ServiceCallerService.GetDefaultCaller();
+
+		return serviceCaller.CallService("Experiment/Next", CHAOS.Portal.Client.HttpMethod.Get, { listId: listId }, false, "json3");
+	}
+}
+
+export class Slide
+{
+	public static Close(questionaireId: string, slideIndex: number, serviceCaller: CHAOS.Portal.Client.IServiceCaller = null): CHAOS.Portal.Client.ICallState<CockpitResults<any>>
+	{
+		if (serviceCaller == null)
+			serviceCaller = CHAOS.Portal.Client.ServiceCallerService.GetDefaultCaller();
+
+		return serviceCaller.CallService("Slide/Close", CHAOS.Portal.Client.HttpMethod.Get, { questionaireId: questionaireId, slideIndex: slideIndex }, false, "json3");
+	}
+}
+
 export class Question
 {
 	public static Get(id: string, index: number, serviceCaller: CHAOS.Portal.Client.IServiceCaller = null): CHAOS.Portal.Client.ICallState<CockpitResults<IQuestion>>
@@ -28,6 +50,12 @@ export class Answer
 
 		return serviceCaller.CallService("Answer/Set", CHAOS.Portal.Client.HttpMethod.Post, { questionId: questionId, output: JSON.stringify(output) }, false);
 	}
+}
+
+export interface IExperimentClaim
+{
+	Id: string;
+	ClaimedOnDate:string;
 }
 
 export interface CockpitResults<T>

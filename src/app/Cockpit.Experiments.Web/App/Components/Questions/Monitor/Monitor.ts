@@ -16,11 +16,13 @@ class Monitor extends QuestionBase
 		this.SetAnswer({ Context: { Type: "UserAgent", Data: navigator.userAgent}, TimeZone: { Offset: new Date().getTimezoneOffset()} });
 	}
 
-	public SlideCompleted(): void
+	public SlideCompleted(callback:()=>void): void
 	{
 		this.AddEvent("Stop", "/", "Monitor");
 
 		this.SetAnswer({ Context: { Type: "UserAgent", Data: navigator.userAgent } });
+
+		callback(); //TODO: Call when answer is set
 	}
 }
 

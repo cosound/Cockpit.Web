@@ -5,7 +5,7 @@ define(["require", "exports", "Models/Question", "Managers/Experiment", "Compone
             this._uiLessQuestions = [];
             this.Questions = [];
             this._slide = slide;
-            slide.SlideCompleted = function () { return _this.SlideCompleted(); };
+            slide.SlideCompleted = function (callback) { return _this.SlideCompleted(callback); };
             this.InitializeQuestions(slide.Questions);
         }
         Default.prototype.InitializeQuestions = function (questions) {
@@ -30,9 +30,14 @@ define(["require", "exports", "Models/Question", "Managers/Experiment", "Compone
                 this._uiLessQuestions[i].SlideLoaded();
             this.CheckIfAllQuestionsAreAnswered();
         };
-        Default.prototype.SlideCompleted = function () {
-            for (var i = 0; i < this._uiLessQuestions.length; i++)
-                this._uiLessQuestions[i].SlideCompleted();
+        Default.prototype.SlideCompleted = function (completed) {
+            var calls = this._uiLessQuestions.length;
+            for (var i = 0; i < this._uiLessQuestions.length; i++) {
+                this._uiLessQuestions[i].SlideCompleted(function () {
+                    if (--calls === 0)
+                        completed();
+                });
+            }
         };
         Default.prototype.AnswerChanged = function (question) {
             if (question.HasValidAnswer())
