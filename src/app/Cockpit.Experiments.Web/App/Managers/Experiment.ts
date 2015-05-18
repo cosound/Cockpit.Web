@@ -22,7 +22,7 @@ export function LoadSlide(index:number, callback:(questions:CockpitPortal.IQuest
 	{
 		if (response.Error != null)
 		{
-			if (response.Error.Message === "No Questionaire found by that Id")
+			if (response.Error.Fullname === "Chaos.Cockpit.Core.Core.Exceptions.SlideClosedException")
 			{
 				Navigation.Navigate("SlideLocked");
 				return;

@@ -12,7 +12,7 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
     function LoadSlide(index, callback) {
         CockpitPortal.Question.Get(_id, index).WithCallback(function (response) {
             if (response.Error != null) {
-                if (response.Error.Message === "No Questionaire found by that Id") {
+                if (response.Error.Fullname === "Chaos.Cockpit.Core.Core.Exceptions.SlideClosedException") {
                     Navigation.Navigate("SlideLocked");
                     return;
                 }
