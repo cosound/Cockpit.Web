@@ -14,6 +14,7 @@ export function Initialize(): void
 		"ExperimentList/:id": (id: string) => { LoadExperimentFromList(id); },
 		"NoMoreExperiments": () => { LoadPage("NoMoreExperiments"); },
 		"SlideLocked": () => { LoadPage("SlideLocked"); },
+		"ExperimentNotFound/:id": (id: string) => { LoadPage("ExperimentNotFound", id); },
 		"*": () => { LoadPage("NotFound"); }
 	});
 }
@@ -25,6 +26,7 @@ export function Navigate(path: string): void
 
 function LoadPage(name: string, data?:any): void
 {
+	console.log(name, data);
 	CurrentPage(new NavigationPage(name, data));
 }
 

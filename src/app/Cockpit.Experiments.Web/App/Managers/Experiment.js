@@ -16,10 +16,14 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
                     Navigation.Navigate("SlideLocked");
                     return;
                 }
+                else if (response.Error.Message === "No Questionaire found by that Id") {
+                    Navigation.Navigate("ExperimentNotFound/" + _id);
+                    return;
+                }
                 else
                     throw new Error("Failed to get slide: " + response.Error.Message);
             }
-            if (response.Body.Count == 0)
+            if (response.Body.Count === 0)
                 throw new Error("No slide returned");
             exports.NumberOfSlides(response.Body.FoundCount);
             callback(response.Body.Results);

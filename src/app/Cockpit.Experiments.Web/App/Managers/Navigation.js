@@ -17,6 +17,9 @@ define(["require", "exports", "knockout", "routie", "Managers/NavigationPage", "
             "SlideLocked": function () {
                 LoadPage("SlideLocked");
             },
+            "ExperimentNotFound/:id": function (id) {
+                LoadPage("ExperimentNotFound", id);
+            },
             "*": function () {
                 LoadPage("NotFound");
             }
@@ -28,6 +31,7 @@ define(["require", "exports", "knockout", "routie", "Managers/NavigationPage", "
     }
     exports.Navigate = Navigate;
     function LoadPage(name, data) {
+        console.log(name, data);
         exports.CurrentPage(new NavigationPage(name, data));
     }
     function LoadSlide(id) {

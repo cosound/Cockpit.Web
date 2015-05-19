@@ -27,11 +27,16 @@ export function LoadSlide(index:number, callback:(questions:CockpitPortal.IQuest
 				Navigation.Navigate("SlideLocked");
 				return;
 			}
+			else if (response.Error.Message === "No Questionaire found by that Id")
+			{
+				Navigation.Navigate("ExperimentNotFound/" + _id);
+				return;
+			}
 			else
 				throw new Error("Failed to get slide: " + response.Error.Message);
 		}
 
-		if (response.Body.Count == 0)
+		if (response.Body.Count === 0)
 			throw new Error("No slide returned");
 
 		NumberOfSlides(response.Body.FoundCount);
