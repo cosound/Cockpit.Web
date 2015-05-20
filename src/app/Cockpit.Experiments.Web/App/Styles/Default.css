@@ -184,6 +184,15 @@ input[type="range"].NoValue::-ms-thumb {
 	border-top: 1px solid grey;
 }
 
+.LikertScale .Scale .Line {
+	position: absolute;
+	top: 10px;
+	left: 0;
+	height: 1px;
+	width: 100%;
+	border-top: 1px solid grey;
+}
+
 .LikertScale .Scale label:first-child .Line {
 	left: 50%;
 	width: 50%;
@@ -191,8 +200,16 @@ input[type="range"].NoValue::-ms-thumb {
 
 .LikertScale .Scale label:last-child .Line {
 	width: 50%;
+	display: inline-block;
 }
 
 .LikertScale .Scale > label > input {
 	position: relative;
+	width: 100%;
+	display: inline-block;
+}
+
+.LikertScale .Scale > label > span:last-child {
+	width: 100%;
+	display: inline-block;
 }
