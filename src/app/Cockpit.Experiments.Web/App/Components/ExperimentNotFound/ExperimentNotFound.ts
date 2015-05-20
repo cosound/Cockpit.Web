@@ -4,7 +4,6 @@
 
 	constructor(data:string)
 	{
-		console.log(data);
 		this.Id = data;
 	}
 }

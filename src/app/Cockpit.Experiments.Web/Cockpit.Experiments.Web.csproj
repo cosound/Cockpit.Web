@@ -17,6 +17,7 @@
     <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="App\Components\ExperimentNotFound\ExperimentNotFound.html" />
     <Content Include="App\Components\NoMoreExperiments\NoMoreExperiments.html" />
     <Content Include="App\Components\NotFound\NotFound.html" />
     <Content Include="App\Components\Players\Audio\Audio.html" />
@@ -36,6 +37,7 @@
     <Content Include="App\Components\Questions\RadioButtonGroup\RadioButtonGroup.html" />
     <Content Include="App\Components\Slides\Completed\Completed.html" />
     <Content Include="App\Components\Slides\Default\Default.html" />
+    <Content Include="App\Components\Welcome\Welcome.html" />
     <Content Include="default.html" />
     <Content Include="Lib\bootstrap\css\bootstrap-theme.css" />
     <Content Include="Lib\bootstrap\css\bootstrap-theme.min.css" />
@@ -128,11 +130,13 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="App\CockpitPortal.ts" />
+    <TypeScriptCompile Include="App\Components\ExperimentNotFound\ExperimentNotFound.ts" />
     <TypeScriptCompile Include="App\Components\NoMoreExperiments\NoMoreExperiments.ts" />
     <TypeScriptCompile Include="App\Components\NotFound\NotFound.ts" />
     <TypeScriptCompile Include="App\Components\Players\Audio\Audio.ts" />
     <TypeScriptCompile Include="App\Components\Players\Audio\AudioInfo.ts" />
     <TypeScriptCompile Include="App\Components\Questions\CheckBoxGroup\CheckBoxGroup.ts" />
+    <TypeScriptCompile Include="App\Components\Welcome\Welcome.ts" />
     <TypeScriptCompile Include="App\Models\CommonTypes.d.ts" />
     <TypeScriptCompile Include="App\Components\Questions\KAcPS\KAcPS.ts" />
     <TypeScriptCompile Include="App\Components\Questions\LikertScale\LikertScale.ts" />
