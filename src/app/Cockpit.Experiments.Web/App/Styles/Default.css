@@ -42,6 +42,19 @@ label.btn.disabled {
 
 /*** OneDScale ***/
 
+.OneDScale .row .YTicks {
+	padding-left: 0px;
+	padding-right: 0px;
+}
+
+.OneDScale .row .YTicks span {
+	display: block;
+}
+
+.OneDScale .row .YTicks.Y1 span {
+	text-align: right;
+}
+
 input[type="range"] {
   -webkit-appearance: none;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);

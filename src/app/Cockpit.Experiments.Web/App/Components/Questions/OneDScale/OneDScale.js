@@ -15,10 +15,14 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             this.Answer = knockout.observable(null);
             this.Id = this.Model.Id;
             this.HeaderLabel = this.GetInstrument("HeaderLabel");
-            this.X1Ticks = this.GetInstrument("X1AxisTicks") ? this.GetArray(this.GetInstrument("X1AxisTicks").X1AxisTick) : null;
-            this.X2Ticks = this.GetInstrument("X2AxisTicks") ? this.GetArray(this.GetInstrument("X2AxisTicks").X2AxisTick) : null;
+            this.X1Ticks = this.GetTicks("X1AxisTicks");
+            this.X2Ticks = this.GetTicks("X2AxisTicks");
+            this.Y1Ticks = this.GetTicks("Y1AxisTicks");
+            this.Y2Ticks = this.GetTicks("Y2AxisTicks");
             this.HasX1Ticks = this.X1Ticks != null;
             this.HasX2Ticks = this.X2Ticks != null;
+            this.HasY1Ticks = this.Y1Ticks != null;
+            this.HasY2Ticks = this.Y2Ticks != null;
             this.IsValueNotSet = knockout.computed(function () { return !(_this.HasAnswer() && _this.HasValidAnswer(_this.Answer())); });
             var stimulus = this.GetInstrument("Stimulus");
             if (stimulus != null) {
@@ -27,10 +31,6 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
                 this.TrackAudioInfo("/Instrument/Stimulus", this.AudioInfo);
                 this.HasMedia = true;
             }
-            if (this.HasX1Ticks)
-                this.X1Ticks = this.X1Ticks.sort(function (a, b) { return parseInt(a.Position) - parseInt(b.Position); });
-            if (this.HasX2Ticks)
-                this.X2Ticks = this.X2Ticks.sort(function (a, b) { return parseInt(a.Position) - parseInt(b.Position); });
             this.CanAnswer = this.GetObservableWhenAllAudioHavePlayed(this.AudioInfo);
             if (this.HasAnswer())
                 this.Answer(this.GetAsnwer().Position);
@@ -39,6 +39,14 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
                 _this.SetAnswer({ Position: v });
             });
         }
+        OneDScale.prototype.GetTicks = function (name) {
+            var ticksContainer = this.GetInstrument(name);
+            if (!ticksContainer)
+                return null;
+            var ticks = this.GetArray(ticksContainer[name.slice(0, -1)]);
+            ticks = ticks.sort(function (a, b) { return parseInt(a.Position) - parseInt(b.Position); });
+            return ticks;
+        };
         return OneDScale;
     })(QuestionBase);
     return OneDScale;
