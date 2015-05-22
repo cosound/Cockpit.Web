@@ -42,13 +42,29 @@ label.btn.disabled {
 
 /*** OneDScale ***/
 
+.OneDScale .CenterContainer .container-fluid, .OneDScale .CenterContainer .XTicks > div, .OneDScale .row .YTicks {
+	padding-left: 0;
+	padding-right: 0;
+}
+
 .OneDScale .row .YTicks {
-	padding-left: 0px;
-	padding-right: 0px;
+	display: table-cell;
+	-webkit-transform-style: preserve-3d;
+	-moz-transform-style: preserve-3d;
+	-ms-transform-style: preserve-3d;
+	-o-transform-style: preserve-3d;
+	transform-style: preserve-3d;
 }
 
 .OneDScale .row .YTicks span {
 	display: block;
+	position: relative;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-moz-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	-o-transform: translateY(-50%);
+	transform: translateY(-50%);
 }
 
 .OneDScale .row .YTicks.Y1 span {
