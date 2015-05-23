@@ -9,11 +9,12 @@ export var CurrentPage: KnockoutObservable<NavigationPage> = knockout.observable
 export function Initialize(): void
 {
 	Routie({
-		"": () => { Navigate("Experiment/6a0fae3a-2ac0-477b-892a-b24433ff3bd2"); },
+		"": () => { LoadPage("Welcome"); },
 		"Experiment/:id": (id: string) => { LoadSlide(id); },
 		"ExperimentList/:id": (id: string) => { LoadExperimentFromList(id); },
 		"NoMoreExperiments": () => { LoadPage("NoMoreExperiments"); },
 		"SlideLocked": () => { LoadPage("SlideLocked"); },
+		"ExperimentNotFound/:id": (id: string) => { LoadPage("ExperimentNotFound", id); },
 		"*": () => { LoadPage("NotFound"); }
 	});
 }

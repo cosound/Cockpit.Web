@@ -13,16 +13,21 @@ class Monitor extends QuestionBase
 	{
 		this.AddEvent("Start", "/", "Monitor");
 
-		this.SetAnswer({ Context: { Type: "UserAgent", Data: navigator.userAgent}, TimeZone: { Offset: new Date().getTimezoneOffset()} });
+		this.UpdateAnswer();
 	}
 
-	public SlideCompleted(callback:()=>void): void
+	public SlideCompleted(): boolean
 	{
 		this.AddEvent("Stop", "/", "Monitor");
 
-		this.SetAnswer({ Context: { Type: "UserAgent", Data: navigator.userAgent } });
+		this.UpdateAnswer();
 
-		callback(); //TODO: Call when answer is set
+		return true;
+	}
+
+	private UpdateAnswer():void
+	{
+		this.SetAnswer({ Context: { Type: "UserAgent", Data: navigator.userAgent }, TimeZone: { Offset: new Date().getTimezoneOffset() } });
 	}
 }
 

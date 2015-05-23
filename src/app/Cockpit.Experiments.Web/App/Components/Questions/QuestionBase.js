@@ -103,8 +103,8 @@ define(["require", "exports", "knockout", "Components/Players/Audio/AudioInfo"],
         };
         QuestionsBase.prototype.SlideLoaded = function () {
         };
-        QuestionsBase.prototype.SlideCompleted = function (callback) {
-            callback();
+        QuestionsBase.prototype.SlideCompleted = function () {
+            return false;
         };
         return QuestionsBase;
     })();

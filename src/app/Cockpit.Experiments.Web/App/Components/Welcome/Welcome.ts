@@ -1,0 +1,6 @@
+﻿class Welcome
+{
+	
+}
+
+export = Welcome;

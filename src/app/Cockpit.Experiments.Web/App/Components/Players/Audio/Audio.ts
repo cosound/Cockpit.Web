@@ -37,7 +37,7 @@ class Audio
 		}
 		else
 		{
-			if (Audio._activePlayer !== null && Audio._activePlayer !== this)
+			if (Audio._activePlayer !== null && Audio._activePlayer !== this && Audio._activePlayer.IsPlaying())
 				Audio._activePlayer.TogglePlay();
 
 			Audio._activePlayer = this;
@@ -54,6 +54,9 @@ class Audio
 		{
 			this._info.IsPlaying(true);
 		}).on("pause", () =>
+		{
+			this._info.IsPlaying(false);
+		}).on("ended", () =>
 		{
 			this._info.IsPlaying(false);
 		});

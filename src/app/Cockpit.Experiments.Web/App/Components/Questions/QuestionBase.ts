@@ -147,9 +147,9 @@ class QuestionsBase implements IQuestionViewModel
 		
 	}
 
-	public SlideCompleted(callback:()=>void):void
+	public SlideCompleted():boolean
 	{
-		callback();
+		return false;
 	}
 }
 

@@ -18,7 +18,7 @@ define(["require", "exports", "knockout", "jquery"], function (require, exports,
                 this.PlayerElement().currentTime = 0;
             }
             else {
-                if (Audio._activePlayer !== null && Audio._activePlayer !== this)
+                if (Audio._activePlayer !== null && Audio._activePlayer !== this && Audio._activePlayer.IsPlaying())
                     Audio._activePlayer.TogglePlay();
                 Audio._activePlayer = this;
                 this.PlayerElement().play();
@@ -30,6 +30,8 @@ define(["require", "exports", "knockout", "jquery"], function (require, exports,
             $player.on("playing", function () {
                 _this._info.IsPlaying(true);
             }).on("pause", function () {
+                _this._info.IsPlaying(false);
+            }).on("ended", function () {
                 _this._info.IsPlaying(false);
             });
             this.Sources.forEach(function (s) { return $player.append("<Source type=\"" + s.Type + "\" src=\"" + s.Source + "\"/>"); });

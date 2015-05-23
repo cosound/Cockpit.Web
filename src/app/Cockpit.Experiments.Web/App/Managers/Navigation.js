@@ -3,7 +3,7 @@ define(["require", "exports", "knockout", "routie", "Managers/NavigationPage", "
     function Initialize() {
         Routie({
             "": function () {
-                Navigate("Experiment/6a0fae3a-2ac0-477b-892a-b24433ff3bd2");
+                LoadPage("Welcome");
             },
             "Experiment/:id": function (id) {
                 LoadSlide(id);
@@ -16,6 +16,9 @@ define(["require", "exports", "knockout", "routie", "Managers/NavigationPage", "
             },
             "SlideLocked": function () {
                 LoadPage("SlideLocked");
+            },
+            "ExperimentNotFound/:id": function (id) {
+                LoadPage("ExperimentNotFound", id);
             },
             "*": function () {
                 LoadPage("NotFound");

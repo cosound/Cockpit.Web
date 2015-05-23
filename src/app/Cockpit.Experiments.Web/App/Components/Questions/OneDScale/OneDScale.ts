@@ -3,22 +3,26 @@ import QuestionBase = require("Components/Questions/QuestionBase");
 import QuestionModel = require("Models/Question");
 import AudioInfo = require("Components/Players/Audio/AudioInfo");
 
-type Ticks = {Label:string; Position:string;}
+type Tick = {Label:string; Position:string;}
 
 class OneDScale extends QuestionBase
 {
 	public Id: string;
 	public HeaderLabel: string;
-	public X1Ticks: Ticks[];
-	public X2Ticks: Ticks[];
+	public X1Ticks: Tick[];
+	public X2Ticks: Tick[];
+	public Y1Ticks: Tick[];
+	public Y2Ticks: Tick[];
 	public MaxLabel: string;
 	public AudioInfo: AudioInfo = null;
 	public AudioLabel: string;
 	public HasMedia:boolean = false;
 	public Answer: KnockoutObservable<number> = knockout.observable<number>(null);
 	public IsValueNotSet: KnockoutComputed<boolean>;
-	public HasX1Ticks:boolean;
+	public HasX1Ticks: boolean;
 	public HasX2Ticks: boolean;
+	public HasY1Ticks: boolean;
+	public HasY2Ticks: boolean;
 	public CanAnswer: KnockoutObservable<boolean>;
 
 	constructor(question: QuestionModel)
@@ -27,10 +31,15 @@ class OneDScale extends QuestionBase
 
 		this.Id = this.Model.Id;
 		this.HeaderLabel = this.GetInstrument("HeaderLabel");
-		this.X1Ticks = this.GetInstrument("X1AxisTicks") ? this.GetArray(this.GetInstrument("X1AxisTicks").X1AxisTick) : null;
-		this.X2Ticks = this.GetInstrument("X2AxisTicks") ? this.GetArray(this.GetInstrument("X2AxisTicks").X2AxisTick) : null;
+		this.X1Ticks = this.GetTicks("X1AxisTicks");
+		this.X2Ticks = this.GetTicks("X2AxisTicks");
+		this.Y1Ticks = this.GetTicks("Y1AxisTicks");
+		this.Y2Ticks = this.GetTicks("Y2AxisTicks");
 		this.HasX1Ticks = this.X1Ticks != null;
 		this.HasX2Ticks = this.X2Ticks != null;
+		this.HasY1Ticks = this.Y1Ticks != null;
+		this.HasY2Ticks = this.Y2Ticks != null;
+
 		this.IsValueNotSet = knockout.computed(() => !(this.HasAnswer() && this.HasValidAnswer(this.Answer())));
 
 		var stimulus = this.GetInstrument("Stimulus");
@@ -43,9 +52,6 @@ class OneDScale extends QuestionBase
 			this.HasMedia = true;
 		}
 
-		if (this.HasX1Ticks) this.X1Ticks = this.X1Ticks.sort((a, b) => parseInt(a.Position) - parseInt(b.Position));
-		if (this.HasX2Ticks) this.X2Ticks = this.X2Ticks.sort((a, b) => parseInt(a.Position) - parseInt(b.Position));
-
 		this.CanAnswer = this.GetObservableWhenAllAudioHavePlayed(this.AudioInfo);
 
 		if (this.HasAnswer()) this.Answer(this.GetAsnwer().Position);
@@ -54,6 +60,18 @@ class OneDScale extends QuestionBase
 			this.AddEvent("Change", "/Instrument", "Mouse/Left/Down", v.toString());
 			this.SetAnswer({ Position: v });
 		});
+	}
+
+	private GetTicks(name:string):Tick[]
+	{
+		var ticksContainer = this.GetInstrument(name);
+
+		if (!ticksContainer) return null;
+
+		var ticks = this.GetArray<Tick>(ticksContainer[name.slice(0, -1)]);
+		ticks = ticks.sort((a, b) => parseInt(a.Position) - parseInt(b.Position));
+
+		return ticks;
 	}
 }
 
