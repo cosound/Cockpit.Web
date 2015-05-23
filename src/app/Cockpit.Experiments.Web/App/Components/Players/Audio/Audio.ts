@@ -56,6 +56,9 @@ class Audio
 		}).on("pause", () =>
 		{
 			this._info.IsPlaying(false);
+		}).on("ended", () =>
+		{
+			this._info.IsPlaying(false);
 		});
 
 		this.Sources.forEach(s => $player.append(`<Source type="${s.Type}" src="${s.Source}"/>`));

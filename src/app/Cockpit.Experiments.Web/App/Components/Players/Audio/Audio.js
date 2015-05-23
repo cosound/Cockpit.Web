@@ -31,6 +31,8 @@ define(["require", "exports", "knockout", "jquery"], function (require, exports,
                 _this._info.IsPlaying(true);
             }).on("pause", function () {
                 _this._info.IsPlaying(false);
+            }).on("ended", function () {
+                _this._info.IsPlaying(false);
             });
             this.Sources.forEach(function (s) { return $player.append("<Source type=\"" + s.Type + "\" src=\"" + s.Source + "\"/>"); });
         };
