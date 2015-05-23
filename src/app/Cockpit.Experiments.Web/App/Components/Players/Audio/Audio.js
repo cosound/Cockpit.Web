@@ -18,7 +18,7 @@ define(["require", "exports", "knockout", "jquery"], function (require, exports,
                 this.PlayerElement().currentTime = 0;
             }
             else {
-                if (Audio._activePlayer !== null && Audio._activePlayer !== this)
+                if (Audio._activePlayer !== null && Audio._activePlayer !== this && Audio._activePlayer.IsPlaying())
                     Audio._activePlayer.TogglePlay();
                 Audio._activePlayer = this;
                 this.PlayerElement().play();

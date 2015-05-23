@@ -37,7 +37,7 @@ class Audio
 		}
 		else
 		{
-			if (Audio._activePlayer !== null && Audio._activePlayer !== this)
+			if (Audio._activePlayer !== null && Audio._activePlayer !== this && Audio._activePlayer.IsPlaying())
 				Audio._activePlayer.TogglePlay();
 
 			Audio._activePlayer = this;
