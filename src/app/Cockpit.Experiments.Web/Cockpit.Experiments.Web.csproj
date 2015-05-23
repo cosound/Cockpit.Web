@@ -161,13 +161,11 @@
     <TypeScriptCompile Include="App\Components\Questions\Boolean\Boolean.ts" />
     <TypeScriptCompile Include="App\Components\Questions\OneDScale\OneDScale.ts" />
     <TypeScriptCompile Include="App\Components\Questions\ContinousScale2D\ContinousScale2D.ts" />
-    <TypeScriptCompile Include="App\Components\Questions\End\End.ts" />
     <TypeScriptCompile Include="App\Components\Questions\Freetext\Freetext.ts" />
     <TypeScriptCompile Include="App\Components\Questions\Introduction\Introduction.ts" />
     <TypeScriptCompile Include="App\Components\Questions\IQuestionViewModel.d.ts" />
     <TypeScriptCompile Include="App\Components\Questions\QuestionBase.ts" />
     <TypeScriptCompile Include="App\Components\Questions\RadioButtonGroup\RadioButtonGroup.ts" />
-    <TypeScriptCompile Include="App\Components\Questions\Start\Start.ts" />
     <TypeScriptCompile Include="App\Components\Questions\Unsupported\Unsupported.ts" />
     <TypeScriptCompile Include="App\Components\Slides\Completed\Completed.ts" />
     <TypeScriptCompile Include="App\Components\Slides\Default\Default.ts" />
