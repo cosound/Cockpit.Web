@@ -37,7 +37,7 @@ define(["require", "exports", "knockout", "Configuration", "Managers/Experiment"
                 var oldSlide = this.SlideData();
                 this.SlideData().Complete(function () {
                     if (Configuration.CloseSlides && oldSlide.Index != null)
-                        setTimeout(function () { return ExperimentManager.CloseSlide(oldSlide.Index); }, 500);
+                        ExperimentManager.CloseSlide(oldSlide.Index);
                 });
             }
             this.SlideData(null);

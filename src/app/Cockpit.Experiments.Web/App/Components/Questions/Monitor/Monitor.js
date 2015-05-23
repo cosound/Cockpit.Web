@@ -12,12 +12,15 @@ define(["require", "exports", "Components/Questions/QuestionBase"], function (re
         }
         Monitor.prototype.SlideLoaded = function () {
             this.AddEvent("Start", "/", "Monitor");
-            this.SetAnswer({ Context: { Type: "UserAgent", Data: navigator.userAgent }, TimeZone: { Offset: new Date().getTimezoneOffset() } });
+            this.UpdateAnswer();
         };
-        Monitor.prototype.SlideCompleted = function (callback) {
+        Monitor.prototype.SlideCompleted = function () {
             this.AddEvent("Stop", "/", "Monitor");
-            this.SetAnswer({ Context: { Type: "UserAgent", Data: navigator.userAgent } });
-            callback();
+            this.UpdateAnswer();
+            return true;
+        };
+        Monitor.prototype.UpdateAnswer = function () {
+            this.SetAnswer({ Context: { Type: "UserAgent", Data: navigator.userAgent }, TimeZone: { Offset: new Date().getTimezoneOffset() } });
         };
         return Monitor;
     })(QuestionBase);

@@ -63,7 +63,7 @@ class SlideShell
 			this.SlideData().Complete(() =>
 			{
 				if (Configuration.CloseSlides && oldSlide.Index != null)
-					setTimeout(() => ExperimentManager.CloseSlide(oldSlide.Index), 500); //TODO: Remove delay when callback waits for answer/set
+					ExperimentManager.CloseSlide(oldSlide.Index);
 			});
 		}
 		this.SlideData(null);

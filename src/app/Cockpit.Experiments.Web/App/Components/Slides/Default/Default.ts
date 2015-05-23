@@ -1,4 +1,5 @@
-﻿import SlideModel = require("Models/Slide");
+﻿import knockout = require("knockout");
+import SlideModel = require("Models/Slide");
 import QuestionModel = require("Models/Question");
 import ExperimentManager = require("Managers/Experiment");
 import CockpitPortal = require("CockpitPortal");
@@ -8,12 +9,17 @@ class Default
 {
 	private _slide: SlideModel;
 	private _uiLessQuestions: IQuestionViewModel[] = [];
+	private _activeAnsweSets:KnockoutObservable<number> = knockout.observable(0);
+
 	public Questions: QuestionModel[] = [];
+	public HaveActiveAnswersSet:KnockoutComputed<boolean>;
 
 	constructor(slide: SlideModel)
 	{
 		this._slide = slide;
 		slide.SlideCompleted = callback => this.SlideCompleted(callback);
+
+		this.HaveActiveAnswersSet = knockout.computed(() => this._activeAnsweSets() === 0);
 
 		this.InitializeQuestions(slide.Questions);
 	}
@@ -30,7 +36,7 @@ class Default
 			this.Questions.push(questionModel);
 
 			if (!questionModel.HasUIElement)
-				require([NameConventionLoader.GetFilePath(questionModel.Type)],(vm: any) => this._uiLessQuestions.push(new vm(questionModel)));
+				((m: QuestionModel) => require([NameConventionLoader.GetFilePath(questionModel.Type)],(vm: any) => this._uiLessQuestions.push(new vm(m))))(questionModel);
 		}
 
 		if (questions.length === 0)
@@ -47,21 +53,34 @@ class Default
 
 	private SlideCompleted(completed: () => void):void
 	{
-		var calls = this._uiLessQuestions.length;
+		var waitForAnswerSaved = false;
 
 		for (var i = 0; i < this._uiLessQuestions.length; i++)
 		{
-			this._uiLessQuestions[i].SlideCompleted(() =>
-			{
-				if (--calls === 0) completed();
-			});
+			waitForAnswerSaved = this._uiLessQuestions[i].SlideCompleted() || waitForAnswerSaved;
 		}
+
+		if (waitForAnswerSaved)
+		{
+			var sub = this.HaveActiveAnswersSet.subscribe(v =>
+			{
+				if (!v)
+				{
+					sub.dispose();
+					completed();
+				}
+			});
+		} else
+			completed();
 	}
 
 	private AnswerChanged(question: QuestionModel):void
 	{
 		if (question.HasValidAnswer())
-			ExperimentManager.SaveQuestionAnswer(question.Id, question.Answer());
+		{
+			this._activeAnsweSets(this._activeAnsweSets() + 1);
+			ExperimentManager.SaveQuestionAnswer(question.Id, question.Answer(),() => this._activeAnsweSets(this._activeAnsweSets() - 1));
+		}
 
 		this.CheckIfAllQuestionsAreAnswered();
 	}

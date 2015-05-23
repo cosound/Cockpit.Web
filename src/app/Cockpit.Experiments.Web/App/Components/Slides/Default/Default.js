@@ -1,11 +1,13 @@
-define(["require", "exports", "Models/Question", "Managers/Experiment", "Components/NameConventionLoader"], function (require, exports, QuestionModel, ExperimentManager, NameConventionLoader) {
+define(["require", "exports", "knockout", "Models/Question", "Managers/Experiment", "Components/NameConventionLoader"], function (require, exports, knockout, QuestionModel, ExperimentManager, NameConventionLoader) {
     var Default = (function () {
         function Default(slide) {
             var _this = this;
             this._uiLessQuestions = [];
+            this._activeAnsweSets = knockout.observable(0);
             this.Questions = [];
             this._slide = slide;
             slide.SlideCompleted = function (callback) { return _this.SlideCompleted(callback); };
+            this.HaveActiveAnswersSet = knockout.computed(function () { return _this._activeAnsweSets() === 0; });
             this.InitializeQuestions(slide.Questions);
         }
         Default.prototype.InitializeQuestions = function (questions) {
@@ -20,7 +22,7 @@ define(["require", "exports", "Models/Question", "Managers/Experiment", "Compone
                 questionModel.HasValidAnswer.subscribe(function () { return _this.CheckIfAllQuestionsAreAnswered(); });
                 this.Questions.push(questionModel);
                 if (!questionModel.HasUIElement)
-                    require([NameConventionLoader.GetFilePath(questionModel.Type)], function (vm) { return _this._uiLessQuestions.push(new vm(questionModel)); });
+                    (function (m) { return require([NameConventionLoader.GetFilePath(questionModel.Type)], function (vm) { return _this._uiLessQuestions.push(new vm(m)); }); })(questionModel);
             }
             if (questions.length === 0)
                 this.SlideLoaded();
@@ -31,17 +33,27 @@ define(["require", "exports", "Models/Question", "Managers/Experiment", "Compone
             this.CheckIfAllQuestionsAreAnswered();
         };
         Default.prototype.SlideCompleted = function (completed) {
-            var calls = this._uiLessQuestions.length;
+            var waitForAnswerSaved = false;
             for (var i = 0; i < this._uiLessQuestions.length; i++) {
-                this._uiLessQuestions[i].SlideCompleted(function () {
-                    if (--calls === 0)
+                waitForAnswerSaved = this._uiLessQuestions[i].SlideCompleted() || waitForAnswerSaved;
+            }
+            if (waitForAnswerSaved) {
+                var sub = this.HaveActiveAnswersSet.subscribe(function (v) {
+                    if (!v) {
+                        sub.dispose();
                         completed();
+                    }
                 });
             }
+            else
+                completed();
         };
         Default.prototype.AnswerChanged = function (question) {
-            if (question.HasValidAnswer())
-                ExperimentManager.SaveQuestionAnswer(question.Id, question.Answer());
+            var _this = this;
+            if (question.HasValidAnswer()) {
+                this._activeAnsweSets(this._activeAnsweSets() + 1);
+                ExperimentManager.SaveQuestionAnswer(question.Id, question.Answer(), function () { return _this._activeAnsweSets(_this._activeAnsweSets() - 1); });
+            }
             this.CheckIfAllQuestionsAreAnswered();
         };
         Default.prototype.CheckIfAllQuestionsAreAnswered = function () {

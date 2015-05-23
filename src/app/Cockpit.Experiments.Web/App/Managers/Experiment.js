@@ -30,8 +30,9 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
         });
     }
     exports.LoadSlide = LoadSlide;
-    function SaveQuestionAnswer(id, answer) {
+    function SaveQuestionAnswer(id, answer, callback) {
         CockpitPortal.Answer.Set(id, answer).WithCallback(function (response) {
+            callback();
             if (response.Error != null)
                 throw new Error("Failed to save answer: " + response.Error.Message);
         });
