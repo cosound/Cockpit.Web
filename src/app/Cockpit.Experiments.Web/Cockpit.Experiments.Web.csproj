@@ -22,6 +22,7 @@
     <Content Include="App\Components\NotFound\NotFound.html" />
     <Content Include="App\Components\Players\Audio\Audio.html" />
     <Content Include="App\Components\Questions\CheckBoxGroup\CheckBoxGroup.html" />
+    <Content Include="App\Components\Questions\FreetextHash\FreetextHash.html" />
     <Content Include="App\Components\Questions\KAcPS\KAcPS.html" />
     <Content Include="App\Components\Questions\LikertScale\LikertScale.html" />
     <Content Include="App\Components\Questions\TextBlock\TextBlock.html" />
@@ -43,6 +44,7 @@
     <Content Include="Lib\bootstrap\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Lib\bootstrap\js\bootstrap.js" />
     <Content Include="Lib\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Lib\crypto-js\md5.js" />
     <Content Include="Lib\Highcharts\crossing-specific-value\crossing-specific-value.js" />
     <Content Include="Lib\Highcharts\draggable-points\draggable-points.js" />
     <Content Include="Lib\Highcharts\highcharts-more.js" />
@@ -133,6 +135,7 @@
     <TypeScriptCompile Include="App\Components\Players\Audio\Audio.ts" />
     <TypeScriptCompile Include="App\Components\Players\Audio\AudioInfo.ts" />
     <TypeScriptCompile Include="App\Components\Questions\CheckBoxGroup\CheckBoxGroup.ts" />
+    <TypeScriptCompile Include="App\Components\Questions\FreetextHash\FreetextHash.ts" />
     <TypeScriptCompile Include="App\Components\Welcome\Welcome.ts" />
     <TypeScriptCompile Include="App\Models\CommonTypes.d.ts" />
     <TypeScriptCompile Include="App\Components\Questions\KAcPS\KAcPS.ts" />
@@ -170,6 +173,7 @@
     <TypeScriptCompile Include="Tests\App\Main.ts" />
     <TypeScriptCompile Include="Tests\TypeScriptDefinitions\jasmine.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\bootstrap.d.ts" />
+    <TypeScriptCompile Include="TypeScriptDefinitions\crypto-js.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\highcharts.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\HighChartsCrossingSpecificValue.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\highchartsDraggable.d.ts" />

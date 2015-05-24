@@ -20,6 +20,7 @@ function Initialize()
 		"RadioButtonGroup": new QuestionMap("Questions/RadioButtonGroup"),
 		"CheckBoxGroup": new QuestionMap("Questions/CheckBoxGroup"),
 		"Freetext": new QuestionMap("Questions/Freetext"),
+		"FreetextHash": new QuestionMap("Questions/FreetextHash"),
 		"OneDScale": new QuestionMap("Questions/OneDScale"),
 		"TwoDScale": new QuestionMap("Questions/ContinousScale2D"),
 		"TwoDKScaleDD": new QuestionMap("Questions/TwoDScaleK"),

@@ -16,14 +16,21 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], 
             if (this.HasInstrument())
                 this.Label = this.GetInstrument("Label");
             if (this.HasAnswer())
-                this.Answer(this.GetAsnwer()["Text"]);
+                this.LoadAnswer(this.GetAsnwer());
             this.Answer.extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 200 } });
             this.Answer.subscribe(function (v) {
                 _this.AddEvent("Change", "/Instrument", "Keyboard", v);
-                _this.SetAnswer({ Text: v });
+                _this.SetAnswer(_this.SaveAnswerAnswer(v));
             });
         }
+        Freetext.prototype.LoadAnswer = function (answer) {
+            this.Answer(answer["Text"]);
+        };
+        Freetext.prototype.SaveAnswerAnswer = function (answer) {
+            return { Text: answer };
+        };
         Freetext.prototype.HasValidAnswer = function (answer) {
+            return true;
             if (!answer.Text)
                 return false;
             return answer.Text !== "";
