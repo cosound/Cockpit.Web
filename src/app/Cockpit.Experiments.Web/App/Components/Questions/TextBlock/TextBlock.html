@@ -1,1 +1,4 @@
-﻿<p data-bind="text: Text"></p>
+﻿<!-- ko if: HasHeader -->
+<h3 data-bind="text: HeaderLabel" class="QuestionHeader"></h3>
+<!-- /ko -->
+<p data-bind="text: Text"></p>

@@ -9,6 +9,8 @@ define(["require", "exports", "Components/Questions/QuestionBase"], function (re
         __extends(TextBlock, _super);
         function TextBlock(question) {
             _super.call(this, question, false);
+            this.HeaderLabel = this.GetInstrument("HeaderLabel");
+            this.HasHeader = this.HeaderLabel != null && this.HeaderLabel !== "";
             this.Text = this.GetInstrument("Text");
         }
         return TextBlock;
