@@ -28,12 +28,9 @@
     <Content Include="App\Components\Questions\TwoDScaleK\TwoDScaleK.html" />
     <Content Include="App\Components\Shell\Shell.html" />
     <Content Include="App\Components\SlideShell\SlideShell.html" />
-    <Content Include="App\Components\Questions\AB\AB.html" />
-    <Content Include="App\Components\Questions\Boolean\Boolean.html" />
     <Content Include="App\Components\Questions\OneDScale\OneDScale.html" />
     <Content Include="App\Components\Questions\ContinousScale2D\ContinousScale2D.html" />
     <Content Include="App\Components\Questions\Freetext\Freetext.html" />
-    <Content Include="App\Components\Questions\Introduction\Introduction.html" />
     <Content Include="App\Components\Questions\RadioButtonGroup\RadioButtonGroup.html" />
     <Content Include="App\Components\Slides\Completed\Completed.html" />
     <Content Include="App\Components\Slides\Default\Default.html" />
@@ -157,12 +154,9 @@
     <TypeScriptCompile Include="App\Models\Question.ts" />
     <TypeScriptCompile Include="App\Models\Slide.ts" />
     <TypeScriptCompile Include="App\Components\Questions\QuestionMap.ts" />
-    <TypeScriptCompile Include="App\Components\Questions\AB\AB.ts" />
-    <TypeScriptCompile Include="App\Components\Questions\Boolean\Boolean.ts" />
     <TypeScriptCompile Include="App\Components\Questions\OneDScale\OneDScale.ts" />
     <TypeScriptCompile Include="App\Components\Questions\ContinousScale2D\ContinousScale2D.ts" />
     <TypeScriptCompile Include="App\Components\Questions\Freetext\Freetext.ts" />
-    <TypeScriptCompile Include="App\Components\Questions\Introduction\Introduction.ts" />
     <TypeScriptCompile Include="App\Components\Questions\IQuestionViewModel.d.ts" />
     <TypeScriptCompile Include="App\Components\Questions\QuestionBase.ts" />
     <TypeScriptCompile Include="App\Components\Questions\RadioButtonGroup\RadioButtonGroup.ts" />
