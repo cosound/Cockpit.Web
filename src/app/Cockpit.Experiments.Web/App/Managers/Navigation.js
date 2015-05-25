@@ -17,6 +17,9 @@ define(["require", "exports", "knockout", "routie", "Managers/NavigationPage", "
             "SlideLocked": function () {
                 LoadPage("SlideLocked");
             },
+            "TextFormat": function () {
+                LoadPage("TextFormat");
+            },
             "ExperimentNotFound/:id": function (id) {
                 LoadPage("ExperimentNotFound", id);
             },

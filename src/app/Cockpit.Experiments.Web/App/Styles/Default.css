@@ -40,6 +40,18 @@ label.btn.disabled {
 	text-transform: capitalize;
 }
 
+.Tiny {
+	font-size: 50%;
+}
+
+.Small {
+	font-size: 80%;
+}
+
+.Large {
+	font-size: 130%;
+}
+
 /*** OneDScale ***/
 
 .OneDScale .ScaleContainer {
@@ -242,4 +254,15 @@ input[type="range"]::-ms-fill-upper {
 .LikertScale .Scale > label > span:last-child {
 	width: 100%;
 	display: inline-block;
+}
+
+/*** Text Format ***/
+
+.TextFormat {
+	vertical-align: top;
+}
+
+.TextFormat textarea.form-control {
+	resize: none;
+	height: 300px;
 }

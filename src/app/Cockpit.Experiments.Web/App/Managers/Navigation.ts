@@ -14,6 +14,7 @@ export function Initialize(): void
 		"ExperimentList/:id": (id: string) => { LoadExperimentFromList(id); },
 		"NoMoreExperiments": () => { LoadPage("NoMoreExperiments"); },
 		"SlideLocked": () => { LoadPage("SlideLocked"); },
+		"TextFormat": () => { LoadPage("TextFormat"); },
 		"ExperimentNotFound/:id": (id: string) => { LoadPage("ExperimentNotFound", id); },
 		"*": () => { LoadPage("NotFound"); }
 	});

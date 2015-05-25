@@ -35,6 +35,7 @@
     <Content Include="App\Components\Questions\RadioButtonGroup\RadioButtonGroup.html" />
     <Content Include="App\Components\Slides\Completed\Completed.html" />
     <Content Include="App\Components\Slides\Default\Default.html" />
+    <Content Include="App\Components\TextFormat\TextFormat.html" />
     <Content Include="App\Components\Welcome\Welcome.html" />
     <Content Include="default.html" />
     <Content Include="Lib\bootstrap\css\bootstrap-theme.css" />
@@ -136,7 +137,9 @@
     <TypeScriptCompile Include="App\Components\Players\Audio\AudioInfo.ts" />
     <TypeScriptCompile Include="App\Components\Questions\CheckBoxGroup\CheckBoxGroup.ts" />
     <TypeScriptCompile Include="App\Components\Questions\FreetextHash\FreetextHash.ts" />
+    <TypeScriptCompile Include="App\Components\TextFormat\TextFormat.ts" />
     <TypeScriptCompile Include="App\Components\Welcome\Welcome.ts" />
+    <TypeScriptCompile Include="App\Managers\TextFormatter.ts" />
     <TypeScriptCompile Include="App\Models\CommonTypes.d.ts" />
     <TypeScriptCompile Include="App\Components\Questions\KAcPS\KAcPS.ts" />
     <TypeScriptCompile Include="App\Components\Questions\LikertScale\LikertScale.ts" />
