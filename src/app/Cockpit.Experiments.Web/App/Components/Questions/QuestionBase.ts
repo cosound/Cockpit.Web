@@ -2,6 +2,7 @@
 import CockpitPortal = require("CockpitPortal");
 import QuestionModel = require("Models/Question");
 import AudioInfo = require("Components/Players/Audio/AudioInfo");
+import TextFormatter = require("Managers/TextFormatter");
 
 class QuestionsBase implements IQuestionViewModel
 {
@@ -49,9 +50,24 @@ class QuestionsBase implements IQuestionViewModel
 		return false;
 	}
 
+	protected GetFormatted(unformatted:string):string
+	{
+		return (unformatted === null || unformatted === undefined) ? unformatted : TextFormatter.Format(unformatted);
+	}
+
 	protected GetInstrument(key:string):any
 	{
 		return this.GetIntrumentObject()[key];
+	}
+
+	protected GetInstrumentFormatted(key: string): string
+	{
+		var instrument = this.GetInstrument(key);
+
+		if (instrument === null || instrument === undefined) return instrument;
+		if (typeof instrument === "string") return this.GetFormatted(instrument);
+
+		throw new Error(`Instrument ${key} is not a string but: ${instrument}`);
 	}
 
 	private GetIntrumentObject():{ [key:string]:any }

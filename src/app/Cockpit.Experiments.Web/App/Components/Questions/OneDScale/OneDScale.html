@@ -1,37 +1,37 @@
 ﻿<div class="container-fluid OneDScale">
 	<div class="row">
 		<div class="col-xs-offset-2 col-xs-10">
-			<h3 data-bind="text: HeaderLabel" class="QuestionHeader"></h3>
+			<h3 data-bind="html: HeaderLabel" class="QuestionHeader"></h3>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-xs-2" data-bind="if: HasMedia">
 			<div data-bind="component: {name: 'Players/Audio', params: AudioInfo}"></div>
-			<p data-bind="text: AudioLabel"></p>
+			<p data-bind="html: AudioLabel"></p>
 		</div>
 		<div class="col-xs-10 ScaleContainer">
 			<div class="YTicks Y1" data-bind="if: HasY1Ticks">
-				<span data-bind="text: Y1Ticks[0].Label"></span>
+				<span data-bind="html: Y1Ticks[0].Label"></span>
 			</div>
 			<div class="CenterContainer">
 				<div class="container-fluid XTicks" data-bind="if: HasX2Ticks">
-					<div class="col-xs-6 text-left" data-bind="text: X2Ticks[0].Label"></div>
+					<div class="col-xs-6 text-left" data-bind="html: X2Ticks[0].Label"></div>
 					<!-- ko if: X2Ticks.length > 1 -->
-					<div class="col-xs-6 text-right" data-bind="text: X2Ticks[1].Label"></div>
+					<div class="col-xs-6 text-right" data-bind="html: X2Ticks[1].Label"></div>
 					<!-- /ko -->
 				</div>
 				<div class="container-fluid">
 					<input type="range" min="-1" max="1" data-bind="value: Answer, css: {NoValue: IsValueNotSet}, enable: CanAnswer" class="form-control col-xs-5" step="0.01" />
 				</div>
 				<div class="container-fluid XTicks" data-bind="if: HasX1Ticks">
-					<div class="col-xs-6 text-left" data-bind="text: X1Ticks[0].Label"></div>
+					<div class="col-xs-6 text-left" data-bind="html: X1Ticks[0].Label"></div>
 					<!-- ko if: X1Ticks.length > 1 -->
-					<div class="col-xs-6 text-right" data-bind="text: X1Ticks[1].Label"></div>
+					<div class="col-xs-6 text-right" data-bind="html: X1Ticks[1].Label"></div>
 					<!-- /ko -->
 				</div>
 			</div>
 			<div class="YTicks" data-bind="if: HasY2Ticks">
-				<span data-bind="text: Y2Ticks[0].Label"></span>
+				<span data-bind="html: Y2Ticks[0].Label"></span>
 			</div>
 		</div>
 	</div>

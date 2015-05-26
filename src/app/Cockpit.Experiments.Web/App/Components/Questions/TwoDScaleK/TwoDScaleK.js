@@ -14,7 +14,7 @@ define(["require", "exports", "knockout", "jquery", "Highcharts", "HighchartsMor
             _super.call(this, question);
             this.ChartElement = knockout.observable();
             this._subscriptions = [];
-            this.Title = this.GetInstrument("HeaderLabel");
+            this.Title = this.GetInstrumentFormatted("HeaderLabel");
             this.InitializeItems();
             this._subscriptions.push(this.ChartElement.subscribe(this.InitializeChart, this));
         }
@@ -54,7 +54,7 @@ define(["require", "exports", "knockout", "jquery", "Highcharts", "HighchartsMor
                     }
                 },
                 xAxis: {
-                    title: { text: this.GetInstrument("X1AxisLabel") },
+                    title: { text: this.GetInstrumentFormatted("X1AxisLabel") },
                     min: -1,
                     max: 1,
                     lineWidth: 1,
@@ -71,7 +71,7 @@ define(["require", "exports", "knockout", "jquery", "Highcharts", "HighchartsMor
                     labels: { enabled: false }
                 },
                 yAxis: {
-                    title: { text: this.GetInstrument("Y1AxisLabel") },
+                    title: { text: this.GetInstrumentFormatted("Y1AxisLabel") },
                     min: -1,
                     max: 1,
                     lineWidth: 1,
@@ -112,7 +112,7 @@ define(["require", "exports", "knockout", "jquery", "Highcharts", "HighchartsMor
             var audioInfo = new AudioInfo([{ Type: data.Stimulus.Type, Source: data.Stimulus.URI }]);
             var item = {
                 Id: data.Id,
-                Name: data.List.Label,
+                Name: this.GetFormatted(data.List.Label),
                 AudioInfo: audioInfo,
                 GraphData: answer ? this.CreateGraphItem(data, answer) : null
             };
@@ -130,7 +130,7 @@ define(["require", "exports", "knockout", "jquery", "Highcharts", "HighchartsMor
                 name: data.List.Label,
                 draggableX: true,
                 draggableY: true,
-                cursor: 'pointer',
+                cursor: "pointer",
                 data: [answer]
             };
         };

@@ -22,7 +22,7 @@ class KacPS extends QuestionBase
 		super(question);
 
 		this.Id = this.Model.Id;
-		this.HeaderLabel = this.GetInstrument("HeaderLabel");
+		this.HeaderLabel = this.GetInstrumentFormatted("HeaderLabel");
 
 		this.Items = this.GetItems<Item, ItemInfo>(v => this.CreateItemInfo(v));
 
@@ -58,7 +58,7 @@ class KacPS extends QuestionBase
 		var info = {
 			Id: data.Id,
 			UniqueId: this.Id + "_" + data.Id,
-			Label: data.ChoiceButton.Label,
+			Label: this.GetFormatted(data.ChoiceButton.Label),
 			AudioInfo: audioInfo,
 			IsSelected: knockout.computed(() => this.Answer() === data.Id ),
 			HasStimulus: data.Stimulus !== null,

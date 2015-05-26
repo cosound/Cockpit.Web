@@ -30,7 +30,7 @@ class OneDScale extends QuestionBase
 		super(question);
 
 		this.Id = this.Model.Id;
-		this.HeaderLabel = this.GetInstrument("HeaderLabel");
+		this.HeaderLabel = this.GetInstrumentFormatted("HeaderLabel");
 		this.X1Ticks = this.GetTicks("X1AxisTicks");
 		this.X2Ticks = this.GetTicks("X2AxisTicks");
 		this.Y1Ticks = this.GetTicks("Y1AxisTicks");
@@ -46,7 +46,7 @@ class OneDScale extends QuestionBase
 
 		if (stimulus != null)
 		{
-			this.AudioLabel = stimulus.Label;
+			this.AudioLabel = this.GetFormatted(stimulus.Label);
 			this.AudioInfo = AudioInfo.Create(stimulus);
 			this.TrackAudioInfo("/Instrument/Stimulus", this.AudioInfo);
 			this.HasMedia = true;
@@ -70,6 +70,7 @@ class OneDScale extends QuestionBase
 
 		var ticks = this.GetArray<Tick>(ticksContainer[name.slice(0, -1)]);
 		ticks = ticks.sort((a, b) => parseInt(a.Position) - parseInt(b.Position));
+		ticks.forEach(t => t.Label = this.GetFormatted(t.Label));
 
 		return ticks;
 	}

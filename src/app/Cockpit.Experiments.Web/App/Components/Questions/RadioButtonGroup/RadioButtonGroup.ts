@@ -22,12 +22,12 @@ class RadioButtonGroup extends QuestionBase
 		super(question);
 
 		this.Id = this.Model.Id;
-		this.HeaderLabel = this.GetInstrument("HeaderLabel");
+		this.HeaderLabel = this.GetInstrumentFormatted("HeaderLabel");
 
 		var stimulus = this.GetInstrument("Stimulus");
 		if (stimulus != null)
 		{
-			this.AudioLabel = stimulus.Label;
+			this.AudioLabel = this.GetFormatted(stimulus.Label);
 
 			this.AudioInfo = AudioInfo.Create(stimulus);
 			this.TrackAudioInfo("/Instrument/Stimulus", this.AudioInfo);
@@ -58,7 +58,7 @@ class RadioButtonGroup extends QuestionBase
 
 		var info = {
 			Id: data.Id,
-			Label: data.Label
+			Label: this.GetFormatted(data.Label)
 		};
 
 		return info;

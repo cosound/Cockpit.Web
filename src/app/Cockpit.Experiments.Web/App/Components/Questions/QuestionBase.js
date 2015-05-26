@@ -1,4 +1,4 @@
-define(["require", "exports", "knockout", "Components/Players/Audio/AudioInfo"], function (require, exports, knockout, AudioInfo) {
+define(["require", "exports", "knockout", "Components/Players/Audio/AudioInfo", "Managers/TextFormatter"], function (require, exports, knockout, AudioInfo, TextFormatter) {
     var QuestionsBase = (function () {
         function QuestionsBase(question, requiresInput) {
             var _this = this;
@@ -31,8 +31,19 @@ define(["require", "exports", "knockout", "Components/Players/Audio/AudioInfo"],
                     return true;
             return false;
         };
+        QuestionsBase.prototype.GetFormatted = function (unformatted) {
+            return (unformatted === null || unformatted === undefined) ? unformatted : TextFormatter.Format(unformatted);
+        };
         QuestionsBase.prototype.GetInstrument = function (key) {
             return this.GetIntrumentObject()[key];
+        };
+        QuestionsBase.prototype.GetInstrumentFormatted = function (key) {
+            var instrument = this.GetInstrument(key);
+            if (instrument === null || instrument === undefined)
+                return instrument;
+            if (typeof instrument === "string")
+                return this.GetFormatted(instrument);
+            throw new Error("Instrument " + key + " is not a string but: " + instrument);
         };
         QuestionsBase.prototype.GetIntrumentObject = function () {
             for (var i = 0; i < this.Model.Input.length; i++) {

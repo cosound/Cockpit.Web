@@ -14,12 +14,12 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             this.Answer = knockout.observableArray();
             this.HasMedia = false;
             this.Id = this.Model.Id;
-            this.HeaderLabel = this.GetInstrument("HeaderLabel");
+            this.HeaderLabel = this.GetInstrumentFormatted("HeaderLabel");
             this._minNoOfSelections = this.GetInstrument("MinNoOfSelections");
             this._maxNoOfSelections = this.GetInstrument("MaxNoOfSelections");
             var stimulus = this.GetInstrument("Stimulus");
             if (stimulus != null) {
-                this.AudioLabel = stimulus.Label;
+                this.AudioLabel = this.GetFormatted(stimulus.Label);
                 this.AudioInfo = new AudioInfo([{ Type: stimulus.Type, Source: stimulus.URI }]);
                 this.TrackAudioInfo("/Instrument/Stimulus", this.AudioInfo);
                 this.HasMedia = true;
@@ -49,7 +49,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
                 this.Answer.push(data.Id);
             var info = {
                 Id: data.Id,
-                Label: data.Label,
+                Label: this.GetFormatted(data.Label),
                 IsEnabled: knockout.computed(function () { return _this.CanAnswer() && (_this.Answer.indexOf(data.Id) !== -1 || _this.CanSelectMore()); })
             };
             return info;

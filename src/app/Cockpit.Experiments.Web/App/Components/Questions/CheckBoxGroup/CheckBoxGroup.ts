@@ -26,14 +26,14 @@ class CheckBoxGroup extends QuestionBase
 		super(question);
 
 		this.Id = this.Model.Id;
-		this.HeaderLabel = this.GetInstrument("HeaderLabel");
+		this.HeaderLabel = this.GetInstrumentFormatted("HeaderLabel");
 		this._minNoOfSelections = this.GetInstrument("MinNoOfSelections");
 		this._maxNoOfSelections = this.GetInstrument("MaxNoOfSelections");
 
 		var stimulus = this.GetInstrument("Stimulus");
 		if (stimulus != null)
 		{
-			this.AudioLabel = stimulus.Label;
+			this.AudioLabel = this.GetFormatted(stimulus.Label);
 
 			this.AudioInfo = new AudioInfo([{ Type: stimulus.Type, Source: stimulus.URI }]);
 			this.TrackAudioInfo("/Instrument/Stimulus", this.AudioInfo);
@@ -75,7 +75,7 @@ class CheckBoxGroup extends QuestionBase
 
 		var info = {
 			Id: data.Id,
-			Label: data.Label,
+			Label: this.GetFormatted(data.Label),
 			IsEnabled: knockout.computed(() => this.CanAnswer() && (this.Answer.indexOf(data.Id) !== -1 || this.CanSelectMore()))
 		};
 

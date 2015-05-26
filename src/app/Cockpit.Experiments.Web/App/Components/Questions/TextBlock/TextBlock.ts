@@ -11,10 +11,10 @@ class TextBlock extends QuestionBase
 	{
 		super(question, false);
 
-		this.HeaderLabel = this.GetInstrument("HeaderLabel");
+		this.HeaderLabel = this.GetInstrumentFormatted("HeaderLabel");
 		this.HasHeader = this.HeaderLabel != null && this.HeaderLabel !== "";
 
-		this.Text = this.GetInstrument("Text");
+		this.Text = this.GetInstrumentFormatted("Text");
 	}
 }
 

@@ -14,7 +14,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], 
             this.Answer = knockout.observable(null);
             this.Id = this.Model.Id;
             if (this.HasInstrument())
-                this.Label = this.GetInstrument("Label");
+                this.Label = this.GetInstrumentFormatted("Label");
             if (this.HasAnswer())
                 this.LoadAnswer(this.GetAsnwer());
             this.Answer.extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 200 } });

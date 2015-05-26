@@ -1,9 +1,9 @@
-﻿<h4 data-bind="text: Title"></h4>
+﻿<h4 data-bind="html: Title"></h4>
 <div class="row">
 	<div class="col-xs-5">
 		<ul class="list-group" data-bind="foreach: Items">
 			<li class="list-group-item">
-				<span data-bind="text: Name"></span>
+				<span data-bind="html: Name"></span>
 				<div class="pull-right" data-bind="component: {name: 'Players/Audio', params: AudioInfo}"></div>
 			</li>
 		</ul>

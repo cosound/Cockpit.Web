@@ -12,7 +12,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             _super.call(this, question);
             this.Answer = knockout.observable(null);
             this.Id = this.Model.Id;
-            this.HeaderLabel = this.GetInstrument("HeaderLabel");
+            this.HeaderLabel = this.GetInstrumentFormatted("HeaderLabel");
             this.Items = this.GetItems(function (v) { return _this.CreateItemInfo(v); });
             this.MaxButtonWidth = knockout.computed(function () { return _this.Items.map(function (i) { return i.ButtonElement() == null ? null : i.ButtonElement().offsetWidth; }).reduce(function (p, c) { return p == null || c == null ? null : Math.max(p, c); }, 0); });
             this.HasNoStimulus = this.Items.every(function (i) { return !i.HasStimulus; });
@@ -37,7 +37,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             var info = {
                 Id: data.Id,
                 UniqueId: this.Id + "_" + data.Id,
-                Label: data.ChoiceButton.Label,
+                Label: this.GetFormatted(data.ChoiceButton.Label),
                 AudioInfo: audioInfo,
                 IsSelected: knockout.computed(function () { return _this.Answer() === data.Id; }),
                 HasStimulus: data.Stimulus !== null,

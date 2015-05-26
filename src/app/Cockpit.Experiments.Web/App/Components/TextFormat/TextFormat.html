@@ -1,24 +1,28 @@
 ﻿<div class="TextFormat container-fluid">
 	<h2>Text Format</h2>
+	<p>Modify the text below to see the result of the text format.</p>
 	<div class="row">
 		<label class="col-xs-8">
 			<b>Input: </b>
 			<textarea class="form-control" data-bind="textInput: Input"></textarea>
 		</label>
-		<ul class="col-xs-4">
-			<li>Bold - {{b|text}}</li>
-			<li>Italic - {{i|text}}</li>
-			<li>Underlined - {{i|text}}</li>
-			<li>Strikethrough - {{s|text}}</li>
-			<li>Marked - {{mark|text}}</li>
-			<li>Tiny text - {{tiny|text}}</li>
-			<li>Small text - {{small|text}}</li>
-			<li>Large text - {{large|text}}</li>
-			<li>Colored - {{color|red|text}}</li>
-			<li>Styled - {{style|color: yellow; font-size: 20px|text}}</li>
-			<li>Link - {{url|http://www.google.com|My link}}</li>
-			<li>New line - {{n}}</li>
-		</ul>
+		<div class="col-xs-4">
+			<label>Available tags:</label>
+			<ul>
+				<li><b>Bold - {{b|text}}</b></li>
+				<li><i>Italic - {{i|text}}</i></li>
+				<li><u>Underlined - {{i|text}}</u></li>
+				<li><s>Strikethrough - {{s|text}}</s></li>
+				<li><mark>Marked - {{mark|text}}</mark></li>
+				<li><span class="Tiny">Tiny text - {{tiny|text}}</span></li>
+				<li><span class="Small">Small text - {{small|text}}</span></li>
+				<li><span class="Large">Large text - {{large|text}}</span></li>
+				<li><span style="color: red">Colored - {{color|red|text}}</span></li>
+				<li><span style="color: green; font-size: 12px">Styled - {{style|color: green; font-size: 12px|text}}</span></li>
+				<li><a target="_blank" href="http://www.google.com">Link - {{url|http://www.google.com|text}}</a></li>
+				<li>New line - {{n}}</li>
+			</ul>
+		</div>
 	</div>
 	<div class="row">
 		<b>Output:</b><br/>
