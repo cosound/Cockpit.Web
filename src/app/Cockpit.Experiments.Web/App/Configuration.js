@@ -1,6 +1,6 @@
 define(["require", "exports"], function (require, exports) {
-    exports.PortalPath = "https://prod-api.cosound.dk";
-    exports.ExperimentTitle = "Cockpit";
+    exports.PortalPath = "https://dev-api.cosound.dk";
+    exports.ExperimentTitle = "Cockpit Test";
     exports.IsPoweredByCockpitVisible = true;
     exports.CloseSlides = false;
     exports.SlideName = "slide";
