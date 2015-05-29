@@ -19,7 +19,11 @@
 			"url": (i: string[]) => `<a target="_blank" href="${i[0]}">${i.length === 1 ? i[0] : i[1]}</a>`,
 			"link": (i: string[]) => `<a target="_blank" href="${i[0]}">${i.length === 1 ? i[0] : i[1]}</a>`,
 			"n": (i: string[]) => "<br/>",
-			"tab": (i: string[]) => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+			"tab": (i: string[]) => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
+			"left": (i: string[]) => `<span class="SingleLineLeft">${i[0]}</span>`,
+			"right": (i: string[]) => `<span class="SingleLineRight">${i[0]}</span>`,
+			"center": (i: string[]) => `<span class="SingleLineCenter">${i[0]}</span>`,
+			"justify": (i: string[]) => `<span class="SingleLineJustify">${i[0]}</span>`
 		};
 	}
 

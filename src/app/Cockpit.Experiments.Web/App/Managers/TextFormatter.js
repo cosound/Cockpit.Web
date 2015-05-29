@@ -16,7 +16,11 @@ define(["require", "exports"], function (require, exports) {
                 "url": function (i) { return ("<a target=\"_blank\" href=\"" + i[0] + "\">" + (i.length === 1 ? i[0] : i[1]) + "</a>"); },
                 "link": function (i) { return ("<a target=\"_blank\" href=\"" + i[0] + "\">" + (i.length === 1 ? i[0] : i[1]) + "</a>"); },
                 "n": function (i) { return "<br/>"; },
-                "tab": function (i) { return "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; }
+                "tab": function (i) { return "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; },
+                "left": function (i) { return ("<span class=\"SingleLineLeft\">" + i[0] + "</span>"); },
+                "right": function (i) { return ("<span class=\"SingleLineRight\">" + i[0] + "</span>"); },
+                "center": function (i) { return ("<span class=\"SingleLineCenter\">" + i[0] + "</span>"); },
+                "justify": function (i) { return ("<span class=\"SingleLineJustify\">" + i[0] + "</span>"); }
             };
         }
         TextFormatter.prototype.Format = function (input) {

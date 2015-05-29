@@ -52,6 +52,33 @@ label.btn.disabled {
 	font-size: 130%;
 }
 
+.SingleLineLeft {
+	display: block;
+	text-align: left;
+}
+
+.SingleLineRight {
+	display: block;
+	text-align: right;
+}
+
+.SingleLineCenter {
+	display: block;
+	text-align: center;
+}
+
+.SingleLineJustify {
+	display: block;
+	text-align: justify;
+	height: 1em;
+	line-height: 1;
+}
+.SingleLineJustify:after {
+	content: "";
+	display: inline-block;
+	width: 100%;
+}
+
 /*** OneDScale ***/
 
 .OneDScale .ScaleContainer {
