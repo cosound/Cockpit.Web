@@ -14,7 +14,9 @@ define(["require", "exports"], function (require, exports) {
                 "color": function (i) { return ("<span style=\"color:" + i[0] + "\">" + i[1] + "</span>"); },
                 "style": function (i) { return ("<span style=\"" + i[0] + "\">" + i[1] + "</span>"); },
                 "url": function (i) { return ("<a target=\"_blank\" href=\"" + i[0] + "\">" + (i.length === 1 ? i[0] : i[1]) + "</a>"); },
-                "n": function (i) { return "<br/>"; }
+                "link": function (i) { return ("<a target=\"_blank\" href=\"" + i[0] + "\">" + (i.length === 1 ? i[0] : i[1]) + "</a>"); },
+                "n": function (i) { return "<br/>"; },
+                "tab": function (i) { return "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; }
             };
         }
         TextFormatter.prototype.Format = function (input) {

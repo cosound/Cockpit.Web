@@ -17,7 +17,9 @@
 			"color": (i: string[]) => `<span style="color:${i[0]}">${i[1]}</span>`,
 			"style": (i: string[]) => `<span style="${i[0]}">${i[1]}</span>`,
 			"url": (i: string[]) => `<a target="_blank" href="${i[0]}">${i.length === 1 ? i[0] : i[1]}</a>`,
-			"n": (i: string[]) => "<br/>"
+			"link": (i: string[]) => `<a target="_blank" href="${i[0]}">${i.length === 1 ? i[0] : i[1]}</a>`,
+			"n": (i: string[]) => "<br/>",
+			"tab": (i: string[]) => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
 		};
 	}
 
