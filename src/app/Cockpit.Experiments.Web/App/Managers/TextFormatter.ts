@@ -10,6 +10,8 @@
 			"i": (i:string[]) => `<i>${i[0]}</i>`,
 			"u": (i:string[]) => `<u>${i[0]}</u>`,
 			"s": (i:string[]) => `<s>${i[0]}</s>`,
+			"sub": (i:string[]) => `<sub>${i[0]}</sub>`,
+			"super": (i:string[]) => `<sup>${i[0]}</sup>`,
 			"mark": (i: string[]) => `<mark>${i[0]}</mark>`,
 			"tiny": (i: string[]) => `<span class="Tiny">${i[0]}</span>`,
 			"small": (i: string[]) => `<span class="Small">${i[0]}</span>`,

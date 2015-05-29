@@ -7,6 +7,8 @@ define(["require", "exports"], function (require, exports) {
                 "i": function (i) { return ("<i>" + i[0] + "</i>"); },
                 "u": function (i) { return ("<u>" + i[0] + "</u>"); },
                 "s": function (i) { return ("<s>" + i[0] + "</s>"); },
+                "sub": function (i) { return ("<sub>" + i[0] + "</sub>"); },
+                "super": function (i) { return ("<sup>" + i[0] + "</sup>"); },
                 "mark": function (i) { return ("<mark>" + i[0] + "</mark>"); },
                 "tiny": function (i) { return ("<span class=\"Tiny\">" + i[0] + "</span>"); },
                 "small": function (i) { return ("<span class=\"Small\">" + i[0] + "</span>"); },
