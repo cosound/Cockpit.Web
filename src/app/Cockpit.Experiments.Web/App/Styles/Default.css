@@ -102,11 +102,27 @@ label.btn.disabled {
 	text-align: right;
 }
 
+.OneDScale .XTicks {
+	position: relative;
+}
+
+.OneDScale .XTicks .Tick {
+	position: absolute;
+}
+
+.OneDScale .XTicks .Tick.MinPosition {
+	left: 0;
+}
+
+.OneDScale .XTicks .Tick.MaxPosition {
+	right: 0;
+}
+
 .OneDScale .ScaleContainer .CenterContainer {
 	padding: 0 10px;
 }
 
-.OneDScale .ScaleContainer .CenterContainer .container-fluid, .OneDScale .CenterContainer .XTicks > div, .OneDScale .row .YTicks {
+.OneDScale .ScaleContainer .CenterContainer .container-fluid, .OneDScale .Tick, .OneDScale .row .YTicks {
 	padding-left: 0;
 	padding-right: 0;
 }

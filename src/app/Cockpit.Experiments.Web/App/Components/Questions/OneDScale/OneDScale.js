@@ -19,10 +19,10 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             this.X2Ticks = this.GetTicks("X2AxisTicks");
             this.Y1Ticks = this.GetTicks("Y1AxisTicks");
             this.Y2Ticks = this.GetTicks("Y2AxisTicks");
-            this.HasX1Ticks = this.X1Ticks != null;
-            this.HasX2Ticks = this.X2Ticks != null;
-            this.HasY1Ticks = this.Y1Ticks != null;
-            this.HasY2Ticks = this.Y2Ticks != null;
+            this.HasX1Ticks = this.X1Ticks.length !== 0;
+            this.HasX2Ticks = this.X2Ticks.length !== 0;
+            this.HasY1Ticks = this.Y1Ticks.length !== 0;
+            this.HasY2Ticks = this.Y2Ticks.length !== 0;
             this.IsValueNotSet = knockout.computed(function () { return !(_this.HasAnswer() && _this.HasValidAnswer(_this.Answer())); });
             var stimulus = this.GetInstrument("Stimulus");
             if (stimulus != null) {
@@ -43,12 +43,21 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             var _this = this;
             var ticksContainer = this.GetInstrument(name);
             if (!ticksContainer)
-                return null;
-            var ticks = this.GetArray(ticksContainer[name.slice(0, -1)]);
+                return new Array();
+            var ticks = this.GetArray(ticksContainer[name.slice(0, -1)]).map(function (t) { return _this.CreateTick(t); });
             ticks = ticks.sort(function (a, b) { return parseInt(a.Position) - parseInt(b.Position); });
-            ticks.forEach(function (t) { return t.Label = _this.GetFormatted(t.Label); });
             return ticks;
         };
+        OneDScale.prototype.CreateTick = function (data) {
+            return {
+                Label: this.GetFormatted(data.Label),
+                Position: data.Position,
+                IsMinPosition: parseInt(data.Position) === OneDScale._positionMinValue,
+                IsMaxPosition: parseInt(data.Position) === OneDScale._positionMaxValue
+            };
+        };
+        OneDScale._positionMinValue = -1;
+        OneDScale._positionMaxValue = 1;
         return OneDScale;
     })(QuestionBase);
     return OneDScale;

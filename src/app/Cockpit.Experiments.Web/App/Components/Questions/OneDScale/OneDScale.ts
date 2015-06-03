@@ -3,10 +3,14 @@ import QuestionBase = require("Components/Questions/QuestionBase");
 import QuestionModel = require("Models/Question");
 import AudioInfo = require("Components/Players/Audio/AudioInfo");
 
-type Tick = {Label:string; Position:string;}
+type Tick = {Label:string; Position:string; IsMinPosition:boolean; IsMaxPosition:boolean;}
+type TickData = {Label:string; Position:string;}
 
 class OneDScale extends QuestionBase
 {
+	private static _positionMinValue: number = -1;
+	private static _positionMaxValue: number = 1;
+
 	public Id: string;
 	public HeaderLabel: string;
 	public X1Ticks: Tick[];
@@ -35,10 +39,10 @@ class OneDScale extends QuestionBase
 		this.X2Ticks = this.GetTicks("X2AxisTicks");
 		this.Y1Ticks = this.GetTicks("Y1AxisTicks");
 		this.Y2Ticks = this.GetTicks("Y2AxisTicks");
-		this.HasX1Ticks = this.X1Ticks != null;
-		this.HasX2Ticks = this.X2Ticks != null;
-		this.HasY1Ticks = this.Y1Ticks != null;
-		this.HasY2Ticks = this.Y2Ticks != null;
+		this.HasX1Ticks = this.X1Ticks.length !== 0;
+		this.HasX2Ticks = this.X2Ticks.length !== 0;
+		this.HasY1Ticks = this.Y1Ticks.length !== 0;
+		this.HasY2Ticks = this.Y2Ticks.length !== 0;
 
 		this.IsValueNotSet = knockout.computed(() => !(this.HasAnswer() && this.HasValidAnswer(this.Answer())));
 
@@ -66,13 +70,22 @@ class OneDScale extends QuestionBase
 	{
 		var ticksContainer = this.GetInstrument(name);
 
-		if (!ticksContainer) return null;
+		if (!ticksContainer) return new Array<Tick>();
 
-		var ticks = this.GetArray<Tick>(ticksContainer[name.slice(0, -1)]);
+		var ticks = this.GetArray<TickData>(ticksContainer[name.slice(0, -1)]).map(t => this.CreateTick(t));
 		ticks = ticks.sort((a, b) => parseInt(a.Position) - parseInt(b.Position));
-		ticks.forEach(t => t.Label = this.GetFormatted(t.Label));
 
 		return ticks;
+	}
+
+	private CreateTick(data:TickData):Tick
+	{
+		return {
+			Label: this.GetFormatted(data.Label),
+			Position: data.Position,
+			IsMinPosition: parseInt(data.Position) === OneDScale._positionMinValue,
+			IsMaxPosition: parseInt(data.Position) === OneDScale._positionMaxValue
+	}
 	}
 }
 
