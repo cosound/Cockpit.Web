@@ -8,9 +8,8 @@ define(["require", "exports"], function (require, exports) {
     exports.Get = Get;
     function Initialize() {
         _map = {
-            "Monitor:Event:StartAtDateTime": new QuestionMap("Questions/Start", false),
-            "Monitor:Event:EndAtDateTime": new QuestionMap("Questions/End", false),
             "Monitor": new QuestionMap("Questions/Monitor", false),
+            "Header": new QuestionMap("Questions/Header", false),
             "introductions_r001": new QuestionMap("Questions/Introduction"),
             "BooleanQuestion, 1.0": new QuestionMap("Questions/Boolean"),
             "AbQuestion, 1.0": new QuestionMap("Questions/AB"),
@@ -23,7 +22,7 @@ define(["require", "exports"], function (require, exports) {
             "TwoDKScaleDD": new QuestionMap("Questions/TwoDScaleK"),
             "TextBlock": new QuestionMap("Questions/TextBlock"),
             "LikertScale": new QuestionMap("Questions/LikertScale"),
-            "KacPS": new QuestionMap("Questions/KAcPS"),
+            "KacPS": new QuestionMap("Questions/KAcPS")
         };
         _map[_unsupported] = new QuestionMap("Questions/Unsupported", false);
     }

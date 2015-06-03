@@ -1,6 +1,7 @@
 define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"], function (require, exports, knockout, CockpitPortal, Navigation) {
     exports.IsReady = knockout.observable(false);
     exports.NumberOfSlides = knockout.observable(0);
+    exports.Title = knockout.observable("");
     var _id;
     function SetId(id) {
         _id = id;

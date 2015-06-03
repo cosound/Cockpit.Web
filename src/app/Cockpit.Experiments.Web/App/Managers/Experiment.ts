@@ -3,7 +3,8 @@ import CockpitPortal = require("CockpitPortal");
 import Navigation = require("Managers/Navigation");
 
 export var IsReady: KnockoutObservable<boolean> = knockout.observable<boolean>(false);
-export var NumberOfSlides:KnockoutObservable<number> = knockout.observable<number>(0);
+export var NumberOfSlides: KnockoutObservable<number> = knockout.observable<number>(0);
+export var Title:KnockoutObservable<string> = knockout.observable("");
 
 var _id:string;
 

@@ -2,7 +2,6 @@ define(["require", "exports", "knockout", "Configuration", "Managers/Experiment"
     var SlideShell = (function () {
         function SlideShell() {
             var _this = this;
-            this.Title = knockout.observable();
             this.SlideName = knockout.observable();
             this.SlideData = knockout.observable();
             this.SlideIndex = knockout.observable(0);
@@ -11,7 +10,7 @@ define(["require", "exports", "knockout", "Configuration", "Managers/Experiment"
             this.SlideNumber = knockout.computed(function () { return _this.SlideIndex() + 1; });
             this.IsLoadingSlide = knockout.computed(function () { return _this.SlideData() == null; });
             this.NumberOfSlides = ExperimentManager.NumberOfSlides;
-            this.Title(Configuration.ExperimentTitle);
+            this.Title = ExperimentManager.Title;
             this.SlideName(Configuration.SlideName);
             this.HasTitle = knockout.computed(function () { return _this.Title() !== ""; });
             this._experimentMangerIsReadySubscription = ExperimentManager.IsReady.subscribe(function (r) {
