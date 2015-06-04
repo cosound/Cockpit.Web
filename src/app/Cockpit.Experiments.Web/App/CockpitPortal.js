@@ -6,6 +6,12 @@ define(["require", "exports", "Configuration"], function (require, exports, Conf
     var Experiment = (function () {
         function Experiment() {
         }
+        Experiment.Get = function (id, serviceCaller) {
+            if (serviceCaller === void 0) { serviceCaller = null; }
+            if (serviceCaller == null)
+                serviceCaller = CHAOS.Portal.Client.ServiceCallerService.GetDefaultCaller();
+            return serviceCaller.CallService("Experiment/Get", 0 /* Get */, { id: id }, false, "json3");
+        };
         Experiment.Next = function (listId, serviceCaller) {
             if (serviceCaller === void 0) { serviceCaller = null; }
             if (serviceCaller == null)

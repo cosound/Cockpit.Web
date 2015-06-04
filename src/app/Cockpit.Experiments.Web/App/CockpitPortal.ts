@@ -10,6 +10,14 @@ function Initialize():void
 
 export class Experiment
 {
+	public static Get(id: string, serviceCaller: CHAOS.Portal.Client.IServiceCaller = null):CHAOS.Portal.Client.ICallState<CockpitResults<IExperiment>>
+	{
+		if (serviceCaller == null)
+			serviceCaller = CHAOS.Portal.Client.ServiceCallerService.GetDefaultCaller();
+
+		return serviceCaller.CallService("Experiment/Get", CHAOS.Portal.Client.HttpMethod.Get, { id: id }, false, "json3");
+	}
+
 	public static Next(listId: string, serviceCaller: CHAOS.Portal.Client.IServiceCaller = null): CHAOS.Portal.Client.ICallState<CockpitResults<IExperimentClaim>>
 	{
 		if (serviceCaller == null)
@@ -50,6 +58,17 @@ export class Answer
 
 		return serviceCaller.CallService("Answer/Set", CHAOS.Portal.Client.HttpMethod.Post, { questionId: questionId, output: JSON.stringify(output) }, false);
 	}
+}
+
+export interface IExperiment
+{
+	Id: string;
+	Name: string;
+	FooterLabel: string;
+	Css: string;
+	Versuion: string;
+	LockQuestion:boolean;
+	EnablePrevious: boolean;
 }
 
 export interface IExperimentClaim
