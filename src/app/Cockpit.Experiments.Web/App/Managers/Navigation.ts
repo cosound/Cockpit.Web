@@ -32,7 +32,7 @@ function LoadPage(name: string, data?:any): void
 
 function LoadSlide(id: string): void
 {
-	ExperimentManager.SetId(id);
+	ExperimentManager.Load(id);
 
 	if (CurrentPage() == null || CurrentPage().Name() !== "SlideShell")
 		CurrentPage(new NavigationPage("SlideShell"));

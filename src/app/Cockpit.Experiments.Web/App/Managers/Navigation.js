@@ -37,7 +37,7 @@ define(["require", "exports", "knockout", "routie", "Managers/NavigationPage", "
         exports.CurrentPage(new NavigationPage(name, data));
     }
     function LoadSlide(id) {
-        ExperimentManager.SetId(id);
+        ExperimentManager.Load(id);
         if (exports.CurrentPage() == null || exports.CurrentPage().Name() !== "SlideShell")
             exports.CurrentPage(new NavigationPage("SlideShell"));
     }

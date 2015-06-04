@@ -66,7 +66,7 @@ export interface IExperiment
 	Name: string;
 	FooterLabel: string;
 	Css: string;
-	Versuion: string;
+	Version: string;
 	LockQuestion:boolean;
 	EnablePrevious: boolean;
 }

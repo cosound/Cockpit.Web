@@ -1,6 +1,7 @@
 ﻿import knockout = require("knockout");
 import CockpitPortal = require("CockpitPortal");
 import Navigation = require("Managers/Navigation");
+import Configuration = require("Configuration");
 
 export var IsReady: KnockoutObservable<boolean> = knockout.observable<boolean>(false);
 export var NumberOfSlides: KnockoutObservable<number> = knockout.observable<number>(0);
@@ -8,13 +9,24 @@ export var Title:KnockoutObservable<string> = knockout.observable("");
 
 var _id:string;
 
-export function SetId(id: string): void
+export function Load(id: string): void
 {
 	_id = id;
 
 	if (IsReady()) IsReady(false);
 
-	IsReady(true);
+	CockpitPortal.Experiment.Get(_id).WithCallback(response =>
+	{
+		if (response.Error != null) throw new Error("Failed to load Experiment: " + response.Error.Message);
+		if (response.Body.Results.length === 0) throw new Error("No Experiment data retuened");
+
+		var config = response.Body.Results[0];
+
+		Configuration.CloseSlides = config.LockQuestion;
+		Configuration.FooterLabel(config.FooterLabel);
+
+		IsReady(true);
+	});
 }
 
 export function LoadSlide(index:number, callback:(questions:CockpitPortal.IQuestion[])=>void ):void

@@ -1,4 +1,4 @@
 ﻿<div class="container" data-bind="if: Page() != null">
 	<div data-bind="component: {name: Page().Name, params: Page().Data}"></div>
-	<p class="text-muted" data-bind="visible: IsPoweredByCockpitVisible">Powered by Cockpit</p>
+	<p class="text-muted" data-bind="visible: IsFooterVisible, text: FooterLabel"></p>
 </div>

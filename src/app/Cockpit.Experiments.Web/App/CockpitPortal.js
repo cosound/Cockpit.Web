@@ -10,13 +10,13 @@ define(["require", "exports", "Configuration"], function (require, exports, Conf
             if (serviceCaller === void 0) { serviceCaller = null; }
             if (serviceCaller == null)
                 serviceCaller = CHAOS.Portal.Client.ServiceCallerService.GetDefaultCaller();
-            return serviceCaller.CallService("Experiment/Get", 0 /* Get */, { id: id }, false, "json3");
+            return serviceCaller.CallService("Experiment/Get", CHAOS.Portal.Client.HttpMethod.Get, { id: id }, false, "json3");
         };
         Experiment.Next = function (listId, serviceCaller) {
             if (serviceCaller === void 0) { serviceCaller = null; }
             if (serviceCaller == null)
                 serviceCaller = CHAOS.Portal.Client.ServiceCallerService.GetDefaultCaller();
-            return serviceCaller.CallService("Experiment/Next", 0 /* Get */, { listId: listId }, false, "json3");
+            return serviceCaller.CallService("Experiment/Next", CHAOS.Portal.Client.HttpMethod.Get, { listId: listId }, false, "json3");
         };
         return Experiment;
     })();
@@ -28,7 +28,7 @@ define(["require", "exports", "Configuration"], function (require, exports, Conf
             if (serviceCaller === void 0) { serviceCaller = null; }
             if (serviceCaller == null)
                 serviceCaller = CHAOS.Portal.Client.ServiceCallerService.GetDefaultCaller();
-            return serviceCaller.CallService("Slide/Close", 0 /* Get */, { questionaireId: questionaireId, slideIndex: slideIndex }, false, "json3");
+            return serviceCaller.CallService("Slide/Close", CHAOS.Portal.Client.HttpMethod.Get, { questionaireId: questionaireId, slideIndex: slideIndex }, false, "json3");
         };
         return Slide;
     })();
@@ -40,7 +40,7 @@ define(["require", "exports", "Configuration"], function (require, exports, Conf
             if (serviceCaller === void 0) { serviceCaller = null; }
             if (serviceCaller == null)
                 serviceCaller = CHAOS.Portal.Client.ServiceCallerService.GetDefaultCaller();
-            return serviceCaller.CallService("Question/Get", 0 /* Get */, { id: id, index: index }, false, "json3");
+            return serviceCaller.CallService("Question/Get", CHAOS.Portal.Client.HttpMethod.Get, { id: id, index: index }, false, "json3");
         };
         return Question;
     })();
@@ -52,7 +52,7 @@ define(["require", "exports", "Configuration"], function (require, exports, Conf
             if (serviceCaller === void 0) { serviceCaller = null; }
             if (serviceCaller == null)
                 serviceCaller = CHAOS.Portal.Client.ServiceCallerService.GetDefaultCaller();
-            return serviceCaller.CallService("Answer/Set", 1 /* Post */, { questionId: questionId, output: JSON.stringify(output) }, false);
+            return serviceCaller.CallService("Answer/Set", CHAOS.Portal.Client.HttpMethod.Post, { questionId: questionId, output: JSON.stringify(output) }, false);
         };
         return Answer;
     })();

@@ -32,6 +32,8 @@
 
 	public Format(input:string):string
 	{
+		if (input == null) return null;
+
 		var result:string;
 
 		while (input !== (result = input.replace(this._formatFinder,(m: string, f: string) => this.Replace(f))))

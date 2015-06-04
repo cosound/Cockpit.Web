@@ -29,6 +29,8 @@ define(["require", "exports"], function (require, exports) {
         }
         TextFormatter.prototype.Format = function (input) {
             var _this = this;
+            if (input == null)
+                return null;
             var result;
             while (input !== (result = input.replace(this._formatFinder, function (m, f) { return _this.Replace(f); })))
                 input = result;

@@ -1,15 +1,24 @@
-define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"], function (require, exports, knockout, CockpitPortal, Navigation) {
+define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation", "Configuration"], function (require, exports, knockout, CockpitPortal, Navigation, Configuration) {
     exports.IsReady = knockout.observable(false);
     exports.NumberOfSlides = knockout.observable(0);
     exports.Title = knockout.observable("");
     var _id;
-    function SetId(id) {
+    function Load(id) {
         _id = id;
         if (exports.IsReady())
             exports.IsReady(false);
-        exports.IsReady(true);
+        CockpitPortal.Experiment.Get(_id).WithCallback(function (response) {
+            if (response.Error != null)
+                throw new Error("Failed to load Experiment: " + response.Error.Message);
+            if (response.Body.Results.length === 0)
+                throw new Error("No Experiment data retuened");
+            var config = response.Body.Results[0];
+            Configuration.CloseSlides = config.LockQuestion;
+            Configuration.FooterLabel(config.FooterLabel);
+            exports.IsReady(true);
+        });
     }
-    exports.SetId = SetId;
+    exports.Load = Load;
     function LoadSlide(index, callback) {
         CockpitPortal.Question.Get(_id, index).WithCallback(function (response) {
             if (response.Error != null) {
