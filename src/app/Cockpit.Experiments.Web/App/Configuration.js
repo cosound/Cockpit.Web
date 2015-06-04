@@ -1,7 +1,10 @@
-define(["require", "exports", "knockout"], function (require, exports, knockout) {
-    exports.PortalPath = "https://dev-api.cosound.dk";
-    exports.ExperimentTitle = "Cockpit Test";
-    exports.CloseSlides = false;
-    exports.SlideName = "slide";
-    exports.FooterLabel = knockout.observable(null);
+define(["require", "exports"], function (require, exports) {
+    var Configuration = (function () {
+        function Configuration() {
+            this.PortalPath = "https://dev-api.cosound.dk";
+        }
+        return Configuration;
+    })();
+    var instance = new Configuration();
+    return instance;
 });

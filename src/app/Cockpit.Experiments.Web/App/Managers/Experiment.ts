@@ -1,64 +1,68 @@
 ﻿import knockout = require("knockout");
 import CockpitPortal = require("CockpitPortal");
 import Navigation = require("Managers/Navigation");
-import Configuration = require("Configuration");
 
-export var IsReady: KnockoutObservable<boolean> = knockout.observable<boolean>(false);
-export var NumberOfSlides: KnockoutObservable<number> = knockout.observable<number>(0);
-export var Title:KnockoutObservable<string> = knockout.observable("");
-
-var _id:string;
-
-export function Load(id: string): void
+class Experiment
 {
-	_id = id;
+	public IsReady: KnockoutObservable<boolean> = knockout.observable<boolean>(false);
+	public NumberOfSlides: KnockoutObservable<number> = knockout.observable<number>(0);
+	public Title: KnockoutObservable<string> = knockout.observable("");
+	public CloseSlides: KnockoutObservable<boolean> = knockout.observable(false);
+	public FooterLabel: KnockoutObservable<string> = knockout.observable(null);
+	public SlideName: KnockoutObservable<string> = knockout.observable("slide");
 
-	if (IsReady()) IsReady(false);
+	private _id:string;
 
-	CockpitPortal.Experiment.Get(_id).WithCallback(response =>
+	public Load(id: string): void
 	{
-		if (response.Error != null) throw new Error("Failed to load Experiment: " + response.Error.Message);
-		if (response.Body.Results.length === 0) throw new Error("No Experiment data retuened");
+		this._id = id;
 
-		var config = response.Body.Results[0];
+		if (this.IsReady()) this.IsReady(false);
 
-		Configuration.CloseSlides = config.LockQuestion;
-		Configuration.FooterLabel(config.FooterLabel);
-
-		IsReady(true);
-	});
-}
-
-export function LoadSlide(index:number, callback:(questions:CockpitPortal.IQuestion[])=>void ):void
-{
-	CockpitPortal.Question.Get(_id, index).WithCallback(response =>
-	{
-		if (response.Error != null)
+		CockpitPortal.Experiment.Get(this._id).WithCallback(response =>
 		{
-			if (response.Error.Fullname === "Chaos.Cockpit.Core.Core.Exceptions.SlideClosedException")
+			if (response.Error != null) throw new Error("Failed to load Experiment: " + response.Error.Message);
+			if (response.Body.Results.length === 0) throw new Error("No Experiment data retuened");
+
+			var config = response.Body.Results[0];
+
+			this.CloseSlides(config.LockQuestion);
+			this.FooterLabel(config.FooterLabel);
+
+			this.IsReady(true);
+		});
+	}
+
+	public LoadSlide(index: number, callback: (questions: CockpitPortal.IQuestion[]) => void): void
+	{
+		CockpitPortal.Question.Get(this._id, index).WithCallback(response =>
+		{
+			if (response.Error != null)
 			{
-				Navigation.Navigate("SlideLocked");
-				return;
+				if (response.Error.Fullname === "Chaos.Cockpit.Core.Core.Exceptions.SlideClosedException")
+				{
+					Navigation.Navigate("SlideLocked");
+					return;
+				}
+				else if (response.Error.Message === "No Questionaire found by that Id")
+				{
+					Navigation.Navigate("ExperimentNotFound/" + this._id);
+					return;
+				}
+				else
+					throw new Error("Failed to get slide: " + response.Error.Message);
 			}
-			else if (response.Error.Message === "No Questionaire found by that Id")
-			{
-				Navigation.Navigate("ExperimentNotFound/" + _id);
-				return;
-			}
-			else
-				throw new Error("Failed to get slide: " + response.Error.Message);
-		}
 
-		if (response.Body.Count === 0)
-			throw new Error("No slide returned");
+			if (response.Body.Count === 0)
+				throw new Error("No slide returned");
 
-		NumberOfSlides(response.Body.FoundCount);
+			this.NumberOfSlides(response.Body.FoundCount);
 
-		callback(response.Body.Results);
-	});
-}
+			callback(response.Body.Results);
+		});
+	}
 
-export function SaveQuestionAnswer(id: string, answer: any, callback:()=>void): void
+	public SaveQuestionAnswer(id: string, answer: any, callback: () => void): void
 {
 	CockpitPortal.Answer.Set(id, answer).WithCallback(response =>
 	{
@@ -68,11 +72,16 @@ export function SaveQuestionAnswer(id: string, answer: any, callback:()=>void): 
 	});
 }
 
-export function CloseSlide(index:number):void
-{
-	CockpitPortal.Slide.Close(_id, index).WithCallback(response =>
+	public CloseSlide(index: number): void
 	{
-		if (response.Error != null)
-			throw new Error("Failed to close slide: " + response.Error.Message);
-	});
+		CockpitPortal.Slide.Close(this._id, index).WithCallback(response =>
+		{
+			if (response.Error != null)
+				throw new Error("Failed to close slide: " + response.Error.Message);
+		});
+	}
 }
+
+var instance = new Experiment();
+
+export = instance;

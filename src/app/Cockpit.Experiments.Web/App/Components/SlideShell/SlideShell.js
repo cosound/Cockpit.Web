@@ -1,8 +1,7 @@
-define(["require", "exports", "knockout", "Configuration", "Managers/Experiment", "Models/Slide"], function (require, exports, knockout, Configuration, ExperimentManager, SlideModel) {
+define(["require", "exports", "knockout", "Managers/Experiment", "Models/Slide"], function (require, exports, knockout, ExperimentManager, SlideModel) {
     var SlideShell = (function () {
         function SlideShell() {
             var _this = this;
-            this.SlideName = knockout.observable();
             this.SlideData = knockout.observable();
             this.SlideIndex = knockout.observable(0);
             this.CanGoToNextSlide = knockout.observable(false);
@@ -11,7 +10,7 @@ define(["require", "exports", "knockout", "Configuration", "Managers/Experiment"
             this.IsLoadingSlide = knockout.computed(function () { return _this.SlideData() == null; });
             this.NumberOfSlides = ExperimentManager.NumberOfSlides;
             this.Title = ExperimentManager.Title;
-            this.SlideName(Configuration.SlideName);
+            this.SlideName = ExperimentManager.SlideName;
             this.HasTitle = knockout.computed(function () { return _this.Title() !== ""; });
             this._experimentMangerIsReadySubscription = ExperimentManager.IsReady.subscribe(function (r) {
                 if (!r)
@@ -26,7 +25,7 @@ define(["require", "exports", "knockout", "Configuration", "Managers/Experiment"
             this.CanGoToNextSlide(false);
             var slideIndex = this.SlideIndex();
             this.LoadSlide(slideIndex + 1);
-            if (Configuration.CloseSlides)
+            if (ExperimentManager.CloseSlides())
                 ExperimentManager.CloseSlide(slideIndex);
         };
         SlideShell.prototype.LoadSlide = function (index) {
@@ -35,7 +34,7 @@ define(["require", "exports", "knockout", "Configuration", "Managers/Experiment"
             if (this.SlideData() != null) {
                 var oldSlide = this.SlideData();
                 this.SlideData().Complete(function () {
-                    if (Configuration.CloseSlides && oldSlide.Index != null)
+                    if (ExperimentManager.CloseSlides() && oldSlide.Index != null)
                         ExperimentManager.CloseSlide(oldSlide.Index);
                 });
             }

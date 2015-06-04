@@ -1,12 +1,11 @@
 ﻿import knockout = require("knockout");
-import Configuration = require("Configuration");
 import ExperimentManager = require("Managers/Experiment");
 import SlideModel = require("Models/Slide");
 
 class SlideShell
 {
 	public Title: KnockoutObservable<string>;
-	public SlideName: KnockoutObservable<string> = knockout.observable<string>();
+	public SlideName: KnockoutObservable<string>;
 	public HasTitle: KnockoutComputed<boolean>;
 
 	public SlideData: KnockoutObservable<SlideModel> = knockout.observable<SlideModel>();
@@ -27,7 +26,7 @@ class SlideShell
 		this.NumberOfSlides = ExperimentManager.NumberOfSlides;
 
 		this.Title = ExperimentManager.Title;
-		this.SlideName(Configuration.SlideName);
+		this.SlideName = ExperimentManager.SlideName;
 		this.HasTitle = knockout.computed(() => this.Title() !== "");
 
 		this._experimentMangerIsReadySubscription = ExperimentManager.IsReady.subscribe(r =>
@@ -49,7 +48,7 @@ class SlideShell
 
 		this.LoadSlide(slideIndex + 1);
 
-		if (Configuration.CloseSlides)
+		if (ExperimentManager.CloseSlides())
 			ExperimentManager.CloseSlide(slideIndex);
 	}
 
@@ -62,7 +61,7 @@ class SlideShell
 			var oldSlide = this.SlideData();
 			this.SlideData().Complete(() =>
 			{
-				if (Configuration.CloseSlides && oldSlide.Index != null)
+				if (ExperimentManager.CloseSlides() && oldSlide.Index != null)
 					ExperimentManager.CloseSlide(oldSlide.Index);
 			});
 		}

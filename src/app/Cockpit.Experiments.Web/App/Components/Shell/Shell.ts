@@ -1,8 +1,8 @@
 ﻿import knockout = require("knockout");
-import Configuration = require("Configuration");
 import Navigation = require("Managers/Navigation");
 import NavigationPage = require("Managers/NavigationPage");
 import TextFormatter = require("Managers/TextFormatter");
+import ExperimentManager = require("Managers/Experiment");
 
 class Shell
 {
@@ -13,7 +13,7 @@ class Shell
 	constructor()
 	{
 		this.Page = Navigation.CurrentPage;
-		this.FooterLabel = knockout.computed(() => TextFormatter.Format(Configuration.FooterLabel()));
+		this.FooterLabel = knockout.computed(() => TextFormatter.Format(ExperimentManager.FooterLabel()));
 		this.IsFooterVisible = knockout.computed(() => this.FooterLabel() != null && this.FooterLabel() !== "");
 
 		Navigation.Initialize();

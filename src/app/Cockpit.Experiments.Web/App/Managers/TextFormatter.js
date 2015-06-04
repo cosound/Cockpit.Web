@@ -32,6 +32,7 @@ define(["require", "exports"], function (require, exports) {
             if (input == null)
                 return null;
             var result;
+            input = this.EscapeHtml(input);
             while (input !== (result = input.replace(this._formatFinder, function (m, f) { return _this.Replace(f); })))
                 input = result;
             return result;
@@ -41,6 +42,9 @@ define(["require", "exports"], function (require, exports) {
             if (options[0].toLocaleLowerCase() in this._formatters)
                 return this._formatters[options[0].toLocaleLowerCase()](options.slice(1));
             return "[Uknown format type: " + options[0].toLocaleLowerCase() + "]";
+        };
+        TextFormatter.prototype.EscapeHtml = function (input) {
+            return input.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
         };
         TextFormatter.prototype.GetImageFormat = function (parameters) {
             var width = "";

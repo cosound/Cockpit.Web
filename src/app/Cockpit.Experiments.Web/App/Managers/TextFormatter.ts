@@ -34,7 +34,9 @@
 	{
 		if (input == null) return null;
 
-		var result:string;
+		var result: string;
+
+		input = this.EscapeHtml(input);
 
 		while (input !== (result = input.replace(this._formatFinder,(m: string, f: string) => this.Replace(f))))
 			input = result;
@@ -50,6 +52,16 @@
 			return this._formatters[options[0].toLocaleLowerCase()](options.slice(1));
 
 		return `[Uknown format type: ${options[0].toLocaleLowerCase()}]`;
+	}
+
+	private EscapeHtml(input:string):string
+	{
+		return input
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+		.replace(/"/g, "&quot;")
+		.replace(/'/g, "&#039;");
 	}
 
 	private GetImageFormat(parameters:string[]):string
