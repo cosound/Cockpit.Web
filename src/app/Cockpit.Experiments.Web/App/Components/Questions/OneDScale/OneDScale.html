@@ -14,14 +14,14 @@
 				<span data-bind="html: Y1Ticks[0].Label"></span>
 			</div>
 			<div class="CenterContainer">
-				<div class="container-fluid XTicks" data-bind="foreach: X2Ticks">
-					<p class="Tick" data-bind="html: Label, css:{MinPosition: IsMinPosition, MaxPosition: IsMaxPosition }"></p>
+				<div class="XTicks X2" data-bind="foreach: X2Ticks, style: { height: X2Height() + 'px' }">
+					<p class="Tick" data-bind="html: Label, css:{MinPosition: IsMinPosition, MaxPosition: IsMaxPosition }, Height: {Value: $parent.X2Height, Max: true}, style: {left: RelativePosition * 100 + '%'}"></p>
 				</div>
 				<div class="container-fluid">
 					<input type="range" min="-1" max="1" data-bind="value: Answer, css: {NoValue: IsValueNotSet}, enable: CanAnswer" class="form-control col-xs-5" step="0.01" />
 				</div>
-				<div class="container-fluid XTicks" data-bind="foreach: X1Ticks">
-					<p class="Tick" data-bind="html: Label, css:{MinPosition: IsMinPosition, MaxPosition: IsMaxPosition }"></p>
+				<div class="XTicks X1" data-bind="foreach: X1Ticks, style: { height: X1Height() + 'px' }">
+					<p class="Tick" data-bind="html: Label, css:{MinPosition: IsMinPosition, MaxPosition: IsMaxPosition }, Height: {Value: $parent.X1Height, Max: true}, style: {left: RelativePosition * 100 + '%'}"></p>
 				</div>
 			</div>
 			<div class="YTicks" data-bind="if: HasY2Ticks">

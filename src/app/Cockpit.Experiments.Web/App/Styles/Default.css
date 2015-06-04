@@ -104,17 +104,36 @@ label.btn.disabled {
 
 .OneDScale .XTicks {
 	position: relative;
+	width: 100%;
 }
 
 .OneDScale .XTicks .Tick {
 	position: absolute;
 }
 
+.OneDScale .XTicks.X1 .Tick {
+	top: 0;
+	margin-top: 5px;
+}
+
+.OneDScale .XTicks.X2 .Tick {
+	bottom: 0;
+}
+
+.OneDScale .XTicks .Tick:not(.MinPosition):not(.MaxPosition) {
+	-webkit-transform: translateX(-50%);
+	-moz-transform: translateX(-50%);
+	-ms-transform: translateX(-50%);
+	-o-transform: translateX(-50%);
+	transform: translateX(-50%);
+}
+
 .OneDScale .XTicks .Tick.MinPosition {
-	left: 0;
+	
 }
 
 .OneDScale .XTicks .Tick.MaxPosition {
+	left: auto !important;
 	right: 0;
 }
 

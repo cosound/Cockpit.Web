@@ -10,6 +10,8 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
         function OneDScale(question) {
             var _this = this;
             _super.call(this, question);
+            this.X1Height = knockout.observable(0);
+            this.X2Height = knockout.observable(0);
             this.AudioInfo = null;
             this.HasMedia = false;
             this.Answer = knockout.observable(null);
@@ -19,8 +21,6 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             this.X2Ticks = this.GetTicks("X2AxisTicks");
             this.Y1Ticks = this.GetTicks("Y1AxisTicks");
             this.Y2Ticks = this.GetTicks("Y2AxisTicks");
-            this.HasX1Ticks = this.X1Ticks.length !== 0;
-            this.HasX2Ticks = this.X2Ticks.length !== 0;
             this.HasY1Ticks = this.Y1Ticks.length !== 0;
             this.HasY2Ticks = this.Y2Ticks.length !== 0;
             this.IsValueNotSet = knockout.computed(function () { return !(_this.HasAnswer() && _this.HasValidAnswer(_this.Answer())); });
@@ -44,16 +44,21 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             var ticksContainer = this.GetInstrument(name);
             if (!ticksContainer)
                 return new Array();
-            var ticks = this.GetArray(ticksContainer[name.slice(0, -1)]).map(function (t) { return _this.CreateTick(t); });
-            ticks = ticks.sort(function (a, b) { return parseInt(a.Position) - parseInt(b.Position); });
+            var ticks = this.GetArray(ticksContainer[name.slice(0, -1)]).map(function (t) { return _this.CreateTick(t); }).filter(function (t) { return t != null; });
             return ticks;
         };
         OneDScale.prototype.CreateTick = function (data) {
+            if (data.Label == null || data.Position == null) {
+                console.log("OneDScale tick skipped because of missing data: " + JSON.stringify(data));
+                return null;
+            }
+            var position = parseFloat(data.Position);
             return {
                 Label: this.GetFormatted(data.Label),
-                Position: data.Position,
-                IsMinPosition: parseInt(data.Position) === OneDScale._positionMinValue,
-                IsMaxPosition: parseInt(data.Position) === OneDScale._positionMaxValue
+                Position: position,
+                RelativePosition: (position - OneDScale._positionMinValue) / (OneDScale._positionMaxValue - OneDScale._positionMinValue),
+                IsMinPosition: position === OneDScale._positionMinValue,
+                IsMaxPosition: position === OneDScale._positionMaxValue
             };
         };
         OneDScale._positionMinValue = -1;

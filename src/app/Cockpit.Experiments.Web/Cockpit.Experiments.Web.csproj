@@ -137,6 +137,7 @@
     <TypeScriptCompile Include="App\Components\Players\Audio\AudioInfo.ts" />
     <TypeScriptCompile Include="App\Components\Questions\CheckBoxGroup\CheckBoxGroup.ts" />
     <TypeScriptCompile Include="App\Components\Questions\FreetextHash\FreetextHash.ts" />
+    <TypeScriptCompile Include="App\Components\Questions\Header\Header.ts" />
     <TypeScriptCompile Include="App\Components\TextFormat\TextFormat.ts" />
     <TypeScriptCompile Include="App\Components\Welcome\Welcome.ts" />
     <TypeScriptCompile Include="App\Managers\TextFormatter.ts" />
