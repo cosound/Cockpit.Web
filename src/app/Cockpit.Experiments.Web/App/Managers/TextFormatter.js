@@ -1,6 +1,7 @@
 define(["require", "exports"], function (require, exports) {
     var TextFormatter = (function () {
         function TextFormatter() {
+            var _this = this;
             this._formatFinder = /\{\{((?:(?!\{\{).)+?)\}\}/g;
             this._formatters = {
                 "b": function (i) { return ("<b>" + i[0] + "</b>"); },
@@ -17,6 +18,7 @@ define(["require", "exports"], function (require, exports) {
                 "style": function (i) { return ("<span style=\"" + i[0] + "\">" + i[1] + "</span>"); },
                 "url": function (i) { return ("<a target=\"_blank\" href=\"" + i[0] + "\">" + (i.length === 1 ? i[0] : i[1]) + "</a>"); },
                 "link": function (i) { return ("<a target=\"_blank\" href=\"" + i[0] + "\">" + (i.length === 1 ? i[0] : i[1]) + "</a>"); },
+                "image": function (i) { return _this.GetImageFormat(i); },
                 "n": function (i) { return "<br/>"; },
                 "tab": function (i) { return "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; },
                 "left": function (i) { return ("<span class=\"SingleLineLeft\">" + i[0] + "</span>"); },
@@ -37,6 +39,28 @@ define(["require", "exports"], function (require, exports) {
             if (options[0].toLocaleLowerCase() in this._formatters)
                 return this._formatters[options[0].toLocaleLowerCase()](options.slice(1));
             return "[Uknown format type: " + options[0].toLocaleLowerCase() + "]";
+        };
+        TextFormatter.prototype.GetImageFormat = function (parameters) {
+            var width = "";
+            var height = "";
+            var style = "";
+            if (parameters.length > 1) {
+                var second = parameters[1].toLocaleLowerCase();
+                if (second === "left" || second === "right") {
+                    style = "style=\"float: " + second + ";\"";
+                }
+                else {
+                    width = "width=\"" + second + "\"";
+                    if (parameters.length === 2)
+                        height = "height=\"" + second + "\"";
+                    else {
+                        height = "height=\"" + parameters[2] + "\"";
+                        if (parameters.length > 3)
+                            style = "style=\"float: " + parameters[3] + ";\"";
+                    }
+                }
+            }
+            return "<img src=\"" + parameters[0] + "\" " + width + " " + height + " " + style + "/>";
         };
         return TextFormatter;
     })();

@@ -12,14 +12,15 @@
 			"s": (i:string[]) => `<s>${i[0]}</s>`,
 			"sub": (i:string[]) => `<sub>${i[0]}</sub>`,
 			"super": (i:string[]) => `<sup>${i[0]}</sup>`,
-			"mark": (i: string[]) => `<mark>${i[0]}</mark>`,
-			"tiny": (i: string[]) => `<span class="Tiny">${i[0]}</span>`,
-			"small": (i: string[]) => `<span class="Small">${i[0]}</span>`,
-			"large": (i: string[]) => `<span class="Large">${i[0]}</span>`,
-			"color": (i: string[]) => `<span style="color:${i[0]}">${i[1]}</span>`,
-			"style": (i: string[]) => `<span style="${i[0]}">${i[1]}</span>`,
-			"url": (i: string[]) => `<a target="_blank" href="${i[0]}">${i.length === 1 ? i[0] : i[1]}</a>`,
-			"link": (i: string[]) => `<a target="_blank" href="${i[0]}">${i.length === 1 ? i[0] : i[1]}</a>`,
+			"mark": (i:string[]) => `<mark>${i[0]}</mark>`,
+			"tiny": (i:string[]) => `<span class="Tiny">${i[0]}</span>`,
+			"small": (i:string[]) => `<span class="Small">${i[0]}</span>`,
+			"large": (i:string[]) => `<span class="Large">${i[0]}</span>`,
+			"color": (i:string[]) => `<span style="color:${i[0]}">${i[1]}</span>`,
+			"style": (i:string[]) => `<span style="${i[0]}">${i[1]}</span>`,
+			"url": (i:string[]) => `<a target="_blank" href="${i[0]}">${i.length === 1 ? i[0] : i[1]}</a>`,
+			"link": (i:string[]) => `<a target="_blank" href="${i[0]}">${i.length === 1 ? i[0] : i[1]}</a>`,
+			"image": (i: string[]) => this.GetImageFormat(i),
 			"n": (i: string[]) => "<br/>",
 			"tab": (i: string[]) => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
 			"left": (i: string[]) => `<span class="SingleLineLeft">${i[0]}</span>`,
@@ -47,6 +48,36 @@
 			return this._formatters[options[0].toLocaleLowerCase()](options.slice(1));
 
 		return `[Uknown format type: ${options[0].toLocaleLowerCase()}]`;
+	}
+
+	private GetImageFormat(parameters:string[]):string
+	{
+		var width = "";
+		var height = "";
+		var style = "";
+
+		if (parameters.length > 1)
+		{
+			var second = parameters[1].toLocaleLowerCase();
+			if (second === "left" || second === "right")
+			{
+				style = `style="float: ${second};"`;
+			} else
+			{
+				width = `width="${second}"`;
+				if (parameters.length === 2)
+					height = `height="${second}"`;
+				else
+				{
+					height = `height="${parameters[2]}"`;
+
+					if (parameters.length > 3)
+						style = `style="float: ${parameters[3]};"`;
+				}
+			}
+		}
+
+		return `<img src="${parameters[0]}" ${width} ${height} ${style}/>`;
 	}
 }
 

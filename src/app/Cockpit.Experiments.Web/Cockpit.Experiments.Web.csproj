@@ -37,6 +37,7 @@
     <Content Include="App\Components\Slides\Default\Default.html" />
     <Content Include="App\Components\TextFormat\TextFormat.html" />
     <Content Include="App\Components\Welcome\Welcome.html" />
+    <Content Include="App\Images\DTULogo.png" />
     <Content Include="default.html" />
     <Content Include="Lib\bootstrap\css\bootstrap-theme.css" />
     <Content Include="Lib\bootstrap\css\bootstrap-theme.min.css" />
@@ -88,19 +89,9 @@
     <Content Include="Lib\video-js\video.js" />
     <Content Include="Lib\video-js\video.novtt.dev.js" />
     <Content Include="Lib\video-js\video.novtt.js" />
-    <Content Include="Tests\default.html" />
-    <Content Include="Tests\Lib\jasmine\boot.js" />
-    <Content Include="Tests\Lib\jasmine\console.js" />
-    <Content Include="Tests\Lib\jasmine\jasmine-html.js" />
-    <Content Include="Tests\Lib\jasmine\jasmine.css" />
-    <Content Include="Tests\Lib\jasmine\jasmine.js" />
-    <Content Include="Tests\Lib\jasmine\jasmine_favicon.png" />
-    <Content Include="Tests\Lib\Squire\Squire.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Lib\bootstrap\css\bootstrap-theme.css.map" />
-    <Content Include="Lib\bootstrap\css\bootstrap.css.map" />
     <Content Include="Lib\bootstrap\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Lib\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Lib\bootstrap\fonts\glyphicons-halflings-regular.woff" />
@@ -174,8 +165,6 @@
     <TypeScriptCompile Include="App\Managers\Navigation.ts" />
     <TypeScriptCompile Include="App\Managers\Experiment.ts" />
     <TypeScriptCompile Include="App\Managers\NavigationPage.ts" />
-    <TypeScriptCompile Include="Tests\App\Main.ts" />
-    <TypeScriptCompile Include="Tests\TypeScriptDefinitions\jasmine.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\bootstrap.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\crypto-js.d.ts" />
     <TypeScriptCompile Include="TypeScriptDefinitions\highcharts.d.ts" />
