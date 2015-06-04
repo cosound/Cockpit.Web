@@ -10,22 +10,20 @@
 			<p data-bind="html: AudioLabel"></p>
 		</div>
 		<div class="col-xs-10 ScaleContainer">
-			<div class="YTicks Y1" data-bind="if: HasY1Ticks">
-				<span data-bind="html: Y1Ticks[0].Label"></span>
+			<div class="XTicks X2" data-bind="foreach: X2Ticks, style: { height: X2Height() + 'px' }">
+				<p class="Tick" data-bind="html: Label, css:{MinPosition: IsMinPosition, MaxPosition: IsMaxPosition }, Height: {Value: $parent.X2Height, Max: true}, style: {left: RelativePosition * 100 + '%'}"></p>
 			</div>
-			<div class="CenterContainer">
-				<div class="XTicks X2" data-bind="foreach: X2Ticks, style: { height: X2Height() + 'px' }">
-					<p class="Tick" data-bind="html: Label, css:{MinPosition: IsMinPosition, MaxPosition: IsMaxPosition }, Height: {Value: $parent.X2Height, Max: true}, style: {left: RelativePosition * 100 + '%'}"></p>
+			<div class="SliderContainer">
+				<div class="YTicks Y1" data-bind="if: HasY1Ticks">
+					<span class="Tick" data-bind="html: Y1Ticks[0].Label"></span>
 				</div>
-				<div class="container-fluid">
-					<input type="range" min="-1" max="1" data-bind="value: Answer, css: {NoValue: IsValueNotSet}, enable: CanAnswer" class="form-control col-xs-5" step="0.01" />
-				</div>
-				<div class="XTicks X1" data-bind="foreach: X1Ticks, style: { height: X1Height() + 'px' }">
-					<p class="Tick" data-bind="html: Label, css:{MinPosition: IsMinPosition, MaxPosition: IsMaxPosition }, Height: {Value: $parent.X1Height, Max: true}, style: {left: RelativePosition * 100 + '%'}"></p>
+				<input type="range" min="-1" max="1" data-bind="value: Answer, css: {NoValue: IsValueNotSet}, enable: CanAnswer" class="form-control" step="0.01"/>
+				<div class="YTicks Y2" data-bind="if: HasY2Ticks">
+					<span class="Tick" data-bind="html: Y2Ticks[0].Label"></span>
 				</div>
 			</div>
-			<div class="YTicks" data-bind="if: HasY2Ticks">
-				<span data-bind="html: Y2Ticks[0].Label"></span>
+			<div class="XTicks X1" data-bind="foreach: X1Ticks, style: { height: X1Height() + 'px' }">
+				<p class="Tick" data-bind="html: Label, css:{MinPosition: IsMinPosition, MaxPosition: IsMaxPosition }, Height: {Value: $parent.X1Height, Max: true}, style: {left: RelativePosition * 100 + '%'}"></p>
 			</div>
 		</div>
 	</div>

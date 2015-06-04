@@ -81,30 +81,31 @@ label.btn.disabled {
 
 /*** OneDScale ***/
 
-.OneDScale .ScaleContainer {
-	display: table;
-}
-
-.OneDScale .ScaleContainer > div {
-	display: table-cell;
-}
-
-.OneDScale .ScaleContainer .YTicks {
-	vertical-align: middle;
-	width: 20%;
-}
-
-.OneDScale .ScaleContainer .YTicks span {
-	display: block;
-}
-
-.OneDScale .ScaleContainer .YTicks.Y1 span {
-	text-align: right;
-}
-
 .OneDScale .XTicks {
 	position: relative;
-	width: 100%;
+	left: 20%;
+	width: 60%;
+}
+
+.OneDScale .SliderContainer {
+	position: relative;
+}
+
+.OneDScale .SliderContainer input[type="range"] {
+	position: relative;
+	left: 20%;
+	width: 60%;
+}
+
+.OneDScale .YTicks {
+	position: absolute;
+	padding: 0 10px;
+	top: 50%;
+	-webkit-transform: translateY(-50%);
+	-moz-transform: translateY(-50%);
+	-ms-transform: translateY(-50%);
+	-o-transform: translateY(-50%);
+	transform: translateY(-50%);
 }
 
 .OneDScale .XTicks .Tick {
@@ -113,7 +114,7 @@ label.btn.disabled {
 
 .OneDScale .XTicks.X1 .Tick {
 	top: 0;
-	margin-top: 5px;
+	margin-top: 10px;
 }
 
 .OneDScale .XTicks.X2 .Tick {
@@ -137,13 +138,20 @@ label.btn.disabled {
 	right: 0;
 }
 
-.OneDScale .ScaleContainer .CenterContainer {
-	padding: 0 10px;
+.OneDScale .YTicks.Y1 {
+	right: 80%;
 }
 
-.OneDScale .ScaleContainer .CenterContainer .container-fluid, .OneDScale .Tick, .OneDScale .row .YTicks {
-	padding-left: 0;
-	padding-right: 0;
+.OneDScale .YTicks.Y2 {
+	left: 80%;
+}
+
+.OneDScale .YTicks .Tick {
+	display: block;
+}
+
+.OneDScale .YTicks.Y1 .Tick {
+	text-align: right;
 }
 
 .OneDScale input[type="range"] {
