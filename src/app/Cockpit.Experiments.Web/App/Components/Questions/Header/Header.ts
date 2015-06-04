@@ -8,7 +8,11 @@ class Header extends QuestionBase
 	{
 		super(question, false);
 
-		ExperimentManager.Title(this.GetFormatted(this.Model.Input[0].HeaderLabel));
+		var inputs = this.GetInputs();
+
+		if (inputs.length === 0 || inputs[0].HeaderLabel == undefined) throw new Error("HeaderLabel not found for Header");
+
+		ExperimentManager.Title(this.GetFormatted(inputs[0].HeaderLabel));
 	}
 
 	public SlideCompleted(): boolean

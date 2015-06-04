@@ -45,7 +45,7 @@ class QuestionsBase implements IQuestionViewModel
 	protected HasValidAnswer(answer:any):boolean
 	{
 		for (var key in answer)
-			if (key != "Events") return true;
+			if (key !== "Events") return true;
 
 		return false;
 	}
@@ -60,6 +60,11 @@ class QuestionsBase implements IQuestionViewModel
 		return this.GetIntrumentObject()[key];
 	}
 
+	protected GetInputs():any[]
+	{
+		return this.Model === null || this.Model.Input === null ? new Array<any>() : this.Model.Input;
+	}
+
 	protected GetInstrumentFormatted(key: string): string
 	{
 		var instrument = this.GetInstrument(key);
@@ -72,9 +77,11 @@ class QuestionsBase implements IQuestionViewModel
 
 	private GetIntrumentObject():{ [key:string]:any }
 	{
-		for (var i = 0; i < this.Model.Input.length; i++)
+		var inputs = this.GetInputs();
+
+		for (var i = 0; i < inputs.length; i++)
 		{
-			if (this.Model.Input[i].Instrument) return this.Model.Input[i].Instrument;
+			if (inputs[i].Instrument) return inputs[i].Instrument;
 		}
 
 		throw new Error("Intrument object not found in input");
@@ -82,9 +89,11 @@ class QuestionsBase implements IQuestionViewModel
 
 	protected HasInstrument():boolean
 	{
-		for (var i = 0; i < this.Model.Input.length; i++)
+		var inputs = this.GetInputs();
+
+		for (var i = 0; i < inputs.length; i++)
 		{
-			if (this.Model.Input[i].Instrument) return true;
+			if (inputs[i].Instrument) return true;
 		}
 		return false;
 	}

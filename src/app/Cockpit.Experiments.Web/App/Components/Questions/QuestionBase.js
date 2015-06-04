@@ -27,7 +27,7 @@ define(["require", "exports", "knockout", "Components/Players/Audio/AudioInfo", 
         };
         QuestionsBase.prototype.HasValidAnswer = function (answer) {
             for (var key in answer)
-                if (key != "Events")
+                if (key !== "Events")
                     return true;
             return false;
         };
@@ -36,6 +36,9 @@ define(["require", "exports", "knockout", "Components/Players/Audio/AudioInfo", 
         };
         QuestionsBase.prototype.GetInstrument = function (key) {
             return this.GetIntrumentObject()[key];
+        };
+        QuestionsBase.prototype.GetInputs = function () {
+            return this.Model === null || this.Model.Input === null ? new Array() : this.Model.Input;
         };
         QuestionsBase.prototype.GetInstrumentFormatted = function (key) {
             var instrument = this.GetInstrument(key);
@@ -46,15 +49,17 @@ define(["require", "exports", "knockout", "Components/Players/Audio/AudioInfo", 
             throw new Error("Instrument " + key + " is not a string but: " + instrument);
         };
         QuestionsBase.prototype.GetIntrumentObject = function () {
-            for (var i = 0; i < this.Model.Input.length; i++) {
-                if (this.Model.Input[i].Instrument)
-                    return this.Model.Input[i].Instrument;
+            var inputs = this.GetInputs();
+            for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i].Instrument)
+                    return inputs[i].Instrument;
             }
             throw new Error("Intrument object not found in input");
         };
         QuestionsBase.prototype.HasInstrument = function () {
-            for (var i = 0; i < this.Model.Input.length; i++) {
-                if (this.Model.Input[i].Instrument)
+            var inputs = this.GetInputs();
+            for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i].Instrument)
                     return true;
             }
             return false;
