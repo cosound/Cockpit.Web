@@ -1,24 +1,28 @@
 ﻿import knockout = require("knockout");
 
-export var Title: KnockoutObservable<string>;
-var isDefault: boolean = true;
-
-var _defaultName:string = "Cockpit";
-
-export function ToDefault(subName:string = null):void
+class Title
 {
-	Title((subName == null ? "" : subName + " - ") + _defaultName);
-	isDefault = true;
-}
+	public Title: KnockoutObservable<string>;
+	private isDefault: boolean = true;
+	private static defaultName: string = "Cockpit";
 
-function Initialize():void
-{
-	Title = knockout.observable(_defaultName);
-	Title.subscribe(v =>
+	constructor()
 	{
-		document.title = v;
-		isDefault = false;
-	});
+		this.Title = knockout.observable(Title.defaultName);
+		this.Title.subscribe(v =>
+		{
+			document.title = v;
+			this.isDefault = false;
+		});
+	}
+
+	public ToDefault(subName: string = null): void
+	{
+		this.Title((subName == null ? "" : subName + " - ") + Title.defaultName);
+		this.isDefault = true;
+	}
 }
 
-Initialize();
+var instance = new Title();
+
+export = instance;

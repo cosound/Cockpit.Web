@@ -10,13 +10,13 @@ define(["require", "exports", "Configuration"], function (require, exports, Conf
             if (serviceCaller === void 0) { serviceCaller = null; }
             if (serviceCaller == null)
                 serviceCaller = CHAOS.Portal.Client.ServiceCallerService.GetDefaultCaller();
-            return serviceCaller.CallService("Experiment/Get", 0 /* Get */, { id: id }, false, "json3");
+            return serviceCaller.CallService("Experiment/Get", 0 /* Get */, { id: id }, false);
         };
         Experiment.Next = function (listId, serviceCaller) {
             if (serviceCaller === void 0) { serviceCaller = null; }
             if (serviceCaller == null)
                 serviceCaller = CHAOS.Portal.Client.ServiceCallerService.GetDefaultCaller();
-            return serviceCaller.CallService("Experiment/Next", 0 /* Get */, { listId: listId }, false, "json3");
+            return serviceCaller.CallService("Experiment/Next", 0 /* Get */, { listId: listId }, false);
         };
         return Experiment;
     })();
@@ -24,11 +24,11 @@ define(["require", "exports", "Configuration"], function (require, exports, Conf
     var Slide = (function () {
         function Slide() {
         }
-        Slide.Close = function (questionaireId, slideIndex, serviceCaller) {
+        Slide.Completed = function (questionaireId, slideIndex, serviceCaller) {
             if (serviceCaller === void 0) { serviceCaller = null; }
             if (serviceCaller == null)
                 serviceCaller = CHAOS.Portal.Client.ServiceCallerService.GetDefaultCaller();
-            return serviceCaller.CallService("Slide/Close", 0 /* Get */, { questionaireId: questionaireId, slideIndex: slideIndex }, false, "json3");
+            return serviceCaller.CallService("Slide/Completed", 0 /* Get */, { questionaireId: questionaireId, slideIndex: slideIndex }, false);
         };
         return Slide;
     })();

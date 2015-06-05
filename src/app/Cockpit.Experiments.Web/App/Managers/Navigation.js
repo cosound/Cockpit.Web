@@ -1,56 +1,61 @@
 define(["require", "exports", "knockout", "routie", "Managers/NavigationPage", "Managers/Experiment", "CockpitPortal"], function (require, exports, knockout, Routie, NavigationPage, ExperimentManager, CockpitPortal) {
-    exports.CurrentPage = knockout.observable();
-    function Initialize() {
-        Routie({
-            "": function () {
-                LoadPage("Welcome");
-            },
-            "Experiment/:id": function (id) {
-                LoadSlide(id);
-            },
-            "ExperimentList/:id": function (id) {
-                LoadExperimentFromList(id);
-            },
-            "NoMoreExperiments": function () {
-                LoadPage("NoMoreExperiments");
-            },
-            "SlideLocked": function () {
-                LoadPage("SlideLocked");
-            },
-            "TextFormat": function () {
-                LoadPage("TextFormat");
-            },
-            "ExperimentNotFound/:id": function (id) {
-                LoadPage("ExperimentNotFound", id);
-            },
-            "*": function () {
-                LoadPage("NotFound");
-            }
-        });
-    }
-    exports.Initialize = Initialize;
-    function Navigate(path) {
-        Routie(path);
-    }
-    exports.Navigate = Navigate;
-    function LoadPage(name, data) {
-        exports.CurrentPage(new NavigationPage(name, data));
-    }
-    function LoadSlide(id) {
-        ExperimentManager.Load(id);
-        if (exports.CurrentPage() == null || exports.CurrentPage().Name() !== "SlideShell")
-            exports.CurrentPage(new NavigationPage("SlideShell"));
-    }
-    function LoadExperimentFromList(id) {
-        CockpitPortal.Experiment.Next(id).WithCallback(function (response) {
-            if (response.Error != null) {
-                Navigate("NoMoreExperiments");
-                return;
-            }
-            if (response.Body.Results.length === 0)
-                Navigate("NoMoreExperiments");
-            else
-                Navigate("Experiment/" + response.Body.Results[0].Id);
-        });
-    }
+    var Navigation = (function () {
+        function Navigation() {
+            var _this = this;
+            this.CurrentPage = knockout.observable();
+            Routie({
+                "": function () {
+                    _this.LoadPage("Welcome");
+                },
+                "Experiment/:id": function (id) {
+                    _this.LoadSlide(id);
+                },
+                "ExperimentList/:id": function (id) {
+                    _this.LoadExperimentFromList(id);
+                },
+                "NoMoreExperiments": function () {
+                    _this.LoadPage("NoMoreExperiments");
+                },
+                "SlideLocked": function () {
+                    _this.LoadPage("SlideLocked");
+                },
+                "TextFormat": function () {
+                    _this.LoadPage("TextFormat");
+                },
+                "ExperimentNotFound/:id": function (id) {
+                    _this.LoadPage("ExperimentNotFound", id);
+                },
+                "*": function () {
+                    _this.LoadPage("NotFound");
+                }
+            });
+        }
+        Navigation.prototype.Navigate = function (path) {
+            Routie(path);
+        };
+        Navigation.prototype.LoadPage = function (name, data) {
+            this.CurrentPage(new NavigationPage(name, data));
+        };
+        Navigation.prototype.LoadSlide = function (id) {
+            ExperimentManager.Load(id);
+            if (this.CurrentPage() == null || this.CurrentPage().Name() !== "SlideShell")
+                this.CurrentPage(new NavigationPage("SlideShell"));
+        };
+        Navigation.prototype.LoadExperimentFromList = function (id) {
+            var _this = this;
+            CockpitPortal.Experiment.Next(id).WithCallback(function (response) {
+                if (response.Error != null) {
+                    _this.Navigate("NoMoreExperiments");
+                    return;
+                }
+                if (response.Body.Results.length === 0)
+                    _this.Navigate("NoMoreExperiments");
+                else
+                    _this.Navigate("Experiment/" + response.Body.Results[0].Id);
+            });
+        };
+        return Navigation;
+    })();
+    var instance = new Navigation();
+    return instance;
 });

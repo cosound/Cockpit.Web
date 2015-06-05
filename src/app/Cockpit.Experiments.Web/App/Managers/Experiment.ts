@@ -8,16 +8,20 @@ class Experiment
 	public NumberOfSlides: KnockoutObservable<number> = knockout.observable<number>(0);
 	public Title: KnockoutObservable<string> = knockout.observable("");
 	public CloseSlides: KnockoutObservable<boolean> = knockout.observable(false);
+	public EnablePrevious: KnockoutObservable<boolean> = knockout.observable(true);
 	public FooterLabel: KnockoutObservable<string> = knockout.observable(null);
 	public SlideName: KnockoutObservable<string> = knockout.observable("slide");
+	public CurrentSlideIndex:KnockoutObservable<number> = knockout.observable(0);
 
-	private _id:string;
+	private _id: string;
+	private _hasLoadedCurrentSlide:boolean = false;
 
 	public Load(id: string): void
 	{
 		this._id = id;
 
-		if (this.IsReady()) this.IsReady(false);
+		this.IsReady(false);
+		this._hasLoadedCurrentSlide = false;
 
 		CockpitPortal.Experiment.Get(this._id).WithCallback(response =>
 		{
@@ -27,19 +31,26 @@ class Experiment
 			var config = response.Body.Results[0];
 
 			this.CloseSlides(config.LockQuestion);
+			this.EnablePrevious(config.EnablePrevious);
 			this.FooterLabel(config.FooterLabel);
+			this.CurrentSlideIndex(config.CurrentSlideIndex);
 
 			this.IsReady(true);
 		});
 	}
 
-	public LoadSlide(index: number, callback: (questions: CockpitPortal.IQuestion[]) => void): void
+	public LoadNextSlide(callback: (slideIndex:number, questions: CockpitPortal.IQuestion[]) => void):void
+	{
+		this.LoadSlide(this.CurrentSlideIndex() + (this._hasLoadedCurrentSlide ? + 1 : 0), callback);
+	}
+
+	private LoadSlide(index: number, callback: (slideIndex:number, questions: CockpitPortal.IQuestion[]) => void): void
 	{
 		CockpitPortal.Question.Get(this._id, index).WithCallback(response =>
 		{
 			if (response.Error != null)
 			{
-				if (response.Error.Fullname === "Chaos.Cockpit.Core.Core.Exceptions.SlideClosedException")
+				if (response.Error.Fullname === "Chaos.Cockpit.Core.Core.Exceptions.SlideLockedException")
 				{
 					Navigation.Navigate("SlideLocked");
 					return;
@@ -58,23 +69,26 @@ class Experiment
 
 			this.NumberOfSlides(response.Body.FoundCount);
 
-			callback(response.Body.Results);
+			this._hasLoadedCurrentSlide = true;
+			this.CurrentSlideIndex(index);
+
+			callback(index, response.Body.Results);
 		});
 	}
 
 	public SaveQuestionAnswer(id: string, answer: any, callback: () => void): void
-{
-	CockpitPortal.Answer.Set(id, answer).WithCallback(response =>
 	{
-		callback();
-		if (response.Error != null)
-			throw new Error("Failed to save answer: " + response.Error.Message);
-	});
-}
+		CockpitPortal.Answer.Set(id, answer).WithCallback(response =>
+		{
+			callback();
+			if (response.Error != null)
+				throw new Error("Failed to save answer: " + response.Error.Message);
+		});
+	}
 
 	public CloseSlide(index: number): void
 	{
-		CockpitPortal.Slide.Close(this._id, index).WithCallback(response =>
+		CockpitPortal.Slide.Completed(this._id, index).WithCallback(response =>
 		{
 			if (response.Error != null)
 				throw new Error("Failed to close slide: " + response.Error.Message);

@@ -15,8 +15,6 @@ class Shell
 		this.Page = Navigation.CurrentPage;
 		this.FooterLabel = knockout.computed(() => TextFormatter.Format(ExperimentManager.FooterLabel()));
 		this.IsFooterVisible = knockout.computed(() => this.FooterLabel() != null && this.FooterLabel() !== "");
-
-		Navigation.Initialize();
 	}
 }
 

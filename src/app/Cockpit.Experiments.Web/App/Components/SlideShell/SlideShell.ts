@@ -10,7 +10,7 @@ class SlideShell
 
 	public SlideData: KnockoutObservable<SlideModel> = knockout.observable<SlideModel>();
 
-	public SlideIndex:KnockoutObservable<number> = knockout.observable<number>(0);
+	public SlideIndex:KnockoutObservable<number>;
 	public SlideNumber:KnockoutComputed<number>;
 	public NumberOfSlides: KnockoutObservable<number>;
 	public CanGoToNextSlide: KnockoutObservable<boolean> = knockout.observable<boolean>(false);
@@ -21,6 +21,7 @@ class SlideShell
 
 	constructor()
 	{
+		this.SlideIndex = ExperimentManager.CurrentSlideIndex;
 		this.SlideNumber = knockout.computed(() => this.SlideIndex() + 1);
 		this.IsLoadingSlide = knockout.computed(() => this.SlideData() == null);
 		this.NumberOfSlides = ExperimentManager.NumberOfSlides;
@@ -34,10 +35,10 @@ class SlideShell
 			if (!r) return;
 
 			this.CleanExperimentLoaded();
-			this.LoadSlide(0);
+			this.GoToNextSlide();
 		});
 
-		if (ExperimentManager.IsReady()) this.LoadSlide(0);
+		if (ExperimentManager.IsReady()) this.GoToNextSlide();
 	}
 
 	public GoToNextSlide():void
@@ -46,29 +47,16 @@ class SlideShell
 
 		var slideIndex = this.SlideIndex();
 
-		this.LoadSlide(slideIndex + 1);
-
-		if (ExperimentManager.CloseSlides())
-			ExperimentManager.CloseSlide(slideIndex);
-	}
-
-	private LoadSlide(index:number):void
-	{
-		this.SlideIndex(index);
-
 		if (this.SlideData() != null)
 		{
 			var oldSlide = this.SlideData();
-			this.SlideData().Complete(() =>
-			{
-				if (ExperimentManager.CloseSlides() && oldSlide.Index != null)
-					ExperimentManager.CloseSlide(oldSlide.Index);
-			});
+			this.SlideData().Complete(() => ExperimentManager.CloseSlide(oldSlide.Index));
 		}
+
 		this.SlideData(null);
 
-		if (index < this.NumberOfSlides() || index === 0)
-			ExperimentManager.LoadSlide(this.SlideIndex(), questions => this.SlideData(new SlideModel("Slides/Default", index, this.CanGoToNextSlide, questions)));
+		if (slideIndex + 1 < this.NumberOfSlides() || this.NumberOfSlides() === 0)
+			ExperimentManager.LoadNextSlide((index, questions) => this.SlideData(new SlideModel("Slides/Default", index, this.CanGoToNextSlide, questions)));
 		else
 		{
 			this.AreFooterControlsVisible(false);

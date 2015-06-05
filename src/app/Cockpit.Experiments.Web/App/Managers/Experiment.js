@@ -5,14 +5,17 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
             this.NumberOfSlides = knockout.observable(0);
             this.Title = knockout.observable("");
             this.CloseSlides = knockout.observable(false);
+            this.EnablePrevious = knockout.observable(true);
             this.FooterLabel = knockout.observable(null);
             this.SlideName = knockout.observable("slide");
+            this.CurrentSlideIndex = knockout.observable(0);
+            this._hasLoadedCurrentSlide = false;
         }
         Experiment.prototype.Load = function (id) {
             var _this = this;
             this._id = id;
-            if (this.IsReady())
-                this.IsReady(false);
+            this.IsReady(false);
+            this._hasLoadedCurrentSlide = false;
             CockpitPortal.Experiment.Get(this._id).WithCallback(function (response) {
                 if (response.Error != null)
                     throw new Error("Failed to load Experiment: " + response.Error.Message);
@@ -20,15 +23,20 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
                     throw new Error("No Experiment data retuened");
                 var config = response.Body.Results[0];
                 _this.CloseSlides(config.LockQuestion);
+                _this.EnablePrevious(config.EnablePrevious);
                 _this.FooterLabel(config.FooterLabel);
+                _this.CurrentSlideIndex(config.CurrentSlideIndex);
                 _this.IsReady(true);
             });
+        };
+        Experiment.prototype.LoadNextSlide = function (callback) {
+            this.LoadSlide(this.CurrentSlideIndex() + (this._hasLoadedCurrentSlide ? +1 : 0), callback);
         };
         Experiment.prototype.LoadSlide = function (index, callback) {
             var _this = this;
             CockpitPortal.Question.Get(this._id, index).WithCallback(function (response) {
                 if (response.Error != null) {
-                    if (response.Error.Fullname === "Chaos.Cockpit.Core.Core.Exceptions.SlideClosedException") {
+                    if (response.Error.Fullname === "Chaos.Cockpit.Core.Core.Exceptions.SlideLockedException") {
                         Navigation.Navigate("SlideLocked");
                         return;
                     }
@@ -42,7 +50,9 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
                 if (response.Body.Count === 0)
                     throw new Error("No slide returned");
                 _this.NumberOfSlides(response.Body.FoundCount);
-                callback(response.Body.Results);
+                _this._hasLoadedCurrentSlide = true;
+                _this.CurrentSlideIndex(index);
+                callback(index, response.Body.Results);
             });
         };
         Experiment.prototype.SaveQuestionAnswer = function (id, answer, callback) {
@@ -53,7 +63,7 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
             });
         };
         Experiment.prototype.CloseSlide = function (index) {
-            CockpitPortal.Slide.Close(this._id, index).WithCallback(function (response) {
+            CockpitPortal.Slide.Completed(this._id, index).WithCallback(function (response) {
                 if (response.Error != null)
                     throw new Error("Failed to close slide: " + response.Error.Message);
             });

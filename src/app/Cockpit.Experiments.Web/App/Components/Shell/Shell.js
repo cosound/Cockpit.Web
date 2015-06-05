@@ -5,7 +5,6 @@ define(["require", "exports", "knockout", "Managers/Navigation", "Managers/TextF
             this.Page = Navigation.CurrentPage;
             this.FooterLabel = knockout.computed(function () { return TextFormatter.Format(ExperimentManager.FooterLabel()); });
             this.IsFooterVisible = knockout.computed(function () { return _this.FooterLabel() != null && _this.FooterLabel() !== ""; });
-            Navigation.Initialize();
         }
         return Shell;
     })();

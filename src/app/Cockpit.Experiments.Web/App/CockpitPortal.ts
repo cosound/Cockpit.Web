@@ -15,7 +15,7 @@ export class Experiment
 		if (serviceCaller == null)
 			serviceCaller = CHAOS.Portal.Client.ServiceCallerService.GetDefaultCaller();
 
-		return serviceCaller.CallService("Experiment/Get", CHAOS.Portal.Client.HttpMethod.Get, { id: id }, false, "json3");
+		return serviceCaller.CallService("Experiment/Get", CHAOS.Portal.Client.HttpMethod.Get, { id: id }, false);
 	}
 
 	public static Next(listId: string, serviceCaller: CHAOS.Portal.Client.IServiceCaller = null): CHAOS.Portal.Client.ICallState<CockpitResults<IExperimentClaim>>
@@ -23,18 +23,18 @@ export class Experiment
 		if (serviceCaller == null)
 			serviceCaller = CHAOS.Portal.Client.ServiceCallerService.GetDefaultCaller();
 
-		return serviceCaller.CallService("Experiment/Next", CHAOS.Portal.Client.HttpMethod.Get, { listId: listId }, false, "json3");
+		return serviceCaller.CallService("Experiment/Next", CHAOS.Portal.Client.HttpMethod.Get, { listId: listId }, false);
 	}
 }
 
 export class Slide
 {
-	public static Close(questionaireId: string, slideIndex: number, serviceCaller: CHAOS.Portal.Client.IServiceCaller = null): CHAOS.Portal.Client.ICallState<CockpitResults<any>>
+	public static Completed(questionaireId: string, slideIndex: number, serviceCaller: CHAOS.Portal.Client.IServiceCaller = null): CHAOS.Portal.Client.ICallState<CockpitResults<any>>
 	{
 		if (serviceCaller == null)
 			serviceCaller = CHAOS.Portal.Client.ServiceCallerService.GetDefaultCaller();
 
-		return serviceCaller.CallService("Slide/Close", CHAOS.Portal.Client.HttpMethod.Get, { questionaireId: questionaireId, slideIndex: slideIndex }, false, "json3");
+		return serviceCaller.CallService("Slide/Completed", CHAOS.Portal.Client.HttpMethod.Get, { questionaireId: questionaireId, slideIndex: slideIndex }, false);
 	}
 }
 
@@ -69,6 +69,7 @@ export interface IExperiment
 	Version: string;
 	LockQuestion:boolean;
 	EnablePrevious: boolean;
+	CurrentSlideIndex: number;
 }
 
 export interface IExperimentClaim
