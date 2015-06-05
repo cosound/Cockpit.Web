@@ -10,6 +10,7 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
             this.SlideName = knockout.observable("slide");
             this.CurrentSlideIndex = knockout.observable(0);
             this._hasLoadedCurrentSlide = false;
+            this._listExperiments = {};
         }
         Experiment.prototype.Load = function (id) {
             var _this = this;
@@ -27,6 +28,25 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
                 _this.FooterLabel(config.FooterLabel);
                 _this.CurrentSlideIndex(config.CurrentSlideIndex);
                 _this.IsReady(true);
+            });
+        };
+        Experiment.prototype.LoadNext = function (listId) {
+            var _this = this;
+            if (this._listExperiments[listId]) {
+                Navigation.Navigate("Experiment/" + this._listExperiments[listId]);
+                return;
+            }
+            CockpitPortal.Experiment.Next(listId).WithCallback(function (response) {
+                if (response.Error != null) {
+                    Navigation.Navigate("NoMoreExperiments");
+                    return;
+                }
+                if (response.Body.Results.length === 0)
+                    Navigation.Navigate("NoMoreExperiments");
+                else {
+                    _this._listExperiments[listId] = response.Body.Results[0].Id;
+                    Navigation.Navigate("Experiment/" + response.Body.Results[0].Id);
+                }
             });
         };
         Experiment.prototype.LoadNextSlide = function (callback) {

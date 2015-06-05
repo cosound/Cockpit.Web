@@ -14,7 +14,8 @@ class Experiment
 	public CurrentSlideIndex:KnockoutObservable<number> = knockout.observable(0);
 
 	private _id: string;
-	private _hasLoadedCurrentSlide:boolean = false;
+	private _hasLoadedCurrentSlide: boolean = false;
+	private _listExperiments:{[listId:string]:string} = {};
 
 	public Load(id: string): void
 	{
@@ -36,6 +37,34 @@ class Experiment
 			this.CurrentSlideIndex(config.CurrentSlideIndex);
 
 			this.IsReady(true);
+		});
+	}
+
+	public LoadNext(listId:string):void
+	{
+		if (this._listExperiments[listId])
+		{
+			Navigation.Navigate("Experiment/" + this._listExperiments[listId]);
+			return;
+		}
+
+		CockpitPortal.Experiment.Next(listId).WithCallback(response =>
+		{
+			if (response.Error != null)
+			{
+				Navigation.Navigate("NoMoreExperiments");
+				return;
+			}
+
+			if (response.Body.Results.length === 0)
+				Navigation.Navigate("NoMoreExperiments");
+			else
+			{
+				this._listExperiments[listId] = response.Body.Results[0].Id;
+
+				Navigation.Navigate("Experiment/" + response.Body.Results[0].Id);
+			}
+				
 		});
 	}
 

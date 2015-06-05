@@ -42,19 +42,7 @@ class Navigation
 
 	private LoadExperimentFromList(id:string):void
 	{
-		CockpitPortal.Experiment.Next(id).WithCallback(response =>
-		{
-			if (response.Error != null)
-			{
-				this.Navigate("NoMoreExperiments");
-				return;
-			}
-
-			if (response.Body.Results.length === 0)
-				this.Navigate("NoMoreExperiments");
-			else
-				this.Navigate("Experiment/" + response.Body.Results[0].Id);
-		});
+		ExperimentManager.LoadNext(id);
 	}
 }
 

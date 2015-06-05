@@ -1,4 +1,4 @@
-define(["require", "exports", "knockout", "routie", "Managers/NavigationPage", "Managers/Experiment", "CockpitPortal"], function (require, exports, knockout, Routie, NavigationPage, ExperimentManager, CockpitPortal) {
+define(["require", "exports", "knockout", "routie", "Managers/NavigationPage", "Managers/Experiment"], function (require, exports, knockout, Routie, NavigationPage, ExperimentManager) {
     var Navigation = (function () {
         function Navigation() {
             var _this = this;
@@ -42,17 +42,7 @@ define(["require", "exports", "knockout", "routie", "Managers/NavigationPage", "
                 this.CurrentPage(new NavigationPage("SlideShell"));
         };
         Navigation.prototype.LoadExperimentFromList = function (id) {
-            var _this = this;
-            CockpitPortal.Experiment.Next(id).WithCallback(function (response) {
-                if (response.Error != null) {
-                    _this.Navigate("NoMoreExperiments");
-                    return;
-                }
-                if (response.Body.Results.length === 0)
-                    _this.Navigate("NoMoreExperiments");
-                else
-                    _this.Navigate("Experiment/" + response.Body.Results[0].Id);
-            });
+            ExperimentManager.LoadNext(id);
         };
         return Navigation;
     })();
