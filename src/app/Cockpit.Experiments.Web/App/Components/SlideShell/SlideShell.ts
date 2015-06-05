@@ -14,6 +14,7 @@ class SlideShell
 	public SlideNumber:KnockoutComputed<number>;
 	public NumberOfSlides: KnockoutObservable<number>;
 	public CanGoToNextSlide: KnockoutObservable<boolean> = knockout.observable<boolean>(false);
+	public CanGoToPreviousSlide: KnockoutObservable<boolean> = knockout.observable<boolean>(true);
 	public AreFooterControlsVisible: KnockoutObservable<boolean> = knockout.observable<boolean>(true);
 	public IsLoadingSlide: KnockoutComputed<boolean>;
 
@@ -25,6 +26,7 @@ class SlideShell
 		this.SlideNumber = knockout.computed(() => this.SlideIndex() + 1);
 		this.IsLoadingSlide = knockout.computed(() => this.SlideData() == null);
 		this.NumberOfSlides = ExperimentManager.NumberOfSlides;
+		this.CanGoToPreviousSlide = ExperimentManager.EnablePrevious;
 
 		this.Title = ExperimentManager.Title;
 		this.SlideName = ExperimentManager.SlideName;
@@ -62,6 +64,13 @@ class SlideShell
 			this.AreFooterControlsVisible(false);
 			this.SlideData(new SlideModel("Slides/Completed"));
 		}
+	}
+
+	public GoToPreviousSlide():void
+	{
+		if (this.SlideIndex() === 0 || !ExperimentManager.EnablePrevious()) return;
+
+		ExperimentManager.LoadSlide(this.SlideIndex() - 1, (index, questions) => this.SlideData(new SlideModel("Slides/Default", index, this.CanGoToNextSlide, questions)));
 	}
 
 	private CleanExperimentLoaded():void

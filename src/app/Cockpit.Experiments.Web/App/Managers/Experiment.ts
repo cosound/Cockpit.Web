@@ -73,7 +73,7 @@ class Experiment
 		this.LoadSlide(this.CurrentSlideIndex() + (this._hasLoadedCurrentSlide ? + 1 : 0), callback);
 	}
 
-	private LoadSlide(index: number, callback: (slideIndex:number, questions: CockpitPortal.IQuestion[]) => void): void
+	public LoadSlide(index: number, callback: (slideIndex:number, questions: CockpitPortal.IQuestion[]) => void): void
 	{
 		CockpitPortal.Question.Get(this._id, index).WithCallback(response =>
 		{

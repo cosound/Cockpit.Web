@@ -8,10 +8,15 @@
 	<!-- ko ifnot: IsLoadingSlide -->
 	<div class="panel-body" data-bind="component: {name: SlideData().Name, params: SlideData}"></div>
 	<!-- /ko -->
-	<div class="panel-footer text-right">
-		<span data-bind="visible: AreFooterControlsVisible">
-			<span class="SlideName" data-bind="text: SlideName"></span> <span data-bind="text: SlideNumber"></span> of <span data-bind="text: NumberOfSlides"></span>
-		</span>
-		<button type="button" data-bind="enable: CanGoToNextSlide, click: GoToNextSlide, visible: AreFooterControlsVisible" class="btn btn-primary">Next <span data-bind="text: SlideName"></span></button>
+	<div class="panel-footer clearfix">
+		<div class="pull-left">
+			<button type="button" data-bind="enable: CanGoToPreviousSlide, click: GoToPreviousSlide, visible: AreFooterControlsVisible" class="btn btn-primary">Previous <span data-bind="text: SlideName"></span></button>
+		</div>
+		<div class="pull-right">
+			<span data-bind="visible: AreFooterControlsVisible">
+				<span class="SlideName" data-bind="text: SlideName"></span> <span data-bind="text: SlideNumber"></span> of <span data-bind="text: NumberOfSlides"></span>
+			</span>
+			<button type="button" data-bind="enable: CanGoToNextSlide, click: GoToNextSlide, visible: AreFooterControlsVisible" class="btn btn-primary">Next <span data-bind="text: SlideName"></span></button>
+		</div>
 	</div>
 </div>

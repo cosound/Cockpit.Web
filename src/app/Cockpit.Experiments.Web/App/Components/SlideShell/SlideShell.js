@@ -4,11 +4,13 @@ define(["require", "exports", "knockout", "Managers/Experiment", "Models/Slide"]
             var _this = this;
             this.SlideData = knockout.observable();
             this.CanGoToNextSlide = knockout.observable(false);
+            this.CanGoToPreviousSlide = knockout.observable(true);
             this.AreFooterControlsVisible = knockout.observable(true);
             this.SlideIndex = ExperimentManager.CurrentSlideIndex;
             this.SlideNumber = knockout.computed(function () { return _this.SlideIndex() + 1; });
             this.IsLoadingSlide = knockout.computed(function () { return _this.SlideData() == null; });
             this.NumberOfSlides = ExperimentManager.NumberOfSlides;
+            this.CanGoToPreviousSlide = ExperimentManager.EnablePrevious;
             this.Title = ExperimentManager.Title;
             this.SlideName = ExperimentManager.SlideName;
             this.HasTitle = knockout.computed(function () { return _this.Title() !== ""; });
@@ -36,6 +38,12 @@ define(["require", "exports", "knockout", "Managers/Experiment", "Models/Slide"]
                 this.AreFooterControlsVisible(false);
                 this.SlideData(new SlideModel("Slides/Completed"));
             }
+        };
+        SlideShell.prototype.GoToPreviousSlide = function () {
+            var _this = this;
+            if (this.SlideIndex() === 0 || !ExperimentManager.EnablePrevious())
+                return;
+            ExperimentManager.LoadSlide(this.SlideIndex() - 1, function (index, questions) { return _this.SlideData(new SlideModel("Slides/Default", index, _this.CanGoToNextSlide, questions)); });
         };
         SlideShell.prototype.CleanExperimentLoaded = function () {
             this._experimentMangerIsReadySubscription.dispose();
