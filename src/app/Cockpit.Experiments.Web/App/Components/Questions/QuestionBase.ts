@@ -122,6 +122,25 @@ class QuestionsBase implements IQuestionViewModel
 		return this.GetArray<TInput>(this.GetInstrument("Items").Item).map(converter);
 	}
 
+	protected RowItems<T>(items: T[], columnCount: number): T[][]
+	{
+		var result = new Array<T[]>();
+		var row: T[];
+
+		items.forEach((item, index) =>
+		{
+			if (index % columnCount === 0)
+			{
+				row = new Array<T>();
+				result.push(row);
+			}
+
+			row.push(item);
+		});
+
+		return result;
+	}
+
 	protected AddEvent(type:string, id:string = null, method:string = "None", data:string = "None")
 	{
 		var event = {

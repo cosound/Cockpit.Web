@@ -16,10 +16,14 @@ class CheckBoxGroup extends QuestionBase
 	public AudioLabel: string;
 	public AudioInfo: AudioInfo = null;
 	public Items: ItemInfo[];
+	public RowedItems: ItemInfo[][];
 	public Answer: KnockoutObservableArray<string> = knockout.observableArray<string>();
 	public CanSelectMore: KnockoutComputed<boolean>;
 	public HasMedia: boolean = false;
 	public CanAnswer: KnockoutObservable<boolean>;
+	public AddFillerItem: KnockoutComputed<boolean>;
+	public AddOneFillerItem: KnockoutComputed<boolean>;
+	public AddHalfFillerItem: KnockoutComputed<boolean>;
 
 	constructor(question: QuestionModel)
 	{
@@ -45,6 +49,11 @@ class CheckBoxGroup extends QuestionBase
 		this.CanSelectMore = knockout.computed(() => this.Answer().length < this._maxNoOfSelections);
 
 		this.Items = this.GetItems<Item, ItemInfo>(v => this.CreateItemInfo(v));
+		this.RowedItems = this.RowItems(this.Items, 4);
+
+		this.AddOneFillerItem = knockout.computed(() => this.Items.length === 2);
+		this.AddHalfFillerItem = knockout.computed(() => this.Items.length === 3);
+		this.AddFillerItem = knockout.computed(() => this.AddOneFillerItem() || this.AddHalfFillerItem());
 
 		if (this.HasAnswer())
 		{

@@ -24,6 +24,10 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             }
             this.CanAnswer = this.GetObservableWhenAllAudioHavePlayed(this.AudioInfo);
             this.Items = this.GetItems(function (item) { return _this.ItemInfo(item); });
+            this.RowedItems = this.RowItems(this.Items, 4);
+            this.AddOneFillerItem = knockout.computed(function () { return _this.Items.length === 2; });
+            this.AddHalfFillerItem = knockout.computed(function () { return _this.Items.length === 3; });
+            this.AddFillerItem = knockout.computed(function () { return _this.AddOneFillerItem() || _this.AddHalfFillerItem(); });
             if (this.HasAnswer())
                 this.Answer(this.GetAsnwer()["Id"]);
             this.Answer.subscribe(function (v) {

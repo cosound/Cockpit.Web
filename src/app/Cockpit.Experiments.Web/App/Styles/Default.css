@@ -2,6 +2,10 @@
 	padding-top: 20px;
 }
 
+.HalfColumn {
+	width: 12.5% !important;
+}
+
 .AudioPlayer {
 	display: inline-block;
 }

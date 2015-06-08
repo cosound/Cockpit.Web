@@ -80,6 +80,18 @@ define(["require", "exports", "knockout", "Components/Players/Audio/AudioInfo", 
         QuestionsBase.prototype.GetItems = function (converter) {
             return this.GetArray(this.GetInstrument("Items").Item).map(converter);
         };
+        QuestionsBase.prototype.RowItems = function (items, columnCount) {
+            var result = new Array();
+            var row;
+            items.forEach(function (item, index) {
+                if (index % columnCount === 0) {
+                    row = new Array();
+                    result.push(row);
+                }
+                row.push(item);
+            });
+            return result;
+        };
         QuestionsBase.prototype.AddEvent = function (type, id, method, data) {
             if (id === void 0) { id = null; }
             if (method === void 0) { method = "None"; }

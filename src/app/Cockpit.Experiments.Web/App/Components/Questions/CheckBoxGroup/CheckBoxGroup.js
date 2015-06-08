@@ -27,6 +27,10 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             this.CanAnswer = this.GetObservableWhenAllAudioHavePlayed(this.AudioInfo);
             this.CanSelectMore = knockout.computed(function () { return _this.Answer().length < _this._maxNoOfSelections; });
             this.Items = this.GetItems(function (v) { return _this.CreateItemInfo(v); });
+            this.RowedItems = this.RowItems(this.Items, 4);
+            this.AddOneFillerItem = knockout.computed(function () { return _this.Items.length === 2; });
+            this.AddHalfFillerItem = knockout.computed(function () { return _this.Items.length === 3; });
+            this.AddFillerItem = knockout.computed(function () { return _this.AddOneFillerItem() || _this.AddHalfFillerItem(); });
             if (this.HasAnswer()) {
                 if (this.GetAsnwer()["Selections"])
                     this.Answer.push.apply(this.Answer, this.GetAsnwer()["Selections"]);

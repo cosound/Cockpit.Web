@@ -13,9 +13,13 @@ class RadioButtonGroup extends QuestionBase
 	public AudioLabel: string;
 	public AudioInfo: AudioInfo = null;
 	public Items: ItemInfo[];
+	public RowedItems: ItemInfo[][];
 	public Answer: KnockoutObservable<string> = knockout.observable<string>(null);
 	public HasMedia: boolean = false;
-	public CanAnswer: KnockoutObservable<boolean>;
+	public CanAnswer: KnockoutObservable<boolean>; 
+	public AddFillerItem:KnockoutComputed<boolean>;
+	public AddOneFillerItem:KnockoutComputed<boolean>;
+	public AddHalfFillerItem:KnockoutComputed<boolean>;
 
 	constructor(question: QuestionModel)
 	{
@@ -37,6 +41,11 @@ class RadioButtonGroup extends QuestionBase
 		this.CanAnswer = this.GetObservableWhenAllAudioHavePlayed(this.AudioInfo);
 
 		this.Items = this.GetItems<Item, ItemInfo>(item => this.ItemInfo(item));
+		this.RowedItems = this.RowItems(this.Items, 4);
+
+		this.AddOneFillerItem = knockout.computed(() => this.Items.length === 2);
+		this.AddHalfFillerItem = knockout.computed(() => this.Items.length === 3);
+		this.AddFillerItem = knockout.computed(() => this.AddOneFillerItem() || this.AddHalfFillerItem());
 
 		if (this.HasAnswer()) this.Answer(this.GetAsnwer()["Id"]);
 		this.Answer.subscribe(v =>
