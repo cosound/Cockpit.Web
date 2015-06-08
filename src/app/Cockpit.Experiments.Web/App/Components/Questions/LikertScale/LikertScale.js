@@ -13,6 +13,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             this.AudioInfo = null;
             this.Answer = knockout.observable(null);
             this.HasMedia = false;
+            this.AnswerIsRequired = true;
             this.Id = this.Model.Id;
             this.HeaderLabel = this.GetInstrumentFormatted("HeaderLabel");
             var stimulus = this.GetInstrument("Stimulus");
@@ -22,7 +23,8 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
                 this.TrackAudioInfo("/Instrument/Stimulus", this.AudioInfo);
                 this.HasMedia = true;
             }
-            this.CanAnswer = this.GetObservableWhenAllAudioHavePlayed(this.AudioInfo);
+            this.CanAnswer = this.WhenAllAudioHavePlayed(this.AudioInfo, true);
+            this.AnswerIsRequired = this.GetInstrument("MinNoOfScalings") !== "0";
             this.Items = this.GetItems(function (item) { return _this.ItemInfo(item); });
             if (this.HasAnswer())
                 this.Answer(this.GetAsnwer()["Id"]);
@@ -32,7 +34,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             });
         }
         LikertScale.prototype.HasValidAnswer = function (answer) {
-            return answer.Id != undefined && answer.Id != null;
+            return !this.AnswerIsRequired || answer.Id != undefined && answer.Id != null;
         };
         LikertScale.prototype.ItemInfo = function (data) {
             if (data.Selected === "1")

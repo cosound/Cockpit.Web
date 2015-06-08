@@ -15,7 +15,8 @@ class LikertScale extends QuestionBase
 	public Items: ItemInfo[];
 	public Answer: KnockoutObservable<string> = knockout.observable<string>(null);
 	public HasMedia: boolean = false;
-	public CanAnswer:KnockoutObservable<boolean>;
+	public CanAnswer: KnockoutObservable<boolean>;
+	public AnswerIsRequired:boolean = true;
 
 	constructor(question: QuestionModel)
 	{
@@ -34,7 +35,8 @@ class LikertScale extends QuestionBase
 			this.HasMedia = true;
 		}
 
-		this.CanAnswer = this.GetObservableWhenAllAudioHavePlayed(this.AudioInfo);
+		this.CanAnswer = this.WhenAllAudioHavePlayed(this.AudioInfo, true);
+		this.AnswerIsRequired = this.GetInstrument("MinNoOfScalings") !== "0";
 
 		this.Items = this.GetItems<Item, ItemInfo>(item => this.ItemInfo(item));
 
@@ -48,7 +50,7 @@ class LikertScale extends QuestionBase
 
 	protected HasValidAnswer(answer: any): boolean
 	{
-		return answer.Id != undefined && answer.Id != null;
+		return !this.AnswerIsRequired || answer.Id != undefined && answer.Id != null;
 	}
 
 	private ItemInfo(data: Item): ItemInfo

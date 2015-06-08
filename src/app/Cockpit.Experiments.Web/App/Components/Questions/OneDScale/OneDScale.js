@@ -31,7 +31,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
                 this.TrackAudioInfo("/Instrument/Stimulus", this.AudioInfo);
                 this.HasMedia = true;
             }
-            this.CanAnswer = this.GetObservableWhenAllAudioHavePlayed(this.AudioInfo);
+            this.CanAnswer = this.WhenAllAudioHavePlayed(this.AudioInfo, true);
             if (this.HasAnswer())
                 this.Answer(this.GetAsnwer().Position);
             this.Answer.subscribe(function (v) {

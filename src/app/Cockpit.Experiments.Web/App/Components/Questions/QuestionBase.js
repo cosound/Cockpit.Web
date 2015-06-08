@@ -109,9 +109,11 @@ define(["require", "exports", "knockout", "Components/Players/Audio/AudioInfo", 
             var _this = this;
             audioInfo.AddIsPlayingCallback(function (isPlaying) { return _this.AddEvent(isPlaying ? "Start" : "Stop", id, "AudioDevice"); });
         };
-        QuestionsBase.prototype.GetObservableWhenAllAudioHavePlayed = function (audio) {
+        QuestionsBase.prototype.WhenAllAudioHavePlayed = function (audio, returnTrueOnAnswer) {
+            var _this = this;
+            if (returnTrueOnAnswer === void 0) { returnTrueOnAnswer = false; }
             if (audio == null)
-                return knockout.observable(true);
+                return knockout.computed(function () { return true; });
             if (audio instanceof AudioInfo)
                 audio = [audio];
             var allHavePlayed = knockout.observable(false);
@@ -127,7 +129,7 @@ define(["require", "exports", "knockout", "Components/Players/Audio/AudioInfo", 
                 }
             });
             allHavePlayed(numberOfPlays === audio.length);
-            return allHavePlayed;
+            return knockout.computed(function () { return _this.HasAnswer() || allHavePlayed(); });
         };
         QuestionsBase.prototype.SlideLoaded = function () {
         };

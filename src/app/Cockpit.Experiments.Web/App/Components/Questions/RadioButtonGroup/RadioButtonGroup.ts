@@ -38,7 +38,7 @@ class RadioButtonGroup extends QuestionBase
 			this.HasMedia = true;
 		}
 
-		this.CanAnswer = this.GetObservableWhenAllAudioHavePlayed(this.AudioInfo);
+		this.CanAnswer = this.WhenAllAudioHavePlayed(this.AudioInfo, true);
 
 		this.Items = this.GetItems<Item, ItemInfo>(item => this.ItemInfo(item));
 		this.RowedItems = this.RowItems(this.Items, 4);

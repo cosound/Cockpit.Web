@@ -159,9 +159,9 @@ class QuestionsBase implements IQuestionViewModel
 		audioInfo.AddIsPlayingCallback(isPlaying => this.AddEvent(isPlaying ? "Start" : "Stop", id, "AudioDevice"));
 	}
 
-	protected GetObservableWhenAllAudioHavePlayed(audio:AudioInfo|AudioInfo[]):KnockoutObservable<boolean>
+	protected WhenAllAudioHavePlayed(audio:AudioInfo|AudioInfo[], returnTrueOnAnswer:boolean = false):KnockoutComputed<boolean>
 	{
-		if (audio == null) return knockout.observable(true);
+		if (audio == null) return knockout.computed(() => true);
 
 		if (audio instanceof AudioInfo)
 			audio = [<AudioInfo>audio];
@@ -183,7 +183,7 @@ class QuestionsBase implements IQuestionViewModel
 
 		allHavePlayed(numberOfPlays === (<AudioInfo[]>audio).length);
 
-		return allHavePlayed;
+		return knockout.computed(() => this.HasAnswer() || allHavePlayed());
 	}
 
 	public SlideLoaded(): void

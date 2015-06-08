@@ -30,7 +30,7 @@ class KacPS extends QuestionBase
 
 		this.HasNoStimulus = this.Items.every(i => !i.HasStimulus);
 
-		this.CanAnswer = this.GetObservableWhenAllAudioHavePlayed(this.Items.map(i => i.AudioInfo));
+		this.CanAnswer = this.WhenAllAudioHavePlayed(this.Items.map(i => i.AudioInfo), true);
 
 		if (this.HasAnswer()) this.Answer(this.GetAsnwer()["Id"]);
 		this.Answer.subscribe(v =>

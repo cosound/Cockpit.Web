@@ -44,7 +44,7 @@ class CheckBoxGroup extends QuestionBase
 			this.HasMedia = true;
 		}
 
-		this.CanAnswer = this.GetObservableWhenAllAudioHavePlayed(this.AudioInfo);
+		this.CanAnswer = this.WhenAllAudioHavePlayed(this.AudioInfo, true);
 
 		this.CanSelectMore = knockout.computed(() => this.Answer().length < this._maxNoOfSelections);
 

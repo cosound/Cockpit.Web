@@ -16,7 +16,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             this.Items = this.GetItems(function (v) { return _this.CreateItemInfo(v); });
             this.MaxButtonWidth = knockout.computed(function () { return _this.Items.map(function (i) { return i.ButtonElement() == null ? null : i.ButtonElement().offsetWidth; }).reduce(function (p, c) { return p == null || c == null ? null : Math.max(p, c); }, 0); });
             this.HasNoStimulus = this.Items.every(function (i) { return !i.HasStimulus; });
-            this.CanAnswer = this.GetObservableWhenAllAudioHavePlayed(this.Items.map(function (i) { return i.AudioInfo; }));
+            this.CanAnswer = this.WhenAllAudioHavePlayed(this.Items.map(function (i) { return i.AudioInfo; }), true);
             if (this.HasAnswer())
                 this.Answer(this.GetAsnwer()["Id"]);
             this.Answer.subscribe(function (v) {
