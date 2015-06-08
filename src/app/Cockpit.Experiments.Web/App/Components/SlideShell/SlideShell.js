@@ -3,14 +3,16 @@ define(["require", "exports", "knockout", "Managers/Experiment", "Models/Slide"]
         function SlideShell() {
             var _this = this;
             this.SlideData = knockout.observable();
-            this.CanGoToNextSlide = knockout.observable(false);
-            this.CanGoToPreviousSlide = knockout.observable(true);
-            this.AreFooterControlsVisible = knockout.observable(true);
+            this.AreAllQuestionsAnswered = knockout.observable(false);
+            this.IsLoadingSlide = knockout.computed(function () { return _this.SlideData() == null; });
             this.SlideIndex = ExperimentManager.CurrentSlideIndex;
             this.SlideNumber = knockout.computed(function () { return _this.SlideIndex() + 1; });
-            this.IsLoadingSlide = knockout.computed(function () { return _this.SlideData() == null; });
             this.NumberOfSlides = ExperimentManager.NumberOfSlides;
-            this.CanGoToPreviousSlide = ExperimentManager.EnablePrevious;
+            this.IsPreviousSlideEnabled = knockout.computed(function () { return ExperimentManager.GoToPreviousSlideEnabled() && !_this.IsLoadingSlide() && _this.SlideIndex() !== 0; });
+            this.IsPreviousSlideVisible = knockout.computed(function () { return ExperimentManager.GoToPreviousSlideEnabled(); });
+            this.IsNextSlideEnabled = knockout.computed(function () { return !_this.IsLoadingSlide() && _this.AreAllQuestionsAnswered() && _this.SlideNumber() !== _this.NumberOfSlides(); });
+            this.IsNextSlideVisible = knockout.computed(function () { return true; });
+            this.IsCloseExperimentVisible = knockout.computed(function () { return ExperimentManager.IsExperimentCompleted(); });
             this.Title = ExperimentManager.Title;
             this.SlideName = ExperimentManager.SlideName;
             this.HasTitle = knockout.computed(function () { return _this.Title() !== ""; });
@@ -25,25 +27,20 @@ define(["require", "exports", "knockout", "Managers/Experiment", "Models/Slide"]
         }
         SlideShell.prototype.GoToNextSlide = function () {
             var _this = this;
-            this.CanGoToNextSlide(false);
-            var slideIndex = this.SlideIndex();
             if (this.SlideData() != null) {
                 var oldSlide = this.SlideData();
                 this.SlideData().Complete(function () { return ExperimentManager.CloseSlide(oldSlide.Index); });
             }
             this.SlideData(null);
-            if (slideIndex + 1 < this.NumberOfSlides() || this.NumberOfSlides() === 0)
-                ExperimentManager.LoadNextSlide(function (index, questions) { return _this.SlideData(new SlideModel("Slides/Default", index, _this.CanGoToNextSlide, questions)); });
-            else {
-                this.AreFooterControlsVisible(false);
-                this.SlideData(new SlideModel("Slides/Completed"));
-            }
+            ExperimentManager.LoadNextSlide(function (index, questions) { return _this.SlideData(new SlideModel("Slides/Default", index, _this.AreAllQuestionsAnswered, questions)); });
         };
         SlideShell.prototype.GoToPreviousSlide = function () {
             var _this = this;
-            if (this.SlideIndex() === 0 || !ExperimentManager.EnablePrevious())
-                return;
-            ExperimentManager.LoadSlide(this.SlideIndex() - 1, function (index, questions) { return _this.SlideData(new SlideModel("Slides/Default", index, _this.CanGoToNextSlide, questions)); });
+            this.SlideData(null);
+            ExperimentManager.LoadPreviousSlide(function (index, questions) { return _this.SlideData(new SlideModel("Slides/Default", index, _this.AreAllQuestionsAnswered, questions)); });
+        };
+        SlideShell.prototype.Close = function () {
+            ExperimentManager.Close();
         };
         SlideShell.prototype.CleanExperimentLoaded = function () {
             this._experimentMangerIsReadySubscription.dispose();

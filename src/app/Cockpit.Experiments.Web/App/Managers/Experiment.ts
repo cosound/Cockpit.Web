@@ -5,17 +5,26 @@ import Navigation = require("Managers/Navigation");
 class Experiment
 {
 	public IsReady: KnockoutObservable<boolean> = knockout.observable<boolean>(false);
+
+	public CurrentSlideIndex: KnockoutObservable<number> = knockout.observable(0);
 	public NumberOfSlides: KnockoutObservable<number> = knockout.observable<number>(0);
+
+	public IsExperimentCompleted: KnockoutObservable<boolean> = knockout.observable(false);
+
 	public Title: KnockoutObservable<string> = knockout.observable("");
 	public CloseSlides: KnockoutObservable<boolean> = knockout.observable(false);
-	public EnablePrevious: KnockoutObservable<boolean> = knockout.observable(true);
+	public GoToPreviousSlideEnabled: KnockoutObservable<boolean> = knockout.observable(true);
 	public FooterLabel: KnockoutObservable<string> = knockout.observable(null);
 	public SlideName: KnockoutObservable<string> = knockout.observable("slide");
-	public CurrentSlideIndex:KnockoutObservable<number> = knockout.observable(0);
-
+	
 	private _id: string;
 	private _hasLoadedCurrentSlide: boolean = false;
-	private _listExperiments:{[listId:string]:string} = {};
+	private _listExperiments: { [listId: string]: string } = {};
+
+	public ExperimentCompleted():void
+	{
+		this.IsExperimentCompleted(true);
+	}
 
 	public Load(id: string): void
 	{
@@ -32,9 +41,10 @@ class Experiment
 			var config = response.Body.Results[0];
 
 			this.CloseSlides(config.LockQuestion);
-			this.EnablePrevious(config.EnablePrevious);
+			this.GoToPreviousSlideEnabled(config.EnablePrevious || true);
 			this.FooterLabel(config.FooterLabel);
 			this.CurrentSlideIndex(config.CurrentSlideIndex);
+			this.IsExperimentCompleted(false);
 
 			this.IsReady(true);
 		});
@@ -70,10 +80,15 @@ class Experiment
 
 	public LoadNextSlide(callback: (slideIndex:number, questions: CockpitPortal.IQuestion[]) => void):void
 	{
-		this.LoadSlide(this.CurrentSlideIndex() + (this._hasLoadedCurrentSlide ? + 1 : 0), callback);
+		this.LoadSlide(this.CurrentSlideIndex() + (this._hasLoadedCurrentSlide ? 1 : 0), callback);
 	}
 
-	public LoadSlide(index: number, callback: (slideIndex:number, questions: CockpitPortal.IQuestion[]) => void): void
+	public LoadPreviousSlide(callback: (slideIndex: number, questions: CockpitPortal.IQuestion[]) => void): void
+	{
+		this.LoadSlide(this.CurrentSlideIndex() +  -1, callback);
+	}
+
+	private LoadSlide(index: number, callback: (slideIndex:number, questions: CockpitPortal.IQuestion[]) => void): void
 	{
 		CockpitPortal.Question.Get(this._id, index).WithCallback(response =>
 		{
@@ -122,6 +137,11 @@ class Experiment
 			if (response.Error != null)
 				throw new Error("Failed to close slide: " + response.Error.Message);
 		});
+	}
+
+	public Close():any
+	{
+		
 	}
 }
 

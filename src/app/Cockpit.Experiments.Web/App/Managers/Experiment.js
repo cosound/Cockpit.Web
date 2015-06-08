@@ -2,16 +2,20 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
     var Experiment = (function () {
         function Experiment() {
             this.IsReady = knockout.observable(false);
+            this.CurrentSlideIndex = knockout.observable(0);
             this.NumberOfSlides = knockout.observable(0);
+            this.IsExperimentCompleted = knockout.observable(false);
             this.Title = knockout.observable("");
             this.CloseSlides = knockout.observable(false);
-            this.EnablePrevious = knockout.observable(true);
+            this.GoToPreviousSlideEnabled = knockout.observable(true);
             this.FooterLabel = knockout.observable(null);
             this.SlideName = knockout.observable("slide");
-            this.CurrentSlideIndex = knockout.observable(0);
             this._hasLoadedCurrentSlide = false;
             this._listExperiments = {};
         }
+        Experiment.prototype.ExperimentCompleted = function () {
+            this.IsExperimentCompleted(true);
+        };
         Experiment.prototype.Load = function (id) {
             var _this = this;
             this._id = id;
@@ -24,9 +28,10 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
                     throw new Error("No Experiment data retuened");
                 var config = response.Body.Results[0];
                 _this.CloseSlides(config.LockQuestion);
-                _this.EnablePrevious(config.EnablePrevious);
+                _this.GoToPreviousSlideEnabled(config.EnablePrevious || true);
                 _this.FooterLabel(config.FooterLabel);
                 _this.CurrentSlideIndex(config.CurrentSlideIndex);
+                _this.IsExperimentCompleted(false);
                 _this.IsReady(true);
             });
         };
@@ -50,7 +55,10 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
             });
         };
         Experiment.prototype.LoadNextSlide = function (callback) {
-            this.LoadSlide(this.CurrentSlideIndex() + (this._hasLoadedCurrentSlide ? +1 : 0), callback);
+            this.LoadSlide(this.CurrentSlideIndex() + (this._hasLoadedCurrentSlide ? 1 : 0), callback);
+        };
+        Experiment.prototype.LoadPreviousSlide = function (callback) {
+            this.LoadSlide(this.CurrentSlideIndex() + -1, callback);
         };
         Experiment.prototype.LoadSlide = function (index, callback) {
             var _this = this;
@@ -87,6 +95,8 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
                 if (response.Error != null)
                     throw new Error("Failed to close slide: " + response.Error.Message);
             });
+        };
+        Experiment.prototype.Close = function () {
         };
         return Experiment;
     })();

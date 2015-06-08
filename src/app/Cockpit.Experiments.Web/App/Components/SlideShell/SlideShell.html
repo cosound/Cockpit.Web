@@ -10,13 +10,12 @@
 	<!-- /ko -->
 	<div class="panel-footer clearfix">
 		<div class="pull-left">
-			<button type="button" data-bind="enable: CanGoToPreviousSlide, click: GoToPreviousSlide, visible: AreFooterControlsVisible" class="btn btn-primary">Previous <span data-bind="text: SlideName"></span></button>
+			<button type="button" data-bind="enable: IsPreviousSlideEnabled, click: GoToPreviousSlide, visible: IsPreviousSlideVisible" class="btn btn-primary">Previous <span data-bind="text: SlideName"></span></button>
 		</div>
 		<div class="pull-right">
-			<span data-bind="visible: AreFooterControlsVisible">
-				<span class="SlideName" data-bind="text: SlideName"></span> <span data-bind="text: SlideNumber"></span> of <span data-bind="text: NumberOfSlides"></span>
-			</span>
-			<button type="button" data-bind="enable: CanGoToNextSlide, click: GoToNextSlide, visible: AreFooterControlsVisible" class="btn btn-primary">Next <span data-bind="text: SlideName"></span></button>
+			<span class="SlideName" data-bind="text: SlideName"></span> <span data-bind="text: SlideNumber"></span> of <span data-bind="text: NumberOfSlides"></span>
+			<button type="button" data-bind="enable: IsNextSlideEnabled, click: GoToNextSlide, visible: IsNextSlideVisible" class="btn btn-primary">Next <span data-bind="text: SlideName"></span></button>
+			<button type="button" data-bind="click: Close, visible: IsCloseExperimentVisible" class="btn btn-primary">Close</button>
 		</div>
 	</div>
 </div>
