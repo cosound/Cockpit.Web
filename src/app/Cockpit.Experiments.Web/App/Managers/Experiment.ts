@@ -14,6 +14,7 @@ class Experiment
 	public Title: KnockoutObservable<string> = knockout.observable("");
 	public CloseSlides: KnockoutObservable<boolean> = knockout.observable(false);
 	public GoToPreviousSlideEnabled: KnockoutObservable<boolean> = knockout.observable(true);
+	public CloseExperimentEnabled: KnockoutObservable<boolean> = knockout.observable(false);
 	public FooterLabel: KnockoutObservable<string> = knockout.observable(null);
 	public SlideName: KnockoutObservable<string> = knockout.observable("slide");
 	

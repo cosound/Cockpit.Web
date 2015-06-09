@@ -36,7 +36,7 @@ class SlideShell
 		this.IsPreviousSlideVisible = knockout.computed(() => ExperimentManager.GoToPreviousSlideEnabled());
 		this.IsNextSlideEnabled = knockout.computed(() => !this.IsLoadingSlide() && this.AreAllQuestionsAnswered() && this.SlideNumber() !== this.NumberOfSlides());
 		this.IsNextSlideVisible = knockout.computed(() => true);
-		this.IsCloseExperimentVisible = knockout.computed(() => ExperimentManager.IsExperimentCompleted());
+		this.IsCloseExperimentVisible = knockout.computed(() => ExperimentManager.IsExperimentCompleted() && ExperimentManager.CloseExperimentEnabled());
 
 		this.Title = ExperimentManager.Title;
 		this.SlideName = ExperimentManager.SlideName;
@@ -46,7 +46,6 @@ class SlideShell
 		{
 			if (!r) return;
 
-			this.CleanExperimentLoaded();
 			this.GoToNextSlide();
 		});
 

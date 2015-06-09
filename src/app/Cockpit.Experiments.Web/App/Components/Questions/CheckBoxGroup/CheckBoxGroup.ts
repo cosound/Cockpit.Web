@@ -59,8 +59,6 @@ class CheckBoxGroup extends QuestionBase
 		{
 			if (this.GetAsnwer()["Selections"])
 				this.Answer.push.apply(this.Answer, this.GetAsnwer()["Selections"]);
-			else
-				this.SetAnswer({ Selections: [] });
 		}
 		
 		this.Answer.subscribe(v =>

@@ -8,6 +8,7 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
             this.Title = knockout.observable("");
             this.CloseSlides = knockout.observable(false);
             this.GoToPreviousSlideEnabled = knockout.observable(true);
+            this.CloseExperimentEnabled = knockout.observable(false);
             this.FooterLabel = knockout.observable(null);
             this.SlideName = knockout.observable("slide");
             this._hasLoadedCurrentSlide = false;

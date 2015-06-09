@@ -34,8 +34,6 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             if (this.HasAnswer()) {
                 if (this.GetAsnwer()["Selections"])
                     this.Answer.push.apply(this.Answer, this.GetAsnwer()["Selections"]);
-                else
-                    this.SetAnswer({ Selections: [] });
             }
             this.Answer.subscribe(function (v) {
                 _this.AddEvent("Change", "/Instrument", "Mouse/Left/Down", v.join(","));
