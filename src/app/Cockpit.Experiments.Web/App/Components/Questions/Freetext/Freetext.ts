@@ -8,14 +8,23 @@ class Freetext extends QuestionBase
 	public Label: string = "";
 	public Answer: KnockoutObservable<string> = knockout.observable<string>(null);
 
+	private _validation: RegExp;
+
 	constructor(question: QuestionModel)
 	{
 		super(question);
 
 		this.Id = this.Model.Id;
 
-		if(this.HasInstrument())
+		if (this.HasInstrument())
+		{
 			this.Label = this.GetInstrumentFormatted("Label");
+
+			var validation = this.GetInstrument("Validation");
+
+			if (validation) this._validation = new RegExp(validation);
+		}
+			
 
 		if (this.HasAnswer()) this.LoadAnswer(this.GetAsnwer());
 		this.Answer.extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 200 }});
@@ -38,11 +47,11 @@ class Freetext extends QuestionBase
 
 	protected HasValidAnswer(answer: any): boolean
 	{
-		return true; //TODO: Check to see if text is required
+		if (!this._validation) return true;
 
-		if (!answer.Text) return false;
-		
-		return answer.Text !== "";
+		if (answer === null) answer = "";
+
+		return this._validation.test(answer);
 	}
 }
 

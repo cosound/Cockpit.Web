@@ -13,8 +13,12 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], 
             this.Label = "";
             this.Answer = knockout.observable(null);
             this.Id = this.Model.Id;
-            if (this.HasInstrument())
+            if (this.HasInstrument()) {
                 this.Label = this.GetInstrumentFormatted("Label");
+                var validation = this.GetInstrument("Validation");
+                if (validation)
+                    this._validation = new RegExp(validation);
+            }
             if (this.HasAnswer())
                 this.LoadAnswer(this.GetAsnwer());
             this.Answer.extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 200 } });
@@ -30,10 +34,11 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], 
             return { Text: answer };
         };
         Freetext.prototype.HasValidAnswer = function (answer) {
-            return true;
-            if (!answer.Text)
-                return false;
-            return answer.Text !== "";
+            if (!this._validation)
+                return true;
+            if (answer === null)
+                answer = "";
+            return this._validation.test(answer);
         };
         return Freetext;
     })(QuestionBase);
