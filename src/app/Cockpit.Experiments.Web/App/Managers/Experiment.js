@@ -1,6 +1,7 @@
 define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"], function (require, exports, knockout, CockpitPortal, Navigation) {
     var Experiment = (function () {
         function Experiment() {
+            var _this = this;
             this.IsReady = knockout.observable(false);
             this.CurrentSlideIndex = knockout.observable(0);
             this.NumberOfSlides = knockout.observable(0);
@@ -8,11 +9,23 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
             this.Title = knockout.observable("");
             this.FooterLabel = knockout.observable(null);
             this.SlideName = knockout.observable("slide");
+            this.StyleSheet = knockout.observable(null);
             this.CloseExperimentEnabled = knockout.observable(false);
             this.CloseSlidesEnabled = knockout.observable(false);
             this.GoToPreviousSlideEnabled = knockout.observable(true);
             this._hasLoadedCurrentSlide = false;
             this._listExperiments = {};
+            this.StyleSheet.subscribe(function (path) {
+                if (_this._styleSheetElement != null)
+                    document.head.removeChild(_this._styleSheetElement);
+                if (path != null) {
+                    _this._styleSheetElement = document.createElement("link");
+                    _this._styleSheetElement.rel = "stylesheet";
+                    _this._styleSheetElement.type = "text/css";
+                    _this._styleSheetElement.href = path;
+                    document.head.appendChild(_this._styleSheetElement);
+                }
+            });
         }
         Experiment.prototype.ExperimentCompleted = function () {
             this.IsExperimentCompleted(true);
@@ -33,6 +46,7 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
                 _this.FooterLabel(config.FooterLabel);
                 _this.CurrentSlideIndex(config.CurrentSlideIndex);
                 _this.IsExperimentCompleted(false);
+                _this.StyleSheet(config.Css);
                 _this.IsReady(true);
             });
         };

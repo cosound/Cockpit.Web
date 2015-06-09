@@ -14,6 +14,7 @@ class Experiment
 	public Title: KnockoutObservable<string> = knockout.observable("");
 	public FooterLabel: KnockoutObservable<string> = knockout.observable(null);
 	public SlideName: KnockoutObservable<string> = knockout.observable("slide");
+	public StyleSheet: KnockoutObservable<string> = knockout.observable(null);
 
 	public CloseExperimentEnabled: KnockoutObservable<boolean> = knockout.observable(false);
 	public CloseSlidesEnabled: KnockoutObservable<boolean> = knockout.observable(false);
@@ -22,6 +23,26 @@ class Experiment
 	private _id: string;
 	private _hasLoadedCurrentSlide: boolean = false;
 	private _listExperiments: { [listId: string]: string } = {};
+
+	private _styleSheetElement:HTMLLinkElement;
+
+	constructor()
+	{
+		this.StyleSheet.subscribe(path =>
+		{
+			if (this._styleSheetElement != null)
+				document.head.removeChild(this._styleSheetElement);
+
+			if (path != null)
+			{
+				this._styleSheetElement = document.createElement("link");
+				this._styleSheetElement.rel = "stylesheet";
+				this._styleSheetElement.type = "text/css";
+				this._styleSheetElement.href = path;
+				document.head.appendChild(this._styleSheetElement);
+			}
+		});
+	}
 
 	public ExperimentCompleted():void
 	{
@@ -47,6 +68,7 @@ class Experiment
 			this.FooterLabel(config.FooterLabel);
 			this.CurrentSlideIndex(config.CurrentSlideIndex);
 			this.IsExperimentCompleted(false);
+			this.StyleSheet(config.Css);
 
 			this.IsReady(true);
 		});
