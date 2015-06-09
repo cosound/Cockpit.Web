@@ -14,6 +14,8 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             this.Answer = knockout.observable(null);
             this.HasMedia = false;
             this.AnswerIsRequired = true;
+            this.IsStimuliBlockVisible = true;
+            this._alignForStimuli = true;
             this.Id = this.Model.Id;
             this.HeaderLabel = this.GetInstrumentFormatted("HeaderLabel");
             var stimulus = this.GetInstrument("Stimulus");
@@ -23,6 +25,9 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
                 this.TrackAudioInfo("/Instrument/Stimulus", this.AudioInfo);
                 this.HasMedia = true;
             }
+            var alignForStimuli = this.GetInstrument("AlignForStimuli");
+            this._alignForStimuli = alignForStimuli === undefined || alignForStimuli === "1";
+            this.IsStimuliBlockVisible = this._alignForStimuli || this.HasMedia;
             this.CanAnswer = this.WhenAllAudioHavePlayed(this.AudioInfo, true);
             this.AnswerIsRequired = this.GetInstrument("MinNoOfScalings") !== "0";
             this.Items = this.GetItems(function (item) { return _this.ItemInfo(item); });

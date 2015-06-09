@@ -5,11 +5,13 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-xs-2" data-bind="if: HasMedia">
+		<div class="col-xs-2" data-bind="visible: IsStimuliBlockVisible">
+			<!-- ko if: HasMedia -->
 			<div data-bind="component: {name: 'Players/Audio', params: AudioInfo}"></div>
 			<p data-bind="html: AudioLabel"></p>
+			<!-- /ko -->
 		</div>
-		<div class="col-xs-10 Scale" data-bind="foreach: Items">
+		<div class="Scale" data-bind="foreach: Items, css: {'col-xs-10': IsStimuliBlockVisible, 'col-xs-12': !IsStimuliBlockVisible}">
 			<label class="text-center" data-bind="css: {disabled: !$parent.CanAnswer()}, style: {width: (100 / $parent.Items.length) + '%'}">
 				<span class="Line"></span>
 				<input type="radio" data-bind="checked: $parent.Answer, attr: {name: $parent.Id}, value: Id, enable: $parent.CanAnswer" />

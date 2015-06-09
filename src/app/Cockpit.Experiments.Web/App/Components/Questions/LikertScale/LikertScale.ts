@@ -16,7 +16,10 @@ class LikertScale extends QuestionBase
 	public Answer: KnockoutObservable<string> = knockout.observable<string>(null);
 	public HasMedia: boolean = false;
 	public CanAnswer: KnockoutObservable<boolean>;
-	public AnswerIsRequired:boolean = true;
+	public AnswerIsRequired: boolean = true;
+	public IsStimuliBlockVisible:boolean = true;
+
+	private _alignForStimuli:boolean = true;
 
 	constructor(question: QuestionModel)
 	{
@@ -34,6 +37,10 @@ class LikertScale extends QuestionBase
 			this.TrackAudioInfo("/Instrument/Stimulus", this.AudioInfo);
 			this.HasMedia = true;
 		}
+
+		var alignForStimuli = this.GetInstrument("AlignForStimuli");
+		this._alignForStimuli = alignForStimuli === undefined || alignForStimuli === "1";
+		this.IsStimuliBlockVisible = this._alignForStimuli || this.HasMedia;
 
 		this.CanAnswer = this.WhenAllAudioHavePlayed(this.AudioInfo, true);
 		this.AnswerIsRequired = this.GetInstrument("MinNoOfScalings") !== "0";

@@ -33,6 +33,10 @@ class OneDScale extends QuestionBase
 	public IsValueNotSet: KnockoutComputed<boolean>;
 	public CanAnswer: KnockoutObservable<boolean>;
 
+	public IsStimuliBlockVisible: boolean = true;
+
+	private _alignForStimuli: boolean = true;
+
 	constructor(question: QuestionModel)
 	{
 		super(question);
@@ -57,6 +61,10 @@ class OneDScale extends QuestionBase
 			this.TrackAudioInfo("/Instrument/Stimulus", this.AudioInfo);
 			this.HasMedia = true;
 		}
+
+		var alignForStimuli = this.GetInstrument("AlignForStimuli");
+		this._alignForStimuli = alignForStimuli === undefined || alignForStimuli === "1";
+		this.IsStimuliBlockVisible = this._alignForStimuli || this.HasMedia;
 
 		this.CanAnswer = this.WhenAllAudioHavePlayed(this.AudioInfo, true);
 

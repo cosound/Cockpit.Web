@@ -33,7 +33,6 @@
     <Content Include="App\Components\Questions\ContinousScale2D\ContinousScale2D.html" />
     <Content Include="App\Components\Questions\Freetext\Freetext.html" />
     <Content Include="App\Components\Questions\RadioButtonGroup\RadioButtonGroup.html" />
-    <Content Include="App\Components\Slides\Completed\Completed.html" />
     <Content Include="App\Components\Slides\Default\Default.html" />
     <Content Include="App\Components\TextFormat\TextFormat.html" />
     <Content Include="App\Components\Welcome\Welcome.html" />
@@ -160,7 +159,6 @@
     <TypeScriptCompile Include="App\Components\Questions\QuestionBase.ts" />
     <TypeScriptCompile Include="App\Components\Questions\RadioButtonGroup\RadioButtonGroup.ts" />
     <TypeScriptCompile Include="App\Components\Questions\Unsupported\Unsupported.ts" />
-    <TypeScriptCompile Include="App\Components\Slides\Completed\Completed.ts" />
     <TypeScriptCompile Include="App\Components\Slides\Default\Default.ts" />
     <TypeScriptCompile Include="App\Components\NameConventionLoader.ts" />
     <TypeScriptCompile Include="App\Managers\Navigation.ts" />

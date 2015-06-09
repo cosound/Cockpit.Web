@@ -5,11 +5,13 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-xs-2" data-bind="if: HasMedia">
+		<div class="col-xs-2" data-bind="visible: IsStimuliBlockVisible">
+			<!-- ko if: HasMedia -->
 			<div data-bind="component: {name: 'Players/Audio', params: AudioInfo}"></div>
 			<p data-bind="html: AudioLabel"></p>
+			<!-- /ko -->
 		</div>
-		<div class="col-xs-10 ScaleContainer">
+		<div class="ScaleContainer" data-bind="css: {'col-xs-10': IsStimuliBlockVisible, 'col-xs-12': !IsStimuliBlockVisible}">
 			<div class="XTicks X2" data-bind="foreach: X2Ticks, style: { height: X2Height() + 'px' }">
 				<p class="Tick" data-bind="html: Label, css:{MinPosition: IsMinPosition, MaxPosition: IsMaxPosition }, Height: {Value: $parent.X2Height, Max: true}, style: {left: RelativePosition * 100 + '%'}"></p>
 			</div>
@@ -17,7 +19,7 @@
 				<div class="YTicks Y1" data-bind="if: HasY1Ticks">
 					<span class="Tick" data-bind="html: Y1Ticks[0].Label"></span>
 				</div>
-				<input type="range" min="-1" max="1" data-bind="value: Answer, css: {NoValue: IsValueNotSet}, enable: CanAnswer" class="form-control" step="0.01"/>
+				<input type="range" min="-1" max="1" data-bind="value: Answer, css: {NoValue: IsValueNotSet}, enable: CanAnswer" class="form-control" step="0.01" />
 				<div class="YTicks Y2" data-bind="if: HasY2Ticks">
 					<span class="Tick" data-bind="html: Y2Ticks[0].Label"></span>
 				</div>
