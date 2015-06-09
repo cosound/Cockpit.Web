@@ -12,11 +12,12 @@ class Experiment
 	public IsExperimentCompleted: KnockoutObservable<boolean> = knockout.observable(false);
 
 	public Title: KnockoutObservable<string> = knockout.observable("");
-	public CloseSlides: KnockoutObservable<boolean> = knockout.observable(false);
-	public GoToPreviousSlideEnabled: KnockoutObservable<boolean> = knockout.observable(true);
-	public CloseExperimentEnabled: KnockoutObservable<boolean> = knockout.observable(false);
 	public FooterLabel: KnockoutObservable<string> = knockout.observable(null);
 	public SlideName: KnockoutObservable<string> = knockout.observable("slide");
+
+	public CloseExperimentEnabled: KnockoutObservable<boolean> = knockout.observable(false);
+	public CloseSlidesEnabled: KnockoutObservable<boolean> = knockout.observable(false);
+	public GoToPreviousSlideEnabled: KnockoutObservable<boolean> = knockout.observable(true);
 	
 	private _id: string;
 	private _hasLoadedCurrentSlide: boolean = false;
@@ -41,7 +42,7 @@ class Experiment
 
 			var config = response.Body.Results[0];
 
-			this.CloseSlides(config.LockQuestion);
+			this.CloseSlidesEnabled(config.LockQuestion);
 			this.GoToPreviousSlideEnabled(config.EnablePrevious || true);
 			this.FooterLabel(config.FooterLabel);
 			this.CurrentSlideIndex(config.CurrentSlideIndex);

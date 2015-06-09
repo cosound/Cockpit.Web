@@ -8,10 +8,10 @@ define(["require", "exports", "knockout", "Managers/Experiment", "Models/Slide"]
             this.SlideIndex = ExperimentManager.CurrentSlideIndex;
             this.SlideNumber = knockout.computed(function () { return _this.SlideIndex() + 1; });
             this.NumberOfSlides = ExperimentManager.NumberOfSlides;
-            this.IsPreviousSlideEnabled = knockout.computed(function () { return ExperimentManager.GoToPreviousSlideEnabled() && !_this.IsLoadingSlide() && _this.SlideIndex() !== 0; });
-            this.IsPreviousSlideVisible = knockout.computed(function () { return ExperimentManager.GoToPreviousSlideEnabled(); });
-            this.IsNextSlideEnabled = knockout.computed(function () { return !_this.IsLoadingSlide() && _this.AreAllQuestionsAnswered() && _this.SlideNumber() !== _this.NumberOfSlides(); });
+            this.IsPreviousSlideVisible = knockout.computed(function () { return ExperimentManager.GoToPreviousSlideEnabled() && !ExperimentManager.CloseSlidesEnabled(); });
+            this.IsPreviousSlideEnabled = knockout.computed(function () { return _this.IsPreviousSlideVisible() && !_this.IsLoadingSlide() && _this.SlideIndex() !== 0; });
             this.IsNextSlideVisible = knockout.computed(function () { return true; });
+            this.IsNextSlideEnabled = knockout.computed(function () { return _this.IsNextSlideVisible() && !_this.IsLoadingSlide() && _this.AreAllQuestionsAnswered() && _this.SlideNumber() !== _this.NumberOfSlides(); });
             this.IsCloseExperimentVisible = knockout.computed(function () { return ExperimentManager.IsExperimentCompleted() && ExperimentManager.CloseExperimentEnabled(); });
             this.Title = ExperimentManager.Title;
             this.SlideName = ExperimentManager.SlideName;

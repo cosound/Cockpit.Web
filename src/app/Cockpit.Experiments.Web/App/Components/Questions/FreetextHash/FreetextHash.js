@@ -9,7 +9,7 @@ define(["require", "exports", "Components/Questions/Freetext/Freetext", "crypto-
         __extends(FreetextHash, _super);
         function FreetextHash(question) {
             _super.call(this, question);
-            this._forceLowerCase = this.GetInstrument("ForceLower") === 1;
+            this._forceLowerCase = this.GetInstrument("ForceLowerCase") === 1;
         }
         FreetextHash.prototype.LoadAnswer = function (answer) {
         };

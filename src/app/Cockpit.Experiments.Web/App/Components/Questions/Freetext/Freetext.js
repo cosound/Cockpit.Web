@@ -12,12 +12,32 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], 
             _super.call(this, question);
             this.Label = "";
             this.Answer = knockout.observable(null);
+            this.LabelPosition = "left";
+            this.LabelPositionLeft = false;
+            this.LabelPositionTop = false;
+            this.LabelPositionRight = false;
+            this.LabelPositionBottom = false;
             this.Id = this.Model.Id;
             if (this.HasInstrument()) {
                 this.Label = this.GetInstrumentFormatted("Label");
                 var validation = this.GetInstrument("Validation");
                 if (validation)
                     this._validation = new RegExp(validation);
+            }
+            this.LabelPosition = this.GetInstrument("LabelPosition");
+            switch (this.LabelPosition) {
+                case "left":
+                    this.LabelPositionLeft = true;
+                    break;
+                case "top":
+                    this.LabelPositionTop = true;
+                    break;
+                case "right":
+                    this.LabelPositionRight = true;
+                    break;
+                case "bottom":
+                    this.LabelPositionBottom = true;
+                    break;
             }
             if (this.HasAnswer())
                 this.LoadAnswer(this.GetAsnwer());

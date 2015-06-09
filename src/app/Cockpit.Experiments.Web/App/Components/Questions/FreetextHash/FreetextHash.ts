@@ -10,7 +10,7 @@ class FreetextHash extends FreeText
 	{
 		super(question);
 
-		this._forceLowerCase = this.GetInstrument("ForceLower") === 1;
+		this._forceLowerCase = this.GetInstrument("ForceLowerCase") === 1;
 	}
 
 	protected LoadAnswer(answer: any): void

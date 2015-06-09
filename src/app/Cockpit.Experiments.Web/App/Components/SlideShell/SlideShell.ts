@@ -17,10 +17,10 @@ class SlideShell
 
 	public IsLoadingSlide: KnockoutComputed<boolean>;
 
-	public IsPreviousSlideEnabled:KnockoutComputed<boolean>;
 	public IsPreviousSlideVisible: KnockoutComputed<boolean>;
-	public IsNextSlideEnabled: KnockoutComputed<boolean>;
+	public IsPreviousSlideEnabled:KnockoutComputed<boolean>;
 	public IsNextSlideVisible: KnockoutComputed<boolean>;
+	public IsNextSlideEnabled: KnockoutComputed<boolean>;
 	public IsCloseExperimentVisible: KnockoutComputed<boolean>;
 
 	private _experimentMangerIsReadySubscription: KnockoutSubscription;
@@ -32,10 +32,10 @@ class SlideShell
 		this.SlideNumber = knockout.computed(() => this.SlideIndex() + 1);
 		this.NumberOfSlides = ExperimentManager.NumberOfSlides;
 
-		this.IsPreviousSlideEnabled = knockout.computed(() => ExperimentManager.GoToPreviousSlideEnabled() && !this.IsLoadingSlide() && this.SlideIndex() !== 0);
-		this.IsPreviousSlideVisible = knockout.computed(() => ExperimentManager.GoToPreviousSlideEnabled());
-		this.IsNextSlideEnabled = knockout.computed(() => !this.IsLoadingSlide() && this.AreAllQuestionsAnswered() && this.SlideNumber() !== this.NumberOfSlides());
+		this.IsPreviousSlideVisible = knockout.computed(() => ExperimentManager.GoToPreviousSlideEnabled() && !ExperimentManager.CloseSlidesEnabled());
+		this.IsPreviousSlideEnabled = knockout.computed(() => this.IsPreviousSlideVisible() && !this.IsLoadingSlide() && this.SlideIndex() !== 0);
 		this.IsNextSlideVisible = knockout.computed(() => true);
+		this.IsNextSlideEnabled = knockout.computed(() => this.IsNextSlideVisible() && !this.IsLoadingSlide() && this.AreAllQuestionsAnswered() && this.SlideNumber() !== this.NumberOfSlides());
 		this.IsCloseExperimentVisible = knockout.computed(() => ExperimentManager.IsExperimentCompleted() && ExperimentManager.CloseExperimentEnabled());
 
 		this.Title = ExperimentManager.Title;

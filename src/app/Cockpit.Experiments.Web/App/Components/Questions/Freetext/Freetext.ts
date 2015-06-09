@@ -7,6 +7,11 @@ class Freetext extends QuestionBase
 	public Id: string;
 	public Label: string = "";
 	public Answer: KnockoutObservable<string> = knockout.observable<string>(null);
+	public LabelPosition:string = "left";
+	public LabelPositionLeft:boolean = false;
+	public LabelPositionTop:boolean = false;
+	public LabelPositionRight:boolean = false;
+	public LabelPositionBottom:boolean = false;
 
 	private _validation: RegExp;
 
@@ -24,7 +29,24 @@ class Freetext extends QuestionBase
 
 			if (validation) this._validation = new RegExp(validation);
 		}
-			
+
+		this.LabelPosition = this.GetInstrument("LabelPosition");
+
+		switch (this.LabelPosition)
+		{
+			case "left":
+				this.LabelPositionLeft = true;
+				break;
+			case "top":
+				this.LabelPositionTop = true;
+				break;
+			case "right":
+				this.LabelPositionRight = true;
+				break;
+			case "bottom":
+				this.LabelPositionBottom = true;
+				break;
+		}
 
 		if (this.HasAnswer()) this.LoadAnswer(this.GetAsnwer());
 		this.Answer.extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 200 }});
