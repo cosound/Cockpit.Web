@@ -10,7 +10,7 @@
 	</div>
 	<div class="row container-fluid" data-bind="foreach: RowedItems">
 		<div class="row" data-bind="foreach: $data">
-			<!-- ko if: $parentContext.$index === 0 -->
+			<!-- ko if: $parentContext.$index() + $index() === 0 -->
 			<div class="col-xs-3" data-bind="visible: $parents[1].AddFillerItem, css:{HalfColumn: $parents[1].AddHalfFillerItem}"></div>
 			<!-- /ko -->
 			<label class="col-xs-3" data-bind="css: {disabled: !$parents[1].CanAnswer()}">
