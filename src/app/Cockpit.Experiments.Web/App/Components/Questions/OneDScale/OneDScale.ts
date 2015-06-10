@@ -6,7 +6,7 @@ import AudioInfo = require("Components/Players/Audio/AudioInfo");
 type Tick = { Label: string; Position: number; RelativePosition:number; IsMinPosition:boolean; IsMaxPosition:boolean;}
 type TickData = {Label:string; Position:string;}
 
-class OneDScale extends QuestionBase
+class OneDScale extends QuestionBase<{Position:number}>
 {
 	private static _positionMinValue: number = -1;
 	private static _positionMaxValue: number = 1;
@@ -50,7 +50,7 @@ class OneDScale extends QuestionBase
 		this.HasY1Ticks = this.Y1Ticks.length !== 0;
 		this.HasY2Ticks = this.Y2Ticks.length !== 0;
 
-		this.IsValueNotSet = knockout.computed(() => !(this.HasAnswer() && this.HasValidAnswer(this.Answer())));
+		this.IsValueNotSet = knockout.computed(() => !(this.HasAnswer() && this.HasValidAnswer()));
 
 		var stimulus = this.GetInstrument("Stimulus");
 
@@ -68,7 +68,7 @@ class OneDScale extends QuestionBase
 
 		this.CanAnswer = this.WhenAllAudioHavePlayed(this.AudioInfo, true);
 
-		if (this.HasAnswer()) this.Answer(this.GetAsnwer().Position);
+		if (this.HasAnswer()) this.Answer(this.GetAnswer().Position);
 		this.Answer.subscribe(v =>
 		{
 			this.AddEvent("Change", "/Instrument", "Mouse/Left/Down", v.toString());

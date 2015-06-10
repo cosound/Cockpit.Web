@@ -1,4 +1,4 @@
-﻿interface Stimulus
+﻿interface IStimulus
 {
 	Type: string;
 	Label: string;

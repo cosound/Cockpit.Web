@@ -1,6 +1,6 @@
 ﻿<div data-bind="foreach: Questions" class="SlideContainer">
 	<!-- ko if: HasUIElement -->
-	<div data-bind="component: {name: Type, params: $data}"></div>
+	<div data-bind="component: {name: Type, params: $data}, css: {DoesNotHaveValidAnswer: !HasValidAnswer()}"></div>
 	<hr />
 	<!-- /ko -->
 </div>

@@ -21,7 +21,7 @@ define(["require", "exports", "knockout", "jquery", "Highcharts", "HighchartsMor
         TwoDScaleK.prototype.InitializeItems = function () {
             var _this = this;
             var answers = {};
-            this.GetAsnwer().Scalings.forEach(function (scaling) {
+            this.GetAnswer().Scalings.forEach(function (scaling) {
                 var coordinates = scaling.Position.split(" ");
                 answers[scaling.Id] = { x: parseFloat(coordinates[0]), y: parseFloat(coordinates[1]) };
             });

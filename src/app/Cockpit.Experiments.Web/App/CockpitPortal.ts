@@ -91,7 +91,12 @@ export interface IQuestion
 	Id:string;
 	Type: string;
 	Input:any[];
-	Output: any;
+	Output: IOutput;
+}
+
+export interface IOutput
+{
+	Events:IQuestionEvent[];
 }
 
 export interface IQuestionEvent

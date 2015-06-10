@@ -25,7 +25,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             this.Y2Ticks = this.GetTicks("Y2AxisTicks");
             this.HasY1Ticks = this.Y1Ticks.length !== 0;
             this.HasY2Ticks = this.Y2Ticks.length !== 0;
-            this.IsValueNotSet = knockout.computed(function () { return !(_this.HasAnswer() && _this.HasValidAnswer(_this.Answer())); });
+            this.IsValueNotSet = knockout.computed(function () { return !(_this.HasAnswer() && _this.HasValidAnswer()); });
             var stimulus = this.GetInstrument("Stimulus");
             if (stimulus != null) {
                 this.AudioLabel = this.GetFormatted(stimulus.Label);
@@ -38,7 +38,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             this.IsStimuliBlockVisible = this._alignForStimuli || this.HasMedia;
             this.CanAnswer = this.WhenAllAudioHavePlayed(this.AudioInfo, true);
             if (this.HasAnswer())
-                this.Answer(this.GetAsnwer().Position);
+                this.Answer(this.GetAnswer().Position);
             this.Answer.subscribe(function (v) {
                 _this.AddEvent("Change", "/Instrument", "Mouse/Left/Down", v.toString());
                 _this.SetAnswer({ Position: v });

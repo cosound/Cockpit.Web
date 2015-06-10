@@ -2,7 +2,7 @@
 import QuestionBase = require("Components/Questions/QuestionBase");
 import QuestionModel = require("Models/Question");
 
-class Header extends QuestionBase
+class Header extends QuestionBase<any>
 {
 	constructor(question: QuestionModel)
 	{

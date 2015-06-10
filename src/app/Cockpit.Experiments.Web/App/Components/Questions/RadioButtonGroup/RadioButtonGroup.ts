@@ -6,7 +6,7 @@ import AudioInfo = require("Components/Players/Audio/AudioInfo");
 type ItemInfo = { Id: string; Label: string; };
 type Item = { Label: string; Id: string; Selected: string };
 
-class RadioButtonGroup extends QuestionBase
+class RadioButtonGroup extends QuestionBase<{Id:string}>
 {
 	public Id: string;
 	public HeaderLabel: string;
@@ -47,7 +47,7 @@ class RadioButtonGroup extends QuestionBase
 		this.AddHalfFillerItem = knockout.computed(() => this.Items.length === 3);
 		this.AddFillerItem = knockout.computed(() => this.AddOneFillerItem() || this.AddHalfFillerItem());
 
-		if (this.HasAnswer()) this.Answer(this.GetAsnwer()["Id"]);
+		if (this.HasAnswer()) this.Answer(this.GetAnswer().Id);
 		this.Answer.subscribe(v =>
 		{
 			this.AddEvent("Change", "/Instrument", "Mouse/Left/Down", v);

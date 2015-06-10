@@ -4,7 +4,7 @@ import QuestionModel = require("Models/Question");
 import AudioInfo = require("Components/Players/Audio/AudioInfo");
 import TextFormatter = require("Managers/TextFormatter");
 
-class QuestionsBase implements IQuestionViewModel
+class QuestionsBase<T> implements IQuestionViewModel
 {
 	protected Model: QuestionModel;
 	protected HasAnswer: KnockoutComputed<boolean>;
@@ -14,16 +14,10 @@ class QuestionsBase implements IQuestionViewModel
 	{
 		this.Model = question;
 		this.Model.RequiresInput = requiresInput;
-		this.HasAnswer = knockout.computed(() => this.Model.Answer() != null);
+		this.HasAnswer = knockout.computed(() => this.Model.Answer() != null && this.HasNoneEventsProperty(this.GetAnswer()));
 
-		if (this.HasAnswer())
-		{
-			var answer = this.Model.Answer();
-
-			this._events = answer.Events ? answer.Events : new Array<CockpitPortal.IQuestionEvent>();
-		} else {
-			this._events = new Array<CockpitPortal.IQuestionEvent>();
-		}
+		var answer = this.Model.Answer();
+		this._events = answer != null && answer.Events ? answer.Events : new Array<CockpitPortal.IQuestionEvent>();
 
 		setTimeout(() =>
 		{
@@ -32,17 +26,21 @@ class QuestionsBase implements IQuestionViewModel
 		}, 0); //Give decendent time to override HasValidAnswer 
 	}
 
-	protected UpdateIsAnswerValid(answer?:any):void
+	protected UpdateIsAnswerValid(answer?:T):void
 	{
-		answer = answer || this.GetAsnwer();
+		answer = answer || this.GetAnswer();
 
-		if (answer == null)
-			this.Model.HasValidAnswer(false);
-		else
-			this.Model.HasValidAnswer(this.HasValidAnswer(answer));
+		this.Model.HasValidAnswer(this.HasValidAnswer(answer));
 	}
 
-	protected HasValidAnswer(answer:any):boolean
+	protected HasValidAnswer(answer?:T):boolean
+	{
+		answer = answer || this.GetAnswer();
+
+		return this.HasNoneEventsProperty(answer);
+	}
+
+	private HasNoneEventsProperty(answer: T):boolean
 	{
 		for (var key in answer)
 			if (key !== "Events") return true;
@@ -53,6 +51,11 @@ class QuestionsBase implements IQuestionViewModel
 	protected GetFormatted(unformatted:string):string
 	{
 		return (unformatted === null || unformatted === undefined) ? unformatted : TextFormatter.Format(unformatted);
+	}
+
+	protected GetStimulusInstrument(key:string):IStimulus
+	{
+		return this.GetInstrument(key);
 	}
 
 	protected GetInstrument(key:string):any
@@ -98,23 +101,27 @@ class QuestionsBase implements IQuestionViewModel
 		return false;
 	}
 
-	protected GetAsnwer(): any
+	protected GetAnswer(): T
 	{
-		return this.HasAnswer() ? this.Model.Answer() : null;
+		var answer = <any>this.Model.Answer();
+
+		return answer ? answer : {};
 	}
 
-	protected SetAnswer(answer: any):void
+	protected SetAnswer(answer: T):void
 	{
-		answer.Events = this._events;
-
 		this.UpdateIsAnswerValid(answer);
-		this.Model.Answer(answer);
+
+		var output = <any>answer;
+		output.Events = this._events;
+
+		this.Model.Answer(output);
 	}
 
-	protected GetArray<T>(data:T|T[]):T[]
+	protected GetArray<TItem>(data: TItem|TItem[]): TItem[]
 	{
-		if (data instanceof Array) return <T[]>(data);
-		return [<T>data];
+		if (data instanceof Array) return <TItem[]>(data);
+		return [<TItem>data];
 	}
 
 	protected GetItems<TInput, TOutput>(converter:(item:TInput)=>TOutput):TOutput[]
@@ -122,16 +129,16 @@ class QuestionsBase implements IQuestionViewModel
 		return this.GetArray<TInput>(this.GetInstrument("Items").Item).map(converter);
 	}
 
-	protected RowItems<T>(items: T[], columnCount: number): T[][]
+	protected RowItems<TItem>(items: TItem[], columnCount: number): TItem[][]
 	{
-		var result = new Array<T[]>();
-		var row: T[];
+		var result = new Array<TItem[]>();
+		var row: TItem[];
 
 		items.forEach((item, index) =>
 		{
 			if (index % columnCount === 0)
 			{
-				row = new Array<T>();
+				row = new Array<TItem>();
 				result.push(row);
 			}
 

@@ -11,7 +11,7 @@ import AudioInfo = require("Components/Players/Audio/AudioInfo");
 type Item = { Id: string; Name: string; AudioInfo: AudioInfo; GraphData: HighchartsSeriesOptions;};
 type AnswerItem = { Id: string; Position:string;};
 
-class TwoDScaleK extends QuestionBase
+class TwoDScaleK extends QuestionBase<{ Scalings: AnswerItem[]}>
 {
 	public Title:string;
 	public ChartElement: KnockoutObservable<HTMLElement> = knockout.observable<HTMLElement>();
@@ -35,7 +35,7 @@ class TwoDScaleK extends QuestionBase
 	{
 		var answers: {[key:string]:{x:number; y:number}} = {};
 
-		this.GetAsnwer().Scalings.forEach((scaling:AnswerItem) =>
+		this.GetAnswer().Scalings.forEach((scaling:AnswerItem) =>
 		{
 			var coordinates = scaling.Position.split(" ");
 			answers[scaling.Id] = { x: parseFloat(coordinates[0]), y: parseFloat(coordinates[1]) }

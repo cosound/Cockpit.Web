@@ -2,7 +2,7 @@
 import QuestionBase = require("Components/Questions/QuestionBase");
 import QuestionModel = require("Models/Question");
 
-class Unsupported extends QuestionBase
+class Unsupported extends QuestionBase<any>
 {
 	constructor(question: QuestionModel)
 	{

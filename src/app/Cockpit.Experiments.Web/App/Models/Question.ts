@@ -9,7 +9,7 @@ class Question
 	public APIType:string;
 	public HasUIElement: boolean;
 	public Input: any[];
-	public Answer: KnockoutObservable<any> = knockout.observable<any>();
+	public Answer: KnockoutObservable<CockpitPortal.IOutput> = knockout.observable<CockpitPortal.IOutput>();
 	public HasValidAnswer: KnockoutObservable<boolean> = knockout.observable(false);
 	public RequiresInput: boolean;
 

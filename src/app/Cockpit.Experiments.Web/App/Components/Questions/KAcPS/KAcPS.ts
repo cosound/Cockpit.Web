@@ -4,9 +4,9 @@ import QuestionModel = require("Models/Question");
 import AudioInfo = require("Components/Players/Audio/AudioInfo");
 
 type ItemInfo = { Id: string; UniqueId: string; Label: string; AudioInfo: AudioInfo; HasStimulus: boolean; IsSelected: KnockoutComputed<boolean>; ButtonElement:KnockoutObservable<HTMLElement> };
-type Item = { Id:string; ChoiceButton:{ Label:string; Selected:string }; Stimulus:Stimulus };
+type Item = { Id:string; ChoiceButton:{ Label:string; Selected:string }; Stimulus:IStimulus };
 
-class KacPS extends QuestionBase
+class KacPS extends QuestionBase<{Id:string}>
 {
 	public Id: string;
 	public HeaderLabel: string;
@@ -32,7 +32,7 @@ class KacPS extends QuestionBase
 
 		this.CanAnswer = this.WhenAllAudioHavePlayed(this.Items.map(i => i.AudioInfo), true);
 
-		if (this.HasAnswer()) this.Answer(this.GetAsnwer()["Id"]);
+		if (this.HasAnswer()) this.Answer(this.GetAnswer().Id);
 		this.Answer.subscribe(v =>
 		{
 			this.AddEvent("Change", "/Instrument", "Mouse/Left/Down", v);

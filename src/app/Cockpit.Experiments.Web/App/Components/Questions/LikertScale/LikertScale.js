@@ -32,7 +32,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             this.AnswerIsRequired = this.GetInstrument("MinNoOfScalings") !== "0";
             this.Items = this.GetItems(function (item) { return _this.ItemInfo(item); });
             if (this.HasAnswer())
-                this.Answer(this.GetAsnwer()["Id"]);
+                this.Answer(this.GetAnswer().Id);
             this.Answer.subscribe(function (v) {
                 _this.AddEvent("Change", "/Instrument", "Mouse/Left/Down", v);
                 _this.SetAnswer({ Id: v });

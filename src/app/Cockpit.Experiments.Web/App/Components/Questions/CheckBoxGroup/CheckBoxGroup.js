@@ -15,9 +15,9 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             this.HasMedia = false;
             this.Id = this.Model.Id;
             this.HeaderLabel = this.GetInstrumentFormatted("HeaderLabel");
-            this._minNoOfSelections = this.GetInstrument("MinNoOfSelections");
-            this._maxNoOfSelections = this.GetInstrument("MaxNoOfSelections");
-            var stimulus = this.GetInstrument("Stimulus");
+            this._minNoOfSelections = parseInt(this.GetInstrument("MinNoOfSelections"));
+            this._maxNoOfSelections = parseInt(this.GetInstrument("MaxNoOfSelections"));
+            var stimulus = this.GetStimulusInstrument("Stimulus");
             if (stimulus != null) {
                 this.AudioLabel = this.GetFormatted(stimulus.Label);
                 this.AudioInfo = new AudioInfo([{ Type: stimulus.Type, Source: stimulus.URI }]);
@@ -32,15 +32,19 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             this.AddHalfFillerItem = knockout.computed(function () { return _this.Items.length === 3; });
             this.AddFillerItem = knockout.computed(function () { return _this.AddOneFillerItem() || _this.AddHalfFillerItem(); });
             if (this.HasAnswer()) {
-                if (this.GetAsnwer()["Selections"])
-                    this.Answer.push.apply(this.Answer, this.GetAsnwer()["Selections"]);
+                if (this.GetAnswer()["Selections"])
+                    this.Answer.push.apply(this.Answer, this.GetAnswer().Selections);
             }
+            else
+                this.SetAnswer({ Selections: [] });
             this.Answer.subscribe(function (v) {
                 _this.AddEvent("Change", "/Instrument", "Mouse/Left/Down", v.join(","));
                 _this.SetAnswer({ Selections: v });
             });
         }
         CheckBoxGroup.prototype.HasValidAnswer = function (answer) {
+            if (this._minNoOfSelections === 0)
+                return true;
             if (!answer.Selections)
                 return false;
             return answer.Selections.length >= this._minNoOfSelections;

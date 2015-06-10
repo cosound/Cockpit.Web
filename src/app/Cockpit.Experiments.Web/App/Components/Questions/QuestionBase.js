@@ -5,27 +5,23 @@ define(["require", "exports", "knockout", "Components/Players/Audio/AudioInfo", 
             if (requiresInput === void 0) { requiresInput = true; }
             this.Model = question;
             this.Model.RequiresInput = requiresInput;
-            this.HasAnswer = knockout.computed(function () { return _this.Model.Answer() != null; });
-            if (this.HasAnswer()) {
-                var answer = this.Model.Answer();
-                this._events = answer.Events ? answer.Events : new Array();
-            }
-            else {
-                this._events = new Array();
-            }
+            this.HasAnswer = knockout.computed(function () { return _this.Model.Answer() != null && _this.HasNoneEventsProperty(_this.GetAnswer()); });
+            var answer = this.Model.Answer();
+            this._events = answer != null && answer.Events ? answer.Events : new Array();
             setTimeout(function () {
                 _this.UpdateIsAnswerValid();
                 _this.Model.Loaded();
             }, 0);
         }
         QuestionsBase.prototype.UpdateIsAnswerValid = function (answer) {
-            answer = answer || this.GetAsnwer();
-            if (answer == null)
-                this.Model.HasValidAnswer(false);
-            else
-                this.Model.HasValidAnswer(this.HasValidAnswer(answer));
+            answer = answer || this.GetAnswer();
+            this.Model.HasValidAnswer(this.HasValidAnswer(answer));
         };
         QuestionsBase.prototype.HasValidAnswer = function (answer) {
+            answer = answer || this.GetAnswer();
+            return this.HasNoneEventsProperty(answer);
+        };
+        QuestionsBase.prototype.HasNoneEventsProperty = function (answer) {
             for (var key in answer)
                 if (key !== "Events")
                     return true;
@@ -33,6 +29,9 @@ define(["require", "exports", "knockout", "Components/Players/Audio/AudioInfo", 
         };
         QuestionsBase.prototype.GetFormatted = function (unformatted) {
             return (unformatted === null || unformatted === undefined) ? unformatted : TextFormatter.Format(unformatted);
+        };
+        QuestionsBase.prototype.GetStimulusInstrument = function (key) {
+            return this.GetInstrument(key);
         };
         QuestionsBase.prototype.GetInstrument = function (key) {
             return this.GetIntrumentObject()[key];
@@ -64,13 +63,15 @@ define(["require", "exports", "knockout", "Components/Players/Audio/AudioInfo", 
             }
             return false;
         };
-        QuestionsBase.prototype.GetAsnwer = function () {
-            return this.HasAnswer() ? this.Model.Answer() : null;
+        QuestionsBase.prototype.GetAnswer = function () {
+            var answer = this.Model.Answer();
+            return answer ? answer : {};
         };
         QuestionsBase.prototype.SetAnswer = function (answer) {
-            answer.Events = this._events;
             this.UpdateIsAnswerValid(answer);
-            this.Model.Answer(answer);
+            var output = answer;
+            output.Events = this._events;
+            this.Model.Answer(output);
         };
         QuestionsBase.prototype.GetArray = function (data) {
             if (data instanceof Array)

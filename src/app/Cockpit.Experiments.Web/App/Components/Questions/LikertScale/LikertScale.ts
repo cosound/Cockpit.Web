@@ -6,7 +6,7 @@ import AudioInfo = require("Components/Players/Audio/AudioInfo");
 type ItemInfo = { Id: string; Label: string; };
 type Item = { Label:string; Id:string; Selected:string };
 
-class LikertScale extends QuestionBase
+class LikertScale extends QuestionBase<{Id:string}>
 {
 	public Id: string;
 	public HeaderLabel: string;
@@ -47,7 +47,7 @@ class LikertScale extends QuestionBase
 
 		this.Items = this.GetItems<Item, ItemInfo>(item => this.ItemInfo(item));
 
-		if (this.HasAnswer()) this.Answer(this.GetAsnwer()["Id"]);
+		if (this.HasAnswer()) this.Answer(this.GetAnswer().Id);
 		this.Answer.subscribe(v =>
 		{
 			this.AddEvent("Change", "/Instrument", "Mouse/Left/Down", v);

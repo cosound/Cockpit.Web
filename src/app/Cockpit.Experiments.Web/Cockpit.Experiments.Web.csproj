@@ -128,6 +128,7 @@
     <TypeScriptCompile Include="App\Components\Questions\CheckBoxGroup\CheckBoxGroup.ts" />
     <TypeScriptCompile Include="App\Components\Questions\EndOfExperiment\EndOfExperiment.ts" />
     <TypeScriptCompile Include="App\Components\Questions\FreetextHash\FreetextHash.ts" />
+    <TypeScriptCompile Include="App\Components\Questions\Freetext\FreetextBase.ts" />
     <TypeScriptCompile Include="App\Components\Questions\Header\Header.ts" />
     <TypeScriptCompile Include="App\Components\TextFormat\TextFormat.ts" />
     <TypeScriptCompile Include="App\Components\Welcome\Welcome.ts" />

@@ -2,7 +2,7 @@
 import QuestionBase = require("Components/Questions/QuestionBase");
 import QuestionModel = require("Models/Question");
 
-class EndOfExperiment extends QuestionBase
+class EndOfExperiment extends QuestionBase<any>
 {
 	constructor(question: QuestionModel)
 	{

@@ -2,6 +2,19 @@
 	padding-top: 20px;
 }
 
+.Highlight .DoesNotHaveValidAnswer {
+	animation: Highlight 3s;
+}
+
+@keyframes Highlight {
+ 	10% {
+ 		background: orange
+ 	}
+ 	100% {
+ 		background: none;
+ 	}
+}
+
 .HalfColumn {
 	width: 12.5% !important;
 }

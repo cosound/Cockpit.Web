@@ -29,7 +29,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             this.AddHalfFillerItem = knockout.computed(function () { return _this.Items.length === 3; });
             this.AddFillerItem = knockout.computed(function () { return _this.AddOneFillerItem() || _this.AddHalfFillerItem(); });
             if (this.HasAnswer())
-                this.Answer(this.GetAsnwer()["Id"]);
+                this.Answer(this.GetAnswer().Id);
             this.Answer.subscribe(function (v) {
                 _this.AddEvent("Change", "/Instrument", "Mouse/Left/Down", v);
                 _this.SetAnswer({ Id: v });

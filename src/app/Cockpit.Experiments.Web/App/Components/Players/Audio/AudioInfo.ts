@@ -21,7 +21,7 @@ class AudioInfo
 		});
 	}
 
-	public static Create(stimulus:Stimulus):AudioInfo
+	public static Create(stimulus:IStimulus):AudioInfo
 	{
 		if (stimulus === null) return null;
 		return new AudioInfo([{ Type: stimulus.Type, Source: stimulus.URI }]);

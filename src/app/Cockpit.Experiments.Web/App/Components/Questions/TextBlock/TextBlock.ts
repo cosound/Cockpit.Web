@@ -1,7 +1,7 @@
 ﻿import QuestionBase = require("Components/Questions/QuestionBase");
 import QuestionModel = require("Models/Question");
 
-class TextBlock extends QuestionBase
+class TextBlock extends QuestionBase<any>
 {
 	public Text: string;
 	public HeaderLabel: string;

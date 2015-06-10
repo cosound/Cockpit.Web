@@ -4,63 +4,19 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], function (require, exports, knockout, QuestionBase) {
+define(["require", "exports", "Components/Questions/Freetext/FreetextBase"], function (require, exports, FreetextBase) {
     var Freetext = (function (_super) {
         __extends(Freetext, _super);
-        function Freetext(question) {
-            var _this = this;
-            _super.call(this, question);
-            this.Label = "";
-            this.Answer = knockout.observable(null);
-            this.LabelPosition = "left";
-            this.LabelPositionLeft = false;
-            this.LabelPositionTop = false;
-            this.LabelPositionRight = false;
-            this.LabelPositionBottom = false;
-            this.Id = this.Model.Id;
-            if (this.HasInstrument()) {
-                this.Label = this.GetInstrumentFormatted("Label");
-                var validation = this.GetInstrument("Validation");
-                if (validation)
-                    this._validation = new RegExp(validation);
-            }
-            this.LabelPosition = this.GetInstrument("LabelPosition");
-            switch (this.LabelPosition) {
-                case "left":
-                    this.LabelPositionLeft = true;
-                    break;
-                case "top":
-                    this.LabelPositionTop = true;
-                    break;
-                case "right":
-                    this.LabelPositionRight = true;
-                    break;
-                case "bottom":
-                    this.LabelPositionBottom = true;
-                    break;
-            }
-            if (this.HasAnswer())
-                this.LoadAnswer(this.GetAsnwer());
-            this.Answer.extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 200 } });
-            this.Answer.subscribe(function (v) {
-                _this.AddEvent("Change", "/Instrument", "Keyboard", v);
-                _this.SetAnswer(_this.SaveAnswerAnswer(v));
-            });
+        function Freetext() {
+            _super.apply(this, arguments);
         }
         Freetext.prototype.LoadAnswer = function (answer) {
-            this.Answer(answer["Text"]);
+            this.Answer(answer.Text ? answer.Text : "");
         };
         Freetext.prototype.SaveAnswerAnswer = function (answer) {
             return { Text: answer };
         };
-        Freetext.prototype.HasValidAnswer = function (answer) {
-            if (!this._validation)
-                return true;
-            if (answer === null)
-                answer = "";
-            return this._validation.test(answer);
-        };
         return Freetext;
-    })(QuestionBase);
+    })(FreetextBase);
     return Freetext;
 });

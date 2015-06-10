@@ -4,7 +4,7 @@ var __extends = this.__extends || function (d, b) {
     __.prototype = b.prototype;
     d.prototype = new __();
 };
-define(["require", "exports", "Components/Questions/Freetext/Freetext", "crypto-js"], function (require, exports, FreeText, CryptoJS) {
+define(["require", "exports", "Components/Questions/Freetext/FreetextBase", "crypto-js"], function (require, exports, FreetextBase, CryptoJS) {
     var FreetextHash = (function (_super) {
         __extends(FreetextHash, _super);
         function FreetextHash(question) {
@@ -17,6 +17,6 @@ define(["require", "exports", "Components/Questions/Freetext/Freetext", "crypto-
             return { Value: CryptoJS.MD5(this._forceLowerCase ? answer.toLocaleLowerCase() : answer).toString(), Length: answer.length };
         };
         return FreetextHash;
-    })(FreeText);
+    })(FreetextBase);
     return FreetextHash;
 });

@@ -1,8 +1,10 @@
 ﻿import QuestionModel = require("Models/Question");
-import FreeText = require("Components/Questions/Freetext/Freetext");
+import FreetextBase = require("Components/Questions/Freetext/FreetextBase");
 import CryptoJS = require("crypto-js");
 
-class FreetextHash extends FreeText
+type Answer = { Value:string; Length:number };
+
+class FreetextHash extends FreetextBase<Answer>
 {
 	private _forceLowerCase:boolean;
 
@@ -13,12 +15,12 @@ class FreetextHash extends FreeText
 		this._forceLowerCase = this.GetInstrument("ForceLowerCase") === 1;
 	}
 
-	protected LoadAnswer(answer: any): void
+	protected LoadAnswer(answer: Answer): void
 	{
 		
 	}
 
-	protected SaveAnswerAnswer(answer: string): any
+	protected SaveAnswerAnswer(answer: string): Answer
 	{
 		return { Value: CryptoJS.MD5(this._forceLowerCase ? answer.toLocaleLowerCase() : answer).toString(), Length: answer.length };
 	}

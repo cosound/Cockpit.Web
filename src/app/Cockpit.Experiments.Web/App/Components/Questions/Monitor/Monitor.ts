@@ -2,7 +2,7 @@
 import QuestionBase = require("Components/Questions/QuestionBase");
 import QuestionModel = require("Models/Question");
 
-class Monitor extends QuestionBase
+class Monitor extends QuestionBase<{Context: {Type:string; Data:string}; TimeZone: {Offset: number}}>
 {
 	constructor(question: QuestionModel)
 	{

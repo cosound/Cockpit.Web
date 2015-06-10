@@ -6,7 +6,7 @@
 	<div>Loading slide...</div>
 	<!-- /ko -->
 	<!-- ko ifnot: IsLoadingSlide -->
-	<div class="panel-body" data-bind="component: {name: SlideData().Name, params: SlideData}"></div>
+	<div class="panel-body" data-bind="component: {name: SlideData().Name, params: SlideData}, css: {Highlight: IsHighlighted}"></div>
 	<!-- /ko -->
 	<div class="panel-footer clearfix">
 		<div class="pull-left">

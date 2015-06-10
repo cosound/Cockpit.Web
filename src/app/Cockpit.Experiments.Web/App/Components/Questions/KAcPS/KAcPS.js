@@ -18,7 +18,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             this.HasNoStimulus = this.Items.every(function (i) { return !i.HasStimulus; });
             this.CanAnswer = this.WhenAllAudioHavePlayed(this.Items.map(function (i) { return i.AudioInfo; }), true);
             if (this.HasAnswer())
-                this.Answer(this.GetAsnwer()["Id"]);
+                this.Answer(this.GetAnswer().Id);
             this.Answer.subscribe(function (v) {
                 _this.AddEvent("Change", "/Instrument", "Mouse/Left/Down", v);
                 _this.SetAnswer({ Id: v });

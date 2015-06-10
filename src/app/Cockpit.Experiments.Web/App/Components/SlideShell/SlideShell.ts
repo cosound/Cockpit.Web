@@ -22,6 +22,7 @@ class SlideShell
 	public IsNextSlideVisible: KnockoutComputed<boolean>;
 	public IsNextSlideEnabled: KnockoutComputed<boolean>;
 	public IsCloseExperimentVisible: KnockoutComputed<boolean>;
+	public IsHighlighted:KnockoutObservable<boolean> = knockout.observable(false);
 
 	private _experimentMangerIsReadySubscription: KnockoutSubscription;
 
@@ -35,7 +36,7 @@ class SlideShell
 		this.IsPreviousSlideVisible = knockout.computed(() => ExperimentManager.GoToPreviousSlideEnabled() && !ExperimentManager.CloseSlidesEnabled());
 		this.IsPreviousSlideEnabled = knockout.computed(() => this.IsPreviousSlideVisible() && !this.IsLoadingSlide() && this.SlideIndex() !== 0);
 		this.IsNextSlideVisible = knockout.computed(() => true);
-		this.IsNextSlideEnabled = knockout.computed(() => this.IsNextSlideVisible() && !this.IsLoadingSlide() && this.AreAllQuestionsAnswered() && this.SlideNumber() !== this.NumberOfSlides());
+		this.IsNextSlideEnabled = knockout.computed(() => this.IsNextSlideVisible() && !this.IsLoadingSlide() && this.SlideNumber() !== this.NumberOfSlides());
 		this.IsCloseExperimentVisible = knockout.computed(() => ExperimentManager.IsExperimentCompleted() && ExperimentManager.CloseExperimentEnabled());
 
 		this.Title = ExperimentManager.Title;
@@ -46,14 +47,42 @@ class SlideShell
 		{
 			if (!r) return;
 
-			this.GoToNextSlide();
+			this.LoadNextSlide();
 		});
 
-		if (ExperimentManager.IsReady()) this.GoToNextSlide();
+		if (ExperimentManager.IsReady()) this.LoadNextSlide();
 	}
 
 	public GoToNextSlide():void
 	{
+		if (this.AreAllQuestionsAnswered())
+		{
+			this.LoadNextSlide();
+		} else
+		{
+			this.IsHighlighted(false);
+			setTimeout(() => this.IsHighlighted(true), 50);
+		}
+	}
+
+	private LoadNextSlide():void
+	{
+		this.UnloadSlide();
+
+		ExperimentManager.LoadNextSlide((index, questions) => this.SlideData(new SlideModel("Slides/Default", index, this.AreAllQuestionsAnswered, questions)));
+	}
+
+	public GoToPreviousSlide():void
+	{
+		this.UnloadSlide();
+
+		ExperimentManager.LoadPreviousSlide((index, questions) => this.SlideData(new SlideModel("Slides/Default", index, this.AreAllQuestionsAnswered, questions)));
+	}
+
+	private UnloadSlide():void
+	{
+		this.IsHighlighted(false);
+
 		if (this.SlideData() != null)
 		{
 			var oldSlide = this.SlideData();
@@ -61,15 +90,6 @@ class SlideShell
 		}
 
 		this.SlideData(null);
-
-		ExperimentManager.LoadNextSlide((index, questions) => this.SlideData(new SlideModel("Slides/Default", index, this.AreAllQuestionsAnswered, questions)));
-	}
-
-	public GoToPreviousSlide():void
-	{
-		this.SlideData(null);
-
-		ExperimentManager.LoadPreviousSlide((index, questions) => this.SlideData(new SlideModel("Slides/Default", index, this.AreAllQuestionsAnswered, questions)));
 	}
 
 	public Close():void

@@ -6,7 +6,7 @@ import AudioInfo = require("Components/Players/Audio/AudioInfo");
 type ItemInfo = { Id: string; Label: string; IsEnabled: KnockoutComputed<boolean>; };
 type Item = { Label: string; Id: string; Selected: string };
 
-class CheckBoxGroup extends QuestionBase
+class CheckBoxGroup extends QuestionBase<{Selections:string[]}>
 {
 	private _minNoOfSelections: number;
 	private _maxNoOfSelections: number;
@@ -31,10 +31,10 @@ class CheckBoxGroup extends QuestionBase
 
 		this.Id = this.Model.Id;
 		this.HeaderLabel = this.GetInstrumentFormatted("HeaderLabel");
-		this._minNoOfSelections = this.GetInstrument("MinNoOfSelections");
-		this._maxNoOfSelections = this.GetInstrument("MaxNoOfSelections");
+		this._minNoOfSelections = parseInt(this.GetInstrument("MinNoOfSelections"));
+		this._maxNoOfSelections = parseInt(this.GetInstrument("MaxNoOfSelections"));
 
-		var stimulus = this.GetInstrument("Stimulus");
+		var stimulus = this.GetStimulusInstrument("Stimulus");
 		if (stimulus != null)
 		{
 			this.AudioLabel = this.GetFormatted(stimulus.Label);
@@ -57,9 +57,11 @@ class CheckBoxGroup extends QuestionBase
 
 		if (this.HasAnswer())
 		{
-			if (this.GetAsnwer()["Selections"])
-				this.Answer.push.apply(this.Answer, this.GetAsnwer()["Selections"]);
+			if (this.GetAnswer()["Selections"])
+				this.Answer.push.apply(this.Answer, this.GetAnswer().Selections);
 		}
+		else
+			this.SetAnswer({ Selections: [] });
 		
 		this.Answer.subscribe(v =>
 		{
@@ -70,6 +72,7 @@ class CheckBoxGroup extends QuestionBase
 
 	protected HasValidAnswer(answer: any): boolean
 	{
+		if (this._minNoOfSelections === 0) return true;
 		if (!answer.Selections) return false;
 
 		return answer.Selections.length >= this._minNoOfSelections;
