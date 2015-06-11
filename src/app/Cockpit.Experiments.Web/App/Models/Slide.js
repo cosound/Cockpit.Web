@@ -13,6 +13,10 @@ define(["require", "exports"], function (require, exports) {
             if (this.SlideCompleted != null)
                 this.SlideCompleted(callback);
         };
+        Slide.prototype.ScrollToFirstInvalidAnswer = function () {
+            if (this.ScrollToFirstInvalidAnswerCallback != null)
+                this.ScrollToFirstInvalidAnswerCallback();
+        };
         return Slide;
     })();
     return Slide;

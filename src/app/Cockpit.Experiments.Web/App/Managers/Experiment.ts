@@ -15,6 +15,7 @@ class Experiment
 	public FooterLabel: KnockoutObservable<string> = knockout.observable(null);
 	public SlideName: KnockoutObservable<string> = knockout.observable("slide");
 	public StyleSheet: KnockoutObservable<string> = knockout.observable(null);
+	public ScrollToInvalidAnswerDuration:number = 2000;
 
 	public CloseExperimentEnabled: KnockoutObservable<boolean> = knockout.observable(false);
 	public CloseSlidesEnabled: KnockoutObservable<boolean> = knockout.observable(false);

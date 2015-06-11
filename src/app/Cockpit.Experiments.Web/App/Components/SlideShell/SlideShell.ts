@@ -60,6 +60,7 @@ class SlideShell
 			this.LoadNextSlide();
 		} else
 		{
+			this.SlideData().ScrollToFirstInvalidAnswer();
 			this.IsHighlighted(false);
 			setTimeout(() => this.IsHighlighted(true), 50);
 		}

@@ -21,10 +21,13 @@ define(["require", "exports", "knockout", "jquery", "Highcharts", "HighchartsMor
         TwoDScaleK.prototype.InitializeItems = function () {
             var _this = this;
             var answers = {};
-            this.GetAnswer().Scalings.forEach(function (scaling) {
-                var coordinates = scaling.Position.split(" ");
-                answers[scaling.Id] = { x: parseFloat(coordinates[0]), y: parseFloat(coordinates[1]) };
-            });
+            var answer = this.GetAnswer();
+            if (answer.Scalings) {
+                this.GetAnswer().Scalings.forEach(function (scaling) {
+                    var coordinates = scaling.Position.split(" ");
+                    answers[scaling.Id] = { x: parseFloat(coordinates[0]), y: parseFloat(coordinates[1]) };
+                });
+            }
             this.Items = this.GetInstrument("Items").Item.map(function (i) { return _this.CreateItem(i, answers[i.Id]); });
         };
         TwoDScaleK.prototype.InitializeChart = function () {
@@ -88,7 +91,7 @@ define(["require", "exports", "knockout", "jquery", "Highcharts", "HighchartsMor
                     labels: { enabled: false }
                 },
                 tooltip: false,
-                series: this.Items.map(function (item) { return item.GraphData; })
+                series: this.Items.map(function (item) { return item.GraphData; }).filter(function (data) { return data != null; })
             });
             this._chart = jquery(this.ChartElement()).highcharts();
         };

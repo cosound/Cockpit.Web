@@ -31,6 +31,7 @@ define(["require", "exports", "knockout", "Managers/Experiment", "Models/Slide"]
                 this.LoadNextSlide();
             }
             else {
+                this.SlideData().ScrollToFirstInvalidAnswer();
                 this.IsHighlighted(false);
                 setTimeout(function () { return _this.IsHighlighted(true); }, 50);
             }

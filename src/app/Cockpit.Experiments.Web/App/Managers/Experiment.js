@@ -10,6 +10,7 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
             this.FooterLabel = knockout.observable(null);
             this.SlideName = knockout.observable("slide");
             this.StyleSheet = knockout.observable(null);
+            this.ScrollToInvalidAnswerDuration = 2000;
             this.CloseExperimentEnabled = knockout.observable(false);
             this.CloseSlidesEnabled = knockout.observable(false);
             this.GoToPreviousSlideEnabled = knockout.observable(true);

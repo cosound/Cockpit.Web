@@ -4,6 +4,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionMap"], f
             var _this = this;
             this.Answer = knockout.observable();
             this.HasValidAnswer = knockout.observable(false);
+            this.ScrollToCallback = knockout.observable(null);
             var questionMap = QuestionMap.Get(question.Type);
             this.Id = question.Id;
             this.Type = questionMap.Type;
@@ -21,6 +22,11 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionMap"], f
                 return;
             this._loadedCallback();
             this._loadedCallback = null;
+        };
+        Question.prototype.ScrollTo = function (duration) {
+            if (this.ScrollToCallback() == null)
+                throw new Error("SrollTo not ready");
+            this.ScrollToCallback()(duration);
         };
         return Question;
     })();

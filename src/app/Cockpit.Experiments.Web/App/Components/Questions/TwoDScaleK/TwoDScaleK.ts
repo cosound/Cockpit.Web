@@ -35,11 +35,16 @@ class TwoDScaleK extends QuestionBase<{ Scalings: AnswerItem[]}>
 	{
 		var answers: {[key:string]:{x:number; y:number}} = {};
 
-		this.GetAnswer().Scalings.forEach((scaling:AnswerItem) =>
+		var answer = this.GetAnswer();
+
+		if (answer.Scalings)
 		{
-			var coordinates = scaling.Position.split(" ");
-			answers[scaling.Id] = { x: parseFloat(coordinates[0]), y: parseFloat(coordinates[1]) }
-		});
+			this.GetAnswer().Scalings.forEach((scaling:AnswerItem) =>
+			{
+				var coordinates = scaling.Position.split(" ");
+				answers[scaling.Id] = { x: parseFloat(coordinates[0]), y: parseFloat(coordinates[1]) }
+			});
+		}
 
 		this.Items = (<any[]>this.GetInstrument("Items").Item).map(i => this.CreateItem(i, answers[i.Id]));
 	}
@@ -106,7 +111,7 @@ class TwoDScaleK extends QuestionBase<{ Scalings: AnswerItem[]}>
 				labels: { enabled: false }
 			},
 			tooltip: false,
-			series: this.Items.map(item => item.GraphData)
+			series: this.Items.map(item => item.GraphData).filter(data => data != null)
 		});
 		this._chart = jquery(this.ChartElement()).highcharts();
 	}

@@ -7,6 +7,7 @@ define(["require", "exports", "knockout", "Models/Question", "Managers/Experimen
             this.Questions = [];
             this._slide = slide;
             slide.SlideCompleted = function (callback) { return _this.SlideCompleted(callback); };
+            slide.ScrollToFirstInvalidAnswerCallback = function () { return _this.ScrollToFirstInvalidAnswer(); };
             this.HaveActiveAnswersSet = knockout.computed(function () { return _this._activeAnsweSets() === 0; });
             this.InitializeQuestions(slide.Questions);
         }
@@ -48,6 +49,11 @@ define(["require", "exports", "knockout", "Models/Question", "Managers/Experimen
             else
                 completed();
         };
+        Default.prototype.ScrollToFirstInvalidAnswer = function () {
+            var question = this.GetFirstQuestionWithoutValidAnswer();
+            if (question != null)
+                question.ScrollTo(ExperimentManager.ScrollToInvalidAnswerDuration);
+        };
         Default.prototype.AnswerChanged = function (question) {
             var _this = this;
             if (question.HasValidAnswer()) {
@@ -56,13 +62,15 @@ define(["require", "exports", "knockout", "Models/Question", "Managers/Experimen
             }
             this.CheckIfAllQuestionsAreAnswered();
         };
-        Default.prototype.CheckIfAllQuestionsAreAnswered = function () {
-            var allQuestionsAnswered = true;
+        Default.prototype.GetFirstQuestionWithoutValidAnswer = function () {
             for (var i = 0; i < this.Questions.length; i++) {
                 if (this.Questions[i].RequiresInput && !this.Questions[i].HasValidAnswer())
-                    allQuestionsAnswered = false;
+                    return this.Questions[i];
             }
-            this._slide.CanGoToNextSlide(allQuestionsAnswered);
+            return null;
+        };
+        Default.prototype.CheckIfAllQuestionsAreAnswered = function () {
+            this._slide.CanGoToNextSlide(this.GetFirstQuestionWithoutValidAnswer() == null);
         };
         return Default;
     })();

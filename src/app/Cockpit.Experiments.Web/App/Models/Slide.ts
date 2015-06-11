@@ -8,6 +8,7 @@ class Slide
 	public CanGoToNextSlide:KnockoutObservable<boolean>;
 	public Questions:CockpitPortal.IQuestion[];
 	public SlideCompleted: (completed: () => void) => void;
+	public ScrollToFirstInvalidAnswerCallback: () => void;
 
 	constructor(name: string, index: number = null, canGoToNextSlide: KnockoutObservable<boolean> = null, questions:CockpitPortal.IQuestion[] = null)
 	{
@@ -20,6 +21,11 @@ class Slide
 	public Complete(callback:()=>void):void
 	{
 		if (this.SlideCompleted != null) this.SlideCompleted(callback);
+	}
+
+	public ScrollToFirstInvalidAnswer():void
+	{
+		if (this.ScrollToFirstInvalidAnswerCallback != null) this.ScrollToFirstInvalidAnswerCallback();
 	}
 }
 

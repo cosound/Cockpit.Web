@@ -12,6 +12,7 @@ class Question
 	public Answer: KnockoutObservable<CockpitPortal.IOutput> = knockout.observable<CockpitPortal.IOutput>();
 	public HasValidAnswer: KnockoutObservable<boolean> = knockout.observable(false);
 	public RequiresInput: boolean;
+	public ScrollToCallback: KnockoutObservable<(duration: number) => void> = knockout.observable(null);
 
 	private _loadedCallback:()=>void;
 
@@ -38,6 +39,12 @@ class Question
 		if (this._loadedCallback === null) return;
 		this._loadedCallback();
 		this._loadedCallback = null;
+	}
+
+	public ScrollTo(duration:number):void
+	{
+		if (this.ScrollToCallback() == null) throw new Error("SrollTo not ready");
+		this.ScrollToCallback()(duration);
 	}
 }
 

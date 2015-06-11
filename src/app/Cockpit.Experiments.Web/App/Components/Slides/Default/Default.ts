@@ -18,6 +18,7 @@ class Default
 	{
 		this._slide = slide;
 		slide.SlideCompleted = callback => this.SlideCompleted(callback);
+		slide.ScrollToFirstInvalidAnswerCallback = () => this.ScrollToFirstInvalidAnswer();
 
 		this.HaveActiveAnswersSet = knockout.computed(() => this._activeAnsweSets() === 0);
 
@@ -74,6 +75,13 @@ class Default
 			completed();
 	}
 
+	private ScrollToFirstInvalidAnswer():void
+	{
+		var question = this.GetFirstQuestionWithoutValidAnswer();
+
+		if(question != null) question.ScrollTo(ExperimentManager.ScrollToInvalidAnswerDuration);
+	}
+
 	private AnswerChanged(question: QuestionModel):void
 	{
 		if (question.HasValidAnswer())
@@ -85,17 +93,19 @@ class Default
 		this.CheckIfAllQuestionsAreAnswered();
 	}
 
-	private CheckIfAllQuestionsAreAnswered():void
+	private GetFirstQuestionWithoutValidAnswer(): QuestionModel
 	{
-		var allQuestionsAnswered = true;
-
 		for (var i = 0; i < this.Questions.length; i++)
 		{
-			if (this.Questions[i].RequiresInput && !this.Questions[i].HasValidAnswer())
-				allQuestionsAnswered = false;
+			if (this.Questions[i].RequiresInput && !this.Questions[i].HasValidAnswer()) return this.Questions[i];
 		}
 
-		this._slide.CanGoToNextSlide(allQuestionsAnswered);
+		return null;
+	}
+
+	private CheckIfAllQuestionsAreAnswered():void
+	{
+		this._slide.CanGoToNextSlide(this.GetFirstQuestionWithoutValidAnswer() == null);
 	}
 }
 

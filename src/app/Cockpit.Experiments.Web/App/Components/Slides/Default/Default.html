@@ -1,6 +1,6 @@
 ﻿<div data-bind="foreach: Questions" class="SlideContainer">
 	<!-- ko if: HasUIElement -->
-	<div data-bind="component: {name: Type, params: $data}, css: {DoesNotHaveValidAnswer: !HasValidAnswer()}"></div>
+	<div data-bind="component: {name: Type, params: $data}, css: {DoesNotHaveValidAnswer: !HasValidAnswer()}, ScrollTo: ScrollToCallback"></div>
 	<hr />
 	<!-- /ko -->
 </div>
