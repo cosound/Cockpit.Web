@@ -8,7 +8,6 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
             this.IsExperimentCompleted = knockout.observable(false);
             this.Title = knockout.observable("");
             this.FooterLabel = knockout.observable(null);
-            this.SlideName = knockout.observable("slide");
             this.StyleSheet = knockout.observable(null);
             this.CompletedUrl = knockout.observable(null);
             this.ScrollToInvalidAnswerDuration = 2000;

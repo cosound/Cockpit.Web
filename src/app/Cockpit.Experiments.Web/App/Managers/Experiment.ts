@@ -13,7 +13,6 @@ class Experiment
 
 	public Title: KnockoutObservable<string> = knockout.observable("");
 	public FooterLabel: KnockoutObservable<string> = knockout.observable(null);
-	public SlideName: KnockoutObservable<string> = knockout.observable("slide");
 	public StyleSheet: KnockoutObservable<string> = knockout.observable(null);
 	public CompletedUrl: KnockoutObservable<string> = knockout.observable(null);
 	public ScrollToInvalidAnswerDuration:number = 2000;

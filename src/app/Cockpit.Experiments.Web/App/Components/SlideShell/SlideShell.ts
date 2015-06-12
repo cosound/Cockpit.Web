@@ -5,7 +5,6 @@ import SlideModel = require("Models/Slide");
 class SlideShell
 {
 	public Title: KnockoutObservable<string>;
-	public SlideName: KnockoutObservable<string>;
 	public HasTitle: KnockoutComputed<boolean>;
 
 	public SlideData: KnockoutObservable<SlideModel> = knockout.observable<SlideModel>();
@@ -40,7 +39,6 @@ class SlideShell
 		this.IsCloseExperimentVisible = knockout.computed(() => ExperimentManager.IsExperimentCompleted() && ExperimentManager.CloseExperimentEnabled());
 
 		this.Title = ExperimentManager.Title;
-		this.SlideName = ExperimentManager.SlideName;
 		this.HasTitle = knockout.computed(() => this.Title() !== "");
 
 		this._experimentMangerIsReadySubscription = ExperimentManager.IsReady.subscribe(r =>
