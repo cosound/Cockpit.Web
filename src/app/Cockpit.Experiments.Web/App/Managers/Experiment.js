@@ -10,8 +10,8 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
             this.FooterLabel = knockout.observable(null);
             this.SlideName = knockout.observable("slide");
             this.StyleSheet = knockout.observable(null);
+            this.CompletedUrl = knockout.observable(null);
             this.ScrollToInvalidAnswerDuration = 2000;
-            this.CloseExperimentEnabled = knockout.observable(false);
             this.CloseSlidesEnabled = knockout.observable(false);
             this.GoToPreviousSlideEnabled = knockout.observable(true);
             this._hasLoadedCurrentSlide = false;
@@ -27,6 +27,7 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
                     document.head.appendChild(_this._styleSheetElement);
                 }
             });
+            this.CloseExperimentEnabled = knockout.computed(function () { return _this.CompletedUrl() != null; });
         }
         Experiment.prototype.ExperimentCompleted = function () {
             this.IsExperimentCompleted(true);
@@ -113,6 +114,7 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
             });
         };
         Experiment.prototype.Close = function () {
+            document.location.href = this.CompletedUrl();
         };
         return Experiment;
     })();

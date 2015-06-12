@@ -15,9 +15,10 @@ class Experiment
 	public FooterLabel: KnockoutObservable<string> = knockout.observable(null);
 	public SlideName: KnockoutObservable<string> = knockout.observable("slide");
 	public StyleSheet: KnockoutObservable<string> = knockout.observable(null);
+	public CompletedUrl: KnockoutObservable<string> = knockout.observable(null);
 	public ScrollToInvalidAnswerDuration:number = 2000;
 
-	public CloseExperimentEnabled: KnockoutObservable<boolean> = knockout.observable(false);
+	public CloseExperimentEnabled: KnockoutComputed<boolean>;
 	public CloseSlidesEnabled: KnockoutObservable<boolean> = knockout.observable(false);
 	public GoToPreviousSlideEnabled: KnockoutObservable<boolean> = knockout.observable(true);
 	
@@ -43,6 +44,8 @@ class Experiment
 				document.head.appendChild(this._styleSheetElement);
 			}
 		});
+
+		this.CloseExperimentEnabled = knockout.computed(() => this.CompletedUrl() != null);
 	}
 
 	public ExperimentCompleted():void
@@ -166,7 +169,7 @@ class Experiment
 
 	public Close():any
 	{
-		
+		document.location.href = this.CompletedUrl();
 	}
 }
 
