@@ -1,6 +1,6 @@
 ﻿class Configuration
 {
-	public PortalPath: string = "https://dev-api.cosound.dk";
+	public PortalPath: string = "https://prod-api.cosound.dk";
 }
 
 var instance = new Configuration();

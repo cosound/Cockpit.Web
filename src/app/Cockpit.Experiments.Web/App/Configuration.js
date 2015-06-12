@@ -1,7 +1,7 @@
 define(["require", "exports"], function (require, exports) {
     var Configuration = (function () {
         function Configuration() {
-            this.PortalPath = "https://dev-api.cosound.dk";
+            this.PortalPath = "https://prod-api.cosound.dk";
         }
         return Configuration;
     })();
