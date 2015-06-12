@@ -27,6 +27,18 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
                 }
             });
             this.CloseExperimentEnabled = knockout.computed(function () { return _this.CompletedUrl() != null; });
+            Navigation.ExperimentId.subscribe(function (id) {
+                if (id != null)
+                    _this.Load(id);
+            });
+            Navigation.ExperimentListId.subscribe(function (id) {
+                if (id != null)
+                    _this.LoadNext(id);
+            });
+            if (Navigation.ExperimentId() != null)
+                this.Load(Navigation.ExperimentId());
+            else if (Navigation.ExperimentListId() != null)
+                this.LoadNext(Navigation.ExperimentListId());
         }
         Experiment.prototype.ExperimentCompleted = function () {
             this.IsExperimentCompleted(true);

@@ -1,12 +1,12 @@
 ﻿import knockout = require("knockout");
 import Routie = require("routie");
 import NavigationPage = require("Managers/NavigationPage");
-import ExperimentManager = require("Managers/Experiment");
-import CockpitPortal = require("CockpitPortal");
 
 class Navigation
 {
 	public CurrentPage: KnockoutObservable<NavigationPage> = knockout.observable<NavigationPage>();
+	public ExperimentId:KnockoutObservable<string> = knockout.observable(null);
+	public ExperimentListId:KnockoutObservable<string> = knockout.observable(null);
 
 	constructor()
 	{
@@ -34,7 +34,7 @@ class Navigation
 
 	private LoadSlide(id: string): void
 	{
-		ExperimentManager.Load(id);
+		this.ExperimentId(id);
 
 		if (this.CurrentPage() == null || this.CurrentPage().Name() !== "SlideShell")
 			this.CurrentPage(new NavigationPage("SlideShell"));
@@ -42,7 +42,8 @@ class Navigation
 
 	private LoadExperimentFromList(id:string):void
 	{
-		ExperimentManager.LoadNext(id);
+		this.ExperimentId(null);
+		this.ExperimentListId(id);
 	}
 }
 

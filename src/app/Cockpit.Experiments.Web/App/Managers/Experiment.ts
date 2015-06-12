@@ -45,6 +45,19 @@ class Experiment
 		});
 
 		this.CloseExperimentEnabled = knockout.computed(() => this.CompletedUrl() != null);
+
+		Navigation.ExperimentId.subscribe(id =>
+		{
+			if(id != null) this.Load(id);
+		});
+		Navigation.ExperimentListId.subscribe(id =>
+		{
+			if (id != null) this.LoadNext(id);
+		});
+		if (Navigation.ExperimentId() != null)
+			this.Load(Navigation.ExperimentId());
+		else if (Navigation.ExperimentListId() != null)
+			this.LoadNext(Navigation.ExperimentListId());
 	}
 
 	public ExperimentCompleted():void

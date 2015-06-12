@@ -1,8 +1,10 @@
-define(["require", "exports", "knockout", "routie", "Managers/NavigationPage", "Managers/Experiment"], function (require, exports, knockout, Routie, NavigationPage, ExperimentManager) {
+define(["require", "exports", "knockout", "routie", "Managers/NavigationPage"], function (require, exports, knockout, Routie, NavigationPage) {
     var Navigation = (function () {
         function Navigation() {
             var _this = this;
             this.CurrentPage = knockout.observable();
+            this.ExperimentId = knockout.observable(null);
+            this.ExperimentListId = knockout.observable(null);
             Routie({
                 "": function () {
                     _this.LoadPage("Welcome");
@@ -37,12 +39,13 @@ define(["require", "exports", "knockout", "routie", "Managers/NavigationPage", "
             this.CurrentPage(new NavigationPage(name, data));
         };
         Navigation.prototype.LoadSlide = function (id) {
-            ExperimentManager.Load(id);
+            this.ExperimentId(id);
             if (this.CurrentPage() == null || this.CurrentPage().Name() !== "SlideShell")
                 this.CurrentPage(new NavigationPage("SlideShell"));
         };
         Navigation.prototype.LoadExperimentFromList = function (id) {
-            ExperimentManager.LoadNext(id);
+            this.ExperimentId(null);
+            this.ExperimentListId(id);
         };
         return Navigation;
     })();
