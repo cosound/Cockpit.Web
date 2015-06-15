@@ -55,7 +55,7 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
                     throw new Error("No Experiment data retuened");
                 var config = response.Body.Results[0];
                 _this.CloseSlidesEnabled(config.LockQuestion);
-                _this.GoToPreviousSlideEnabled(config.EnablePrevious || true);
+                _this.GoToPreviousSlideEnabled(config.EnablePrevious);
                 _this.FooterLabel(config.FooterLabel);
                 _this.CurrentSlideIndex(config.CurrentSlideIndex);
                 _this.IsExperimentCompleted(false);

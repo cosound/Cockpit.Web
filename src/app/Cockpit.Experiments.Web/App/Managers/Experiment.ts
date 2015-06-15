@@ -80,7 +80,7 @@ class Experiment
 			var config = response.Body.Results[0];
 
 			this.CloseSlidesEnabled(config.LockQuestion);
-			this.GoToPreviousSlideEnabled(config.EnablePrevious || true);
+			this.GoToPreviousSlideEnabled(config.EnablePrevious);
 			this.FooterLabel(config.FooterLabel);
 			this.CurrentSlideIndex(config.CurrentSlideIndex);
 			this.IsExperimentCompleted(false);
