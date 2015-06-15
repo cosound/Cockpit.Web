@@ -60,6 +60,7 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
                 _this.CurrentSlideIndex(config.CurrentSlideIndex);
                 _this.IsExperimentCompleted(false);
                 _this.StyleSheet(config.Css);
+                _this.CompletedUrl(config.RedirectOnCloseUrl);
                 _this.IsReady(true);
             });
         };
