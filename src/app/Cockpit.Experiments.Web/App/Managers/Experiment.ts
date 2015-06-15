@@ -85,6 +85,7 @@ class Experiment
 			this.CurrentSlideIndex(config.CurrentSlideIndex);
 			this.IsExperimentCompleted(false);
 			this.StyleSheet(config.Css);
+			this.CompletedUrl(config.RedirectOnCloseUrl);
 
 			this.IsReady(true);
 		});

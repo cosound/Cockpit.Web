@@ -70,6 +70,7 @@ export interface IExperiment
 	LockQuestion:boolean;
 	EnablePrevious: boolean;
 	CurrentSlideIndex: number;
+	RedirectOnCloseUrl:string;
 }
 
 export interface IExperimentClaim
