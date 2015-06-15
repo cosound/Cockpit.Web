@@ -11,8 +11,8 @@ define(["require", "exports", "knockout", "Managers/Experiment", "Models/Slide"]
             this.NumberOfSlides = ExperimentManager.NumberOfSlides;
             this.IsPreviousSlideVisible = knockout.computed(function () { return ExperimentManager.GoToPreviousSlideEnabled() && !ExperimentManager.CloseSlidesEnabled(); });
             this.IsPreviousSlideEnabled = knockout.computed(function () { return _this.IsPreviousSlideVisible() && !_this.IsLoadingSlide() && _this.SlideIndex() !== 0; });
-            this.IsNextSlideVisible = knockout.computed(function () { return true; });
-            this.IsNextSlideEnabled = knockout.computed(function () { return _this.IsNextSlideVisible() && !_this.IsLoadingSlide() && _this.SlideNumber() !== _this.NumberOfSlides(); });
+            this.IsNextSlideVisible = knockout.computed(function () { return !ExperimentManager.IsExperimentCompleted() && _this.SlideNumber() !== _this.NumberOfSlides(); });
+            this.IsNextSlideEnabled = knockout.computed(function () { return _this.IsNextSlideVisible() && !_this.IsLoadingSlide(); });
             this.IsCloseExperimentVisible = knockout.computed(function () { return ExperimentManager.IsExperimentCompleted() && ExperimentManager.CloseExperimentEnabled(); });
             this.Title = ExperimentManager.Title;
             this.HasTitle = knockout.computed(function () { return _this.Title() !== ""; });
