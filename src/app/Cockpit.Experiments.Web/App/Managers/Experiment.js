@@ -1,4 +1,4 @@
-define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"], function (require, exports, knockout, CockpitPortal, Navigation) {
+define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation", "Managers/Title"], function (require, exports, knockout, CockpitPortal, Navigation, Title) {
     var Experiment = (function () {
         function Experiment() {
             var _this = this;
@@ -7,6 +7,7 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
             this.NumberOfSlides = knockout.observable(0);
             this.IsExperimentCompleted = knockout.observable(false);
             this.Title = knockout.observable("");
+            this.SlideTitle = knockout.observable("");
             this.FooterLabel = knockout.observable(null);
             this.StyleSheet = knockout.observable(null);
             this.CompletedUrl = knockout.observable(null);
@@ -26,6 +27,7 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
                     document.head.appendChild(_this._styleSheetElement);
                 }
             });
+            this.Title.subscribe(function (title) { return Title.ToDefault(title == "" ? null : title); });
             this.CloseExperimentEnabled = knockout.computed(function () { return _this.CompletedUrl() != null; });
             Navigation.ExperimentId.subscribe(function (id) {
                 if (id != null)
@@ -54,6 +56,7 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
                 if (response.Body.Results.length === 0)
                     throw new Error("No Experiment data retuened");
                 var config = response.Body.Results[0];
+                _this.Title(config.Name);
                 _this.CloseSlidesEnabled(config.LockQuestion);
                 _this.GoToPreviousSlideEnabled(config.EnablePrevious);
                 _this.FooterLabel(config.FooterLabel);

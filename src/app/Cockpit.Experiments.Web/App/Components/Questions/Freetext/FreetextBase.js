@@ -8,7 +8,6 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], 
     var FreetextBase = (function (_super) {
         __extends(FreetextBase, _super);
         function FreetextBase(question) {
-            var _this = this;
             _super.call(this, question);
             this.Label = "";
             this.Answer = knockout.observable(null);
@@ -42,10 +41,6 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], 
             if (this.HasAnswer())
                 this.LoadAnswer(this.GetAnswer());
             this.Answer.extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 200 } });
-            this.Answer.subscribe(function (v) {
-                _this.AddEvent("Change", "/Instrument", "Keyboard", v);
-                _this.SetAnswer(_this.SaveAnswerAnswer(v));
-            });
         }
         FreetextBase.prototype.LoadAnswer = function (answer) {
             throw new Error("Not implemented");

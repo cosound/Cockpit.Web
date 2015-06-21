@@ -4,7 +4,7 @@ class Title
 {
 	public Title: KnockoutObservable<string>;
 	private isDefault: boolean = true;
-	private static defaultName: string = "Cockpit";
+	private static defaultName: string = document.title;
 
 	constructor()
 	{

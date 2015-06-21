@@ -38,7 +38,7 @@ class SlideShell
 		this.IsNextSlideEnabled = knockout.computed(() => this.IsNextSlideVisible() && !this.IsLoadingSlide());
 		this.IsCloseExperimentVisible = knockout.computed(() => ExperimentManager.IsExperimentCompleted() && ExperimentManager.CloseExperimentEnabled());
 
-		this.Title = ExperimentManager.Title;
+		this.Title = ExperimentManager.SlideTitle;
 		this.HasTitle = knockout.computed(() => this.Title() !== "");
 
 		this._experimentMangerIsReadySubscription = ExperimentManager.IsReady.subscribe(r =>

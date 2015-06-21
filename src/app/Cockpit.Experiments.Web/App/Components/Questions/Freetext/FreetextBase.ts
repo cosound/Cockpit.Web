@@ -52,11 +52,6 @@ class FreetextBase<T> extends QuestionBase<T>
 			this.LoadAnswer(this.GetAnswer());
 
 		this.Answer.extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 200 }});
-		this.Answer.subscribe(v =>
-		{
-			this.AddEvent("Change", "/Instrument", "Keyboard", v);
-			this.SetAnswer(this.SaveAnswerAnswer(v));
-		});
 	}
 
 	protected LoadAnswer(answer: T):void
