@@ -16,8 +16,8 @@ define(["require", "exports"], function (require, exports) {
                 "large": function (i) { return ("<span class=\"Large\">" + i[0] + "</span>"); },
                 "color": function (i) { return ("<span style=\"color:" + i[0] + "\">" + i[1] + "</span>"); },
                 "style": function (i) { return ("<span style=\"" + i[0] + "\">" + i[1] + "</span>"); },
-                "url": function (i) { return ("<a target=\"_blank\" href=\"" + i[0] + "\">" + (i.length === 1 ? i[0] : i[1]) + "</a>"); },
-                "link": function (i) { return ("<a target=\"_blank\" href=\"" + i[0] + "\">" + (i.length === 1 ? i[0] : i[1]) + "</a>"); },
+                "url": function (i) { return _this.GetLinkFormat(i); },
+                "link": function (i) { return _this.GetLinkFormat(i); },
                 "image": function (i) { return _this.GetImageFormat(i); },
                 "n": function (i) { return "<br/>"; },
                 "tab": function (i) { return "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"; },
@@ -45,6 +45,12 @@ define(["require", "exports"], function (require, exports) {
         };
         TextFormatter.prototype.EscapeHtml = function (input) {
             return input.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        };
+        TextFormatter.prototype.GetLinkFormat = function (parameters) {
+            var url = parameters[0];
+            var text = parameters.length >= 2 ? parameters[1] : url;
+            var target = parameters.length >= 3 && parameters[2].toLocaleLowerCase() === "current" ? "_self" : "_blank";
+            return "<a target=\"" + target + "\" href=\"" + url + "\">" + text + "</a>";
         };
         TextFormatter.prototype.GetImageFormat = function (parameters) {
             var width = "";

@@ -19,7 +19,7 @@ define(["require", "exports", "knockout", "Components/Players/Audio/AudioInfo", 
         };
         QuestionsBase.prototype.HasValidAnswer = function (answer) {
             answer = answer || this.GetAnswer();
-            return this.HasNoneEventsProperty(answer);
+            return !this.Model.RequiresInput || this.HasNoneEventsProperty(answer);
         };
         QuestionsBase.prototype.HasNoneEventsProperty = function (answer) {
             for (var key in answer)

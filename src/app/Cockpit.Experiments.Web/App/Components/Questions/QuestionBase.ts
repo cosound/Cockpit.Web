@@ -37,7 +37,7 @@ class QuestionsBase<T> implements IQuestionViewModel
 	{
 		answer = answer || this.GetAnswer();
 
-		return this.HasNoneEventsProperty(answer);
+		return !this.Model.RequiresInput || this.HasNoneEventsProperty(answer);
 	}
 
 	private HasNoneEventsProperty(answer: T):boolean

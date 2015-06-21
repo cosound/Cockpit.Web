@@ -18,8 +18,8 @@
 			"large": (i:string[]) => `<span class="Large">${i[0]}</span>`,
 			"color": (i:string[]) => `<span style="color:${i[0]}">${i[1]}</span>`,
 			"style": (i:string[]) => `<span style="${i[0]}">${i[1]}</span>`,
-			"url": (i:string[]) => `<a target="_blank" href="${i[0]}">${i.length === 1 ? i[0] : i[1]}</a>`,
-			"link": (i:string[]) => `<a target="_blank" href="${i[0]}">${i.length === 1 ? i[0] : i[1]}</a>`,
+			"url": (i:string[]) => this.GetLinkFormat(i),
+			"link": (i: string[]) => this.GetLinkFormat(i),
 			"image": (i: string[]) => this.GetImageFormat(i),
 			"n": (i: string[]) => "<br/>",
 			"tab": (i: string[]) => "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;",
@@ -62,6 +62,16 @@
 		.replace(/>/g, "&gt;")
 		.replace(/"/g, "&quot;")
 		.replace(/'/g, "&#039;");
+	}
+
+	private GetLinkFormat(parameters:string[]):string
+	{
+		var url = parameters[0];
+		var text = parameters.length >= 2 ? parameters[1] : url;
+		var target = parameters.length >= 3 && parameters[2].toLocaleLowerCase() === "current" ? "_self" : "_blank";
+
+
+		return `<a target="${target}" href="${url}">${text}</a>`;
 	}
 
 	private GetImageFormat(parameters:string[]):string
