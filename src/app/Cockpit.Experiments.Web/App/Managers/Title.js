@@ -14,7 +14,7 @@ define(["require", "exports", "knockout"], function (require, exports, knockout)
             this.Title((subName == null ? "" : subName + " - ") + Title.defaultName);
             this.isDefault = true;
         };
-        Title.defaultName = "Cockpit";
+        Title.defaultName = document.title;
         return Title;
     })();
     var instance = new Title();

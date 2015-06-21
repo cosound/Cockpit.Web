@@ -12,12 +12,12 @@ class Header extends QuestionBase<any>
 
 		if (inputs.length === 0 || inputs[0].HeaderLabel == undefined) throw new Error("HeaderLabel not found for Header");
 
-		ExperimentManager.Title(this.GetFormatted(inputs[0].HeaderLabel));
+		ExperimentManager.SlideTitle(this.GetFormatted(inputs[0].HeaderLabel));
 	}
 
 	public SlideCompleted(): boolean
 	{
-		ExperimentManager.Title("");
+		ExperimentManager.SlideTitle("");
 
 		return false;
 	}

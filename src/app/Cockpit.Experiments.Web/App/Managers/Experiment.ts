@@ -1,6 +1,7 @@
 ﻿import knockout = require("knockout");
 import CockpitPortal = require("CockpitPortal");
 import Navigation = require("Managers/Navigation");
+import Title = require("Managers/Title");
 
 class Experiment
 {
@@ -12,6 +13,7 @@ class Experiment
 	public IsExperimentCompleted: KnockoutObservable<boolean> = knockout.observable(false);
 
 	public Title: KnockoutObservable<string> = knockout.observable("");
+	public SlideTitle: KnockoutObservable<string> = knockout.observable("");
 	public FooterLabel: KnockoutObservable<string> = knockout.observable(null);
 	public StyleSheet: KnockoutObservable<string> = knockout.observable(null);
 	public CompletedUrl: KnockoutObservable<string> = knockout.observable(null);
@@ -43,6 +45,7 @@ class Experiment
 				document.head.appendChild(this._styleSheetElement);
 			}
 		});
+		this.Title.subscribe(title => Title.ToDefault(title == "" ? null : title));
 
 		this.CloseExperimentEnabled = knockout.computed(() => this.CompletedUrl() != null);
 
@@ -79,6 +82,7 @@ class Experiment
 
 			var config = response.Body.Results[0];
 
+			this.Title(config.Name);
 			this.CloseSlidesEnabled(config.LockQuestion);
 			this.GoToPreviousSlideEnabled(config.EnablePrevious);
 			this.FooterLabel(config.FooterLabel);

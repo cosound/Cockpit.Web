@@ -1,6 +1,7 @@
 ﻿import knockout = require("knockout");
 import Routie = require("routie");
 import NavigationPage = require("Managers/NavigationPage");
+import Title = require("Managers/Title");
 
 class Navigation
 {
@@ -29,6 +30,7 @@ class Navigation
 
 	private LoadPage(name: string, data?:any): void
 	{
+		Title.ToDefault();
 		this.CurrentPage(new NavigationPage(name, data));
 	}
 
@@ -37,7 +39,7 @@ class Navigation
 		this.ExperimentId(id);
 
 		if (this.CurrentPage() == null || this.CurrentPage().Name() !== "SlideShell")
-			this.CurrentPage(new NavigationPage("SlideShell"));
+			this.LoadPage("SlideShell");
 	}
 
 	private LoadExperimentFromList(id:string):void

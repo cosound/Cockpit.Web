@@ -1,4 +1,4 @@
-define(["require", "exports", "knockout", "routie", "Managers/NavigationPage"], function (require, exports, knockout, Routie, NavigationPage) {
+define(["require", "exports", "knockout", "routie", "Managers/NavigationPage", "Managers/Title"], function (require, exports, knockout, Routie, NavigationPage, Title) {
     var Navigation = (function () {
         function Navigation() {
             var _this = this;
@@ -36,12 +36,13 @@ define(["require", "exports", "knockout", "routie", "Managers/NavigationPage"], 
             Routie(path);
         };
         Navigation.prototype.LoadPage = function (name, data) {
+            Title.ToDefault();
             this.CurrentPage(new NavigationPage(name, data));
         };
         Navigation.prototype.LoadSlide = function (id) {
             this.ExperimentId(id);
             if (this.CurrentPage() == null || this.CurrentPage().Name() !== "SlideShell")
-                this.CurrentPage(new NavigationPage("SlideShell"));
+                this.LoadPage("SlideShell");
         };
         Navigation.prototype.LoadExperimentFromList = function (id) {
             this.ExperimentId(null);
