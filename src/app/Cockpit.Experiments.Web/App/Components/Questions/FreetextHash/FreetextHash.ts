@@ -13,6 +13,11 @@ class FreetextHash extends FreetextBase<Answer>
 		super(question);
 
 		this._forceLowerCase = this.GetInstrument("ForceLowerCase") === 1;
+
+		this.Answer.subscribe(v =>
+		{
+			this.SetAnswer(this.SaveAnswerAnswer(v));
+		});
 	}
 
 	protected LoadAnswer(answer: Answer): void

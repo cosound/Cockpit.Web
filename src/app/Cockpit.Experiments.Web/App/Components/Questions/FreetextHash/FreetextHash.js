@@ -8,8 +8,12 @@ define(["require", "exports", "Components/Questions/Freetext/FreetextBase", "cry
     var FreetextHash = (function (_super) {
         __extends(FreetextHash, _super);
         function FreetextHash(question) {
+            var _this = this;
             _super.call(this, question);
             this._forceLowerCase = this.GetInstrument("ForceLowerCase") === 1;
+            this.Answer.subscribe(function (v) {
+                _this.SetAnswer(_this.SaveAnswerAnswer(v));
+            });
         }
         FreetextHash.prototype.LoadAnswer = function (answer) {
         };
