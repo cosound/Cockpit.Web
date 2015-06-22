@@ -49,28 +49,34 @@ class FreetextBase<T> extends QuestionBase<T>
 		}
 
 		if (this.HasAnswer())
-			this.LoadAnswer(this.GetAnswer());
+			this.Answer(this.LoadText(this.GetAnswer()));
 
-		this.Answer.extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 200 }});
+		this.Answer.extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 200 } });
+		this.Answer.subscribe(v => this.UpdateAnswer(v));
 	}
 
-	protected LoadAnswer(answer: T):void
+	protected UpdateAnswer(text:string):void
+	{
+		this.SetAnswer(this.SaveText(text));
+	}
+
+	protected LoadText(answer:T):string
 	{
 		throw new Error("Not implemented");
 	}
 
-	protected SaveAnswerAnswer(answer: string): T
+	protected SaveText(answer: string): T
 	{
 		throw new Error("Not implemented");
 	}
 
-	protected HasValidAnswer(answer: any): boolean
+	protected HasValidAnswer(answer: T): boolean
 	{
 		if (!this._validation) return true;
 
-		if (answer === null) answer = "";
+		var text = answer == null ? "" : this.LoadText(answer);
 
-		return this._validation.test(answer);
+		return this._validation.test(text);
 	}
 }
 
