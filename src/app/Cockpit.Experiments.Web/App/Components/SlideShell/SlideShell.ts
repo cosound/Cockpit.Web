@@ -48,6 +48,11 @@ class SlideShell
 			this.LoadNextSlide();
 		});
 
+		this.IsHighlighted.subscribe(value =>
+		{
+			if (value) setTimeout(() => this.IsHighlighted(false), 3000); //TODO: add binding to listen to the event for animation complete instead of timeout
+		});
+
 		if (ExperimentManager.IsReady()) this.LoadNextSlide();
 	}
 
@@ -56,11 +61,18 @@ class SlideShell
 		if (this.AreAllQuestionsAnswered())
 		{
 			this.LoadNextSlide();
-		} else
+		}
+		else
 		{
 			this.SlideData().ScrollToFirstInvalidAnswer();
-			this.IsHighlighted(false);
-			setTimeout(() => this.IsHighlighted(true), 50);
+
+			if (this.IsHighlighted())
+			{
+				this.IsHighlighted(false);
+				setTimeout(() => this.IsHighlighted(true), 50);
+			}
+			else
+				this.IsHighlighted(true);
 		}
 	}
 

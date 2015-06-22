@@ -117,9 +117,12 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
         };
         Experiment.prototype.SaveQuestionAnswer = function (id, answer, callback) {
             CockpitPortal.Answer.Set(id, answer).WithCallback(function (response) {
-                callback();
-                if (response.Error != null)
-                    throw new Error("Failed to save answer: " + response.Error.Message);
+                if (response.Error != null) {
+                    callback(false);
+                    if (response.Error.Fullname !== "Chaos.Cockpit.Core.Core.Exceptions.ValidationException")
+                        throw new Error("Failed to save answer: " + response.Error.Message);
+                }
+                callback(true);
             });
         };
         Experiment.prototype.CloseSlide = function (index) {

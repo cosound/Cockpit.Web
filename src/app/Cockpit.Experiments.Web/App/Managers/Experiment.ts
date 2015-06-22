@@ -165,13 +165,18 @@ class Experiment
 		});
 	}
 
-	public SaveQuestionAnswer(id: string, answer: any, callback: () => void): void
+	public SaveQuestionAnswer(id: string, answer: any, callback: (success:boolean) => void): void
 	{
 		CockpitPortal.Answer.Set(id, answer).WithCallback(response =>
 		{
-			callback();
 			if (response.Error != null)
-				throw new Error("Failed to save answer: " + response.Error.Message);
+			{
+				callback(false);
+
+				if (response.Error.Fullname !== "Chaos.Cockpit.Core.Core.Exceptions.ValidationException")
+					throw new Error("Failed to save answer: " + response.Error.Message);
+			}
+			callback(true);
 		});
 	}
 

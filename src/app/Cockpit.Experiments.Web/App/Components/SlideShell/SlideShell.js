@@ -21,6 +21,10 @@ define(["require", "exports", "knockout", "Managers/Experiment", "Models/Slide"]
                     return;
                 _this.LoadNextSlide();
             });
+            this.IsHighlighted.subscribe(function (value) {
+                if (value)
+                    setTimeout(function () { return _this.IsHighlighted(false); }, 3000);
+            });
             if (ExperimentManager.IsReady())
                 this.LoadNextSlide();
         }
@@ -31,8 +35,12 @@ define(["require", "exports", "knockout", "Managers/Experiment", "Models/Slide"]
             }
             else {
                 this.SlideData().ScrollToFirstInvalidAnswer();
-                this.IsHighlighted(false);
-                setTimeout(function () { return _this.IsHighlighted(true); }, 50);
+                if (this.IsHighlighted()) {
+                    this.IsHighlighted(false);
+                    setTimeout(function () { return _this.IsHighlighted(true); }, 50);
+                }
+                else
+                    this.IsHighlighted(true);
             }
         };
         SlideShell.prototype.LoadNextSlide = function () {
