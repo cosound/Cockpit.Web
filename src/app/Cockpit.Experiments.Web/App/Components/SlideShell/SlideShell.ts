@@ -66,23 +66,23 @@ class SlideShell
 
 	private LoadNextSlide():void
 	{
-		this.UnloadSlide();
+		this.UnloadSlide(true);
 
 		ExperimentManager.LoadNextSlide((index, questions) => this.SlideData(new SlideModel("Slides/Default", index, this.AreAllQuestionsAnswered, questions)));
 	}
 
 	public GoToPreviousSlide():void
 	{
-		this.UnloadSlide();
+		this.UnloadSlide(false);
 
 		ExperimentManager.LoadPreviousSlide((index, questions) => this.SlideData(new SlideModel("Slides/Default", index, this.AreAllQuestionsAnswered, questions)));
 	}
 
-	private UnloadSlide():void
+	private UnloadSlide(complete:boolean):void
 	{
 		this.IsHighlighted(false);
 
-		if (this.SlideData() != null)
+		if (complete && this.SlideData() != null)
 		{
 			var oldSlide = this.SlideData();
 			this.SlideData().Complete(() => ExperimentManager.CloseSlide(oldSlide.Index));

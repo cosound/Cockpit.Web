@@ -37,17 +37,17 @@ define(["require", "exports", "knockout", "Managers/Experiment", "Models/Slide"]
         };
         SlideShell.prototype.LoadNextSlide = function () {
             var _this = this;
-            this.UnloadSlide();
+            this.UnloadSlide(true);
             ExperimentManager.LoadNextSlide(function (index, questions) { return _this.SlideData(new SlideModel("Slides/Default", index, _this.AreAllQuestionsAnswered, questions)); });
         };
         SlideShell.prototype.GoToPreviousSlide = function () {
             var _this = this;
-            this.UnloadSlide();
+            this.UnloadSlide(false);
             ExperimentManager.LoadPreviousSlide(function (index, questions) { return _this.SlideData(new SlideModel("Slides/Default", index, _this.AreAllQuestionsAnswered, questions)); });
         };
-        SlideShell.prototype.UnloadSlide = function () {
+        SlideShell.prototype.UnloadSlide = function (complete) {
             this.IsHighlighted(false);
-            if (this.SlideData() != null) {
+            if (complete && this.SlideData() != null) {
                 var oldSlide = this.SlideData();
                 this.SlideData().Complete(function () { return ExperimentManager.CloseSlide(oldSlide.Index); });
             }
