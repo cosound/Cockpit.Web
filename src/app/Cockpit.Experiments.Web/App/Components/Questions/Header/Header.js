@@ -12,10 +12,10 @@ define(["require", "exports", "Managers/Experiment", "Components/Questions/Quest
             var inputs = this.GetInputs();
             if (inputs.length === 0 || inputs[0].HeaderLabel == undefined)
                 throw new Error("HeaderLabel not found for Header");
-            ExperimentManager.Title(this.GetFormatted(inputs[0].HeaderLabel));
+            ExperimentManager.SlideTitle(this.GetFormatted(inputs[0].HeaderLabel));
         }
         Header.prototype.SlideCompleted = function () {
-            ExperimentManager.Title("");
+            ExperimentManager.SlideTitle("");
             return false;
         };
         return Header;

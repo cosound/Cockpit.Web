@@ -14,7 +14,7 @@ define(["require", "exports", "knockout", "Managers/Experiment", "Models/Slide"]
             this.IsNextSlideVisible = knockout.computed(function () { return _this.SlideNumber() !== _this.NumberOfSlides(); });
             this.IsNextSlideEnabled = knockout.computed(function () { return _this.IsNextSlideVisible() && !_this.IsLoadingSlide(); });
             this.IsCloseExperimentVisible = knockout.computed(function () { return ExperimentManager.IsExperimentCompleted() && ExperimentManager.CloseExperimentEnabled(); });
-            this.Title = ExperimentManager.Title;
+            this.Title = ExperimentManager.SlideTitle;
             this.HasTitle = knockout.computed(function () { return _this.Title() !== ""; });
             this._experimentMangerIsReadySubscription = ExperimentManager.IsReady.subscribe(function (r) {
                 if (!r)
