@@ -62,6 +62,7 @@ define(["require", "exports", "knockout", "Models/Question", "Managers/Experimen
                     if (!success)
                         question.HasValidAnswer(false);
                     _this._activeAnsweSets(_this._activeAnsweSets() - 1);
+                    _this.CheckIfAllQuestionsAreAnswered();
                 });
             }
             this.CheckIfAllQuestionsAreAnswered();

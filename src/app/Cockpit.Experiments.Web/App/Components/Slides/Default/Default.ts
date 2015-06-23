@@ -91,6 +91,7 @@ class Default
 			{
 				if (!success) question.HasValidAnswer(false);
 				this._activeAnsweSets(this._activeAnsweSets() - 1);
+				this.CheckIfAllQuestionsAreAnswered();
 			});
 		}
 
