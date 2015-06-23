@@ -87,6 +87,7 @@ class Default
 		if (question.HasValidAnswer())
 		{
 			this._activeAnsweSets(this._activeAnsweSets() + 1);
+
 			ExperimentManager.SaveQuestionAnswer(question.Id, question.Answer(), success =>
 			{
 				if (!success) question.HasValidAnswer(false);

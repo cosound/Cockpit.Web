@@ -176,7 +176,8 @@ class Experiment
 				if (response.Error.Fullname !== "Chaos.Cockpit.Core.Core.Exceptions.ValidationException")
 					throw new Error("Failed to save answer: " + response.Error.Message);
 			}
-			callback(true);
+			else
+				callback(true);
 		});
 	}
 
