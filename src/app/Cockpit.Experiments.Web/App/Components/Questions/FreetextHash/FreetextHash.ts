@@ -16,16 +16,16 @@ class FreetextHash extends FreetextBase<Answer>
 
 		this.Answer.subscribe(v =>
 		{
-			this.SetAnswer(this.SaveAnswerAnswer(v));
+			this.SetAnswer(this.SaveText(v));
 		});
 	}
 
-	protected LoadAnswer(answer: Answer): void
+	protected LoadAnswer(answer: Answer): string
 	{
-		
+		return "";
 	}
 
-	protected SaveAnswerAnswer(answer: string): Answer
+	protected SaveText(answer: string): Answer
 	{
 		return { Value: CryptoJS.MD5(this._forceLowerCase ? answer.toLocaleLowerCase() : answer).toString(), Length: answer.length };
 	}

@@ -48,6 +48,11 @@ class SlideShell
 			this.LoadNextSlide();
 		});
 
+		this.IsHighlighted.subscribe(value =>
+		{
+			if (value) setTimeout(() => this.IsHighlighted(false), 3000); //TODO: add binding to listen to the event for animation complete instead of timeout
+		});
+
 		if (ExperimentManager.IsReady()) this.LoadNextSlide();
 	}
 
@@ -56,33 +61,40 @@ class SlideShell
 		if (this.AreAllQuestionsAnswered())
 		{
 			this.LoadNextSlide();
-		} else
+		}
+		else
 		{
 			this.SlideData().ScrollToFirstInvalidAnswer();
-			this.IsHighlighted(false);
-			setTimeout(() => this.IsHighlighted(true), 50);
+
+			if (this.IsHighlighted())
+			{
+				this.IsHighlighted(false);
+				setTimeout(() => this.IsHighlighted(true), 50);
+			}
+			else
+				this.IsHighlighted(true);
 		}
 	}
 
 	private LoadNextSlide():void
 	{
-		this.UnloadSlide();
+		this.UnloadSlide(true);
 
 		ExperimentManager.LoadNextSlide((index, questions) => this.SlideData(new SlideModel("Slides/Default", index, this.AreAllQuestionsAnswered, questions)));
 	}
 
 	public GoToPreviousSlide():void
 	{
-		this.UnloadSlide();
+		this.UnloadSlide(false);
 
 		ExperimentManager.LoadPreviousSlide((index, questions) => this.SlideData(new SlideModel("Slides/Default", index, this.AreAllQuestionsAnswered, questions)));
 	}
 
-	private UnloadSlide():void
+	private UnloadSlide(complete:boolean):void
 	{
 		this.IsHighlighted(false);
 
-		if (this.SlideData() != null)
+		if (complete && this.SlideData() != null)
 		{
 			var oldSlide = this.SlideData();
 			this.SlideData().Complete(() => ExperimentManager.CloseSlide(oldSlide.Index));

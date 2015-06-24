@@ -8,17 +8,16 @@ define(["require", "exports", "Components/Questions/Freetext/FreetextBase"], fun
     var Freetext = (function (_super) {
         __extends(Freetext, _super);
         function Freetext(question) {
-            var _this = this;
             _super.call(this, question);
-            this.Answer.subscribe(function (v) {
-                _this.AddEvent("Change", "/Instrument", "Keyboard", v);
-                _this.SetAnswer(_this.SaveAnswerAnswer(v));
-            });
         }
-        Freetext.prototype.LoadAnswer = function (answer) {
-            this.Answer(answer.Text ? answer.Text : "");
+        Freetext.prototype.UpdateAnswer = function (text) {
+            this.AddEvent("Change", "/Instrument", "Keyboard", text);
+            _super.prototype.UpdateAnswer.call(this, text);
         };
-        Freetext.prototype.SaveAnswerAnswer = function (answer) {
+        Freetext.prototype.LoadText = function (answer) {
+            return answer == null || answer.Text == null ? "" : answer.Text;
+        };
+        Freetext.prototype.SaveText = function (answer) {
             return { Text: answer };
         };
         return Freetext;

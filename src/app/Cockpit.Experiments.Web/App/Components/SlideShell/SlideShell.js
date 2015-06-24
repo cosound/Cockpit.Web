@@ -14,12 +14,16 @@ define(["require", "exports", "knockout", "Managers/Experiment", "Models/Slide"]
             this.IsNextSlideVisible = knockout.computed(function () { return _this.SlideNumber() !== _this.NumberOfSlides(); });
             this.IsNextSlideEnabled = knockout.computed(function () { return _this.IsNextSlideVisible() && !_this.IsLoadingSlide(); });
             this.IsCloseExperimentVisible = knockout.computed(function () { return ExperimentManager.IsExperimentCompleted() && ExperimentManager.CloseExperimentEnabled(); });
-            this.Title = ExperimentManager.Title;
+            this.Title = ExperimentManager.SlideTitle;
             this.HasTitle = knockout.computed(function () { return _this.Title() !== ""; });
             this._experimentMangerIsReadySubscription = ExperimentManager.IsReady.subscribe(function (r) {
                 if (!r)
                     return;
                 _this.LoadNextSlide();
+            });
+            this.IsHighlighted.subscribe(function (value) {
+                if (value)
+                    setTimeout(function () { return _this.IsHighlighted(false); }, 3000);
             });
             if (ExperimentManager.IsReady())
                 this.LoadNextSlide();
@@ -31,23 +35,27 @@ define(["require", "exports", "knockout", "Managers/Experiment", "Models/Slide"]
             }
             else {
                 this.SlideData().ScrollToFirstInvalidAnswer();
-                this.IsHighlighted(false);
-                setTimeout(function () { return _this.IsHighlighted(true); }, 50);
+                if (this.IsHighlighted()) {
+                    this.IsHighlighted(false);
+                    setTimeout(function () { return _this.IsHighlighted(true); }, 50);
+                }
+                else
+                    this.IsHighlighted(true);
             }
         };
         SlideShell.prototype.LoadNextSlide = function () {
             var _this = this;
-            this.UnloadSlide();
+            this.UnloadSlide(true);
             ExperimentManager.LoadNextSlide(function (index, questions) { return _this.SlideData(new SlideModel("Slides/Default", index, _this.AreAllQuestionsAnswered, questions)); });
         };
         SlideShell.prototype.GoToPreviousSlide = function () {
             var _this = this;
-            this.UnloadSlide();
+            this.UnloadSlide(false);
             ExperimentManager.LoadPreviousSlide(function (index, questions) { return _this.SlideData(new SlideModel("Slides/Default", index, _this.AreAllQuestionsAnswered, questions)); });
         };
-        SlideShell.prototype.UnloadSlide = function () {
+        SlideShell.prototype.UnloadSlide = function (complete) {
             this.IsHighlighted(false);
-            if (this.SlideData() != null) {
+            if (complete && this.SlideData() != null) {
                 var oldSlide = this.SlideData();
                 this.SlideData().Complete(function () { return ExperimentManager.CloseSlide(oldSlide.Index); });
             }

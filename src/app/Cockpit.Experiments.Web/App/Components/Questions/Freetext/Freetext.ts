@@ -8,20 +8,20 @@ class Freetext extends FreetextBase<Answer>
 	constructor(question: QuestionModel)
 	{
 		super(question);
-
-		this.Answer.subscribe(v =>
-		{
-			this.AddEvent("Change", "/Instrument", "Keyboard", v);
-			this.SetAnswer(this.SaveAnswerAnswer(v));
-		});
 	}
 
-	protected LoadAnswer(answer: Answer): void
+	protected UpdateAnswer(text: string): void
 	{
-		this.Answer(answer.Text ? answer.Text : "");
+		this.AddEvent("Change", "/Instrument", "Keyboard", text);
+		super.UpdateAnswer(text);
 	}
 
-	protected SaveAnswerAnswer(answer: string): Answer
+	protected LoadText(answer: Answer): string
+	{
+		return answer == null || answer.Text == null ? "" : answer.Text;
+	}
+
+	protected SaveText(answer: string): Answer
 	{
 		return { Text: answer };
 	}

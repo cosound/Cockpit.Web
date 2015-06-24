@@ -12,12 +12,13 @@ define(["require", "exports", "Components/Questions/Freetext/FreetextBase", "cry
             _super.call(this, question);
             this._forceLowerCase = this.GetInstrument("ForceLowerCase") === 1;
             this.Answer.subscribe(function (v) {
-                _this.SetAnswer(_this.SaveAnswerAnswer(v));
+                _this.SetAnswer(_this.SaveText(v));
             });
         }
         FreetextHash.prototype.LoadAnswer = function (answer) {
+            return "";
         };
-        FreetextHash.prototype.SaveAnswerAnswer = function (answer) {
+        FreetextHash.prototype.SaveText = function (answer) {
             return { Value: CryptoJS.MD5(this._forceLowerCase ? answer.toLocaleLowerCase() : answer).toString(), Length: answer.length };
         };
         return FreetextHash;

@@ -20,7 +20,7 @@ class Default
 		slide.SlideCompleted = callback => this.SlideCompleted(callback);
 		slide.ScrollToFirstInvalidAnswerCallback = () => this.ScrollToFirstInvalidAnswer();
 
-		this.HaveActiveAnswersSet = knockout.computed(() => this._activeAnsweSets() === 0);
+		this.HaveActiveAnswersSet = knockout.computed(() => this._activeAnsweSets() !== 0);
 
 		this.InitializeQuestions(slide.Questions);
 	}
@@ -87,7 +87,13 @@ class Default
 		if (question.HasValidAnswer())
 		{
 			this._activeAnsweSets(this._activeAnsweSets() + 1);
-			ExperimentManager.SaveQuestionAnswer(question.Id, question.Answer(),() => this._activeAnsweSets(this._activeAnsweSets() - 1));
+
+			ExperimentManager.SaveQuestionAnswer(question.Id, question.Answer(), success =>
+			{
+				if (!success) question.HasValidAnswer(false);
+				this._activeAnsweSets(this._activeAnsweSets() - 1);
+				this.CheckIfAllQuestionsAreAnswered();
+			});
 		}
 
 		this.CheckIfAllQuestionsAreAnswered();
@@ -105,7 +111,7 @@ class Default
 
 	private CheckIfAllQuestionsAreAnswered():void
 	{
-		this._slide.CanGoToNextSlide(this.GetFirstQuestionWithoutValidAnswer() == null);
+		this._slide.CanGoToNextSlide(this.GetFirstQuestionWithoutValidAnswer() == null && !this.HaveActiveAnswersSet());
 	}
 }
 

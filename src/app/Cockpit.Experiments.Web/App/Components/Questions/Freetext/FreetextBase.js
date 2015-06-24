@@ -8,6 +8,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], 
     var FreetextBase = (function (_super) {
         __extends(FreetextBase, _super);
         function FreetextBase(question) {
+            var _this = this;
             _super.call(this, question);
             this.Label = "";
             this.Answer = knockout.observable(null);
@@ -39,21 +40,24 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase"], 
                     break;
             }
             if (this.HasAnswer())
-                this.LoadAnswer(this.GetAnswer());
+                this.Answer(this.LoadText(this.GetAnswer()));
             this.Answer.extend({ rateLimit: { method: "notifyWhenChangesStop", timeout: 200 } });
+            this.Answer.subscribe(function (v) { return _this.UpdateAnswer(v); });
         }
-        FreetextBase.prototype.LoadAnswer = function (answer) {
+        FreetextBase.prototype.UpdateAnswer = function (text) {
+            this.SetAnswer(this.SaveText(text));
+        };
+        FreetextBase.prototype.LoadText = function (answer) {
             throw new Error("Not implemented");
         };
-        FreetextBase.prototype.SaveAnswerAnswer = function (answer) {
+        FreetextBase.prototype.SaveText = function (answer) {
             throw new Error("Not implemented");
         };
         FreetextBase.prototype.HasValidAnswer = function (answer) {
             if (!this._validation)
                 return true;
-            if (answer === null)
-                answer = "";
-            return this._validation.test(answer);
+            var text = answer == null ? "" : this.LoadText(answer);
+            return this._validation.test(text);
         };
         return FreetextBase;
     })(QuestionBase);
