@@ -344,8 +344,9 @@ input[type="range"]::-ms-fill-upper {
 
 .LikertScale .Scale > label > input {
 	position: relative;
-	width: 100%;
 	display: inline-block;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .LikertScale .Scale > label > span:last-child {
