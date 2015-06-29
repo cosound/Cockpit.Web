@@ -3,16 +3,33 @@
 }
 
 .Highlight .DoesNotHaveValidAnswer {
+	-webkit-animation: Highlight 3s;
 	animation: Highlight 3s;
 }
 
 @keyframes Highlight {
- 	10% {
- 		background: orange
- 	}
- 	100% {
- 		background: none;
- 	}
+ 	10% { background: orange; }
+ 	100% { background: none; }
+}
+
+@-webkit-keyframes Highlight {
+ 	10% { background: orange; }
+ 	100% { background: none; }
+}
+
+.Rotating {
+	-webkit-animation: Rotating 1s linear 0s infinite;
+	animation: Rotating 1s linear 0s infinite;
+}
+
+@keyframes Rotating {
+ 	from { transform: rotate(0); }
+ 	to { transform: rotate(359deg); }
+}
+
+@-webkit-keyframes Rotating {
+ 	from { transform: rotate(0); }
+ 	to { transform: rotate(359deg); }
 }
 
 .HalfColumn {

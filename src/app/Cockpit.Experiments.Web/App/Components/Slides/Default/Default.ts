@@ -9,10 +9,11 @@ class Default
 {
 	private _slide: SlideModel;
 	private _uiLessQuestions: IQuestionViewModel[] = [];
-	private _activeAnsweSets:KnockoutObservable<number> = knockout.observable(0);
+	private _activeAnsweSets: KnockoutObservable<number> = knockout.observable(0);
+	private _isWorking:KnockoutObservable<boolean> = knockout.observable(false);
 
 	public Questions: QuestionModel[] = [];
-	public HaveActiveAnswersSet:KnockoutComputed<boolean>;
+	public HaveActiveAnswersSets:KnockoutComputed<boolean>;
 
 	constructor(slide: SlideModel)
 	{
@@ -20,7 +21,8 @@ class Default
 		slide.SlideCompleted = callback => this.SlideCompleted(callback);
 		slide.ScrollToFirstInvalidAnswerCallback = () => this.ScrollToFirstInvalidAnswer();
 
-		this.HaveActiveAnswersSet = knockout.computed(() => this._activeAnsweSets() !== 0);
+		this.HaveActiveAnswersSets = knockout.computed(() => this._activeAnsweSets() !== 0);
+		slide.SetIsWorking(knockout.computed(() => this._isWorking() || this.HaveActiveAnswersSets()));
 
 		this.InitializeQuestions(slide.Questions);
 	}
@@ -63,7 +65,7 @@ class Default
 
 		if (waitForAnswerSaved)
 		{
-			var sub = this.HaveActiveAnswersSet.subscribe(v =>
+			var sub = this.HaveActiveAnswersSets.subscribe(v =>
 			{
 				if (!v)
 				{
@@ -91,8 +93,11 @@ class Default
 			ExperimentManager.SaveQuestionAnswer(question.Id, question.Answer(), success =>
 			{
 				if (!success) question.HasValidAnswer(false);
+
+				this._isWorking(true);
 				this._activeAnsweSets(this._activeAnsweSets() - 1);
 				this.CheckIfAllQuestionsAreAnswered();
+				this._isWorking(false);
 			});
 		}
 
@@ -111,7 +116,7 @@ class Default
 
 	private CheckIfAllQuestionsAreAnswered():void
 	{
-		this._slide.CanGoToNextSlide(this.GetFirstQuestionWithoutValidAnswer() == null && !this.HaveActiveAnswersSet());
+		this._slide.CanGoToNextSlide(this.GetFirstQuestionWithoutValidAnswer() == null && !this.HaveActiveAnswersSets());
 	}
 }
 

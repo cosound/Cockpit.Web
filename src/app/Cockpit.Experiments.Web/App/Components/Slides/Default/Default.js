@@ -4,11 +4,13 @@ define(["require", "exports", "knockout", "Models/Question", "Managers/Experimen
             var _this = this;
             this._uiLessQuestions = [];
             this._activeAnsweSets = knockout.observable(0);
+            this._isWorking = knockout.observable(false);
             this.Questions = [];
             this._slide = slide;
             slide.SlideCompleted = function (callback) { return _this.SlideCompleted(callback); };
             slide.ScrollToFirstInvalidAnswerCallback = function () { return _this.ScrollToFirstInvalidAnswer(); };
-            this.HaveActiveAnswersSet = knockout.computed(function () { return _this._activeAnsweSets() !== 0; });
+            this.HaveActiveAnswersSets = knockout.computed(function () { return _this._activeAnsweSets() !== 0; });
+            slide.SetIsWorking(knockout.computed(function () { return _this._isWorking() || _this.HaveActiveAnswersSets(); }));
             this.InitializeQuestions(slide.Questions);
         }
         Default.prototype.InitializeQuestions = function (questions) {
@@ -39,7 +41,7 @@ define(["require", "exports", "knockout", "Models/Question", "Managers/Experimen
                 waitForAnswerSaved = this._uiLessQuestions[i].SlideCompleted() || waitForAnswerSaved;
             }
             if (waitForAnswerSaved) {
-                var sub = this.HaveActiveAnswersSet.subscribe(function (v) {
+                var sub = this.HaveActiveAnswersSets.subscribe(function (v) {
                     if (!v) {
                         sub.dispose();
                         completed();
@@ -61,8 +63,10 @@ define(["require", "exports", "knockout", "Models/Question", "Managers/Experimen
                 ExperimentManager.SaveQuestionAnswer(question.Id, question.Answer(), function (success) {
                     if (!success)
                         question.HasValidAnswer(false);
+                    _this._isWorking(true);
                     _this._activeAnsweSets(_this._activeAnsweSets() - 1);
                     _this.CheckIfAllQuestionsAreAnswered();
+                    _this._isWorking(false);
                 });
             }
             this.CheckIfAllQuestionsAreAnswered();
@@ -75,7 +79,7 @@ define(["require", "exports", "knockout", "Models/Question", "Managers/Experimen
             return null;
         };
         Default.prototype.CheckIfAllQuestionsAreAnswered = function () {
-            this._slide.CanGoToNextSlide(this.GetFirstQuestionWithoutValidAnswer() == null && !this.HaveActiveAnswersSet());
+            this._slide.CanGoToNextSlide(this.GetFirstQuestionWithoutValidAnswer() == null && !this.HaveActiveAnswersSets());
         };
         return Default;
     })();
