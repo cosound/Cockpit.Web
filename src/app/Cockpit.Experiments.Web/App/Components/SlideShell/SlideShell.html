@@ -10,11 +10,17 @@
 	<!-- /ko -->
 	<div class="panel-footer clearfix">
 		<div class="pull-left">
-			<button type="button" data-bind="enable: IsPreviousSlideEnabled, click: GoToPreviousSlide, visible: IsPreviousSlideVisible" class="btn btn-primary">Previous</button>
+			<button type="button" data-bind="enable: IsPreviousSlideEnabled, click: GoToPreviousSlide, visible: IsPreviousSlideVisible" class="btn btn-primary">
+				<span class="glyphicon glyphicon-circle-arrow-left" aria-hidden="true"></span>
+				Previous
+			</button>
 		</div>
 		<div class="pull-right">
 			<span data-bind="text: SlideNumber"></span> of <span data-bind="text: NumberOfSlides"></span>
-			<button type="button" data-bind="enable: IsNextSlideEnabled, click: GoToNextSlide, visible: IsNextSlideVisible" class="btn btn-primary">Next</button>
+			<button type="button" data-bind="enable: IsNextSlideEnabled, click: GoToNextSlide, visible: IsNextSlideVisible" class="btn btn-primary">
+				Next
+				<span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true" data-bind="css: {Rotating: IsWaitingForNext}"></span>
+			</button>
 			<button type="button" data-bind="click: Close, visible: IsCloseExperimentVisible" class="btn btn-primary">Close</button>
 		</div>
 	</div>

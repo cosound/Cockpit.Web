@@ -21,9 +21,12 @@ class SlideShell
 	public IsNextSlideVisible: KnockoutComputed<boolean>;
 	public IsNextSlideEnabled: KnockoutComputed<boolean>;
 	public IsCloseExperimentVisible: KnockoutComputed<boolean>;
-	public IsHighlighted:KnockoutObservable<boolean> = knockout.observable(false);
+	public IsCloseExperimentEnabled: KnockoutComputed<boolean>;
+	public IsHighlighted: KnockoutObservable<boolean> = knockout.observable(false);
+	public IsWaiting: KnockoutComputed<boolean>;
+	public IsWaitingForNext: KnockoutObservable<boolean> = knockout.observable(false);
 
-	private _experimentMangerIsReadySubscription: KnockoutSubscription;
+	private _subscriptions:KnockoutSubscription[] = [];
 
 	constructor()
 	{
@@ -32,21 +35,24 @@ class SlideShell
 		this.SlideNumber = knockout.computed(() => this.SlideIndex() + 1);
 		this.NumberOfSlides = ExperimentManager.NumberOfSlides;
 
+		this.IsWaiting = knockout.computed(() => this.IsWaitingForNext());
+
 		this.IsPreviousSlideVisible = knockout.computed(() => ExperimentManager.GoToPreviousSlideEnabled() && !ExperimentManager.CloseSlidesEnabled());
-		this.IsPreviousSlideEnabled = knockout.computed(() => this.IsPreviousSlideVisible() && !this.IsLoadingSlide() && this.SlideIndex() !== 0);
+		this.IsPreviousSlideEnabled = knockout.computed(() => this.IsPreviousSlideVisible() && !this.IsLoadingSlide() && this.SlideIndex() !== 0 && !this.IsWaiting());
 		this.IsNextSlideVisible = knockout.computed(() => this.SlideNumber() !== this.NumberOfSlides());
-		this.IsNextSlideEnabled = knockout.computed(() => this.IsNextSlideVisible() && !this.IsLoadingSlide());
+		this.IsNextSlideEnabled = knockout.computed(() => this.IsNextSlideVisible() && !this.IsLoadingSlide() && !this.IsWaiting());
 		this.IsCloseExperimentVisible = knockout.computed(() => ExperimentManager.IsExperimentCompleted() && ExperimentManager.CloseExperimentEnabled());
+		this.IsCloseExperimentEnabled = knockout.computed(() => this.IsCloseExperimentVisible() && !this.IsWaiting());
 
 		this.Title = ExperimentManager.SlideTitle;
 		this.HasTitle = knockout.computed(() => this.Title() !== "");
 
-		this._experimentMangerIsReadySubscription = ExperimentManager.IsReady.subscribe(r =>
+		this._subscriptions.push(ExperimentManager.IsReady.subscribe(r =>
 		{
 			if (!r) return;
 
 			this.LoadNextSlide();
-		});
+		}));
 
 		this.IsHighlighted.subscribe(value =>
 		{
@@ -58,22 +64,29 @@ class SlideShell
 
 	public GoToNextSlide():void
 	{
-		if (this.AreAllQuestionsAnswered())
-		{
-			this.LoadNextSlide();
-		}
-		else
-		{
-			this.SlideData().ScrollToFirstInvalidAnswer();
+		this.IsWaitingForNext(true);
 
-			if (this.IsHighlighted())
+		this.DoWhenDone(() => !this.IsLoadingSlide() && !this.SlideData().IsWorking(), () =>
+		{
+			this.IsWaitingForNext(false);
+
+			if (this.AreAllQuestionsAnswered())
 			{
-				this.IsHighlighted(false);
-				setTimeout(() => this.IsHighlighted(true), 50);
+				this.LoadNextSlide();
 			}
 			else
-				this.IsHighlighted(true);
-		}
+			{
+				this.SlideData().ScrollToFirstInvalidAnswer();
+
+				if (this.IsHighlighted())
+				{
+					this.IsHighlighted(false);
+					setTimeout(() => this.IsHighlighted(true), 50);
+				}
+				else
+					this.IsHighlighted(true);
+			}
+		});
 	}
 
 	private LoadNextSlide():void
@@ -88,6 +101,21 @@ class SlideShell
 		this.UnloadSlide(false);
 
 		ExperimentManager.LoadPreviousSlide((index, questions) => this.SlideData(new SlideModel("Slides/Default", index, this.AreAllQuestionsAnswered, questions)));
+	}
+
+	private DoWhenDone(check:() => boolean, action:() => void):void
+	{
+		if (check())
+		{
+			action();
+			return;
+		}
+		var sub = knockout.computed(check).subscribe(v =>
+		{
+			sub.dispose();
+			action();
+		});
+		this._subscriptions.push(sub);
 	}
 
 	private UnloadSlide(complete:boolean):void
@@ -108,16 +136,10 @@ class SlideShell
 		ExperimentManager.Close();
 	}
 
-	private CleanExperimentLoaded():void
-	{
-		this._experimentMangerIsReadySubscription.dispose();
-		this._experimentMangerIsReadySubscription = null;
-	}
-
 	public dispose():void
 	{
-		if (this._experimentMangerIsReadySubscription)
-			this.CleanExperimentLoaded();
+		this._subscriptions.forEach(s => s.dispose());
+
 	}
 }
 
