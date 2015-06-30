@@ -2,6 +2,8 @@
 import CockpitPortal = require("CockpitPortal");
 import Navigation = require("Managers/Navigation");
 import Title = require("Managers/Title");
+import Notification = require("Managers/Notification");
+import CallRepeater = require("Managers/CallRepeater");
 
 class Experiment
 {
@@ -77,8 +79,18 @@ class Experiment
 
 		CockpitPortal.Experiment.Get(this._id).WithCallback(response =>
 		{
-			if (response.Error != null) throw new Error("Failed to load Experiment: " + response.Error.Message);
-			if (response.Body.Results.length === 0) throw new Error("No Experiment data retuened");
+			if (response.Error != null)
+			{
+				Notification.Error(`Failed to load Experiment: ${response.Error.Message}`);
+				Navigation.Navigate(`ExperimentNotFound/${id}`);
+				return;
+			}
+			if (response.Body.Results.length === 0)
+			{
+				Navigation.Navigate(`ExperimentNotFound/${id}`);
+				Notification.Error("No Experiment data retuened");
+				return;
+			}
 
 			var config = response.Body.Results[0];
 
@@ -99,7 +111,7 @@ class Experiment
 	{
 		if (this._listExperiments[listId])
 		{
-			Navigation.Navigate("Experiment/" + this._listExperiments[listId]);
+			Navigation.Navigate(`Experiment/${this._listExperiments[listId]}`);
 			return;
 		}
 
@@ -117,9 +129,8 @@ class Experiment
 			{
 				this._listExperiments[listId] = response.Body.Results[0].Id;
 
-				Navigation.Navigate("Experiment/" + response.Body.Results[0].Id);
+				Navigation.Navigate(`Experiment/${response.Body.Results[0].Id}`);
 			}
-				
 		});
 	}
 
@@ -140,21 +151,20 @@ class Experiment
 			if (response.Error != null)
 			{
 				if (response.Error.Fullname === "Chaos.Cockpit.Core.Core.Exceptions.SlideLockedException")
-				{
 					Navigation.Navigate("SlideLocked");
-					return;
-				}
 				else if (response.Error.Message === "No Questionaire found by that Id")
-				{
-					Navigation.Navigate("ExperimentNotFound/" + this._id);
-					return;
-				}
+					Navigation.Navigate(`ExperimentNotFound/${this._id}`);
 				else
-					throw new Error("Failed to get slide: " + response.Error.Message);
+					Notification.Error(`Failed to get slide: ${response.Error.Message}`);
+
+				return;
 			}
 
 			if (response.Body.Count === 0)
-				throw new Error("No slide returned");
+			{
+				Notification.Error("No slide returned");
+				return;
+			}
 
 			this.NumberOfSlides(response.Body.FoundCount);
 
@@ -167,18 +177,22 @@ class Experiment
 
 	public SaveQuestionAnswer(id: string, answer: any, callback: (success:boolean) => void): void
 	{
-		CockpitPortal.Answer.Set(id, answer).WithCallback(response =>
+		new CallRepeater((c) =>
 		{
-			if (response.Error != null)
+			CockpitPortal.Answer.Set(id, answer).WithCallback(response =>
 			{
-				callback(false);
-
-				if (response.Error.Fullname !== "Chaos.Cockpit.Core.Core.Exceptions.ValidationException")
-					throw new Error("Failed to save answer: " + response.Error.Message);
-			}
-			else
-				callback(true);
-		});
+				if (response.Error != null)
+				{
+					if (response.Error.Fullname !== "Chaos.Cockpit.Core.Core.Exceptions.ValidationException")
+					{
+						c(false, false);
+						Notification.Error(`Failed to save answer: ${response.Error.Message}`);
+					} else
+						c(false, true);
+				} else
+					c(true, false);
+			});
+		}, callback);
 	}
 
 	public CloseSlide(index: number): void
@@ -186,7 +200,7 @@ class Experiment
 		CockpitPortal.Slide.Completed(this._id, index).WithCallback(response =>
 		{
 			if (response.Error != null)
-				throw new Error("Failed to close slide: " + response.Error.Message);
+				Notification.Error(`Failed to close slide: ${response.Error.Message}`);
 		});
 	}
 

@@ -1,4 +1,4 @@
-define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation", "Managers/Title"], function (require, exports, knockout, CockpitPortal, Navigation, Title) {
+define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation", "Managers/Title", "Managers/Notification", "Managers/CallRepeater"], function (require, exports, knockout, CockpitPortal, Navigation, Title, Notification, CallRepeater) {
     var Experiment = (function () {
         function Experiment() {
             var _this = this;
@@ -51,10 +51,16 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
             this.IsReady(false);
             this._hasLoadedCurrentSlide = false;
             CockpitPortal.Experiment.Get(this._id).WithCallback(function (response) {
-                if (response.Error != null)
-                    throw new Error("Failed to load Experiment: " + response.Error.Message);
-                if (response.Body.Results.length === 0)
-                    throw new Error("No Experiment data retuened");
+                if (response.Error != null) {
+                    Notification.Error("Failed to load Experiment: " + response.Error.Message);
+                    Navigation.Navigate("ExperimentNotFound/" + id);
+                    return;
+                }
+                if (response.Body.Results.length === 0) {
+                    Navigation.Navigate("ExperimentNotFound/" + id);
+                    Notification.Error("No Experiment data retuened");
+                    return;
+                }
                 var config = response.Body.Results[0];
                 _this.Title(config.Name);
                 _this.CloseSlidesEnabled(config.LockQuestion);
@@ -96,19 +102,18 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
             var _this = this;
             CockpitPortal.Question.Get(this._id, index).WithCallback(function (response) {
                 if (response.Error != null) {
-                    if (response.Error.Fullname === "Chaos.Cockpit.Core.Core.Exceptions.SlideLockedException") {
+                    if (response.Error.Fullname === "Chaos.Cockpit.Core.Core.Exceptions.SlideLockedException")
                         Navigation.Navigate("SlideLocked");
-                        return;
-                    }
-                    else if (response.Error.Message === "No Questionaire found by that Id") {
+                    else if (response.Error.Message === "No Questionaire found by that Id")
                         Navigation.Navigate("ExperimentNotFound/" + _this._id);
-                        return;
-                    }
                     else
-                        throw new Error("Failed to get slide: " + response.Error.Message);
+                        Notification.Error("Failed to get slide: " + response.Error.Message);
+                    return;
                 }
-                if (response.Body.Count === 0)
-                    throw new Error("No slide returned");
+                if (response.Body.Count === 0) {
+                    Notification.Error("No slide returned");
+                    return;
+                }
                 _this.NumberOfSlides(response.Body.FoundCount);
                 _this._hasLoadedCurrentSlide = true;
                 _this.CurrentSlideIndex(index);
@@ -116,20 +121,25 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
             });
         };
         Experiment.prototype.SaveQuestionAnswer = function (id, answer, callback) {
-            CockpitPortal.Answer.Set(id, answer).WithCallback(function (response) {
-                if (response.Error != null) {
-                    callback(false);
-                    if (response.Error.Fullname !== "Chaos.Cockpit.Core.Core.Exceptions.ValidationException")
-                        throw new Error("Failed to save answer: " + response.Error.Message);
-                }
-                else
-                    callback(true);
-            });
+            new CallRepeater(function (c) {
+                CockpitPortal.Answer.Set(id, answer).WithCallback(function (response) {
+                    if (response.Error != null) {
+                        if (response.Error.Fullname !== "Chaos.Cockpit.Core.Core.Exceptions.ValidationException") {
+                            c(false, false);
+                            Notification.Error("Failed to save answer: " + response.Error.Message);
+                        }
+                        else
+                            c(false, true);
+                    }
+                    else
+                        c(true, false);
+                });
+            }, callback);
         };
         Experiment.prototype.CloseSlide = function (index) {
             CockpitPortal.Slide.Completed(this._id, index).WithCallback(function (response) {
                 if (response.Error != null)
-                    throw new Error("Failed to close slide: " + response.Error.Message);
+                    Notification.Error("Failed to close slide: " + response.Error.Message);
             });
         };
         Experiment.prototype.Close = function () {
