@@ -133,7 +133,9 @@
     <TypeScriptCompile Include="App\Components\TextFormat\TextFormat.ts" />
     <TypeScriptCompile Include="App\Components\Welcome\Welcome.ts" />
     <TypeScriptCompile Include="App\KnockoutBindings\ScrollTo.ts" />
+    <TypeScriptCompile Include="App\Managers\Notification.ts" />
     <TypeScriptCompile Include="App\Managers\TextFormatter.ts" />
+    <TypeScriptCompile Include="App\Managers\CallRepeater.ts" />
     <TypeScriptCompile Include="App\Models\CommonTypes.d.ts" />
     <TypeScriptCompile Include="App\Components\Questions\KAcPS\KAcPS.ts" />
     <TypeScriptCompile Include="App\Components\Questions\LikertScale\LikertScale.ts" />
