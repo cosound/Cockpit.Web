@@ -113,7 +113,7 @@ class QuestionsBase<T> implements IQuestionViewModel
 		this.UpdateIsAnswerValid(answer);
 
 		var output = <any>answer;
-		output.Events = this._events;
+		output.Events = this._events.map(this.CloneEvent);
 
 		this.Model.Answer(output);
 	}
@@ -148,7 +148,7 @@ class QuestionsBase<T> implements IQuestionViewModel
 		return result;
 	}
 
-	protected AddEvent(type:string, id:string = null, method:string = "None", data:string = "None")
+	protected AddEvent(type:string, id:string = null, method:string = "None", data:string = "None"):void
 	{
 		var event = {
 			Id: id === null ? "None" : id,
@@ -159,6 +159,17 @@ class QuestionsBase<T> implements IQuestionViewModel
 		};
 
 		this._events.push(event);
+	}
+
+	private CloneEvent(event:CockpitPortal.IQuestionEvent):CockpitPortal.IQuestionEvent
+	{
+		return {
+			Id: event.Id,
+			Type: event.Type,
+			Method: event.Method,
+			Data: event.Data,
+			DateTime: event.DateTime
+		};
 	}
 
 	protected TrackAudioInfo(id:string, audioInfo:AudioInfo):void

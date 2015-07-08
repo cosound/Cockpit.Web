@@ -39,7 +39,11 @@ class CallQueue
 		if (queue.length === 0)
 			delete this._queues[id];
 		else
-			queue[queue.length - 1].Call(s => this.CallNext(id, queue.length, s));
+		{
+			var newCount = queue.length;
+			queue[newCount - 1].Call(s => this.CallNext(id, newCount, s));
+		}
+			
 	}
 }
 

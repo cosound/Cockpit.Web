@@ -70,7 +70,7 @@ define(["require", "exports", "knockout", "Components/Players/Audio/AudioInfo", 
         QuestionsBase.prototype.SetAnswer = function (answer) {
             this.UpdateIsAnswerValid(answer);
             var output = answer;
-            output.Events = this._events;
+            output.Events = this._events.map(this.CloneEvent);
             this.Model.Answer(output);
         };
         QuestionsBase.prototype.GetArray = function (data) {
@@ -105,6 +105,15 @@ define(["require", "exports", "knockout", "Components/Players/Audio/AudioInfo", 
                 DateTime: new Date()
             };
             this._events.push(event);
+        };
+        QuestionsBase.prototype.CloneEvent = function (event) {
+            return {
+                Id: event.Id,
+                Type: event.Type,
+                Method: event.Method,
+                Data: event.Data,
+                DateTime: event.DateTime
+            };
         };
         QuestionsBase.prototype.TrackAudioInfo = function (id, audioInfo) {
             var _this = this;

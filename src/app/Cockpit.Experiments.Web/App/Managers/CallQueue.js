@@ -26,8 +26,10 @@ define(["require", "exports"], function (require, exports) {
             completed.forEach(function (c) { return c.Complete(success, false); });
             if (queue.length === 0)
                 delete this._queues[id];
-            else
-                queue[queue.length - 1].Call(function (s) { return _this.CallNext(id, queue.length, s); });
+            else {
+                var newCount = queue.length;
+                queue[newCount - 1].Call(function (s) { return _this.CallNext(id, newCount, s); });
+            }
         };
         return CallQueue;
     })();
