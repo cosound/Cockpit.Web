@@ -14,16 +14,18 @@ define(["require", "exports", "Managers/Notification"], function (require, expor
             this._completedCallback = completedCallback;
             this._caller(function (s, f) { return _this.CallCompleted(s, f); });
         };
+        CallRepeater.prototype.Complete = function (success, invokeCompleted) {
+            if (invokeCompleted === void 0) { invokeCompleted = true; }
+            if (invokeCompleted)
+                this._completedCallback(success);
+            this._callback(success);
+        };
         CallRepeater.prototype.CallCompleted = function (success, fatal) {
             var _this = this;
-            if (success) {
-                this._completedCallback();
-                this._callback(true);
-            }
-            else if (fatal) {
-                this._completedCallback();
-                this._callback(false);
-            }
+            if (success)
+                this.Complete(true);
+            else if (fatal)
+                this.Complete(false);
             else {
                 Notification.Debug("Call failed, repeating in " + this._repeatWaitPeriod + " milliseconds");
                 setTimeout(function () { return _this._caller(function (s, f) { return _this.CallCompleted(s, f); }); }, this._repeatWaitPeriod);

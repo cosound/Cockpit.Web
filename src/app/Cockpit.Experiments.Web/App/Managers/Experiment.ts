@@ -52,7 +52,7 @@ class Experiment
 		this.Title.subscribe(title => Title.ToDefault(title == "" ? null : title));
 
 		this.CloseExperimentEnabled = knockout.computed(() => this.CompletedUrl() != null);
-		this._callQueue = new CallQueue();
+		this._callQueue = new CallQueue(true);
 
 		Navigation.ExperimentId.subscribe(id =>
 		{

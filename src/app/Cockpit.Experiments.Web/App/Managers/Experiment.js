@@ -29,7 +29,7 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
             });
             this.Title.subscribe(function (title) { return Title.ToDefault(title == "" ? null : title); });
             this.CloseExperimentEnabled = knockout.computed(function () { return _this.CompletedUrl() != null; });
-            this._callQueue = new CallQueue();
+            this._callQueue = new CallQueue(true);
             Navigation.ExperimentId.subscribe(function (id) {
                 if (id != null)
                     _this.Load(id);

@@ -1,7 +1,8 @@
 define(["require", "exports"], function (require, exports) {
     var CallQueue = (function () {
-        function CallQueue() {
+        function CallQueue(onlyCallLast) {
             this._queues = {};
+            this._onlyCallLast = onlyCallLast;
         }
         CallQueue.prototype.Queue = function (id, call) {
             var _this = this;
@@ -10,17 +11,23 @@ define(["require", "exports"], function (require, exports) {
             }
             else {
                 this._queues[id] = [call];
-                call.Call(function () { return _this.CallNext(id); });
+                call.Call(function (s) { return _this.CallNext(id, 1, s); });
             }
         };
-        CallQueue.prototype.CallNext = function (id) {
+        CallQueue.prototype.CallNext = function (id, count, success) {
             var _this = this;
             var queue = this._queues[id];
-            queue.shift();
+            if (queue.length === 1) {
+                delete this._queues[id];
+                return;
+            }
+            var completed = queue.splice(0, count);
+            completed.pop();
+            completed.forEach(function (c) { return c.Complete(success, false); });
             if (queue.length === 0)
                 delete this._queues[id];
             else
-                queue[0].Call(function () { return _this.CallNext(id); });
+                queue[queue.length - 1].Call(function (s) { return _this.CallNext(id, queue.length, s); });
         };
         return CallQueue;
     })();
