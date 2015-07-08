@@ -4,6 +4,7 @@ import Navigation = require("Managers/Navigation");
 import Title = require("Managers/Title");
 import Notification = require("Managers/Notification");
 import CallRepeater = require("Managers/CallRepeater");
+import CallQueue = require("Managers/CallQueue");
 
 class Experiment
 {
@@ -28,6 +29,7 @@ class Experiment
 	private _id: string;
 	private _hasLoadedCurrentSlide: boolean = false;
 	private _listExperiments: { [listId: string]: string } = {};
+	private _callQueue: CallQueue;
 
 	private _styleSheetElement:HTMLLinkElement;
 
@@ -50,6 +52,7 @@ class Experiment
 		this.Title.subscribe(title => Title.ToDefault(title == "" ? null : title));
 
 		this.CloseExperimentEnabled = knockout.computed(() => this.CompletedUrl() != null);
+		this._callQueue = new CallQueue();
 
 		Navigation.ExperimentId.subscribe(id =>
 		{
@@ -177,7 +180,7 @@ class Experiment
 
 	public SaveQuestionAnswer(id: string, answer: any, callback: (success:boolean) => void): void
 	{
-		new CallRepeater((c) =>
+		this._callQueue.Queue(id, new CallRepeater((c) =>
 		{
 			CockpitPortal.Answer.Set(id, answer).WithCallback(response =>
 			{
@@ -192,7 +195,7 @@ class Experiment
 				} else
 					c(true, false);
 			});
-		}, callback);
+		}, callback));
 	}
 
 	public CloseSlide(index: number): void
