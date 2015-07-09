@@ -1,4 +1,4 @@
-define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation", "Managers/Title", "Managers/Notification", "Managers/CallRepeater"], function (require, exports, knockout, CockpitPortal, Navigation, Title, Notification, CallRepeater) {
+define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation", "Managers/Title", "Managers/Notification", "Managers/CallRepeater", "Managers/CallQueue"], function (require, exports, knockout, CockpitPortal, Navigation, Title, Notification, CallRepeater, CallQueue) {
     var Experiment = (function () {
         function Experiment() {
             var _this = this;
@@ -29,6 +29,7 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
             });
             this.Title.subscribe(function (title) { return Title.ToDefault(title == "" ? null : title); });
             this.CloseExperimentEnabled = knockout.computed(function () { return _this.CompletedUrl() != null; });
+            this._callQueue = new CallQueue(true);
             Navigation.ExperimentId.subscribe(function (id) {
                 if (id != null)
                     _this.Load(id);
@@ -121,7 +122,7 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
             });
         };
         Experiment.prototype.SaveQuestionAnswer = function (id, answer, callback) {
-            new CallRepeater(function (c) {
+            this._callQueue.Queue(id, new CallRepeater(function (c) {
                 CockpitPortal.Answer.Set(id, answer).WithCallback(function (response) {
                     if (response.Error != null) {
                         if (response.Error.Fullname !== "Chaos.Cockpit.Core.Core.Exceptions.ValidationException") {
@@ -134,7 +135,7 @@ define(["require", "exports", "knockout", "CockpitPortal", "Managers/Navigation"
                     else
                         c(true, false);
                 });
-            }, callback);
+            }, callback));
         };
         Experiment.prototype.CloseSlide = function (index) {
             CockpitPortal.Slide.Completed(this._id, index).WithCallback(function (response) {
