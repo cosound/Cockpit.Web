@@ -15,6 +15,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             this.Items = this.GetItems(function (v) { return _this.CreateItemInfo(v); });
             this.MaxButtonWidth = knockout.computed(function () { return _this.Items.map(function (i) { return i.ButtonElement() == null ? null : i.ButtonElement().offsetWidth; }).reduce(function (p, c) { return p == null || c == null ? null : Math.max(p, c); }, 0); });
             this.HasNoStimulus = this.Items.every(function (i) { return !i.HasStimulus; });
+            this._hasActives = this.Items.some(function (i) { return i.IsActive; });
             this.CanAnswer = this.WhenAllAudioHavePlayed(this.Items.map(function (i) { return i.AudioInfo; }), true);
             if (this.HasAnswer())
                 this.Answer(this.GetAnswer().Id);
@@ -24,7 +25,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             });
         }
         KacPS.prototype.HasValidAnswer = function (answer) {
-            return answer.Id != undefined && answer.Id != null;
+            return !this._hasActives || (answer.Id != undefined && answer.Id != null);
         };
         KacPS.prototype.CreateItemInfo = function (data) {
             var _this = this;
@@ -39,6 +40,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
                 Label: this.GetFormatted(data.ChoiceButton.Label),
                 AudioInfo: audioInfo,
                 IsSelected: knockout.computed(function () { return _this.Answer() === data.Id; }),
+                IsActive: data.ChoiceButton.Active == undefined || data.ChoiceButton.Active,
                 HasStimulus: data.Stimulus !== null,
                 ButtonElement: knockout.observable(null)
             };

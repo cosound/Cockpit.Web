@@ -11,7 +11,7 @@
 			<div class="Filler"><button class="btn btn-default"><span class="glyphicon glyphicon-play" aria-hidden="true"></span></button></div>
 			<!-- /ko -->
 			<input type="radio" data-bind="checked: $parent.Answer, attr: {id: UniqueId, name: $parent.Id}, value: Id, enable: $parent.CanAnswer" />
-			<label class="btn btn-default" data-bind="attr: {for: UniqueId}, css: {active: IsSelected, disabled: !$parent.CanAnswer()}, html: Label, Element: ButtonElement, style: { width: $parent.MaxButtonWidth() ? $parent.MaxButtonWidth() + 'px' : null }">
+			<label data-bind="attr: {for: UniqueId}, css: {active: IsSelected, disabled: !$parent.CanAnswer(), btn: IsActive, 'btn-default': IsActive}, html: Label, Element: ButtonElement, style: { width: $parent.MaxButtonWidth() ? $parent.MaxButtonWidth() + 'px' : null }">
 			</label>
 		</div>
 	</div>
