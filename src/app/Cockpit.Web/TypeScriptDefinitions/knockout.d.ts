@@ -634,6 +634,7 @@ interface KnockoutComponentLoader {
 
 interface KnockoutComponentConfig {
 	template: any;
+	viewModel?: any;
 	createViewModel?: any;
 }
 

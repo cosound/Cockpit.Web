@@ -8,8 +8,7 @@ define(["require", "exports", "jquery", "knockout", "Managers/Portal", "Managers
     try {
         CanUseStorage = window.localStorage != undefined;
     }
-    catch (e) {
-    }
+    catch (e) { }
     function Intialize() {
         Portal.Client.SessionAuthenticated().Add(function () { return Authenticated(true); });
         if (CanUseStorage)

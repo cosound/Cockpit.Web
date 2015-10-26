@@ -1,5 +1,4 @@
 define(["require", "exports", "knockout"], function (require, exports, knockout) {
-    exports.Title;
     var isDefault = true;
     var _defaultName = "Cockpit";
     function ToDefault(subName) {

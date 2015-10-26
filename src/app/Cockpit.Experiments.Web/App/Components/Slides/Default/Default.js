@@ -16,10 +16,8 @@ define(["require", "exports", "knockout", "Models/Question", "Managers/Experimen
         Default.prototype.InitializeQuestions = function (questions) {
             var _this = this;
             var numberToLoad = questions.length;
-            var loaded = function () {
-                if (--numberToLoad === 0)
-                    _this.SlideLoaded();
-            };
+            var loaded = function () { if (--numberToLoad === 0)
+                _this.SlideLoaded(); };
             for (var i = 0; i < questions.length; i++) {
                 var questionModel = new QuestionModel(questions[i], function (question) { return _this.AnswerChanged(question); }, loaded);
                 questionModel.HasValidAnswer.subscribe(function () { return _this.CheckIfAllQuestionsAreAnswered(); });
