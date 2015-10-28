@@ -23,9 +23,13 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
                 _this.AddEvent("Change", "/Instrument", "Mouse/Left/Down", v);
                 _this.SetAnswer({ Id: v });
             });
+            this.CanAnswer.subscribe(function (v) {
+                if (v)
+                    _this.UpdateIsAnswerValid();
+            });
         }
         KacPS.prototype.HasValidAnswer = function (answer) {
-            return !this._hasActives || (answer.Id != undefined && answer.Id != null);
+            return (!this._hasActives && this.CanAnswer()) || (answer.Id != undefined && answer.Id != null);
         };
         KacPS.prototype.CreateItemInfo = function (data) {
             var _this = this;
@@ -40,7 +44,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
                 Label: this.GetFormatted(data.ChoiceButton.Label),
                 AudioInfo: audioInfo,
                 IsSelected: knockout.computed(function () { return _this.Answer() === data.Id; }),
-                IsActive: data.ChoiceButton.Active == undefined || data.ChoiceButton.Active,
+                IsActive: data.ChoiceButton.Active == undefined || data.ChoiceButton.Active !== "0",
                 HasStimulus: data.Stimulus !== null,
                 ButtonElement: knockout.observable(null)
             };

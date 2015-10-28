@@ -4,7 +4,7 @@ import QuestionModel = require("Models/Question");
 import AudioInfo = require("Components/Players/Audio/AudioInfo");
 
 type ItemInfo = { Id: string; UniqueId: string; Label: string; AudioInfo: AudioInfo; HasStimulus: boolean; IsActive:boolean; IsSelected: KnockoutComputed<boolean>; ButtonElement:KnockoutObservable<HTMLElement> };
-type Item = { Id: string; ChoiceButton: { Label: string; Selected: string; Active?:boolean }; Stimulus:IStimulus };
+type Item = { Id: string; ChoiceButton: { Label: string; Selected: string; Active?:string }; Stimulus:IStimulus };
 
 class KacPS extends QuestionBase<{Id:string}>
 {
@@ -41,11 +41,16 @@ class KacPS extends QuestionBase<{Id:string}>
 			this.AddEvent("Change", "/Instrument", "Mouse/Left/Down", v);
 			this.SetAnswer({ Id: v });
 		});
+		this.CanAnswer.subscribe(v =>
+		{
+			if (v)
+				this.UpdateIsAnswerValid();
+		});
 	}
 
 	protected HasValidAnswer(answer: any): boolean
 	{
-		return !this._hasActives || (answer.Id != undefined && answer.Id != null);
+		return (!this._hasActives && this.CanAnswer()) || (answer.Id != undefined && answer.Id != null);
 	}
 
 	private CreateItemInfo(data: Item): ItemInfo
@@ -64,7 +69,7 @@ class KacPS extends QuestionBase<{Id:string}>
 			Label: this.GetFormatted(data.ChoiceButton.Label),
 			AudioInfo: audioInfo,
 			IsSelected: knockout.computed(() => this.Answer() === data.Id),
-			IsActive: data.ChoiceButton.Active == undefined || data.ChoiceButton.Active,
+			IsActive: data.ChoiceButton.Active == undefined || data.ChoiceButton.Active !== "0",
 			HasStimulus: data.Stimulus !== null,
 			ButtonElement: knockout.observable(null)
 		};
