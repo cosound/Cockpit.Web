@@ -1,8 +1,7 @@
-var __extends = this.__extends || function (d, b) {
+var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
-    __.prototype = b.prototype;
-    d.prototype = new __();
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "Components/Players/Audio/AudioInfo"], function (require, exports, knockout, QuestionBase, AudioInfo) {
     var KacPS = (function (_super) {
@@ -16,6 +15,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
             this.Items = this.GetItems(function (v) { return _this.CreateItemInfo(v); });
             this.MaxButtonWidth = knockout.computed(function () { return _this.Items.map(function (i) { return i.ButtonElement() == null ? null : i.ButtonElement().offsetWidth; }).reduce(function (p, c) { return p == null || c == null ? null : Math.max(p, c); }, 0); });
             this.HasNoStimulus = this.Items.every(function (i) { return !i.HasStimulus; });
+            this._hasActives = this.Items.some(function (i) { return i.IsActive; });
             this.CanAnswer = this.WhenAllAudioHavePlayed(this.Items.map(function (i) { return i.AudioInfo; }), true);
             if (this.HasAnswer())
                 this.Answer(this.GetAnswer().Id);
@@ -23,9 +23,13 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
                 _this.AddEvent("Change", "/Instrument", "Mouse/Left/Down", v);
                 _this.SetAnswer({ Id: v });
             });
+            this.CanAnswer.subscribe(function (v) {
+                if (v)
+                    _this.UpdateIsAnswerValid();
+            });
         }
         KacPS.prototype.HasValidAnswer = function (answer) {
-            return answer.Id != undefined && answer.Id != null;
+            return (!this._hasActives && this.CanAnswer()) || (answer.Id != undefined && answer.Id != null);
         };
         KacPS.prototype.CreateItemInfo = function (data) {
             var _this = this;
@@ -40,6 +44,7 @@ define(["require", "exports", "knockout", "Components/Questions/QuestionBase", "
                 Label: this.GetFormatted(data.ChoiceButton.Label),
                 AudioInfo: audioInfo,
                 IsSelected: knockout.computed(function () { return _this.Answer() === data.Id; }),
+                IsActive: data.ChoiceButton.Active == undefined || data.ChoiceButton.Active !== "0",
                 HasStimulus: data.Stimulus !== null,
                 ButtonElement: knockout.observable(null)
             };

@@ -11,9 +11,7 @@ define(["require", "exports", "knockout", "Managers/TextFormatter"], function (r
             for (var _i = 0; _i < arguments.length; _i++) {
                 codes[_i - 0] = arguments[_i];
             }
-            return codes.map(function (c) {
-                return { Code: c, Result: TextFormatter.Format(c) };
-            });
+            return codes.map(function (c) { return { Code: c, Result: TextFormatter.Format(c) }; });
         };
         return TextFormat;
     })();

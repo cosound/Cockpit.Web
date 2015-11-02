@@ -6,30 +6,14 @@ define(["require", "exports", "knockout", "routie", "Managers/NavigationPage", "
             this.ExperimentId = knockout.observable(null);
             this.ExperimentListId = knockout.observable(null);
             Routie({
-                "": function () {
-                    _this.LoadPage("Welcome");
-                },
-                "Experiment/:id": function (id) {
-                    _this.LoadSlide(id);
-                },
-                "ExperimentList/:id": function (id) {
-                    _this.LoadExperimentFromList(id);
-                },
-                "NoMoreExperiments": function () {
-                    _this.LoadPage("NoMoreExperiments");
-                },
-                "SlideLocked": function () {
-                    _this.LoadPage("SlideLocked");
-                },
-                "TextFormat": function () {
-                    _this.LoadPage("TextFormat");
-                },
-                "ExperimentNotFound/:id": function (id) {
-                    _this.LoadPage("ExperimentNotFound", id);
-                },
-                "*": function () {
-                    _this.LoadPage("NotFound");
-                }
+                "": function () { _this.LoadPage("Welcome"); },
+                "Experiment/:id": function (id) { _this.LoadSlide(id); },
+                "ExperimentList/:id": function (id) { _this.LoadExperimentFromList(id); },
+                "NoMoreExperiments": function () { _this.LoadPage("NoMoreExperiments"); },
+                "SlideLocked": function () { _this.LoadPage("SlideLocked"); },
+                "TextFormat": function () { _this.LoadPage("TextFormat"); },
+                "ExperimentNotFound/:id": function (id) { _this.LoadPage("ExperimentNotFound", id); },
+                "*": function () { _this.LoadPage("NotFound"); }
             });
         }
         Navigation.prototype.Navigate = function (path) {

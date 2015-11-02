@@ -3,18 +3,10 @@ define(["require", "exports", "knockout", "routie"], function (require, exports,
     function Initialize() {
         exports.CurrentPage.extend({ rateLimit: 0 });
         Routie({
-            "": function () {
-                Navigate("Search");
-            },
-            "Search": function () {
-                LoadPage("Search");
-            },
-            "Search/:selectionId": function (selectionId) {
-                LoadPage("Search", selectionId);
-            },
-            "Selections": function () {
-                LoadPage("Selections");
-            }
+            "": function () { Navigate("Search"); },
+            "Search": function () { LoadPage("Search"); },
+            "Search/:selectionId": function (selectionId) { LoadPage("Search", selectionId); },
+            "Selections": function () { LoadPage("Selections"); }
         });
     }
     exports.Initialize = Initialize;

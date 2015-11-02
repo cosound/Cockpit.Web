@@ -44,7 +44,12 @@ define(["require", "exports"], function (require, exports) {
             return "[Uknown format type: " + options[0].toLocaleLowerCase() + "]";
         };
         TextFormatter.prototype.EscapeHtml = function (input) {
-            return input.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+            return input
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
         };
         TextFormatter.prototype.GetLinkFormat = function (parameters) {
             var url = parameters[0];
