@@ -159,6 +159,13 @@ class QuestionsBase<T> implements IQuestionViewModel
 		};
 
 		this._events.push(event);
+
+		this.TriggerAnswerUpdate();
+	}
+
+	protected TriggerAnswerUpdate():void
+	{
+		this.SetAnswer(this.GetAnswer());
 	}
 
 	private CloneEvent(event:CockpitPortal.IQuestionEvent):CockpitPortal.IQuestionEvent

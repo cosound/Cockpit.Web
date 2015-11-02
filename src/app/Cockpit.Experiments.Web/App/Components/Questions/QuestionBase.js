@@ -105,6 +105,10 @@ define(["require", "exports", "knockout", "Components/Players/Audio/AudioInfo", 
                 DateTime: new Date()
             };
             this._events.push(event);
+            this.TriggerAnswerUpdate();
+        };
+        QuestionsBase.prototype.TriggerAnswerUpdate = function () {
+            this.SetAnswer(this.GetAnswer());
         };
         QuestionsBase.prototype.CloneEvent = function (event) {
             return {
